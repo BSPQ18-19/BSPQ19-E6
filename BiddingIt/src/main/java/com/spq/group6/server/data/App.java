@@ -1,4 +1,4 @@
-package com.spq.group6;
+package com.spq.group6.server.data;
 
 /**
  * Hello world!
