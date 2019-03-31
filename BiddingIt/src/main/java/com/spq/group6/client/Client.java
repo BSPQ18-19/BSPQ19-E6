@@ -1,9 +1,9 @@
 package com.spq.group6.client;
 
-/**
- * Hello world!
- *
- */
+import com.spq.group6.server.remote.IServer;
+import com.spq.group6.server.data.User;
+
+
 public class Client 
 {
     public static void main(String[] args) {
@@ -20,8 +20,8 @@ public class Client
 			String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
 			IServer biddingItServerGateway = (IServer) java.rmi.Naming.lookup(name);
 			// Register to be allowed to send messages
-			biddingItServerGateway.registerUser("Alejandro", "1234");
-			System.out.println("* Message coming from the server: '" + biddingItServerGateway.sayMessage("Alejandro", "Lorite", "This is a test!") + "'");
+			User user = biddingItServerGateway.signIn("Alejandro", "1234", "Spain");
+			User user2 = biddingItServerGateway.logIn("Alejandro", "1234");
 			
 		} catch (Exception e) {
 			System.err.println("RMI Example exception: " + e.getMessage());
