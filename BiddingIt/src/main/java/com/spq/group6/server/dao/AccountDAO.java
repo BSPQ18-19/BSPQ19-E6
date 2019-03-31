@@ -1,4 +1,15 @@
 package com.spq.group6.server.dao;
 
-public class AccountDAO {
+import com.spq.group6.server.data.User;
+
+public class AccountDAO implements IAccountDAO {
+    @Override
+    public User createUser(User user) {
+        return null;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return null;
+    }
 }
