@@ -130,7 +130,7 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <version>1.6.0</version>
                         <configuration>
-                            <mainClass>com.spq.group6.server.Server</mainClass>
+                            <mainClass>com.spq.group6.server.ServerMain</mainClass>
                             <systemProperties>
 
                                 <systemProperty>
