@@ -3,8 +3,12 @@ package com.spq.group6.server.remote;
 import com.spq.group6.server.data.User;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-public class Server implements IServer {
+public class Server extends UnicastRemoteObject implements IServer {
+    public Server() throws RemoteException {
+    }
+
     @Override
     public User logIn(String username, String password) throws RemoteException {
         return null;
