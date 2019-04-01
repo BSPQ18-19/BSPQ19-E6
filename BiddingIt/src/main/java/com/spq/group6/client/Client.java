@@ -21,6 +21,7 @@ public class Client
 			IServer biddingItServerGateway = (IServer) java.rmi.Naming.lookup(name);
 			// Register to be allowed to send messages
 			User user = biddingItServerGateway.signIn("Alejandro", "1234", "Spain");
+			System.out.println("response: " + user.getMoney());
 			User user2 = biddingItServerGateway.logIn("Alejandro", "1234");
 			
 		} catch (Exception e) {
