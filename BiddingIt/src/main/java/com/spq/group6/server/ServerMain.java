@@ -25,6 +25,10 @@ public class ServerMain{
             IServer objServer = new Server();
             Naming.rebind(name, objServer);
             System.out.println("Server '" + name + "' active and waiting...");
+            java.io.InputStreamReader inputStreamReader = new java.io.InputStreamReader ( System.in );
+            java.io.BufferedReader stdin = new java.io.BufferedReader ( inputStreamReader );
+            @SuppressWarnings("unused")
+            String line  = stdin.readLine();
 
         } catch (Exception e) {
             System.err.println("Exception ocurred: " + e.getMessage());
