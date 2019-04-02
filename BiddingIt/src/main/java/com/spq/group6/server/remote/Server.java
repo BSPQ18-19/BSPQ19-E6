@@ -1,5 +1,10 @@
 package com.spq.group6.server.remote;
 
+<<<<<<< HEAD
+=======
+import com.spq.group6.server.data.*;
+
+>>>>>>> b1e550616860d50a4e1280b3d9696aabbe9aa66a
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -25,7 +30,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return accountService.signIn(username, password, country);
     }
 
-    public User updateUser(User user) throws RemoteException{
+    public User updateUser(User user) throws RemoteException {
         return accountService.updateUser(user);
     }
 }
