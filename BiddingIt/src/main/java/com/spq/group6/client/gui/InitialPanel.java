@@ -16,10 +16,10 @@ public class InitialPanel extends JPanel {
 	private JLabel titleLabel;
 	private JLabel infoLabel;
 	private JLabel authorLabel;
-	private JButton authorizationGoogleButton;
-	private JButton authorizationFacebookButton;
+	private JButton logInButton;
+	private JButton signInButton;
 	
-	public InitialJPanel(int screenWidth, int screenHeight) {
+	public InitialPanel(int screenWidth, int screenHeight) {
 		
 		this.setLayout(null);
 		
@@ -40,12 +40,12 @@ public class InitialPanel extends JPanel {
 				(int) (screenHeight / 1.25 - authorLabel.getHeight() / 2));
 		SDG2Util.fixJLabelFontSize(authorLabel);	
 		
-		authorizationGoogleButton = new JButton("Google");		
-		authorizationGoogleButton.setSize(screenWidth / 6, screenHeight / 8);
-		authorizationGoogleButton.setLocation(screenWidth / 2 - authorizationGoogleButton.getWidth() / 2, 
+		logInButton = new JButton("Log in");		
+		logInButton.setSize(screenWidth / 6, screenHeight / 8);
+		logInButton.setLocation(screenWidth / 2 - logInButton.getWidth() / 2, 
 				(int) (infoLabel.getLocation().getY() + infoLabel.getFont().getSize() + screenHeight / 8));
-		SDG2Util.fixJButtonFontSize(authorizationGoogleButton);
-		authorizationGoogleButton.addActionListener(new ActionListener() {
+		SDG2Util.fixJButtonFontSize(logInButton);
+		logInButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -53,32 +53,32 @@ public class InitialPanel extends JPanel {
 			}
 		});
 		
-		authorizationFacebookButton = new JButton("Facebook");
-		authorizationFacebookButton.setSize(screenWidth / 6, screenHeight / 8);
-		authorizationFacebookButton.setLocation(screenWidth / 2 - authorizationFacebookButton.getWidth() / 2, 
-				(int) (authorizationGoogleButton.getLocation().getY() + authorizationGoogleButton.getSize().getHeight() + screenHeight / 20));
-		SDG2Util.fixJButtonFontSize(authorizationFacebookButton);
-		authorizationFacebookButton.addActionListener(new ActionListener() {
+		signInButton = new JButton("Sign in");
+		signInButton.setSize(screenWidth / 6, screenHeight / 8);
+		signInButton.setLocation(screenWidth / 2 - signInButton.getWidth() / 2, 
+				(int) (signInButton.getLocation().getY() + signInButton.getSize().getHeight() + screenHeight / 20));
+		SDG2Util.fixJButtonFontSize(signInButton);
+		signInButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("a");
-				JOptionPane.showMessageDialog(InitialJPanel.this, "This feature is not available yet, sorry.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(InitialPanel.this, "This feature is not available yet, sorry.", "Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
 		this.add(titleLabel);
 		this.add(infoLabel);
 		this.add(authorLabel);
-		this.add(authorizationGoogleButton);
-		this.add(authorizationFacebookButton);
+		this.add(logInButton);
+		this.add(signInButton);
 	}
 	
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new InitialJPanel(800, 600));
+		testFrame.add(new InitialPanel(800, 600));
 		testFrame.setVisible(true);
 	}
 

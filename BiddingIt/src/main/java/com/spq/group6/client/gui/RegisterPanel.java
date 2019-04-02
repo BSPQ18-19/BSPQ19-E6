@@ -7,12 +7,10 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import easybooking.client.controller.ClientController;
-import easybooking.server.data.AuthorizationSystem;
-import sd.group2.JLabelGraficoAjustado;
+import com.spq.group6.client.controller.ClientController;
 import sd.group2.SDG2Util;
 
-public class RegisterJPanel extends JPanel {
+public class RegisterPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
@@ -20,17 +18,17 @@ public class RegisterJPanel extends JPanel {
 	private JLabel infoLabel;
 	private JLabel usernameLabel;
 	private JTextField usernameTF;
-	private JLabelGraficoAjustado usernametickImage;
+	//private JLabelGraficoAjustado usernametickImage;
 	private JLabel emailLabel;
 	private JTextField emailTF;
-	private JLabelGraficoAjustado emailtickImage;
+	//private JLabelGraficoAjustado emailtickImage;
 	private JLabel defaultAirportCodeLabel;
 	private JComboBox<String> defaultAirportComboBox;
 	private JButton confirmButton;
 	
 	private ClientController controller;
 	
-	public RegisterPanel(int screenWidth, int screenHeight, ClientController controller, AuthorizationSystem authSystem, String... email) {
+	public RegisterPanel(int screenWidth, int screenHeight, ClientController controller, String... email) {
 		
 		this.setLayout(null);
 		this.controller = controller;

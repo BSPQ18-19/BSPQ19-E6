@@ -1,10 +1,7 @@
 package com.spq.group6.client.remote;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-
-import ecom.spq.group6.remote.IServer;
+import com.spq.group6.server.data.User;
+import com.spq.group6.server.remote.IServer;
 
 public class ServerLocator {
 	private IServer service;
@@ -13,7 +10,7 @@ public class ServerLocator {
 		
 	}
 	
-    public IEasyBookingServerRemoteFacade getService() {
+    public IServer getService() {
         return service;
     }
 

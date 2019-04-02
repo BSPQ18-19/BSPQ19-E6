@@ -39,7 +39,7 @@ public class ClientWindow extends JFrame {
 		
 		switch(nextScreenType) {
 		case INITIAL:
-			mainPanel = new InitialJPanel(screenWidth, screenHeight);
+			mainPanel = new InitialPanel(screenWidth, screenHeight);
 			break;
 		case REGISTER:
 			if (strings.length > 0)
@@ -49,7 +49,7 @@ public class ClientWindow extends JFrame {
 
 			break;
 		case LOG_IN:
-			mainPanel = new LogInJPanel(screenWidth, screenHeight, AuthorizationSystem.GOOGLE);
+			mainPanel = new LogInPanel(screenWidth, screenHeight, AuthorizationSystem.GOOGLE);
 			break;
 		case LOG_IN_SUCCESFUL:
 			if (strings.length > 0)
