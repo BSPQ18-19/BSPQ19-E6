@@ -3,14 +3,14 @@ package com.spq.group6.client.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.spq.group6.client.controller.ClientController;
-
-import sd.group2.JLabelGraficoAjustado;
-import sd.group2.SDG2Util;
+import com.spq.group6.util.SDG2Util;
 
 public class RegisterPanel extends JPanel {
 
@@ -24,13 +24,13 @@ public class RegisterPanel extends JPanel {
 	private JLabel emailLabel;
 	private JTextField emailTF;
 	//private JLabelGraficoAjustado emailtickImage;
-	private JLabel defaultAirportCodeLabel;
-	private JComboBox<String> defaultAirportComboBox;
+	private JLabel countryLabel;
+	private JTextField countryTF;
 	private JButton confirmButton;
 	
 	private ClientController controller;
 	
-	public RegisterPanel(int screenWidth, int screenHeight, ClientController controller, String... email) {
+	public RegisterPanel(int screenWidth, int screenHeight, ClientController controller) {
 		
 		this.setLayout(null);
 		this.controller = controller;
@@ -75,20 +75,18 @@ public class RegisterPanel extends JPanel {
 			public void changedUpdate(DocumentEvent e) {checkInput(true);}
 		});
 		
+		/*
 		usernametickImage = new JLabelGraficoAjustado("media/error.png", usernameTF.getHeight(), usernameTF.getHeight());
 		usernametickImage.setLocation((int) (usernameTF.getLocation().getX() + usernameTF.getWidth() + screenWidth/75),
 				usernameTF.getLocation().getY());
-		
+		*/
 		emailLabel = new JLabel("Email:", SwingConstants.LEFT);
 		emailLabel.setSize(usernameLabel.getSize());
 		emailLabel.setLocation((int) usernameLabel.getLocation().getX(),
 				(int) (usernameLabel.getLocation().getY() + usernameLabel.getHeight() + screenHeight / 40));
 		emailLabel.setFont(usernameLabel.getFont());
 		
-		if (email.length > 0)
-			emailTF = new JTextField(email[0]);
-		else
-			emailTF = new JTextField();
+		emailTF = new JTextField();
 		emailTF.setSize(usernameTF.getSize());
 		emailTF.setLocation((int) usernameTF.getLocation().getX(), 
 				(int) emailLabel.getLocation().getY());
@@ -105,26 +103,22 @@ public class RegisterPanel extends JPanel {
 			public void changedUpdate(DocumentEvent e) {checkInput(false);}
 		});
 		
+		/*
 		emailtickImage = new JLabelGraficoAjustado("/error.png", usernametickImage.getHeight(), usernametickImage.getHeight());
 		emailtickImage.setLocation(usernametickImage.getLocation().getX(), emailTF.getLocation().getY());
-		if (email.length > 0)
-			checkInput(false);
+		*/
 		
-		defaultAirportCodeLabel = new JLabel("Select your default airport:", SwingConstants.LEFT);
-		defaultAirportCodeLabel.setSize(emailLabel.getWidth()*2, emailLabel.getHeight());
-		defaultAirportCodeLabel.setLocation((int) emailLabel.getLocation().getX(),
+		countryLabel = new JLabel("Select your default airport:", SwingConstants.LEFT);
+		countryLabel.setSize(emailLabel.getWidth()*2, emailLabel.getHeight());
+		countryLabel.setLocation((int) emailLabel.getLocation().getX(),
 				(int) (emailLabel.getLocation().getY() + emailLabel.getHeight() + screenHeight / 40));
-		defaultAirportCodeLabel.setFont(emailLabel.getFont());
+		countryLabel.setFont(emailLabel.getFont());
 		
-		// TODO default airport code combo box
-		if (controller != null)
-			defaultAirportComboBox = new JComboBox<>(controller.getAirports());
-		else
-			defaultAirportComboBox = new JComboBox<>(new String[] {"BIO", "MAD", "BAR"});
-		defaultAirportComboBox.setSize(defaultAirportCodeLabel.getSize());
-		defaultAirportComboBox.setLocation((int) defaultAirportCodeLabel.getLocation().getX(),
-				(int) (defaultAirportCodeLabel.getLocation().getY() + defaultAirportCodeLabel.getHeight() + screenHeight / 40));
-		defaultAirportComboBox.setFont(usernameTF.getFont());
+		countryTF = new JTextField();
+		countryTF.setSize(usernameTF.getSize());
+		countryTF.setLocation((int) countryLabel.getLocation().getX(),
+				(int) (countryLabel.getLocation().getY() + countryLabel.getHeight() + screenHeight / 40));
+		countryLabel.setFont(usernameTF.getFont());
 		
 		confirmButton = new JButton("Confirm");
 		confirmButton.setSize(screenWidth / 6, screenHeight / 10);
@@ -135,11 +129,21 @@ public class RegisterPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					controller.signIn(usernameTF.getText(), emailTF.getText(), countryTF.getText());
+					ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				/*
 				if (usernametickImage.getName().equals("media/checked.png") &&
 						emailtickImage.getName().equals("media/checked.png")) {
 					controller.registerUser(usernameTF.getText(), emailTF.getText(), (String) defaultAirportComboBox.getSelectedItem(), authSystem);
 					ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL);
-					// TODO send server to register user, confirm and go to main menu
+					// send server to register user, confirm and go to main menu
 				} else if (!usernametickImage.getName().equals("media/checked.png") &&
 						emailtickImage.getName().equals("media/checked.png")) {
 					JOptionPane.showMessageDialog(RegisterJPanel.this, "Username is already taken.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -150,6 +154,7 @@ public class RegisterPanel extends JPanel {
 						!emailtickImage.getName().equals("media/checked.png")) {
 					JOptionPane.showMessageDialog(RegisterJPanel.this, "Username and email are already taken.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
+				*/
 			}
 		});
 		
@@ -158,17 +163,18 @@ public class RegisterPanel extends JPanel {
 		this.add(infoLabel);
 		this.add(usernameLabel);
 		this.add(usernameTF);
-		this.add(usernametickImage);
+		// this.add(usernametickImage);
 		this.add(emailLabel);
 		this.add(emailTF);
-		this.add(emailtickImage);
-		this.add(defaultAirportCodeLabel);
-		this.add(defaultAirportComboBox);
+		// this.add(emailtickImage);
+		this.add(countryLabel);
+		this.add(countryTF);
 		this.add(confirmButton);
 	}
 	
 	// param isUsername is true when checking the usernametf and false when checking the emailtf
 	private void checkInput(boolean isUsername) {
+		/*
 		if (isUsername) {
 			String trimmedUsernameTFText = usernameTF.getText().trim();
 			if (!trimmedUsernameTFText.equals("") && controller.existsUsername(trimmedUsernameTFText))
@@ -185,13 +191,14 @@ public class RegisterPanel extends JPanel {
 			emailtickImage.repaint();
 		}
 		System.out.println(usernametickImage.getName() + " " + emailtickImage.getName());
+		*/
 	}
 	
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new RegisterJPanel(800, 600, null, AuthorizationSystem.GOOGLE, ""));
+		testFrame.add(new RegisterPanel(800, 600, null));
 		testFrame.setVisible(true);
 	}
 }

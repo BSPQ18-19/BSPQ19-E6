@@ -34,7 +34,7 @@ public class ClientWindow extends JFrame {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
-	public void changeScreen(ScreenType nextScreenType, String... strings) {
+	public void changeScreen(ScreenType nextScreenType) {
 		this.currentScreenType = nextScreenType;
 		
 		switch(nextScreenType) {
@@ -42,21 +42,13 @@ public class ClientWindow extends JFrame {
 			mainPanel = new InitialPanel(screenWidth, screenHeight);
 			break;
 		case REGISTER:
-			if (strings.length > 0)
-				mainPanel = new RegisterJPanel(screenWidth, screenHeight, controller, AuthorizationSystem.GOOGLE, strings[0]);
-			else
-				mainPanel = new RegisterJPanel(screenWidth, screenHeight, controller, AuthorizationSystem.GOOGLE);
-
+			mainPanel = new RegisterPanel(screenWidth, screenHeight, controller);
 			break;
 		case LOG_IN:
-			mainPanel = new LogInPanel(screenWidth, screenHeight, AuthorizationSystem.GOOGLE);
+			mainPanel = new LogInPanel(screenWidth, screenHeight);
 			break;
 		case LOG_IN_SUCCESFUL:
-			if (strings.length > 0)
-				mainPanel = new LogInSuccesfulJPanel(screenWidth, screenHeight, strings[0]);
-			else
-				mainPanel = new LogInSuccesfulJPanel(screenWidth, screenHeight);
-
+			mainPanel = new LogInSuccesfulPanel(screenWidth, screenHeight);
 			break;
 		default:
 			break;
