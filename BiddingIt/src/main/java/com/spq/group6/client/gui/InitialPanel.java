@@ -22,7 +22,7 @@ public class InitialPanel extends JPanel {
 		
 		this.setLayout(null);
 		
-		titleLabel = new JLabel("Easybooking", SwingConstants.CENTER);
+		titleLabel = new JLabel("BiddingIt", SwingConstants.CENTER);
 		titleLabel.setSize(screenWidth / 2, screenHeight / 2);
 		titleLabel.setLocation(screenWidth / 2 - titleLabel.getWidth() / 2, screenHeight / 4 - titleLabel.getHeight() / 2);
 		SDG2Util.fixJLabelFontSize(titleLabel);	
@@ -33,14 +33,14 @@ public class InitialPanel extends JPanel {
 				(int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 7));
 		SDG2Util.fixJLabelFontSize(infoLabel);	
 		
-		authorLabel = new JLabel("SD Group 2", SwingConstants.CENTER);
+		authorLabel = new JLabel("SPQ Group 6", SwingConstants.CENTER);
 		authorLabel.setSize(screenWidth / 8, screenHeight / 15);
 		authorLabel.setLocation((int) (screenWidth / 1.25 - authorLabel.getWidth() / 2),
 				(int) (screenHeight / 1.25 - authorLabel.getHeight() / 2));
 		SDG2Util.fixJLabelFontSize(authorLabel);	
 		
 		logInButton = new JButton("Log in");		
-		logInButton.setSize(screenWidth / 6, screenHeight / 8);
+		logInButton.setSize(screenWidth / 5, screenHeight / 8);
 		logInButton.setLocation(screenWidth / 2 - logInButton.getWidth() / 2, 
 				(int) (infoLabel.getLocation().getY() + infoLabel.getFont().getSize() + screenHeight / 8));
 		SDG2Util.fixJButtonFontSize(logInButton);
@@ -53,16 +53,15 @@ public class InitialPanel extends JPanel {
 		});
 		
 		signInButton = new JButton("Sign in");
-		signInButton.setSize(screenWidth / 6, screenHeight / 8);
+		signInButton.setSize(screenWidth / 5, screenHeight / 8);
 		signInButton.setLocation(screenWidth / 2 - signInButton.getWidth() / 2, 
-				(int) (signInButton.getLocation().getY() + signInButton.getSize().getHeight() + screenHeight / 20));
+				(int) (logInButton.getLocation().getY() + signInButton.getSize().getHeight() + screenHeight / 20));
 		SDG2Util.fixJButtonFontSize(signInButton);
 		signInButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("a");
-				JOptionPane.showMessageDialog(InitialPanel.this, "This feature is not available yet, sorry.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				ClientWindow.getClientWindow(null).changeScreen(ScreenType.REGISTER);	
 			}
 		});
 		

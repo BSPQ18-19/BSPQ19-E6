@@ -16,17 +16,17 @@ public class RegisterPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
-	private JLabel title2Label;
 	private JLabel infoLabel;
 	private JLabel usernameLabel;
 	private JTextField usernameTF;
 	//private JLabelGraficoAjustado usernametickImage;
-	private JLabel emailLabel;
-	private JTextField emailTF;
-	//private JLabelGraficoAjustado emailtickImage;
+	private JLabel passwordLabel;
+	private JTextField passwordTF;
+	//private JLabelGraficoAjustado passwordtickImage;
 	private JLabel countryLabel;
 	private JTextField countryTF;
 	private JButton confirmButton;
+	private JButton cancelButton;
 	
 	private ClientController controller;
 	
@@ -40,16 +40,11 @@ public class RegisterPanel extends JPanel {
 		titleLabel.setLocation(screenWidth / 8, (int) (screenHeight / 7 - titleLabel.getHeight() / 2));
 		SDG2Util.fixJLabelFontSize(titleLabel);
 		
-		title2Label = new JLabel("You don't have an account. Please register first.", SwingConstants.LEFT);
-		title2Label.setSize((int) (screenWidth / 1.2), screenHeight / 6);
-		title2Label.setLocation(screenWidth / 7, (int) (titleLabel.getLocation().getY() + (titleLabel.getHeight()*0.7)));
-		SDG2Util.fixJLabelFontSize(title2Label);
-		
-		infoLabel = new JLabel("<html>Please enter a username and your email:<br/>(the one associated to your Google/Facebook account)</html>",
+		infoLabel = new JLabel("<html>Please enter a username, a password<br/>and the country you live in.</html>",
 				SwingConstants.LEFT);
 		infoLabel.setSize((int) (screenWidth / 1.3), screenHeight / 6);
 		infoLabel.setLocation(screenWidth / 7,
-				(int) (titleLabel.getLocation().getY() + titleLabel.getHeight() + screenHeight / 20));
+				(int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize()*1.5));
 		infoLabel.setFont(new Font("Arial", Font.PLAIN, screenHeight/30));
 		
 		usernameLabel = new JLabel("Username:", SwingConstants.LEFT);
@@ -80,18 +75,18 @@ public class RegisterPanel extends JPanel {
 		usernametickImage.setLocation((int) (usernameTF.getLocation().getX() + usernameTF.getWidth() + screenWidth/75),
 				usernameTF.getLocation().getY());
 		*/
-		emailLabel = new JLabel("Email:", SwingConstants.LEFT);
-		emailLabel.setSize(usernameLabel.getSize());
-		emailLabel.setLocation((int) usernameLabel.getLocation().getX(),
+		passwordLabel = new JLabel("Password:", SwingConstants.LEFT);
+		passwordLabel.setSize(usernameLabel.getSize());
+		passwordLabel.setLocation((int) usernameLabel.getLocation().getX(),
 				(int) (usernameLabel.getLocation().getY() + usernameLabel.getHeight() + screenHeight / 40));
-		emailLabel.setFont(usernameLabel.getFont());
+		passwordLabel.setFont(usernameLabel.getFont());
 		
-		emailTF = new JTextField();
-		emailTF.setSize(usernameTF.getSize());
-		emailTF.setLocation((int) usernameTF.getLocation().getX(), 
-				(int) emailLabel.getLocation().getY());
-		emailTF.setFont(usernameTF.getFont());
-		emailTF.getDocument().addDocumentListener(new DocumentListener() {
+		passwordTF = new JTextField();
+		passwordTF.setSize(usernameTF.getSize());
+		passwordTF.setLocation((int) usernameTF.getLocation().getX(), 
+				(int) passwordLabel.getLocation().getY());
+		passwordTF.setFont(usernameTF.getFont());
+		passwordTF.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {checkInput(false);}
@@ -104,26 +99,26 @@ public class RegisterPanel extends JPanel {
 		});
 		
 		/*
-		emailtickImage = new JLabelGraficoAjustado("/error.png", usernametickImage.getHeight(), usernametickImage.getHeight());
-		emailtickImage.setLocation(usernametickImage.getLocation().getX(), emailTF.getLocation().getY());
+		passwordtickImage = new JLabelGraficoAjustado("/error.png", usernametickImage.getHeight(), usernametickImage.getHeight());
+		passwordtickImage.setLocation(usernametickImage.getLocation().getX(), passwordTF.getLocation().getY());
 		*/
 		
-		countryLabel = new JLabel("Select your default airport:", SwingConstants.LEFT);
-		countryLabel.setSize(emailLabel.getWidth()*2, emailLabel.getHeight());
-		countryLabel.setLocation((int) emailLabel.getLocation().getX(),
-				(int) (emailLabel.getLocation().getY() + emailLabel.getHeight() + screenHeight / 40));
-		countryLabel.setFont(emailLabel.getFont());
+		countryLabel = new JLabel("Country:", SwingConstants.LEFT);
+		countryLabel.setSize(passwordLabel.getWidth()*2, passwordLabel.getHeight());
+		countryLabel.setLocation((int) passwordLabel.getLocation().getX(),
+				(int) (passwordLabel.getLocation().getY() + passwordLabel.getHeight() + screenHeight / 40));
+		countryLabel.setFont(passwordLabel.getFont());
 		
 		countryTF = new JTextField();
 		countryTF.setSize(usernameTF.getSize());
-		countryTF.setLocation((int) countryLabel.getLocation().getX(),
-				(int) (countryLabel.getLocation().getY() + countryLabel.getHeight() + screenHeight / 40));
-		countryLabel.setFont(usernameTF.getFont());
+		countryTF.setLocation((int) usernameTF.getLocation().getX(),
+				(int) (countryLabel.getLocation().getY()));
+		countryTF.setFont(usernameTF.getFont());
 		
 		confirmButton = new JButton("Confirm");
 		confirmButton.setSize(screenWidth / 6, screenHeight / 10);
 		confirmButton.setLocation((int) (screenWidth / 1.5), 
-				(int) (emailLabel.getLocation().getY() + emailLabel.getFont().getSize() + screenHeight / 8));
+				(int) (passwordLabel.getLocation().getY() + passwordLabel.getFont().getSize() + screenHeight / 8));
 		SDG2Util.fixJButtonFontSize(confirmButton);
 		confirmButton.addActionListener(new ActionListener() {
 			
@@ -131,7 +126,7 @@ public class RegisterPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					controller.signIn(usernameTF.getText(), emailTF.getText(), countryTF.getText());
+					controller.signIn(usernameTF.getText(), passwordTF.getText(), countryTF.getText());
 					ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
@@ -140,39 +135,52 @@ public class RegisterPanel extends JPanel {
 				
 				/*
 				if (usernametickImage.getName().equals("media/checked.png") &&
-						emailtickImage.getName().equals("media/checked.png")) {
-					controller.registerUser(usernameTF.getText(), emailTF.getText(), (String) defaultAirportComboBox.getSelectedItem(), authSystem);
+						passwordtickImage.getName().equals("media/checked.png")) {
+					controller.registerUser(usernameTF.getText(), passwordTF.getText(), (String) defaultAirportComboBox.getSelectedItem(), authSystem);
 					ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL);
 					// send server to register user, confirm and go to main menu
 				} else if (!usernametickImage.getName().equals("media/checked.png") &&
-						emailtickImage.getName().equals("media/checked.png")) {
+						passwordtickImage.getName().equals("media/checked.png")) {
 					JOptionPane.showMessageDialog(RegisterJPanel.this, "Username is already taken.", "Error", JOptionPane.ERROR_MESSAGE);
 				} else if (usernametickImage.getName().equals("media/checked.png") &&
-						!emailtickImage.getName().equals("media/checked.png")) {
-					JOptionPane.showMessageDialog(RegisterJPanel.this, "Email is already taken.", "Error", JOptionPane.ERROR_MESSAGE);
+						!passwordtickImage.getName().equals("media/checked.png")) {
+					JOptionPane.showMessageDialog(RegisterJPanel.this, "password is already taken.", "Error", JOptionPane.ERROR_MESSAGE);
 				} else if (!usernametickImage.getName().equals("media/checked.png") &&
-						!emailtickImage.getName().equals("media/checked.png")) {
-					JOptionPane.showMessageDialog(RegisterJPanel.this, "Username and email are already taken.", "Error", JOptionPane.ERROR_MESSAGE);
+						!passwordtickImage.getName().equals("media/checked.png")) {
+					JOptionPane.showMessageDialog(RegisterJPanel.this, "Username and password are already taken.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				*/
 			}
 		});
 		
+		cancelButton = new JButton("cancel");
+		cancelButton.setSize(screenWidth / 5, screenHeight / 10);
+		cancelButton.setLocation((int) (screenWidth / 6), (int) confirmButton.getLocation().getY());
+		SDG2Util.fixJButtonFontSize(cancelButton);
+		cancelButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL);
+			}
+		});
+		
 		this.add(titleLabel);
-		this.add(title2Label);
 		this.add(infoLabel);
 		this.add(usernameLabel);
 		this.add(usernameTF);
 		// this.add(usernametickImage);
-		this.add(emailLabel);
-		this.add(emailTF);
-		// this.add(emailtickImage);
+		this.add(passwordLabel);
+		this.add(passwordTF);
+		// this.add(passwordtickImage);
 		this.add(countryLabel);
 		this.add(countryTF);
 		this.add(confirmButton);
+		this.add(cancelButton);
+
 	}
 	
-	// param isUsername is true when checking the usernametf and false when checking the emailtf
+	// param isUsername is true when checking the usernametf and false when checking the passwordtf
 	private void checkInput(boolean isUsername) {
 		/*
 		if (isUsername) {
@@ -183,14 +191,14 @@ public class RegisterPanel extends JPanel {
 				usernametickImage = new JLabelGraficoAjustado("media/checked.png", usernameTF.getHeight(), usernameTF.getHeight());
 			usernametickImage.repaint();
 		} else {
-			String trimmedEmailTFText = emailTF.getText().trim();
-			if (!trimmedEmailTFText.equals("") && controller.existsEmail(trimmedEmailTFText))
-				emailtickImage = new JLabelGraficoAjustado("media/error.png", usernametickImage.getHeight(), usernametickImage.getHeight());
+			String trimmedpasswordTFText = passwordTF.getText().trim();
+			if (!trimmedpasswordTFText.equals("") && controller.existspassword(trimmedpasswordTFText))
+				passwordtickImage = new JLabelGraficoAjustado("media/error.png", usernametickImage.getHeight(), usernametickImage.getHeight());
 			else
-				emailtickImage = new JLabelGraficoAjustado("media/checked.png", usernametickImage.getHeight(), usernametickImage.getHeight());
-			emailtickImage.repaint();
+				passwordtickImage = new JLabelGraficoAjustado("media/checked.png", usernametickImage.getHeight(), usernametickImage.getHeight());
+			passwordtickImage.repaint();
 		}
-		System.out.println(usernametickImage.getName() + " " + emailtickImage.getName());
+		System.out.println(usernametickImage.getName() + " " + passwordtickImage.getName());
 		*/
 	}
 	

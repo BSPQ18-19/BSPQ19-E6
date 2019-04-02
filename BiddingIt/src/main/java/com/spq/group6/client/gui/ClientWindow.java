@@ -34,7 +34,7 @@ public class ClientWindow extends JFrame {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
-	public void changeScreen(ScreenType nextScreenType) {
+	public void changeScreen(ScreenType nextScreenType, String... data) {
 		this.currentScreenType = nextScreenType;
 		
 		switch(nextScreenType) {
@@ -45,10 +45,10 @@ public class ClientWindow extends JFrame {
 			mainPanel = new RegisterPanel(screenWidth, screenHeight, controller);
 			break;
 		case LOG_IN:
-			mainPanel = new LogInPanel(screenWidth, screenHeight);
+			mainPanel = new LogInPanel(screenWidth, screenHeight, controller);
 			break;
 		case LOG_IN_SUCCESFUL:
-			mainPanel = new LogInSuccesfulPanel(screenWidth, screenHeight);
+			mainPanel = new LogInSuccesfulPanel(screenWidth, screenHeight, data[0]);
 			break;
 		default:
 			break;

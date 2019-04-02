@@ -11,11 +11,11 @@ public class LogInSuccesfulPanel extends JPanel {
 	private JLabel infoLabel1;
 	private JLabel infoLabel2;
 	
-	public LogInSuccesfulPanel(int screenWidth, int screenHeight, String... username) {
+	public LogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
 		
 		this.setLayout(null);
 		
-		if (username.length > 0)
+		if (!username.isEmpty())
 			titleLabel = new JLabel("Welcome " + username + "! :)", SwingConstants.LEFT);
 		else 
 			titleLabel = new JLabel("Welcome! :)", SwingConstants.LEFT);		
