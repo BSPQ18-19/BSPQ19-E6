@@ -1,10 +1,5 @@
 package com.spq.group6.server.remote;
 
-<<<<<<< HEAD
-=======
-import com.spq.group6.server.data.*;
-
->>>>>>> b1e550616860d50a4e1280b3d9696aabbe9aa66a
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
