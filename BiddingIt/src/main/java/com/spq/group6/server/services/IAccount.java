@@ -1,9 +1,10 @@
 package com.spq.group6.server.services;
 
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.UserException;
 
 public interface IAccount {
-    User logIn(String username, String password);
-
-    User signIn(String username, String password, String country);
+    public User logIn(String username, String password) throws UserException;
+    public User signIn(String username, String password, String country) throws UserException;
+    public User updateUser(User user);
 }

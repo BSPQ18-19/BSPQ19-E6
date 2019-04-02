@@ -12,4 +12,9 @@ public class AccountDAO implements IAccountDAO {
     public User getUserByUsername(String username) {
         return null;
     }
+
+    @Override
+    public User updateUser(User user) {
+        return null;
+    }
 }

@@ -23,7 +23,14 @@ public class User implements Serializable{
 	private String country;
 	private int money;
 	private Product[] ownedProducts;
-	
+
+	public User(String username, String password, String country){
+		super();
+		this.username = username;
+		this.password = password;
+		this.country = country;
+	}
+
 	public User(String username, String password, String country, int money, Product[] ownedProducts) {
 		super();
 		this.username = username;
