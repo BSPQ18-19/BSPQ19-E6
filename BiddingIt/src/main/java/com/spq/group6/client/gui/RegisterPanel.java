@@ -127,7 +127,7 @@ public class RegisterPanel extends JPanel {
 				
 				try {
 					controller.signIn(usernameTF.getText(), passwordTF.getText(), countryTF.getText());
-					ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL);
+					ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

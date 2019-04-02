@@ -94,7 +94,7 @@ public class LogInPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL);
+				ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL, usernameTF.getText());
 			}
 		});
 		

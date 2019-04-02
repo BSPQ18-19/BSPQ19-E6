@@ -26,11 +26,7 @@ public class ServerLocator {
 
 		try {
 			String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
-			IServer biddingItServerGateway = (IServer) java.rmi.Naming.lookup(name);
-			// Register to be allowed to send messages
-			User user = biddingItServerGateway.signIn("Alejandro", "1234", "Spain");
-			System.out.println("response: " + user.getMoney());
-			User user2 = biddingItServerGateway.logIn("Alejandro", "1234");
+			service = (IServer) java.rmi.Naming.lookup(name);
 			
 		} catch (Exception e) {
 			System.err.println("RMI Example exception: " + e.getMessage());

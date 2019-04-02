@@ -15,6 +15,8 @@ public class ClientController {
 	
     public ClientController(String args[]) throws RemoteException {
 		super();
+		for (String s : args)
+			System.out.println(s);
 		serviceLocator = new ServerLocator();
 		serviceLocator.setService(args);
 		ClientWindow.getClientWindow(this).setVisible(true);
