@@ -65,6 +65,13 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/SDG2Util.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.sd.group2</groupId>
+            <artifactId>JLabelGraficoAjustado</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/JLabelGraficoAjustado.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>

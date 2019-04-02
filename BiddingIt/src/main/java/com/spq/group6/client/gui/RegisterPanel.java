@@ -8,6 +8,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.spq.group6.client.controller.ClientController;
+
+import sd.group2.JLabelGraficoAjustado;
 import sd.group2.SDG2Util;
 
 public class RegisterPanel extends JPanel {
