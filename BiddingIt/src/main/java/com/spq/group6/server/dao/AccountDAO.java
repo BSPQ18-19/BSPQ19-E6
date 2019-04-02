@@ -11,7 +11,7 @@ import com.spq.group6.server.data.User;
 
 public class AccountDAO implements IAccountDAO {
     @Override
-    public void createUser(User user) {
+    public User createUser(User user) {
 
 		PersistenceManagerFactory persistentManagerFactory = JDOHelper
 				.getPersistenceManagerFactory("datanucleus.properties");
@@ -21,13 +21,21 @@ public class AccountDAO implements IAccountDAO {
 
 		try {
 			transaction.begin();
-			//
-			//Query<User> userQuery = persistentManager.newQuery("SELECT FROM " + User.class.getName());
+			Query<User> userQuery = persistentManager.newQuery("SELECT FROM " + User.class.getName());//listado de usuarios
 
-			//User newU = new User(user.getUsername(), user.getPassword(), user.getCountry(), user.getMoney(), user.getOwnedProducts);
-			//persistentManager.makePersistent(newU);
-			persistentManager.makePersistent(user);
-			System.out.println("- Inserted into db: " + user.toString());
+			int found = 0;
+			for (User u : userQuery.executeList()) {
+				if(u.getUsername().equals(user.getUsername())) {//comparacion del nombre de usuario del usuario con el nombre de usuario dado
+					found++;
+				}
+			}
+
+			if(found > 0){
+				System.err.println("* User already exist.");
+			}else {
+				persistentManager.makePersistent(user);
+				System.out.println("- Inserted into db: " + user.toString());
+			}
 
 			transaction.commit();
 		} catch (Exception ex) {
@@ -41,6 +49,7 @@ public class AccountDAO implements IAccountDAO {
 
 			persistentManager.close();
 		}
+		return user;
     }
 
     public User getUserByUsername(String username) {
@@ -75,12 +84,15 @@ public class AccountDAO implements IAccountDAO {
 
 			persistentManager.close();
 		}
-    	
+
+		if(user == null){
+			System.err.println("* No user found with this username.");
+		}
         return user;
     }
 
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
     	
     	PersistenceManagerFactory persistentManagerFactory = JDOHelper
 				.getPersistenceManagerFactory("datanucleus.properties");
@@ -93,18 +105,22 @@ public class AccountDAO implements IAccountDAO {
 
 			Query<User> userQuery = persistentManager.newQuery("SELECT FROM " + User.class.getName());
 
+			int found = 0;
 			for (User u : userQuery.executeList()) {
-				if(user.getUserID() == u.getUserID()) {//comparacion del nombre de usuario del usuario con el nombre de usuario dado
+				if(u.getUsername().equals(user.getUsername())) {//comparacion del nombre de usuario del usuario con el nombre de usuario dado
 					u.setCountry(user.getCountry());
 					u.setMoney(user.getMoney());
 					u.setPassword(user.getPassword());
-					//u.setUsername(user.getUsername());
 					u.setOwnedProducts(user.getOwnedProducts());
 					persistentManager.makePersistent(u);
+					found++;
 					System.out.println("- Updated into db: " + user.toString());
 				}
 			}
-			
+
+			if(found == 0){
+				System.err.println("* No user found with this username.");
+			}
 			transaction.commit();
 		} catch (Exception ex) {
 			
@@ -117,6 +133,6 @@ public class AccountDAO implements IAccountDAO {
 
 			persistentManager.close();
 		}
-    	
+    	return user;
     }
 }
