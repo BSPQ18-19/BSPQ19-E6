@@ -1,18 +1,10 @@
-package com.spq.group6;
-
+package com.spq.group6.server.dao;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
+public class AccountDAOTest {
     @Test
     public void shouldAnswerWithTrue()
     {
