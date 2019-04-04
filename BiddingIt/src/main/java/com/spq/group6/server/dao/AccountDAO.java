@@ -8,131 +8,89 @@ import javax.jdo.Transaction;
 
 import com.spq.group6.server.data.User;
 
+import java.util.List;
+
 
 public class AccountDAO implements IAccountDAO {
-    @Override
+    private static PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+
     public User createUser(User user) {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
 
-		PersistenceManagerFactory persistentManagerFactory = JDOHelper
-				.getPersistenceManagerFactory("datanucleus.properties");
+        try {
+            pm.setDetachAllOnCommit(true);
+            tx.begin();
+            pm.makePersistent(user); // Saves user in the Database
+            tx.commit();
+        } catch (Exception ex) {
 
-		PersistenceManager persistentManager = persistentManagerFactory.getPersistenceManager();
-		Transaction transaction = persistentManager.currentTransaction();
+            System.err.println("* Exception inserting data into db: " + ex.getMessage());
 
-		try {
-			transaction.begin();
-			Query<User> userQuery = persistentManager.newQuery("SELECT FROM " + User.class.getName());//listado de usuarios
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
 
-			int found = 0;
-			for (User u : userQuery.executeList()) {
-				if(u.getUsername().equals(user.getUsername())) {//comparacion del nombre de usuario del usuario con el nombre de usuario dado
-					found++;
-				}
-			}
-
-			if(found > 0){
-				System.err.println("* User already exist.");
-			}else {
-				persistentManager.makePersistent(user);
-				System.out.println("- Inserted into db: " + user.toString());
-			}
-
-			transaction.commit();
-		} catch (Exception ex) {
-
-			System.err.println("* Exception inserting data into db: " + ex.getMessage());
-
-		} finally {
-			if (transaction.isActive()) {
-				transaction.rollback();
-			}
-
-			persistentManager.close();
-		}
-		return user;
-    }
-
-    public User getUserByUsername(String username) {
-    	
-		PersistenceManagerFactory persistentManagerFactory = JDOHelper
-				.getPersistenceManagerFactory("datanucleus.properties");
-		
-		PersistenceManager persistentManager = persistentManagerFactory.getPersistenceManager();
-		Transaction transaction = persistentManager.currentTransaction();
-		
-		User user = null;
-		try {
-			transaction.begin();
-			Query<User> userQuery = persistentManager.newQuery("SELECT FROM " + User.class.getName());//listado de usuarios
-
-			for (User u : userQuery.executeList()) {
-				if(u.getUsername().equals(username)) {//comparacion del nombre de usuario del usuario con el nombre de usuario dado
-					user = u;
-					System.out.println("- Selected from db: " + u.toString());
-				}
-			}
-
-			transaction.commit();
-		} catch (Exception ex) {
-			
-			System.err.println("* Exception taking data from db: " + ex.getMessage());
-			
-		} finally {
-			if (transaction.isActive()) {
-				transaction.rollback();
-			}
-
-			persistentManager.close();
-		}
-
-		if(user == null){
-			System.err.println("* No user found with this username.");
-		}
+            pm.close();
+        }
         return user;
     }
 
-    @Override
+    public User getUserByUsername(String username) {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+
+        User user = null;
+        try {
+            pm.setDetachAllOnCommit(true);
+            tx.begin();
+
+            Query<User> query = pm.newQuery(User.class);
+            query.setFilter("username == '" + username + "'");
+            List<User> result = (List<User>) query.execute();
+            user = result.size() != 1 ? null : result.get(0); // Retrieves and detaches the User
+
+            tx.commit();
+        } catch (Exception ex) {
+
+            System.err.println("* Exception taking data from db: " + ex.getMessage());
+
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+
+            pm.close();
+        }
+        if (user == null) {
+            System.err.println("* No user found with this username.");
+        }
+        return user;
+    }
+
     public User updateUser(User user) {
-    	
-    	PersistenceManagerFactory persistentManagerFactory = JDOHelper
-				.getPersistenceManagerFactory("datanucleus.properties");
-		
-		PersistenceManager persistentManager = persistentManagerFactory.getPersistenceManager();
-		Transaction transaction = persistentManager.currentTransaction();
-		
-		try {
-			transaction.begin();
 
-			Query<User> userQuery = persistentManager.newQuery("SELECT FROM " + User.class.getName());
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
 
-			int found = 0;
-			for (User u : userQuery.executeList()) {
-				if(u.getUsername().equals(user.getUsername())) {//comparacion del nombre de usuario del usuario con el nombre de usuario dado
-					u.setCountry(user.getCountry());
-					u.setMoney(user.getMoney());
-					u.setPassword(user.getPassword());
-					u.setOwnedProducts(user.getOwnedProducts());
-					persistentManager.makePersistent(u);
-					found++;
-					System.out.println("- Updated into db: " + user.toString());
-				}
-			}
+        try {
+            pm.setDetachAllOnCommit(true);
+            tx.begin();
 
-			if(found == 0){
-				System.err.println("* No user found with this username.");
-			}
-			transaction.commit();
-		} catch (Exception ex) {
-			
-			System.err.println("* Exception updating data into db: " + ex.getMessage());
-			
-		} finally {
-			if (transaction.isActive()) {
-				transaction.rollback();
-			}
+            pm.makePersistent(user);
+            tx.commit();
+        } catch (Exception ex) {
 
-			persistentManager.close();
-		}
-    	return user;
+            System.err.println("* Exception updating data into db: " + ex.getMessage());
+
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+
+            pm.close();
+        }
+        return user;
     }
 }
