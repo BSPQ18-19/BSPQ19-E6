@@ -16,8 +16,6 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = 1067819197739525240L;
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
-	private long userID;
 	private String username;
 	private String password;
 	private String country;
@@ -46,14 +44,6 @@ public class User implements Serializable{
 
 	public void setOwnedProducts(Product[] ownedProducts) {
 		this.ownedProducts = ownedProducts;
-	}
-
-	public long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(long userID) {
-		this.userID = userID;
 	}
 
 	public String getUsername() {
