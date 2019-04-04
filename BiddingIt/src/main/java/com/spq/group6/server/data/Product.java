@@ -67,8 +67,4 @@ public class Product implements Serializable{
 				name.equals(product.name) &&
 				description.equals(product.description);
 	}
-
-	public int hashCode() {
-		return Objects.hash(productID, userID, name, description);
-	}
 }

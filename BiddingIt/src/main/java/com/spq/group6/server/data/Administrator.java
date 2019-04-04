@@ -55,8 +55,4 @@ public class Administrator implements Serializable {
 				username.equals(that.username) &&
 				password.equals(that.password);
 	}
-
-	public int hashCode() {
-		return Objects.hash(admindID, username, password);
-	}
 }

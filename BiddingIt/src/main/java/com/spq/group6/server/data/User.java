@@ -12,7 +12,6 @@ import javax.jdo.annotations.PrimaryKey;
 @PersistenceCapable(detachable = "true")
 public class User implements Serializable{
 	private static final long serialVersionUID = 1067819197739525240L;
-	@PrimaryKey
 	private String username;
 	private String password;
 	private String country;
@@ -85,11 +84,5 @@ public class User implements Serializable{
 				password.equals(user.password) &&
 				country.equals(user.country) &&
 				Arrays.equals(ownedProducts, user.ownedProducts);
-	}
-
-	public int hashCode() {
-		int result = Objects.hash(username, password, country, money);
-		result = 31 * result + Arrays.hashCode(ownedProducts);
-		return result;
 	}
 }

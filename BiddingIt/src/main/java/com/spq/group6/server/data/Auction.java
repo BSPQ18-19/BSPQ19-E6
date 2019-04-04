@@ -125,8 +125,4 @@ public class Auction implements Serializable{
 				Objects.equals(password, auction.password) &&
 				state.equals(auction.state);
 	}
-
-	public int hashCode() {
-		return Objects.hash(auctionID, ownerID, productID, dayLimit, startDay, initialPrice, highestBid, password, state);
-	}
 }

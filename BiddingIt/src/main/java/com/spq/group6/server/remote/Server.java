@@ -25,7 +25,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return accountService.signIn(username, password, country);
     }
 
-    public User updateUser(User user) throws RemoteException {
-        return accountService.updateUser(user);
+    public void updateUser(User user) throws RemoteException, UserException {
+        accountService.updateUser(user);
     }
 }

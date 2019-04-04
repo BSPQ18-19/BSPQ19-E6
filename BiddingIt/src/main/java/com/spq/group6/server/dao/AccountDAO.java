@@ -13,9 +13,15 @@ import java.util.List;
 
 public class AccountDAO implements IAccountDAO {
     private static PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+    private PersistenceManager pm;
 
-    public User createUser(User user) {
-        PersistenceManager pm = pmf.getPersistenceManager();
+    public AccountDAO() {
+        pm = pmf.getPersistenceManager();
+        pm.setDetachAllOnCommit(true);
+    }
+
+    public void createUser(User user) {
+
         Transaction tx = pm.currentTransaction();
 
         try {
@@ -31,14 +37,30 @@ public class AccountDAO implements IAccountDAO {
             if (tx.isActive()) {
                 tx.rollback();
             }
-
-            pm.close();
         }
-        return user;
+    }
+
+    public void deleteUser(User user) {
+
+        Transaction tx = pm.currentTransaction();
+
+        try {
+            pm.setDetachAllOnCommit(true);
+            tx.begin();
+            pm.deletePersistent(user); // Saves user in the Database
+            tx.commit();
+        } catch (Exception ex) {
+
+            System.err.println("* Exception inserting data into db: " + ex.getMessage());
+
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
     }
 
     public User getUserByUsername(String username) {
-        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
 
         User user = null;
@@ -60,8 +82,6 @@ public class AccountDAO implements IAccountDAO {
             if (tx.isActive()) {
                 tx.rollback();
             }
-
-            pm.close();
         }
         if (user == null) {
             System.err.println("* No user found with this username.");
@@ -69,9 +89,8 @@ public class AccountDAO implements IAccountDAO {
         return user;
     }
 
-    public User updateUser(User user) {
+    public void updateUser(User user) {
 
-        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
 
         try {
@@ -89,8 +108,8 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
 
-            pm.close();
         }
-        return user;
     }
+
+
 }

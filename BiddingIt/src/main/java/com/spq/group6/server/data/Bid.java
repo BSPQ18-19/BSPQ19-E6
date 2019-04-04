@@ -56,8 +56,4 @@ public class Bid implements Serializable {
 				amount == bid.amount &&
 				userID.equals(bid.userID);
 	}
-
-	public int hashCode() {
-		return Objects.hash(bidID, userID, amount);
-	}
 }
