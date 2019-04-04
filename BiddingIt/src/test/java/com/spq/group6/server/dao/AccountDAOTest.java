@@ -8,8 +8,6 @@ import static org.junit.Assert.*;
 
 public class AccountDAOTest {
 
-
-
     @Test
     public void getUserByUsername()
     {
