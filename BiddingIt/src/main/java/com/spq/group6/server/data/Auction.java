@@ -1,6 +1,7 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -109,7 +110,23 @@ public class Auction implements Serializable{
 	public void setState(String state) {
 		this.state = state;
 	}
-	
-	
-	
+
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Auction auction = (Auction) o;
+		return auctionID == auction.auctionID &&
+				initialPrice == auction.initialPrice &&
+				ownerID.equals(auction.ownerID) &&
+				productID.equals(auction.productID) &&
+				dayLimit.equals(auction.dayLimit) &&
+				startDay.equals(auction.startDay) &&
+				highestBid.equals(auction.highestBid) &&
+				Objects.equals(password, auction.password) &&
+				state.equals(auction.state);
+	}
+
+	public int hashCode() {
+		return Objects.hash(auctionID, ownerID, productID, dayLimit, startDay, initialPrice, highestBid, password, state);
+	}
 }

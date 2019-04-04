@@ -1,6 +1,7 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -46,5 +47,17 @@ public class Bid implements Serializable {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	
+
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Bid bid = (Bid) o;
+		return bidID == bid.bidID &&
+				amount == bid.amount &&
+				userID.equals(bid.userID);
+	}
+
+	public int hashCode() {
+		return Objects.hash(bidID, userID, amount);
+	}
 }

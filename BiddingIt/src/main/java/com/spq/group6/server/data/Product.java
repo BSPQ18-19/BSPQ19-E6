@@ -1,13 +1,13 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-@SuppressWarnings("unused")
 @PersistenceCapable(detachable = "true")
 public class Product implements Serializable{
 	private static final long serialVersionUID = -7363525693084022738L;
@@ -57,5 +57,18 @@ public class Product implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Product product = (Product) o;
+		return productID == product.productID &&
+				userID.equals(product.userID) &&
+				name.equals(product.name) &&
+				description.equals(product.description);
+	}
+
+	public int hashCode() {
+		return Objects.hash(productID, userID, name, description);
+	}
 }

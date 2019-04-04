@@ -1,6 +1,8 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -73,5 +75,21 @@ public class User implements Serializable{
 	public void setMoney(int money) {
 		this.money = money;
 	}
-	
+
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return money == user.money &&
+				username.equals(user.username) &&
+				password.equals(user.password) &&
+				country.equals(user.country) &&
+				Arrays.equals(ownedProducts, user.ownedProducts);
+	}
+
+	public int hashCode() {
+		int result = Objects.hash(username, password, country, money);
+		result = 31 * result + Arrays.hashCode(ownedProducts);
+		return result;
+	}
 }

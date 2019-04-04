@@ -1,6 +1,7 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -45,6 +46,17 @@ public class Administrator implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Administrator that = (Administrator) o;
+		return admindID == that.admindID &&
+				username.equals(that.username) &&
+				password.equals(that.password);
+	}
+
+	public int hashCode() {
+		return Objects.hash(admindID, username, password);
+	}
 }
