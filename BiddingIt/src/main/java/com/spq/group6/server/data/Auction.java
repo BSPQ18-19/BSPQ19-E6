@@ -7,21 +7,20 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class Auction implements Serializable{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2911721842372082865L;
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private long auctionID;
+	@Persistent(defaultFetchGroup="true")
 	private User ownerID;
+	@Persistent(defaultFetchGroup="true")
 	private Product productID;
 	private String dayLimit;
 	private String startDay;
 	private int initialPrice;
+	@Persistent(defaultFetchGroup="true")
 	private Bid highestBid;
 	private String password;
 	private String state;

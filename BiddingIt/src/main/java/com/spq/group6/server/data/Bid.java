@@ -7,16 +7,13 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class Bid implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private long bidID;
+	@Persistent(defaultFetchGroup="true")
 	private User userID;
 	private int amount;
 	

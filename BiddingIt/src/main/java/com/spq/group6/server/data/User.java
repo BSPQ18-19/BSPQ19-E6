@@ -7,19 +7,15 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-@SuppressWarnings("unused")
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class User implements Serializable{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1067819197739525240L;
 	@PrimaryKey
 	private String username;
 	private String password;
 	private String country;
 	private int money;
+	@Persistent(defaultFetchGroup="true")
 	private Product[] ownedProducts;
 
 	public User(String username, String password, String country){

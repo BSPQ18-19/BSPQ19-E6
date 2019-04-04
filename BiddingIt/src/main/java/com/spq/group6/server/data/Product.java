@@ -8,17 +8,13 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @SuppressWarnings("unused")
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class Product implements Serializable{
-	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7363525693084022738L;
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private long productID;
+	@Persistent(defaultFetchGroup="true")
 	private User userID;
 	private String name;
 	private String description;
