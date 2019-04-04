@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.spq.group6.client.remote.ServerLocator;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.client.gui.ClientWindow;
 
 public class ClientController {
@@ -33,9 +34,8 @@ public class ClientController {
             	return true;
             } else
             	System.out.println(info + " incorrect. Server returned null.");
-        } catch (RemoteException re) {
+        } catch (UserException re) {
         	System.out.println(info + ". Exception found in server: " + re);
-        	throw re;
         }
         return false;
      }
@@ -51,9 +51,8 @@ public class ClientController {
             	return true;
             } else
             	System.out.println(info + " incorrect. Server returned null.");
-        } catch (RemoteException re) {
+        } catch (UserException re) {
         	System.out.println(info + ". Exception found in server: " + re);
-        	throw re;
         }
         return false;
      }
