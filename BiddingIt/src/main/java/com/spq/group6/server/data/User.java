@@ -1,14 +1,10 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable(detachable = "true")
 public class User implements Serializable{
