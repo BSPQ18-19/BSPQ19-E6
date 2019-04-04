@@ -2,6 +2,7 @@ package com.spq.group6.server.data;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -16,8 +17,8 @@ public class User implements Serializable{
 	private String password;
 	private String country;
 	private int money;
-	@Persistent(defaultFetchGroup="true")
-	private Product[] ownedProducts;
+	@Persistent(defaultFetchGroup="true", mappedBy = "user")
+	private List<Product> ownedProducts;
 
 	public User(String username, String password, String country){
 		super();
@@ -26,7 +27,7 @@ public class User implements Serializable{
 		this.country = country;
 	}
 
-	public User(String username, String password, String country, int money, Product[] ownedProducts) {
+	public User(String username, String password, String country, int money, List<Product> ownedProducts) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -35,11 +36,11 @@ public class User implements Serializable{
 		this.ownedProducts = ownedProducts;
 	}
 
-	public Product[] getOwnedProducts() {
+	public List<Product> getOwnedProducts() {
 		return ownedProducts;
 	}
 
-	public void setOwnedProducts(Product[] ownedProducts) {
+	public void setOwnedProducts(List<Product> ownedProducts) {
 		this.ownedProducts = ownedProducts;
 	}
 
@@ -83,6 +84,7 @@ public class User implements Serializable{
 				username.equals(user.username) &&
 				password.equals(user.password) &&
 				country.equals(user.country) &&
-				Arrays.equals(ownedProducts, user.ownedProducts);
+				ownedProducts.equals(user.ownedProducts);
 	}
+
 }

@@ -1,7 +1,6 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -15,12 +14,12 @@ public class Bid implements Serializable {
 	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private long bidID;
 	@Persistent(defaultFetchGroup="true")
-	private User userID;
+	private User user;
 	private int amount;
 	
-	public Bid(User userID, int amount) {
+	public Bid(User user, int amount) {
 		super();
-		this.userID = userID;
+		this.user = user;
 		this.amount = amount;
 	}
 
@@ -32,12 +31,12 @@ public class Bid implements Serializable {
 		this.bidID = bidID;
 	}
 
-	public User getUserID() {
-		return userID;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserID(User userID) {
-		this.userID = userID;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getAmount() {
@@ -54,6 +53,6 @@ public class Bid implements Serializable {
 		Bid bid = (Bid) o;
 		return bidID == bid.bidID &&
 				amount == bid.amount &&
-				userID.equals(bid.userID);
+				user.equals(bid.user);
 	}
 }

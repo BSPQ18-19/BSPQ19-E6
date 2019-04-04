@@ -11,9 +11,6 @@ import javax.jdo.annotations.PrimaryKey;
 @PersistenceCapable(detachable = "true")
 public class Administrator implements Serializable {
 	private static final long serialVersionUID = 7105382595085185972L;
-	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
-	private long admindID;
 	private String username;
 	private String password;
 	
@@ -21,14 +18,6 @@ public class Administrator implements Serializable {
 		super();
 		this.username = username;
 		this.password = password;
-	}
-
-	public long getAdmindID() {
-		return admindID;
-	}
-
-	public void setAdmindID(long admindID) {
-		this.admindID = admindID;
 	}
 
 	public String getUsername() {
@@ -51,8 +40,7 @@ public class Administrator implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Administrator that = (Administrator) o;
-		return admindID == that.admindID &&
-				username.equals(that.username) &&
+		return username.equals(that.username) &&
 				password.equals(that.password);
 	}
 }
