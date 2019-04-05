@@ -2,6 +2,7 @@ package com.spq.group6.client.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -76,8 +77,10 @@ public class UserProductsPanel extends JPanel{
 //		products[1] = new Product(user1, "Product2", "desc2");
 //		user1.setOwnedProducts(products);
 
+		ArrayList<Product> userProducts = controller.getCurrentUserProducts();
+		userProducts.add(new Product(controller.getCurrentUser(), "", "")); // to add new products
 		productsTable = new JTable();
-		productsTable.setModel(new ProductJTableModel(controller.getCurrentUser().getOwnedProducts()));	 
+		productsTable.setModel(new ProductJTableModel(userProducts));	 
 		ButtonColumn modifyButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 3);
 		ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 4);
 		

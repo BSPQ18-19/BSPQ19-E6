@@ -2,6 +2,7 @@ package com.spq.group6.client.gui;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 import com.spq.group6.server.data.Product;
@@ -42,9 +43,15 @@ public class ProductJTableModel extends AbstractTableModel {
 		case 2:
 			return product.getDescription();
 		case 3:
-			return "Save";
+			if (rowIndex == products.size() - 1) // last (new) product
+				return "Create";
+			else
+				return "Save";
 		case 4:
-			return "Delete";
+			if (rowIndex == products.size() - 1) // last (new) product
+				return "";
+			else
+				return "Delete";
 		default:
 			break;
 		}
@@ -77,12 +84,17 @@ public class ProductJTableModel extends AbstractTableModel {
 	
 	public void modifyProductAt(int rowIndex, String name, String description) {
 		Product product = products.get(rowIndex);
+		if (rowIndex == products.size() - 1 && product.getName().equals("")) { // last row and new product
+			product.setProductID(productID);
+			products.add(new Product(product.getUserID(), "", "")); // to add new products
+		}
 		product.setName(name);
 		product.setDescription(description);
 	}
 
 	public void removeRow(int rowIndex) {
-		products.remove(rowIndex);
+		if (rowIndex != products.size() - 1) // not last row (new) product
+			products.remove(rowIndex);
 	}
 
 }

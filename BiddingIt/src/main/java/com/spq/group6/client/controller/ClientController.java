@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.spq.group6.client.remote.ServerLocator;
+import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.client.gui.ClientWindow;
@@ -95,7 +96,11 @@ public class ClientController {
     
     public User getCurrentUser() {
 		return currentUser;
-	} 
+	}
+    
+    public ArrayList<Product> getCurrentUserProducts() {
+    	return currentUser.getOwnedProducts();
+    }
 
 	public void exit(){
     	System.exit(0);
