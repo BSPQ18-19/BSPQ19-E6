@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.util.SDG2Util;
 
 public class MainMenuPanel extends JPanel {
@@ -12,69 +13,84 @@ public class MainMenuPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
 	private JLabel infoLabel;
-	private JLabel authorLabel;
-	private JButton logInButton;
-	private JButton signInButton;
+	private JButton marketButton;
+	private JButton userProductsButton;
+	private JButton logOutButton;
 	
-	public MainMenuPanel(int screenWidth, int screenHeight) {
+	private ClientController controller;
+	
+	public MainMenuPanel(int screenWidth, int screenHeight, ClientController controller) {
 		
 		this.setLayout(null);
 		
-		titleLabel = new JLabel("BiddingIt", SwingConstants.CENTER);
-		titleLabel.setSize(screenWidth / 2, screenHeight / 2);
-		titleLabel.setLocation(screenWidth / 2 - titleLabel.getWidth() / 2, screenHeight / 4 - titleLabel.getHeight() / 2);
+		titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
+		titleLabel.setSize(screenWidth / 3, screenHeight / 3);
+		titleLabel.setLocation((int) (screenWidth / 2 - titleLabel.getWidth()*1.25), (int) (screenHeight / 4 - titleLabel.getHeight() / 1.25));
 		SDG2Util.fixJLabelFontSize(titleLabel);	
 				
-		infoLabel = new JLabel("Welcome. Please sign in.", SwingConstants.CENTER);
-		infoLabel.setSize((int) (screenWidth / 3.3), screenHeight / 6);
-		infoLabel.setLocation(screenWidth / 2 - infoLabel.getWidth() / 2, 
-				(int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 7));
+		infoLabel = new JLabel("Welcome to the best bidding system in the world!", SwingConstants.LEFT);
+		infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 6);
+		infoLabel.setLocation((int) titleLabel.getLocation().getX(), 
+				(int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 10));
 		SDG2Util.fixJLabelFontSize(infoLabel);	
 		
-		authorLabel = new JLabel("SPQ Group 6", SwingConstants.CENTER);
-		authorLabel.setSize(screenWidth / 8, screenHeight / 15);
-		authorLabel.setLocation((int) (screenWidth / 1.25 - authorLabel.getWidth() / 2),
-				(int) (screenHeight / 1.25 - authorLabel.getHeight() / 2));
-		SDG2Util.fixJLabelFontSize(authorLabel);	
-		
-		logInButton = new JButton("Log in");		
-		logInButton.setSize(screenWidth / 5, screenHeight / 8);
-		logInButton.setLocation(screenWidth / 2 - logInButton.getWidth() / 2, 
-				(int) (infoLabel.getLocation().getY() + infoLabel.getFont().getSize() + screenHeight / 8));
-		SDG2Util.fixJButtonFontSize(logInButton);
-		logInButton.addActionListener(new ActionListener() {
+		marketButton = new JButton("Market");		
+		marketButton.setSize(screenWidth / 5, screenHeight / 8);
+		marketButton.setLocation((int) (titleLabel.getLocation().getX()), 
+				(int) (infoLabel.getLocation().getY() + infoLabel.getFont().getSize() + screenHeight / 5));
+		SDG2Util.fixJButtonFontSize(marketButton);
+		marketButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN);
+				JOptionPane.showConfirmDialog(MainMenuPanel.this, "This feature is not implemented yet. Sorry.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				// ClientWindow.getClientWindow(null).changeScreen(ScreenType.MARKET);
+
 			}
 		});
 		
-		signInButton = new JButton("Sign in");
-		signInButton.setSize(screenWidth / 5, screenHeight / 8);
-		signInButton.setLocation(screenWidth / 2 - signInButton.getWidth() / 2, 
-				(int) (logInButton.getLocation().getY() + signInButton.getSize().getHeight() + screenHeight / 20));
-		SDG2Util.fixJButtonFontSize(signInButton);
-		signInButton.addActionListener(new ActionListener() {
+		userProductsButton = new JButton("My products");
+		userProductsButton.setSize(screenWidth / 5, screenHeight / 8);
+		userProductsButton.setLocation((int) (titleLabel.getLocation().getX()), 
+				(int) (marketButton.getLocation().getY() + userProductsButton.getSize().getHeight() + screenHeight / 20));
+		SDG2Util.fixJButtonFontSize(userProductsButton);
+		userProductsButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.REGISTER);	
+				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_PRODUCTS);	
+			}
+		});
+		
+		logOutButton = new JButton("Log out");
+		logOutButton.setSize(screenWidth / 8, screenHeight / 15);
+		logOutButton.setLocation((int) (screenWidth / 2 + 2*logOutButton.getWidth()), 
+				(int) (screenHeight / 10));
+		SDG2Util.fixJButtonFontSize(logOutButton);
+		logOutButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (controller.logOut())
+					ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL);
+				else
+					JOptionPane.showConfirmDialog(MainMenuPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+
 			}
 		});
 		
 		this.add(titleLabel);
 		this.add(infoLabel);
-		this.add(authorLabel);
-		this.add(logInButton);
-		this.add(signInButton);
+		this.add(marketButton);
+		this.add(userProductsButton);
+		this.add(logOutButton);
 	}
 	
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new MainMenuPanel(800, 600));
+		testFrame.add(new MainMenuPanel(800, 600, null));
 		testFrame.setVisible(true);
 	}
 

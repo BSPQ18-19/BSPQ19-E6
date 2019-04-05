@@ -62,7 +62,7 @@ public class LogInSuccesfulPanel extends JPanel {
 					}
 					
 					if (repetitions == 5)
-						ClientWindow.getClientWindow(null).changeScreen(ScreenType.BIDS);
+						ClientWindow.getClientWindow(null).changeScreen(ScreenType.MAIN_MENU);
 					repetitions++;
 				}
 			}

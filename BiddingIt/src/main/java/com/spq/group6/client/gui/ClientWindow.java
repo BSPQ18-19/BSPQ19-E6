@@ -50,8 +50,15 @@ public class ClientWindow extends JFrame {
 		case LOG_IN_SUCCESFUL:
 			mainPanel = new LogInSuccesfulPanel(screenWidth, screenHeight, data[0]);
 			break;
-		case BIDS:
+		case MAIN_MENU:
+			mainPanel = new MainMenuPanel(screenWidth, screenHeight, controller);
+			break;	
+		case MARKET:
+			// TODO
 			mainPanel = new InitialPanel(screenWidth, screenHeight);
+			break;
+		case USER_PRODUCTS:
+			mainPanel = new UserProductsPanel(screenWidth, screenHeight, controller);
 			break;
 		default:
 			break;
