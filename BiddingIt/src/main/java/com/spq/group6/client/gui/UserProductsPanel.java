@@ -1,13 +1,14 @@
 package com.spq.group6.client.gui;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.DefaultTableModel;
 
 import com.spq.group6.client.controller.ClientController;
+import com.spq.group6.server.data.Product;
+import com.spq.group6.server.data.User;
 import com.spq.group6.util.SDG2Util;
 
 public class UserProductsPanel extends JPanel{
@@ -15,6 +16,7 @@ public class UserProductsPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
 	private JLabel infoLabel;
+	private JScrollPane productsTableScrollPane;
 	private JTable productsTable;
 	private JButton backButton;
 	private JButton logOutButton;
@@ -67,14 +69,27 @@ public class UserProductsPanel extends JPanel{
 			}
 		});
 		
-		productsTable = new JTable(new String[][] {}, new String[] {"ID", "Name", "Description", "", ""});
-		productsTable.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);
-		productsTable.setLocation((int) (titleLabel.getLocation().getX()),
+		
+//		User user1 = new User("Alejandro", "1234", "ES");
+//		Product[] products = new Product[2];
+//		products[0] = new Product(user1, "Product1", "desc1");
+//		products[1] = new Product(user1, "Product2", "desc2");
+//		user1.setOwnedProducts(products);
+
+		productsTable = new JTable();
+		productsTable.setModel(new ProductJTableModel(controller.getCurrentUser().getOwnedProducts()));	 
+		ButtonColumn modifyButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 3);
+		ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 4);
+		
+		productsTableScrollPane = new JScrollPane(productsTable);
+		productsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);
+		productsTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
 				(int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
+
 		
 		this.add(titleLabel);
 		this.add(infoLabel);
-		this.add(productsTable);
+		this.add(productsTableScrollPane);
 		this.add(backButton);
 		this.add(logOutButton);
 	}
