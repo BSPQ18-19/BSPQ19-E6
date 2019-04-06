@@ -4,6 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.spq.group6.client.controller.ClientController;
+import com.spq.group6.client.gui.panels.*;
+import com.spq.group6.client.gui.utils.ScreenType;
 
 public class ClientWindow extends JFrame {
 

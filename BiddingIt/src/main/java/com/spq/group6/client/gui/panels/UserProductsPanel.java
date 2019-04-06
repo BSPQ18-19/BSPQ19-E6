@@ -1,16 +1,18 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 import com.spq.group6.client.controller.ClientController;
+import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.elements.ButtonColumn;
+import com.spq.group6.client.gui.elements.ProductJTableModel;
+import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.actions.ActionDelete;
 import com.spq.group6.server.data.Product;
-import com.spq.group6.server.data.User;
 import com.spq.group6.util.SDG2Util;
 
 public class UserProductsPanel extends JPanel{
@@ -80,7 +82,7 @@ public class UserProductsPanel extends JPanel{
 
 		List<Product> userProducts = controller.getCurrentUserProducts();
 		productsTable = new JTable();
-		productsTable.setModel(new ProductJTableModel(controller, userProducts));	 
+		productsTable.setModel(new ProductJTableModel(controller, userProducts));
 		@SuppressWarnings("unused")
 		ButtonColumn modifyButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 2);
 		@SuppressWarnings("unused")

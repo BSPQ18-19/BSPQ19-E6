@@ -1,4 +1,4 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.elements;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,9 @@
 package com.spq.group6.client.controller;
 
 import java.rmi.RemoteException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.spq.group6.client.remote.ServerLocator;
+import com.spq.group6.client.remote.ServiceLocator;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
@@ -13,15 +11,12 @@ import com.spq.group6.client.gui.ClientWindow;
 
 public class ClientController {
 
-	private ServerLocator serviceLocator;
+	private ServiceLocator serviceLocator;
 	private User currentUser;
 	
-    public ClientController(String args[]) throws RemoteException {
+    public ClientController() throws RemoteException {
 		super();
-		for (String s : args)
-			System.out.println(s);
-		serviceLocator = new ServerLocator();
-		serviceLocator.setService(args);
+		serviceLocator = ServiceLocator.getServiceLocator();
 		ClientWindow.getClientWindow(this).setVisible(true);
 	}
     

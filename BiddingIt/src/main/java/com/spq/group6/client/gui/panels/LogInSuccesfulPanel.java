@@ -1,7 +1,9 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.panels;
 
 import javax.swing.*;
 
+import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.util.SDG2Util;
 
 public class LogInSuccesfulPanel extends JPanel {

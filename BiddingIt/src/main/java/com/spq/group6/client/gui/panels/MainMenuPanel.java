@@ -1,4 +1,4 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import com.spq.group6.client.controller.ClientController;
+import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.util.SDG2Util;
 
 public class MainMenuPanel extends JPanel {
@@ -58,7 +60,7 @@ public class MainMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_PRODUCTS);	
+				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_PRODUCTS);
 			}
 		});
 		

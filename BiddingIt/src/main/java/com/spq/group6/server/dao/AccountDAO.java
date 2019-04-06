@@ -84,9 +84,6 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
-        if (user == null) {
-            System.err.println("* No user found with this username.");
-        }
         return user;
     }
 

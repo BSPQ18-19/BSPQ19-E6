@@ -1,4 +1,4 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.panels;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -8,6 +8,8 @@ import java.rmi.RemoteException;
 import javax.swing.*;
 
 import com.spq.group6.client.controller.ClientController;
+import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.util.SDG2Util;
 
 
