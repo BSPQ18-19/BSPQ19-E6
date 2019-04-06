@@ -82,9 +82,9 @@ public class UserProductsPanel extends JPanel{
 		productsTable = new JTable();
 		productsTable.setModel(new ProductJTableModel(controller, userProducts));	 
 		@SuppressWarnings("unused")
-		ButtonColumn modifyButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 3);
+		ButtonColumn modifyButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 2);
 		@SuppressWarnings("unused")
-		ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 4);
+		ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 3);
 		
 		productsTableScrollPane = new JScrollPane(productsTable);
 		productsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);
