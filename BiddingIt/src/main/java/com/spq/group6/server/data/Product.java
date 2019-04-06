@@ -8,25 +8,16 @@ import javax.jdo.annotations.Persistent;
 @PersistenceCapable(detachable = "true")
 public class Product implements Serializable{
 	private static final long serialVersionUID = -7363525693084022738L;
-	@Persistent(defaultFetchGroup="true")
-	private User user;
 	private String name;
 	private String description;
 	
-	public Product(User user, String name, String description){
+	public Product(String name, String description){
 		super();
-		this.user = user;
 		this.name = name;
 		this.description = description;
 	}
 
-	public User getUser() {
-		return user;
-	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
 
 	public String getName() {
 		return name;
@@ -48,8 +39,7 @@ public class Product implements Serializable{
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Product product = (Product) o;
-		return user.equals(product.user) &&
-				name.equals(product.name) &&
+		return name.equals(product.name) &&
 				description.equals(product.description);
 	}
 }

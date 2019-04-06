@@ -6,6 +6,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 
 import java.util.List;
@@ -26,7 +27,6 @@ public class AccountDAO implements IAccountDAO {
         Transaction tx = pm.currentTransaction();
 
         try {
-            pm.setDetachAllOnCommit(true);
             tx.begin();
             pm.makePersistent(user); // Saves user in the Database
             tx.commit();
@@ -46,8 +46,8 @@ public class AccountDAO implements IAccountDAO {
         Transaction tx = pm.currentTransaction();
 
         try {
-            pm.setDetachAllOnCommit(true);
             tx.begin();
+            for (Product product: user.getOwnedProducts()) pm.deletePersistent(product);
             pm.deletePersistent(user); // Saves user in the Database
             tx.commit();
         } catch (Exception ex) {
@@ -95,7 +95,6 @@ public class AccountDAO implements IAccountDAO {
         Transaction tx = pm.currentTransaction();
 
         try {
-            pm.setDetachAllOnCommit(true);
             tx.begin();
 
             pm.makePersistent(user);
@@ -112,5 +111,26 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
+
+    public void updateProduct(Product product) {
+        Transaction tx = pm.currentTransaction();
+
+        try {
+            pm.setDetachAllOnCommit(true);
+            tx.begin();
+
+            pm.makePersistent(product);
+            tx.commit();
+        } catch (Exception ex) {
+
+            System.err.println("* Exception updating data into db: " + ex.getMessage());
+
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+
+        }
+    }
 
 }

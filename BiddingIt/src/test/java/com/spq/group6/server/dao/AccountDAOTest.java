@@ -44,10 +44,11 @@ public class AccountDAOTest {
     public void createProductUpdatingUser(){
         // Setup
         User testUser = new User("charles", "test_pass", "uk");
-        Product testProduct = new Product(testUser, "cd", "Mikel Urdangarin cd");
+        Product testProduct = new Product("cd", "Mikel Urdangarin cd");
         dao.createUser(testUser);
         // Test
         testUser.getOwnedProducts().add(testProduct);
+        //dao.updateProduct(testProduct);
         dao.updateUser(testUser);
         User persistedUser = dao.getUserByUsername(testUser.getUsername());
         assertEquals(1, persistedUser.getOwnedProducts().size());
@@ -59,7 +60,7 @@ public class AccountDAOTest {
     public void deleteProductUpdatingUser(){
         // Setup
         User testUser = new User("charles", "test_pass", "uk");
-        Product testProduct = new Product(testUser, "cd", "Mikel Urdangarin cd");
+        Product testProduct = new Product("cd", "Mikel Urdangarin cd");
         testUser.getOwnedProducts().add(testProduct);
         dao.createUser(testUser);
         // Test
@@ -71,5 +72,30 @@ public class AccountDAOTest {
         dao.deleteUser(testUser);
     }
 
-    
+    @Test
+    public void updateExchange(){
+        // Setup
+        User testUser1 = new User("charles", "test_pass", "uk");
+        User testUser2 = new User("xavier", "test_pass", "uk");
+        Product testProduct = new Product("cd", "Mikel Urdangarin cd");
+        testUser1.getOwnedProducts().add(testProduct);
+        dao.createUser(testUser1);
+        dao.createUser(testUser2);
+        // Test
+        User persistedUser;
+        testUser1.getOwnedProducts().clear();
+        testUser2.getOwnedProducts().add(testProduct);
+        dao.updateUser(testUser2);
+        dao.updateUser(testUser1);
+        persistedUser = dao.getUserByUsername(testUser1.getUsername());
+        assertEquals(0, persistedUser.getOwnedProducts().size());
+
+        persistedUser = dao.getUserByUsername(testUser2.getUsername());
+        assertEquals(1, persistedUser.getOwnedProducts().size());
+        assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
+        // Clean
+        dao.deleteUser(testUser1);
+        dao.deleteUser(testUser2);
+    }
+
 }

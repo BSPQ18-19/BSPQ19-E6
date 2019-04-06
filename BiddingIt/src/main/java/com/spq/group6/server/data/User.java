@@ -3,6 +3,7 @@ package com.spq.group6.server.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -14,7 +15,7 @@ public class User implements Serializable{
 	private String password;
 	private String country;
 	private int money;
-	@Persistent(defaultFetchGroup="true", mappedBy = "user", dependentElement = "true")
+	@Persistent(defaultFetchGroup="true")
 	private List<Product> ownedProducts;
 
 	public User(String username, String password, String country){
@@ -81,7 +82,7 @@ public class User implements Serializable{
 		return money == user.money &&
 				username.equals(user.username) &&
 				password.equals(user.password) &&
-				country.equals(user.country);
+				country.equals(user.country) &&
+				ownedProducts.equals(user.ownedProducts);
 	}
-
 }
