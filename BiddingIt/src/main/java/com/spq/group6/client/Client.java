@@ -18,6 +18,7 @@ public class Client
 			ClientController controller = new ClientController();
 			ServiceLocator serviceLocator = ServiceLocator.getServiceLocator();
 			serviceLocator.setService(args[0], args[1], args[2]);
+
 			ClientWindow.getClientWindow(controller).setVisible(true);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

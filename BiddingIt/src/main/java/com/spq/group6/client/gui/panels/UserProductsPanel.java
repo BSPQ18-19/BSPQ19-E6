@@ -13,7 +13,7 @@ import com.spq.group6.client.gui.elements.ProductJTableModel;
 import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.client.gui.actions.ActionDelete;
 import com.spq.group6.server.data.Product;
-import com.spq.group6.util.SDG2Util;
+import com.spq.group6.client.gui.utils.SDG2Util;
 
 public class UserProductsPanel extends JPanel{
 

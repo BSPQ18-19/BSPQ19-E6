@@ -10,7 +10,7 @@ import javax.swing.*;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.util.SDG2Util;
+import com.spq.group6.client.gui.utils.SDG2Util;
 
 
 public class LogInPanel extends JPanel {
