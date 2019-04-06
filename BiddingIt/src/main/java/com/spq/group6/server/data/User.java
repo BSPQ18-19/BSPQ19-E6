@@ -1,37 +1,32 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
-@SuppressWarnings("unused")
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class User implements Serializable{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1067819197739525240L;
-	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
-	private long userID;
 	private String username;
 	private String password;
 	private String country;
 	private int money;
-	private Product[] ownedProducts;
+	@Persistent(defaultFetchGroup="true")
+	private List<Product> ownedProducts;
 
 	public User(String username, String password, String country){
 		super();
 		this.username = username;
 		this.password = password;
 		this.country = country;
+		this.ownedProducts = new ArrayList<Product>();
 	}
 
-	public User(String username, String password, String country, int money, Product[] ownedProducts) {
+	public User(String username, String password, String country, int money, List<Product> ownedProducts) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -40,20 +35,12 @@ public class User implements Serializable{
 		this.ownedProducts = ownedProducts;
 	}
 
-	public Product[] getOwnedProducts() {
+	public List<Product> getOwnedProducts() {
 		return ownedProducts;
 	}
 
-	public void setOwnedProducts(Product[] ownedProducts) {
+	public void setOwnedProducts(List<Product> ownedProducts) {
 		this.ownedProducts = ownedProducts;
-	}
-
-	public long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(long userID) {
-		this.userID = userID;
 	}
 
 	public String getUsername() {
@@ -87,5 +74,15 @@ public class User implements Serializable{
 	public void setMoney(int money) {
 		this.money = money;
 	}
-	
+
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return money == user.money &&
+				username.equals(user.username) &&
+				password.equals(user.password) &&
+				country.equals(user.country) &&
+				ownedProducts.equals(user.ownedProducts);
+	}
 }

@@ -1,36 +1,31 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class Auction implements Serializable{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2911721842372082865L;
-	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
-	private long auctionID;
-	private User ownerID;
-	private Product productID;
+	@Persistent(defaultFetchGroup="true")
+	private User owner;
+	@Persistent(defaultFetchGroup="true")
+	private Product product;
 	private String dayLimit;
 	private String startDay;
 	private int initialPrice;
+	@Persistent(defaultFetchGroup="true")
 	private Bid highestBid;
 	private String password;
 	private String state;
 	
-	public Auction(User ownerID, Product productID, String dayLimit, String startDay, int initialPrice
+	public Auction(User owner, Product product, String dayLimit, String startDay, int initialPrice
 			, Bid highestBid, String password, String state) {
 		super();
-		this.ownerID = ownerID;
-		this.productID = productID;
+		this.owner = owner;
+		this.product = product;
 		this.dayLimit = dayLimit;
 		this.startDay = startDay;
 		this.initialPrice = initialPrice;
@@ -39,28 +34,20 @@ public class Auction implements Serializable{
 		this.state = state;
 	}
 
-	public long getAuctionID() {
-		return auctionID;
+	public User getOwner() {
+		return owner;
 	}
 
-	public void setAuctionID(long auctionID) {
-		this.auctionID = auctionID;
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
-	public User getOwnerID() {
-		return ownerID;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setOwnerID(User ownerID) {
-		this.ownerID = ownerID;
-	}
-
-	public Product getProductID() {
-		return productID;
-	}
-
-	public void setProductID(Product productID) {
-		this.productID = productID;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public String getDayLimit() {
@@ -110,7 +97,18 @@ public class Auction implements Serializable{
 	public void setState(String state) {
 		this.state = state;
 	}
-	
-	
-	
+
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Auction auction = (Auction) o;
+		return initialPrice == auction.initialPrice &&
+				owner.equals(auction.owner) &&
+				product.equals(auction.product) &&
+				dayLimit.equals(auction.dayLimit) &&
+				startDay.equals(auction.startDay) &&
+				highestBid.equals(auction.highestBid) &&
+				Objects.equals(password, auction.password) &&
+				state.equals(auction.state);
+	}
 }

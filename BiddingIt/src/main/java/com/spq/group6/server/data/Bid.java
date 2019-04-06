@@ -7,22 +7,19 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class Bid implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private long bidID;
-	private User userID;
+	@Persistent(defaultFetchGroup="true")
+	private User user;
 	private int amount;
 	
-	public Bid(User userID, int amount) {
+	public Bid(User user, int amount) {
 		super();
-		this.userID = userID;
+		this.user = user;
 		this.amount = amount;
 	}
 
@@ -34,12 +31,12 @@ public class Bid implements Serializable {
 		this.bidID = bidID;
 	}
 
-	public User getUserID() {
-		return userID;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserID(User userID) {
-		this.userID = userID;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getAmount() {
@@ -49,5 +46,13 @@ public class Bid implements Serializable {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	
+
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Bid bid = (Bid) o;
+		return bidID == bid.bidID &&
+				amount == bid.amount &&
+				user.equals(bid.user);
+	}
 }

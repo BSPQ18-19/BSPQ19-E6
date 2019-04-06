@@ -2,21 +2,11 @@ package com.spq.group6.server.data;
 
 import java.io.Serializable;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class Administrator implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7105382595085185972L;
-	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
-	private long admindID;
 	private String username;
 	private String password;
 	
@@ -24,14 +14,6 @@ public class Administrator implements Serializable {
 		super();
 		this.username = username;
 		this.password = password;
-	}
-
-	public long getAdmindID() {
-		return admindID;
-	}
-
-	public void setAdmindID(long admindID) {
-		this.admindID = admindID;
 	}
 
 	public String getUsername() {
@@ -49,6 +31,12 @@ public class Administrator implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Administrator that = (Administrator) o;
+		return username.equals(that.username) &&
+				password.equals(that.password);
+	}
 }
