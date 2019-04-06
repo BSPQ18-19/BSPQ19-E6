@@ -77,10 +77,13 @@ public class LogInPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					controller.logIn(usernameTF.getText(), passwordTF.getText());
-					ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL);
+					if (controller.logIn(usernameTF.getText(), passwordTF.getText()))
+						ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL);
+					else
+						JOptionPane.showConfirmDialog(LogInPanel.this, "Error logging in.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+
 				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
+
 					e1.printStackTrace();
 				}
 			}

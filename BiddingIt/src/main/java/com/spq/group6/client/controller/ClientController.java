@@ -3,6 +3,7 @@ package com.spq.group6.client.controller;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.spq.group6.client.remote.ServerLocator;
 import com.spq.group6.server.data.Product;
@@ -98,8 +99,46 @@ public class ClientController {
 		return currentUser;
 	}
     
-    public ArrayList<Product> getCurrentUserProducts() {
+    public List<Product> getCurrentUserProducts() {
     	return currentUser.getOwnedProducts();
+    }
+    
+    public boolean createProduct(Product product, String name, String description) {
+		try {
+			product.setName(name);
+			product.setDescription(description);
+			serviceLocator.getService().updateUser(currentUser);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (UserException e) {
+			e.printStackTrace();
+		}
+    	return true;
+    }
+    
+    public boolean modifyProduct(Product product, String name, String description) {
+    	try {
+			product.setName(name);
+			product.setDescription(description);
+			serviceLocator.getService().updateUser(currentUser);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (UserException e) {
+			e.printStackTrace();
+		}
+    	return true;
+    }
+    
+    public boolean deleteProduct(Product product) {
+    	try {
+    		getCurrentUserProducts().remove(product);
+			serviceLocator.getService().updateUser(currentUser);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (UserException e) {
+			e.printStackTrace();
+		}
+    	return true;
     }
 
 	public void exit(){
