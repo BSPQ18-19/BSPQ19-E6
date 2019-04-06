@@ -73,6 +73,23 @@ public class AccountDAOTest {
     }
 
     @Test
+    public void updateProductUpdatingUser(){
+        // Setup
+        String prodOldName = "cd", prodNewName = "dvd";
+        User testUser = new User("charles", "test_pass", "uk");
+        Product testProduct = new Product(prodOldName, "Mikel Urdangarin cd");
+        testUser.getOwnedProducts().add(testProduct);
+        dao.createUser(testUser);
+        // Test
+        testProduct.setName(prodNewName);
+        dao.updateUser(testUser);
+        User persistedUser = dao.getUserByUsername(testUser.getUsername());
+        assertEquals(prodNewName, persistedUser.getOwnedProducts().get(0).getName());
+        // Clean
+        dao.deleteUser(testUser);
+    }
+
+    @Test
     public void updateExchange(){
         // Setup
         User testUser1 = new User("charles", "test_pass", "uk");
