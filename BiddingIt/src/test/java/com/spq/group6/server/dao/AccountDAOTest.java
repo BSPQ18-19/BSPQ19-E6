@@ -1,5 +1,6 @@
 package com.spq.group6.server.dao;
 
+import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import org.junit.Test;
 
@@ -38,4 +39,37 @@ public class AccountDAOTest {
         // Clean
         dao.deleteUser(testUser);
     }
+
+    @Test
+    public void createProductUpdatingUser(){
+        // Setup
+        User testUser = new User("charles", "test_pass", "uk");
+        Product testProduct = new Product(testUser, "cd", "Mikel Urdangarin cd");
+        dao.createUser(testUser);
+        // Test
+        testUser.getOwnedProducts().add(testProduct);
+        dao.updateUser(testUser);
+        User persistedUser = dao.getUserByUsername(testUser.getUsername());
+        assertEquals(1, persistedUser.getOwnedProducts().size());
+        assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
+        // Clean
+        dao.deleteUser(testUser);
+    }
+    @Test
+    public void deleteProductUpdatingUser(){
+        // Setup
+        User testUser = new User("charles", "test_pass", "uk");
+        Product testProduct = new Product(testUser, "cd", "Mikel Urdangarin cd");
+        testUser.getOwnedProducts().add(testProduct);
+        dao.createUser(testUser);
+        // Test
+        testUser.getOwnedProducts().clear();
+        dao.updateUser(testUser);
+        User persistedUser = dao.getUserByUsername(testUser.getUsername());
+        assertEquals(0, persistedUser.getOwnedProducts().size());
+        // Clean
+        dao.deleteUser(testUser);
+    }
+
+    
 }

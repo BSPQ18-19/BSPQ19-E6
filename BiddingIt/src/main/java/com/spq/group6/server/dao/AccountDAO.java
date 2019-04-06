@@ -18,6 +18,7 @@ public class AccountDAO implements IAccountDAO {
     public AccountDAO() {
         pm = pmf.getPersistenceManager();
         pm.setDetachAllOnCommit(true);
+        pm.getFetchPlan().setMaxFetchDepth(3);
     }
 
     public void createUser(User user) {
