@@ -80,7 +80,7 @@ public class LogInPanel extends JPanel {
 				
 				try {
 					if (controller.logIn(usernameTF.getText(), passwordTF.getText()))
-						ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL);
+						ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
 					else
 						JOptionPane.showConfirmDialog(LogInPanel.this, "Error logging in.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 

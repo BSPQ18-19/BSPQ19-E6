@@ -18,14 +18,17 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     public User logIn(String username, String password) throws RemoteException, UserException {
+        System.out.println("Received Log in petition");
         return accountService.logIn(username, password);
     }
 
     public User signIn(String username, String password, String country) throws RemoteException, UserException{
+        System.out.println("Received Sign in petition");
         return accountService.signIn(username, password, country);
     }
 
     public void updateUser(User user) throws RemoteException, UserException {
+        System.out.println("Received update petition");
         accountService.updateUser(user);
     }
 }
