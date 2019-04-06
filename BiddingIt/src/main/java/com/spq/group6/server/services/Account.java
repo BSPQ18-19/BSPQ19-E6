@@ -16,6 +16,7 @@ public class Account implements IAccount {
         User user = accountDAO.getUserByUsername(username);
         if(user == null) throw new UserException("User does not exist");
         if (! password.equals(user.getPassword())) throw new UserException("Invalid username or password");
+        System.out.println("User " + username + " has logged in.");
         return user;
     }
 
@@ -23,12 +24,15 @@ public class Account implements IAccount {
         User user = new User(username, password, country);
         checkDuplicatedUser(user);
         accountDAO.createUser(user);
+        if (user != null) System.out.println("User '" + username + "' has signed in.");
         return user;
     }
 
     public void updateUser(User user) throws UserException {
         checkDuplicatedUser(user);
         accountDAO.updateUser(user);
+        System.out.println("User '" + user.getUsername() + "' updated.");
+
     }
 
     private void checkDuplicatedUser(User user) throws UserException{
