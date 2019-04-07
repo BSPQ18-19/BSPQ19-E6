@@ -1,5 +1,6 @@
 package com.spq.group6.server.dao;
 
+import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 
 public interface IAccountDAO {
@@ -7,4 +8,5 @@ public interface IAccountDAO {
     public void deleteUser(User user);
     public User getUserByUsername(String username);
     public void updateUser(User user);
+    public void deleteProduct(Product product);
 }

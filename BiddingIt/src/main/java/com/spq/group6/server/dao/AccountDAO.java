@@ -130,4 +130,22 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
+    public void deleteProduct(Product product) {
+        Transaction tx = pm.currentTransaction();
+
+        try {
+            tx.begin();
+            pm.deletePersistent(product);
+            tx.commit();
+        } catch (Exception ex) {
+
+            System.err.println("* Exception inserting data into db: " + ex.getMessage());
+
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+    }
+
 }

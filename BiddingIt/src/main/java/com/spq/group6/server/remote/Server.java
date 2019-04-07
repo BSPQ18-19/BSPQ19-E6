@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 
+import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.Account;
@@ -31,4 +32,21 @@ public class Server extends UnicastRemoteObject implements IServer {
         System.out.println("Received update petition");
         accountService.updateUser(user);
     }
+
+    public void createProduct(User user, Product product) throws RemoteException, UserException {
+        System.out.println("Received product create petition");
+        user.getOwnedProducts().add(product);
+        accountService.updateUser(user);
+    }
+
+    public void updateProduct(User user, Product product) throws RemoteException, UserException {
+        System.out.println("Received product update petition");
+        accountService.updateUser(user);
+    }
+
+    public void deleteProduct(User user, Product product) throws RemoteException{
+        System.out.println("Received product delete petition");
+        accountService.deleteProduct(user, product);
+    }
+
 }
