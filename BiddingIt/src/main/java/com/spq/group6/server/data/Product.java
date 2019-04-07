@@ -17,7 +17,11 @@ public class Product implements Serializable{
 		this.description = description;
 	}
 
-
+	public Product(Product p){
+		super();
+		this.name = p.getName();
+		this.description = p.getDescription();
+	}
 
 	public String getName() {
 		return name;
