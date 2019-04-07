@@ -3,8 +3,8 @@ package com.spq.group6.client.gui.panels;
 import javax.swing.*;
 
 import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.util.SDG2Util;
 
 public class LogInSuccesfulPanel extends JPanel {
 
@@ -28,7 +28,7 @@ public class LogInSuccesfulPanel extends JPanel {
 		infoLabel1 = new JLabel("You have logged in succesfully.", SwingConstants.CENTER);
 		infoLabel1.setSize((int) (screenWidth / 1.5), screenHeight / 7);
 		infoLabel1.setLocation(screenWidth / 2 - infoLabel1.getWidth() / 2, (int) (screenHeight / 2 - infoLabel1.getHeight() / 2));
-		SDG2Util.fixJLabelFontSize(infoLabel1);	
+		SDG2Util.fixJLabelFontSize(infoLabel1);
 		
 		infoLabel2 = new JLabel("Please wait while we set everything up", SwingConstants.CENTER);
 		infoLabel2.setSize((int) (screenWidth / 1.5), screenHeight / 7);
