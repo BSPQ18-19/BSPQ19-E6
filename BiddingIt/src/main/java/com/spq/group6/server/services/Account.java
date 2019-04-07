@@ -52,8 +52,8 @@ public class Account implements IAccount {
 
     public void deleteProduct(User user, Product product){
         user.getOwnedProducts().remove(product);
-        accountDAO.deleteProduct(product);
         accountDAO.updateUser(user);
+        accountDAO.deleteProduct(product);
 
     }
 

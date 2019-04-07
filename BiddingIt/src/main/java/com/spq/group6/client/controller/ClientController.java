@@ -99,17 +99,31 @@ public class ClientController {
     }
     
     public boolean createProduct(String name, String description) {
-		try {
-			currentUser.getOwnedProducts().add(serviceLocator.getService().createProduct(currentUser, name, description));
-		} catch (RemoteException e) {
+    	String info = "Create the product " + name + " with description " + description;
+        try {
+        	System.out.println("Trying to " + info + ".");
+        	Product newProduct = serviceLocator.getService().createProduct(currentUser, name, description);
+			if (newProduct != null) {
+				currentUser.getOwnedProducts().add(newProduct);
+				System.out.println(info + " correct.");
+			}
+			else
+            	System.out.println(info + " incorrect. Server returned null.");
+        } catch (RemoteException e) {
 			e.printStackTrace();
 		}
     	return true;
     }
     
     public boolean updateProduct(Product product, String name, String description) {
-    	try {
+    	String info = "Update the product " + name + " with description " + description;
+        try {
+        	System.out.println("Trying to " + info + ".");
 			product = serviceLocator.getService().updateProduct(currentUser, product, name, description);
+			if (product != null)
+				System.out.println(info + " correct.");
+			else
+            	System.out.println(info + " incorrect. Server returned null.");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -117,8 +131,11 @@ public class ClientController {
     }
     
     public boolean deleteProduct(Product product) {
-    	try {
+    	String info = "Delete the product " + product.getName() + " with description " + product.getDescription();
+        try {
+        	System.out.println("Trying to " + info + ".");
 			serviceLocator.getService().deleteProduct(currentUser, product);
+			System.out.println(info + " correct.");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

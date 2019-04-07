@@ -2,7 +2,6 @@ package com.spq.group6.client.gui.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -26,6 +25,7 @@ public class UserProductsPanel extends JPanel{
 	private JButton backButton;
 	private JButton logOutButton;
 	
+	@SuppressWarnings("unused")
 	private ClientController controller;
 	
 	public UserProductsPanel(int screenWidth, int screenHeight, ClientController controller) {

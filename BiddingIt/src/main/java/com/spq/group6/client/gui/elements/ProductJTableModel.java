@@ -1,10 +1,6 @@
 package com.spq.group6.client.gui.elements;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.spq.group6.client.controller.ClientController;
@@ -24,24 +20,20 @@ public class ProductJTableModel extends DefaultTableModel {
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return columnIndex == 0 || columnIndex== 1 ? true : false;
+		return columnIndex == 0 || columnIndex == 1 || columnIndex == 2 || columnIndex == 3 ? true : false;
 	}
 	
 	public void updateProductAt(int rowIndex, String name, String description) {
-		System.out.println("a");
-		Product product = controller.getCurrentUserProducts().get(rowIndex);
 		if (rowIndex == this.getRowCount() - 1) { // last row (new) product (create product)
-			System.out.println("b");
 			if (controller.createProduct(name, description)) {
-				System.out.println("c");
+				this.setValueAt("Save", rowIndex, 2);
+				this.setValueAt("Delete", rowIndex, 3);
 				this.addRow(new String[] {"", "", "Create", ""}); // add new row for a new product
 				JOptionPane.showConfirmDialog(null, "Product created correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			} else
 				JOptionPane.showConfirmDialog(null, "Error creating a product.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		} else { // (update product)
-			System.out.println("d");
-			if (controller.updateProduct(product, name, description)) {
-				System.out.println("e");
+			if (controller.updateProduct(controller.getCurrentUserProducts().get(rowIndex), name, description)) {
 				JOptionPane.showConfirmDialog(null, "Product modified correctly", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			} else
 				JOptionPane.showConfirmDialog(null, "Error creating a product.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
