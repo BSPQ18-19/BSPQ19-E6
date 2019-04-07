@@ -35,12 +35,14 @@ public class Server extends UnicastRemoteObject implements IServer {
         accountService.updateUser(user);
     }
 
-    public void createProduct(User user, Product product) throws RemoteException{
+    public Product createProduct(User user, String name, String description) throws RemoteException{
         System.out.println("Received product create petition");
-        accountService.createProduct(user, product);
+        Product newProduct = new Product(name, description);
+        accountService.createProduct(user, newProduct);
+        return newProduct;
     }
 
-    public void updateProduct(User user, Product product) throws RemoteException{
+    public Product updateProduct(User user, String name, String description) throws RemoteException{
         System.out.println("Received product update petition");
         accountService.updateProduct(user, product);
         System.out.println("User '" + user.getUsername() + "' updated.");

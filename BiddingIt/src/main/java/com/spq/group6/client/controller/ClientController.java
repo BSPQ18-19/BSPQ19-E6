@@ -102,7 +102,7 @@ public class ClientController {
 		try {
 			product.setName(name);
 			product.setDescription(description);
-			serviceLocator.getService().updateUser(currentUser);
+			serviceLocator.getService().createProduct(currentUser);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (UserException e) {

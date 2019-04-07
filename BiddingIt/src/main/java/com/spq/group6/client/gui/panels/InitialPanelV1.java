@@ -1,11 +1,13 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import com.spq.group6.util.RoundedBorder;
-import com.spq.group6.util.SDG2Util;
+import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.utils.RoundedBorder;
+import com.spq.group6.client.gui.utils.SDG2Util;
+import com.spq.group6.client.gui.utils.ScreenType;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Cursor;

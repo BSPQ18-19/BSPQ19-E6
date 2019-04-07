@@ -80,9 +80,25 @@ public class UserProductsPanel extends JPanel{
 //		products[1] = new Product(user1, "Product2", "desc2");
 //		user1.setOwnedProducts(products);
 
+		String[] productsColumnNames = {"Name", "Description", "", ""};
+		Object[][] productsData = null;
+		if (controller.getCurrentUser() != null) {
+			productsData = new Object[controller.getCurrentUserProducts().size() + 1][productsColumnNames.length];
+			int i = 0;
+			for (i = 0; i < controller.getCurrentUserProducts().size(); i++) {
+				Product tempProduct = new Product(controller.getCurrentUserProducts().get(i));
+				productsData[i][0] = tempProduct.getName();
+				productsData[i][1] = tempProduct.getDescription();
+				productsData[i][2] = "Save";
+				productsData[i][3] = "Delete";
+			}
+			productsData[i][0] = "";
+			productsData[i][1] = "";
+			productsData[i][2] = "Create";
+			productsData[i][3] = "";
+		}
 		List<Product> userProducts = controller.getCurrentUserProducts();
-		productsTable = new JTable();
-		productsTable.setModel(new ProductJTableModel(controller, userProducts));
+		productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames, controller));
 		@SuppressWarnings("unused")
 		ButtonColumn modifyButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 2);
 		@SuppressWarnings("unused")

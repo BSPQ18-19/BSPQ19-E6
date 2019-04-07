@@ -1,4 +1,4 @@
-package com.spq.group6.util;
+package com.spq.group6.client.gui.utils;
 
 import java.awt.Component;
 import java.awt.Graphics;
