@@ -17,7 +17,6 @@ public class Account implements IAccount {
         User user = accountDAO.getUserByUsername(username);
         if(user == null) throw new UserException("User does not exist");
         if (! password.equals(user.getPassword())) throw new UserException("Invalid username or password");
-        System.out.println("User " + username + " has logged in.");
         return user;
     }
 
@@ -32,15 +31,24 @@ public class Account implements IAccount {
     public void updateUser(User user) throws UserException {
         checkDuplicatedUser(user);
         accountDAO.updateUser(user);
-        System.out.println("User '" + user.getUsername() + "' updated.");
 
+    }
+
+    @Override
+    public void createProduct(User user, Product product) {
+        user.getOwnedProducts().add(product);
+        accountDAO.updateUser(user);
+    }
+
+    @Override
+    public void updateProduct(User user, Product product) {
+        accountDAO.updateUser(user);
     }
 
     public void deleteProduct(User user, Product product){
         user.getOwnedProducts().remove(product);
         accountDAO.deleteProduct(product);
         accountDAO.updateUser(user);
-        System.out.println("'" +user.getUsername() + "'s product '" + product.getName() + "' deleted.");
 
     }
 

@@ -20,7 +20,9 @@ public class Server extends UnicastRemoteObject implements IServer {
 
     public User logIn(String username, String password) throws RemoteException, UserException {
         System.out.println("Received Log in petition");
-        return accountService.logIn(username, password);
+        User user = accountService.logIn(username, password);
+        System.out.println("User " + username + " has logged in.");
+        return user;
     }
 
     public User signIn(String username, String password, String country) throws RemoteException, UserException{
@@ -33,20 +35,22 @@ public class Server extends UnicastRemoteObject implements IServer {
         accountService.updateUser(user);
     }
 
-    public void createProduct(User user, Product product) throws RemoteException, UserException {
+    public void createProduct(User user, Product product) throws RemoteException{
         System.out.println("Received product create petition");
-        user.getOwnedProducts().add(product);
-        accountService.updateUser(user);
+        accountService.createProduct(user, product);
     }
 
-    public void updateProduct(User user, Product product) throws RemoteException, UserException {
+    public void updateProduct(User user, Product product) throws RemoteException{
         System.out.println("Received product update petition");
-        accountService.updateUser(user);
+        accountService.updateProduct(user, product);
+        System.out.println("User '" + user.getUsername() + "' updated.");
     }
 
     public void deleteProduct(User user, Product product) throws RemoteException{
         System.out.println("Received product delete petition");
         accountService.deleteProduct(user, product);
+        System.out.println("'" +user.getUsername() + "'s product '" + product.getName() + "' deleted.");
+
     }
 
 }

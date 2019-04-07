@@ -69,7 +69,7 @@ public class AccountDAOTest {
         User persistedUser = dao.getUserByUsername(testUser.getUsername());
         assertEquals(0, persistedUser.getOwnedProducts().size());
         // Clean
-        testUser.getOwnedProducts().add()
+        dao.deleteProduct(testProduct);
         dao.deleteUser(testUser);
 
     }
