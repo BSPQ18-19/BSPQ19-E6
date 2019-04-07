@@ -54,7 +54,6 @@ public class Account implements IAccount {
         user.getOwnedProducts().remove(product);
         accountDAO.updateUser(user);
         accountDAO.deleteProduct(product);
-
     }
 
     private void checkDuplicatedUser(User user) throws UserException{

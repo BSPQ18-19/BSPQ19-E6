@@ -43,7 +43,7 @@ public class ProductJTableModel extends DefaultTableModel {
 
 	public void removeProductAt(int rowIndex) {
     	if (rowIndex != this.getRowCount() - 1) { // not last row (new) product
-    		Product product = new Product((String) this.getValueAt(rowIndex, 0), (String) this.getValueAt(rowIndex, 1));
+    		Product product = controller.getCurrentUser().getOwnedProducts().get(rowIndex);
     		if (controller.deleteProduct(product)) {
     			JOptionPane.showConfirmDialog(null, "Product deleted correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     			this.removeRow(rowIndex);

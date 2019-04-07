@@ -139,8 +139,8 @@ public class AccountDAO implements IAccountDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception inserting data into db: " + ex.getMessage());
-
+            System.err.println("* Exception deleting data: " + ex.getMessage());
+            Thread.currentThread().getStackTrace();
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
