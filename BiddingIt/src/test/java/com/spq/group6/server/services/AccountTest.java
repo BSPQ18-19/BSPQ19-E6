@@ -67,9 +67,11 @@ public class AccountTest {
         User persistedUser;
         User testUser = new User("test_user", "test_pass", "uk");
         dao.createUser(testUser);
-        Product testProduct = new Product("test_prod", "desc_prod");
+        String prodName = "test_prod", prodDescription = "desc_prod";
+        Product testProduct = service.createProduct(testUser, prodName, prodDescription);
         // Test
-        service.createProduct(testUser, testProduct);
+        assertEquals(prodName, testProduct.getName());
+        assertEquals(prodDescription, testProduct.getDescription());
         persistedUser = dao.getUserByUsername(testUser.getUsername());
         assertEquals(1, persistedUser.getOwnedProducts().size());
         assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
@@ -83,15 +85,14 @@ public class AccountTest {
         // Setup
         User testUser = new User("test_user", "test_pass", "uk");
         dao.createUser(testUser);
-        String oldName = "test_prod", newName = "test_super_prod";
-        Product testProduct = new Product(oldName, "desc_prod");
-        service.createProduct(testUser, testProduct);
+        String oldName = "test_prod", newName = "test_super_prod", prodDescription = "desc_prod";
+        Product testProduct = service.createProduct(testUser, newName, prodDescription);
+        service.createProduct(testUser, oldName, prodDescription);
         // Test
-        testProduct.setName(newName);
-        service.updateProduct(testUser, testProduct);
+        service.updateProduct(testUser, testProduct, newName, prodDescription);
+        assertEquals(newName, testProduct.getName());
         User persistedUser = dao.getUserByUsername(testUser.getUsername());
         assertEquals(newName, persistedUser.getOwnedProducts().get(0).getName());
-        assertEquals(newName, testUser.getOwnedProducts().get(0).getName());
         // Clean
         dao.deleteUser(testUser);
     }
@@ -102,9 +103,8 @@ public class AccountTest {
         // Setup
         User testUser = new User("test_user", "test_pass", "uk");
         dao.createUser(testUser);
-        String oldName = "test_prod", newName = "test_super_prod";
-        Product testProduct = new Product(oldName, "desc_prod");
-        service.createProduct(testUser, testProduct);
+        String prodName = "test_prod", prodDescription = "desc_prod";
+        Product testProduct = service.createProduct(testUser, prodName, prodDescription);
         // Test
         service.deleteProduct(testUser, testProduct);
         User persistedUser = dao.getUserByUsername(testUser.getUsername());

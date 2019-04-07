@@ -87,7 +87,7 @@ public class UserProductsPanel extends JPanel{
 			productsData = new Object[controller.getCurrentUserProducts().size() + 1][productsColumnNames.length];
 			int i = 0;
 			for (i = 0; i < controller.getCurrentUserProducts().size(); i++) {
-				Product tempProduct = new Product(controller.getCurrentUserProducts().get(i));
+				Product tempProduct = controller.getCurrentUserProducts().get(i);
 				productsData[i][0] = tempProduct.getName();
 				productsData[i][1] = tempProduct.getDescription();
 				productsData[i][2] = "Save";

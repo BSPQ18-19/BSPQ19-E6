@@ -10,18 +10,14 @@ public class Product implements Serializable{
 	private static final long serialVersionUID = -7363525693084022738L;
 	private String name;
 	private String description;
-	
+
 	public Product(String name, String description){
 		super();
 		this.name = name;
 		this.description = description;
 	}
-	
-	public Product(Product p) {
-		super();
-		this.name = p.getName();
-		this.description = p.getDescription();
-	}
+
+
 
 	public String getName() {
 		return name;
