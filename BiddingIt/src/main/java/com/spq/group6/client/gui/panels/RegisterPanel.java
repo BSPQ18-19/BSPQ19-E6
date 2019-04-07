@@ -1,4 +1,4 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.panels;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.spq.group6.client.controller.ClientController;
-import com.spq.group6.util.SDG2Util;
+import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.utils.SDG2Util;
+import com.spq.group6.client.gui.utils.ScreenType;
 
 public class RegisterPanel extends JPanel {
 

@@ -1,4 +1,4 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.panels;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -8,7 +8,9 @@ import java.rmi.RemoteException;
 import javax.swing.*;
 
 import com.spq.group6.client.controller.ClientController;
-import com.spq.group6.util.SDG2Util;
+import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.utils.SDG2Util;
 
 
 public class LogInPanel extends JPanel {
@@ -78,7 +80,7 @@ public class LogInPanel extends JPanel {
 				
 				try {
 					if (controller.logIn(usernameTF.getText(), passwordTF.getText()))
-						ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL);
+						ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
 					else
 						JOptionPane.showConfirmDialog(LogInPanel.this, "Error logging in.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 

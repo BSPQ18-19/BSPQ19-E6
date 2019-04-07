@@ -1,4 +1,4 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import com.spq.group6.client.controller.ClientController;
-import com.spq.group6.util.SDG2Util;
+import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.utils.SDG2Util;
+import com.spq.group6.client.gui.utils.ScreenType;
 
 public class MainMenuPanel extends JPanel {
 
@@ -26,7 +28,7 @@ public class MainMenuPanel extends JPanel {
 		titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
 		titleLabel.setSize(screenWidth / 3, screenHeight / 3);
 		titleLabel.setLocation((int) (screenWidth / 2 - titleLabel.getWidth()*1.25), (int) (screenHeight / 4 - titleLabel.getHeight() / 1.25));
-		SDG2Util.fixJLabelFontSize(titleLabel);	
+		SDG2Util.fixJLabelFontSize(titleLabel);
 				
 		infoLabel = new JLabel("Welcome to the best bidding system in the world!", SwingConstants.LEFT);
 		infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 6);
@@ -58,7 +60,7 @@ public class MainMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_PRODUCTS);	
+				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_PRODUCTS);
 			}
 		});
 		

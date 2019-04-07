@@ -1,4 +1,6 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.actions;
+
+import com.spq.group6.client.gui.elements.ProductJTableModel;
 
 import java.awt.event.ActionEvent;
 
@@ -11,7 +13,7 @@ public class ActionModify extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		JTable table = (JTable)e.getSource();
         int modelRow = Integer.valueOf( e.getActionCommand() );
-        ((ProductJTableModel)table.getModel()).modifyProductAt(modelRow, 
+        ((ProductJTableModel)table.getModel()).modifyProductAt(modelRow,
         		(String) table.getValueAt(modelRow, 1), (String) table.getValueAt(modelRow, 2));
 	}
 

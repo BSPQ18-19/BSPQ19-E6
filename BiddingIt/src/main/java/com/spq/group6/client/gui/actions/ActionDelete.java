@@ -1,4 +1,6 @@
-package com.spq.group6.client.gui;
+package com.spq.group6.client.gui.actions;
+
+import com.spq.group6.client.gui.elements.ProductJTableModel;
 
 import java.awt.event.ActionEvent;
 

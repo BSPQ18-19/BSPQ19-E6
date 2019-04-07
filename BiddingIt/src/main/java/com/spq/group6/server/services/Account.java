@@ -2,6 +2,7 @@ package com.spq.group6.server.services;
 
 import com.spq.group6.server.dao.AccountDAO;
 import com.spq.group6.server.dao.IAccountDAO;
+import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
 
@@ -23,12 +24,32 @@ public class Account implements IAccount {
         User user = new User(username, password, country);
         checkDuplicatedUser(user);
         accountDAO.createUser(user);
+        if (user != null) System.out.println("User '" + username + "' has signed in.");
         return user;
     }
 
     public void updateUser(User user) throws UserException {
         checkDuplicatedUser(user);
         accountDAO.updateUser(user);
+
+    }
+
+    @Override
+    public void createProduct(User user, Product product) {
+        user.getOwnedProducts().add(product);
+        accountDAO.updateUser(user);
+    }
+
+    @Override
+    public void updateProduct(User user, Product product) {
+        accountDAO.updateUser(user);
+    }
+
+    public void deleteProduct(User user, Product product){
+        user.getOwnedProducts().remove(product);
+        accountDAO.deleteProduct(product);
+        accountDAO.updateUser(user);
+
     }
 
     private void checkDuplicatedUser(User user) throws UserException{
