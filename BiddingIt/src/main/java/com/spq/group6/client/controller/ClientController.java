@@ -98,27 +98,19 @@ public class ClientController {
     	return currentUser.getOwnedProducts();
     }
     
-    public boolean createProduct(Product product, String name, String description) {
+    public boolean createProduct(String name, String description) {
 		try {
-			product.setName(name);
-			product.setDescription(description);
-			serviceLocator.getService().createProduct(currentUser);
+			currentUser.getOwnedProducts().add(serviceLocator.getService().createProduct(currentUser, name, description));
 		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (UserException e) {
 			e.printStackTrace();
 		}
     	return true;
     }
     
-    public boolean modifyProduct(Product product, String name, String description) {
+    public boolean updateProduct(Product product, String name, String description) {
     	try {
-			product.setName(name);
-			product.setDescription(description);
-			serviceLocator.getService().updateUser(currentUser);
+			product = serviceLocator.getService().updateProduct(currentUser, product, name, description);
 		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (UserException e) {
 			e.printStackTrace();
 		}
     	return true;
@@ -126,11 +118,8 @@ public class ClientController {
     
     public boolean deleteProduct(Product product) {
     	try {
-    		getCurrentUserProducts().remove(product);
-			serviceLocator.getService().updateUser(currentUser);
+			serviceLocator.getService().deleteProduct(currentUser, product);
 		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (UserException e) {
 			e.printStackTrace();
 		}
     	return true;

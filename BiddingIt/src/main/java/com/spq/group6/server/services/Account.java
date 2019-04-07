@@ -35,14 +35,19 @@ public class Account implements IAccount {
     }
 
     @Override
-    public void createProduct(User user, Product product) {
-        user.getOwnedProducts().add(product);
+    public Product createProduct(User user, String name, String description) {
+        Product newProduct = new Product(name, description);
+    	user.getOwnedProducts().add(newProduct);
         accountDAO.updateUser(user);
+        return newProduct;
     }
 
     @Override
-    public void updateProduct(User user, Product product) {
-        accountDAO.updateUser(user);
+    public Product updateProduct(User user, Product product, String name, String description) {
+        product.setName(name);
+        product.setDescription(description);
+    	accountDAO.updateUser(user);
+    	return product;
     }
 
     public void deleteProduct(User user, Product product){

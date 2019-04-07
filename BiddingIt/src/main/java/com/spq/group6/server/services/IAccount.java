@@ -10,7 +10,7 @@ public interface IAccount {
     public User logIn(String username, String password) throws UserException;
     public User signIn(String username, String password, String country) throws UserException;
     public void updateUser(User user) throws UserException;
-    public void createProduct(User user, Product product);
-    public void updateProduct(User user, Product product);
+    public Product createProduct(User user, String name, String description);
+    public Product updateProduct(User user, Product product, String name, String description);
     public void deleteProduct(User user, Product product);
 }

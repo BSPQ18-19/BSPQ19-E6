@@ -12,6 +12,7 @@ import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.ProductJTableModel;
 import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.client.gui.actions.ActionDelete;
+import com.spq.group6.client.gui.actions.ActionUpdate;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.client.gui.utils.SDG2Util;
 
@@ -97,10 +98,9 @@ public class UserProductsPanel extends JPanel{
 			productsData[i][2] = "Create";
 			productsData[i][3] = "";
 		}
-		List<Product> userProducts = controller.getCurrentUserProducts();
 		productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames, controller));
 		@SuppressWarnings("unused")
-		ButtonColumn modifyButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 2);
+		ButtonColumn updateButtonColumn = new ButtonColumn(productsTable, new ActionUpdate(), 2);
 		@SuppressWarnings("unused")
 		ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 3);
 		

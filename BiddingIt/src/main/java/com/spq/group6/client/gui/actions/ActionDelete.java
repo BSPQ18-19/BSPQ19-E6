@@ -13,7 +13,7 @@ public class ActionDelete extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		JTable table = (JTable)e.getSource();
         int modelRow = Integer.valueOf( e.getActionCommand() );
-        ((ProductJTableModel)table.getModel()).removeRow(modelRow);
+        ((ProductJTableModel)table.getModel()).removeProductAt(modelRow);
 	}
 
 }
