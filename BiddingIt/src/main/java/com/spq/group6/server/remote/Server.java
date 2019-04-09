@@ -30,12 +30,12 @@ public class Server extends UnicastRemoteObject implements IServer {
         return accountService.signIn(username, password, country);
     }
 
-    public void updateUser(User user) throws RemoteException, UserException {
+    public User updateUser(User user) throws RemoteException, UserException {
         System.out.println("Received update petition");
-        accountService.updateUser(user);
+        return accountService.updateUser(user);
     }
 
-    public Product createProduct(User user, String name, String description) throws RemoteException{
+    public User createProduct(User user, String name, String description) throws RemoteException{
         System.out.println("Received product create petition");
         return accountService.createProduct(user, name, description);
     }
@@ -46,11 +46,9 @@ public class Server extends UnicastRemoteObject implements IServer {
         //System.out.println("User '" + user.getUsername() + "' updated.");
     }
 
-    public void deleteProduct(User user, Product product) throws RemoteException{
+    public User deleteProduct(User user, Product product) throws RemoteException{
         System.out.println("Received product delete petition");
-        accountService.deleteProduct(user, product);
-        System.out.println("'" +user.getUsername() + "'s product '" + product.getName() + "' deleted.");
-
+        return accountService.deleteProduct(user, product);
     }
 
 }

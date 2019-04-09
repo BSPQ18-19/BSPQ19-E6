@@ -8,5 +8,6 @@ public interface IAccountDAO {
     public void deleteUser(User user);
     public User getUserByUsername(String username);
     public void updateUser(User user);
+    public void updateProduct(Product product);
     public void deleteProduct(Product product);
 }

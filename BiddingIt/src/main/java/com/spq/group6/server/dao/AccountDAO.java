@@ -47,7 +47,7 @@ public class AccountDAO implements IAccountDAO {
 
         try {
             tx.begin();
-            for (Product product: user.getOwnedProducts()) pm.deletePersistent(product);
+            for (Product product : user.getOwnedProducts()) pm.deletePersistent(product);
             pm.deletePersistent(user); // Saves user in the Database
             tx.commit();
         } catch (Exception ex) {
@@ -88,46 +88,11 @@ public class AccountDAO implements IAccountDAO {
     }
 
     public void updateUser(User user) {
-
-        Transaction tx = pm.currentTransaction();
-
-        try {
-            tx.begin();
-
-            pm.makePersistent(user);
-            tx.commit();
-        } catch (Exception ex) {
-
-            System.err.println("* Exception updating data into db: " + ex.getMessage());
-
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-
-        }
+        updateObject(user);
     }
 
-
     public void updateProduct(Product product) {
-        Transaction tx = pm.currentTransaction();
-
-        try {
-            pm.setDetachAllOnCommit(true);
-            tx.begin();
-
-            pm.makePersistent(product);
-            tx.commit();
-        } catch (Exception ex) {
-
-            System.err.println("* Exception updating data into db: " + ex.getMessage());
-
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-
-        }
+        updateObject(product);
     }
 
     public void deleteProduct(Product product) {
@@ -140,7 +105,6 @@ public class AccountDAO implements IAccountDAO {
         } catch (Exception ex) {
 
             System.err.println("* Exception deleting data: " + ex.getMessage());
-            Thread.currentThread().getStackTrace();
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -148,4 +112,23 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
+
+    private void updateObject(Object obj) {
+        Transaction tx = pm.currentTransaction();
+
+        try {
+            tx.begin();
+
+            pm.makePersistent(obj);
+            tx.commit();
+        } catch (Exception ex) {
+
+            System.err.println("* Exception updating data into db: " + ex.getMessage());
+
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+    }
 }

@@ -102,9 +102,9 @@ public class ClientController {
     	String info = "Create the product " + name + " with description " + description;
         try {
         	System.out.println("Trying to " + info + ".");
-        	Product newProduct = serviceLocator.getService().createProduct(currentUser, name, description);
-			if (newProduct != null) {
-				currentUser.getOwnedProducts().add(newProduct);
+        	currentUser = serviceLocator.getService().createProduct(currentUser, name, description);
+			Product newProduct = currentUser.getOwnedProducts().get(currentUser.getOwnedProducts().size()-1);
+        	if (newProduct != null) {
 				System.out.println(info + " correct.");
 			}
 			else
@@ -134,7 +134,7 @@ public class ClientController {
     	String info = "Delete the product " + product.getName() + " with description " + product.getDescription();
         try {
         	System.out.println("Trying to " + info + ".");
-			serviceLocator.getService().deleteProduct(currentUser, product);
+			currentUser = serviceLocator.getService().deleteProduct(currentUser, product);
 			System.out.println(info + " correct.");
 		} catch (RemoteException e) {
 			e.printStackTrace();

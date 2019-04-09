@@ -28,32 +28,33 @@ public class Account implements IAccount {
         return user;
     }
 
-    public void updateUser(User user) throws UserException {
+    public User updateUser(User user) throws UserException {
         checkDuplicatedUser(user);
         accountDAO.updateUser(user);
-
+        return user;
     }
 
     @Override
-    public Product createProduct(User user, String name, String description) {
+    public User createProduct(User user, String name, String description) {
         Product newProduct = new Product(name, description);
     	user.getOwnedProducts().add(newProduct);
         accountDAO.updateUser(user);
-        return newProduct;
+        return user;
     }
 
     @Override
     public Product updateProduct(User user, Product product, String name, String description) {
         product.setName(name);
         product.setDescription(description);
-    	accountDAO.updateUser(user);
+    	accountDAO.updateProduct(product);
     	return product;
     }
 
-    public void deleteProduct(User user, Product product){
+    public User deleteProduct(User user, Product product){
         user.getOwnedProducts().remove(product);
         accountDAO.updateUser(user);
         accountDAO.deleteProduct(product);
+        return user;
     }
 
     private void checkDuplicatedUser(User user) throws UserException{
