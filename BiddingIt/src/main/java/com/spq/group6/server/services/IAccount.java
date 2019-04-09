@@ -11,6 +11,6 @@ public interface IAccount {
     public User signIn(String username, String password, String country) throws UserException;
     public User updateUser(User user) throws UserException;
     public User createProduct(User user, String name, String description);
-    public Product updateProduct(User user, Product product, String name, String description);
+    public Product updateProduct(Product product, String name, String description);
     public User deleteProduct(User user, Product product);
 }

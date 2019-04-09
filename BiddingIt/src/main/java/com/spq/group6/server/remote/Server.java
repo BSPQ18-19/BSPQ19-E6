@@ -40,9 +40,9 @@ public class Server extends UnicastRemoteObject implements IServer {
         return accountService.createProduct(user, name, description);
     }
 
-    public Product updateProduct(User user, Product product, String name, String description) throws RemoteException{
+    public Product updateProduct(Product product, String name, String description) throws RemoteException{
         System.out.println("Received product update petition");
-        return accountService.updateProduct(user, product, name, description);
+        return accountService.updateProduct(product, name, description);
         //System.out.println("User '" + user.getUsername() + "' updated.");
     }
 

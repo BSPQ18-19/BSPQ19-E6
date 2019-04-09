@@ -119,7 +119,7 @@ public class ClientController {
     	String info = "Update the product " + name + " with description " + description;
         try {
         	System.out.println("Trying to " + info + ".");
-			product = serviceLocator.getService().updateProduct(currentUser, product, name, description);
+			product = serviceLocator.getService().updateProduct(product, name, description);
 			if (product != null)
 				System.out.println(info + " correct.");
 			else

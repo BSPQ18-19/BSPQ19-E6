@@ -12,7 +12,7 @@ public interface IServer extends Remote {
     public User signIn(String username, String password, String country) throws RemoteException, UserException;
     public User updateUser(User user) throws RemoteException, UserException;
     public User createProduct(User user, String name, String description) throws RemoteException;
-    public Product updateProduct(User user, Product product, String name, String description) throws RemoteException;
+    public Product updateProduct(Product product, String name, String description) throws RemoteException;
     public User deleteProduct(User user, Product product) throws RemoteException;
 
 }

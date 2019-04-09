@@ -43,7 +43,7 @@ public class Account implements IAccount {
     }
 
     @Override
-    public Product updateProduct(User user, Product product, String name, String description) {
+    public Product updateProduct(Product product, String name, String description) {
         product.setName(name);
         product.setDescription(description);
     	accountDAO.updateProduct(product);
