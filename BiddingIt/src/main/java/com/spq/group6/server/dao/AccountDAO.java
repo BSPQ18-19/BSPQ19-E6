@@ -13,13 +13,10 @@ import java.util.List;
 
 
 public class AccountDAO implements IAccountDAO {
-    private static PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
     private PersistenceManager pm;
 
     public AccountDAO() {
-        pm = pmf.getPersistenceManager();
-        pm.setDetachAllOnCommit(true);
-        pm.getFetchPlan().setMaxFetchDepth(3);
+        pm = JdoManager.getPersistanceManager();
     }
 
     public void createUser(User user) {

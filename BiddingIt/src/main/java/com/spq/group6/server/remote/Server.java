@@ -2,20 +2,26 @@ package com.spq.group6.server.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Timestamp;
 
 
+import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
-import com.spq.group6.server.services.Account;
-import com.spq.group6.server.services.IAccount;
+import com.spq.group6.server.services.AccountService;
+import com.spq.group6.server.services.AuctionService;
+import com.spq.group6.server.services.IAccountService;
+import com.spq.group6.server.services.IAuctionService;
 
 
 public class Server extends UnicastRemoteObject implements IServer {
-    private IAccount accountService;
+    private IAccountService accountService;
+    private IAuctionService auctionService;
 
     public Server() throws RemoteException {
-        accountService = new Account();
+        accountService = new AccountService();
+        auctionService = new AuctionService();
     }
 
     public User logIn(String username, String password) throws RemoteException, UserException {
@@ -49,6 +55,14 @@ public class Server extends UnicastRemoteObject implements IServer {
     public User deleteProduct(User user, Product product) throws RemoteException{
         System.out.println("Received product delete petition");
         return accountService.deleteProduct(user, product);
+    }
+
+    public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException {
+        return auctionService.createPublicAuction(owner, product, dayLimit, initialPrice);
+    }
+
+    public Auction bid(Auction auction, User user, float amount) throws RemoteException {
+        return auctionService.bid(auction, user, amount);
     }
 
 }

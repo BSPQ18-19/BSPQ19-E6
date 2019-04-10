@@ -1,6 +1,8 @@
 package com.spq.group6.server.data;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import javax.jdo.annotations.PersistenceCapable;
@@ -8,30 +10,27 @@ import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable(detachable = "true")
 public class Auction implements Serializable{
-	private static final long serialVersionUID = 2911721842372082865L;
+	public static final long serialVersionUID = 2911721842372082865L;
 	@Persistent(defaultFetchGroup="true")
 	private User owner;
 	@Persistent(defaultFetchGroup="true")
 	private Product product;
-	private String dayLimit;
-	private String startDay;
-	private int initialPrice;
+	private Timestamp dayLimit;
+	private float initialPrice;
 	@Persistent(defaultFetchGroup="true")
 	private Bid highestBid;
 	private String password;
-	private String state;
-	
-	public Auction(User owner, Product product, String dayLimit, String startDay, int initialPrice
-			, Bid highestBid, String password, String state) {
-		super();
+	private boolean isOpen;
+
+	public Auction(User owner, Product product, Timestamp dayLimit, float initialPrice, String password) {
 		this.owner = owner;
 		this.product = product;
 		this.dayLimit = dayLimit;
-		this.startDay = startDay;
 		this.initialPrice = initialPrice;
-		this.highestBid = highestBid;
 		this.password = password;
-		this.state = state;
+
+		this.highestBid = null;
+		this.isOpen = true;
 	}
 
 	public User getOwner() {
@@ -50,27 +49,19 @@ public class Auction implements Serializable{
 		this.product = product;
 	}
 
-	public String getDayLimit() {
+	public Timestamp getDayLimit() {
 		return dayLimit;
 	}
 
-	public void setDayLimit(String dayLimit) {
+	public void setDayLimit(Timestamp dayLimit) {
 		this.dayLimit = dayLimit;
 	}
 
-	public String getStartDay() {
-		return startDay;
-	}
-
-	public void setStartDay(String startDay) {
-		this.startDay = startDay;
-	}
-
-	public int getInitialPrice() {
+	public float getInitialPrice() {
 		return initialPrice;
 	}
 
-	public void setInitialPrice(int initialPrice) {
+	public void setInitialPrice(float initialPrice) {
 		this.initialPrice = initialPrice;
 	}
 
@@ -90,12 +81,12 @@ public class Auction implements Serializable{
 		this.password = password;
 	}
 
-	public String getState() {
-		return state;
+	public boolean isOpen() {
+		return isOpen;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setOpen(boolean open) {
+		isOpen = open;
 	}
 
 	public boolean equals(Object o) {
@@ -103,12 +94,11 @@ public class Auction implements Serializable{
 		if (o == null || getClass() != o.getClass()) return false;
 		Auction auction = (Auction) o;
 		return initialPrice == auction.initialPrice &&
+				isOpen == auction.isOpen &&
 				owner.equals(auction.owner) &&
 				product.equals(auction.product) &&
 				dayLimit.equals(auction.dayLimit) &&
-				startDay.equals(auction.startDay) &&
-				highestBid.equals(auction.highestBid) &&
-				Objects.equals(password, auction.password) &&
-				state.equals(auction.state);
+				Objects.equals(highestBid, auction.highestBid) &&
+				Objects.equals(password, auction.password);
 	}
 }

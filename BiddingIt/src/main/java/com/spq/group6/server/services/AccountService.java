@@ -6,10 +6,10 @@ import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
 
-public class Account implements IAccount {
+public class AccountService implements IAccountService {
     IAccountDAO accountDAO;
 
-    public Account() {
+    public AccountService() {
         accountDAO = new AccountDAO();
     }
 

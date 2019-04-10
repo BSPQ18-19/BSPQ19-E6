@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class AccountTest {
     private AccountDAO dao = new AccountDAO();
-    private Account service = new Account();
+    private AccountService service = new AccountService();
 
     @Test
     public void testSignIn()

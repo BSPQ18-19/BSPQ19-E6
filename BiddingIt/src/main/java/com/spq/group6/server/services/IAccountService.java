@@ -6,7 +6,7 @@ import com.spq.group6.server.exceptions.UserException;
 
 import java.rmi.RemoteException;
 
-public interface IAccount {
+public interface IAccountService {
     public User logIn(String username, String password) throws UserException;
     public User signIn(String username, String password, String country) throws UserException;
     public User updateUser(User user) throws UserException;
