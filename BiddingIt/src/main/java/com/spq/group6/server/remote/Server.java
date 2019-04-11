@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.BidException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.AccountService;
 import com.spq.group6.server.services.AuctionService;
@@ -61,7 +62,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return auctionService.createPublicAuction(owner, product, dayLimit, initialPrice);
     }
 
-    public Auction bid(Auction auction, User user, float amount) throws RemoteException {
+    public Auction bid(Auction auction, User user, float amount) throws RemoteException, BidException {
         return auctionService.bid(auction, user, amount);
     }
 

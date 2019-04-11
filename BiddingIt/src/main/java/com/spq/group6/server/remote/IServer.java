@@ -3,6 +3,7 @@ package com.spq.group6.server.remote;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.BidException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.AuctionService;
 
@@ -19,6 +20,6 @@ public interface IServer extends Remote {
     public User deleteProduct(User user, Product product) throws RemoteException;
 
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException;
-    public Auction bid(Auction auction, User user, float amount) throws RemoteException;
+    public Auction bid(Auction auction, User user, float amount) throws RemoteException, BidException;
 
 }

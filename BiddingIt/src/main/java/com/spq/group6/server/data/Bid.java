@@ -20,7 +20,12 @@ public class Bid implements Serializable {
 		this.amount = amount;
 	}
 
-	public User getUser() {
+    public Bid(User user, float amount) {
+		this.user = user;
+		this.amount = amount;
+    }
+
+    public User getUser() {
 		return user;
 	}
 
