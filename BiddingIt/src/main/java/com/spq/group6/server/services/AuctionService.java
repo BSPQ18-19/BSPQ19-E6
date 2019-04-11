@@ -8,6 +8,7 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.BidException;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class AuctionService implements IAuctionService {
     IAuctionDAO auctionDAO = null;
@@ -22,7 +23,7 @@ public class AuctionService implements IAuctionService {
         return auction;
     }
 
-    public Auction bid(Auction auction, User user, float amount) throws BidException{
+    public Auction bid(Auction auction, User user, float amount) throws BidException {
         Bid newBid = new Bid(user, amount);
         Bid oldBid = auction.getHighestBid();
 
@@ -32,8 +33,16 @@ public class AuctionService implements IAuctionService {
         return auction;
     }
 
-    private void checkNewBid(Bid newBid, Bid oldBid) throws BidException{
-        if (newBid.getAmount()<= oldBid.getAmount()) {
+    public ArrayList<Auction> searchAuctionByCountry(String country) {
+        return auctionDAO.getAuctionByCountry(country);
+    }
+
+    public ArrayList<Auction> searchAuctionByProductName(String name) {
+        return auctionDAO.getAuctionByProductName(name);
+    }
+
+    private void checkNewBid(Bid newBid, Bid oldBid) throws BidException {
+        if (newBid.getAmount() <= oldBid.getAmount()) {
             throw new BidException("Invalid Bid value.");
         }
     }
