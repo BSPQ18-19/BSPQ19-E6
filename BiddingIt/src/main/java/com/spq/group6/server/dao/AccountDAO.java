@@ -1,8 +1,6 @@
 package com.spq.group6.server.dao;
 
-import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
@@ -13,13 +11,20 @@ import java.util.List;
 
 
 public class AccountDAO implements IAccountDAO {
+    private static AccountDAO accountDAO = null;
     private PersistenceManager pm;
 
-    public AccountDAO() {
+    private AccountDAO(){
         pm = JdoManager.getPersistanceManager();
     }
 
-    public void createUser(User user) {
+    public static AccountDAO getAccountDAO(){
+        if (accountDAO == null){
+            accountDAO = new AccountDAO();
+        }
+        return accountDAO;
+    }
+    public synchronized void createUser(User user) {
 
         Transaction tx = pm.currentTransaction();
 
@@ -38,7 +43,7 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
-    public void deleteUser(User user) {
+    public synchronized void deleteUser(User user) {
 
         Transaction tx = pm.currentTransaction();
 
@@ -58,7 +63,7 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
-    public User getUserByUsername(String username) {
+    public synchronized User getUserByUsername(String username) {
         Transaction tx = pm.currentTransaction();
 
         User user = null;
@@ -84,15 +89,15 @@ public class AccountDAO implements IAccountDAO {
         return user;
     }
 
-    public void updateUser(User user) {
+    public synchronized void updateUser(User user) {
         updateObject(user);
     }
 
-    public void updateProduct(Product product) {
+    public synchronized void updateProduct(Product product) {
         updateObject(product);
     }
 
-    public void deleteProduct(Product product) {
+    public synchronized void deleteProduct(Product product) {
         Transaction tx = pm.currentTransaction();
 
         try {
@@ -110,7 +115,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
 
-    private void updateObject(Object obj) {
+    private synchronized void updateObject(Object obj) {
         Transaction tx = pm.currentTransaction();
 
         try {

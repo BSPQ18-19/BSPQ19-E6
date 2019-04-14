@@ -3,12 +3,15 @@ package com.spq.group6.server.dao;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class JdoManager {
+class JdoManager {
     private static PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
     private static PersistenceManager pm;
+    static Lock pmLock = new ReentrantLock();
 
-    public static PersistenceManager getPersistanceManager() {
+    static synchronized PersistenceManager getPersistanceManager() {
         if (pm == null) {
             pm = pmf.getPersistenceManager();
             pm.setDetachAllOnCommit(true);

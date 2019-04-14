@@ -3,7 +3,7 @@ package com.spq.group6.server.remote;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
-import com.spq.group6.server.exceptions.BidException;
+import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.*;
 
@@ -61,7 +61,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return auctionService.createPublicAuction(owner, product, dayLimit, initialPrice);
     }
 
-    public Auction bid(Auction auction, User user, float amount) throws RemoteException, BidException {
+    public Auction bid(Auction auction, User user, float amount) throws RemoteException, AuctionException {
         return auctionService.bid(auction, user, amount);
     }
 

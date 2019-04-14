@@ -5,10 +5,13 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
-import com.spq.group6.server.exceptions.BidException;
+import com.spq.group6.server.exceptions.AuctionException;
+import com.spq.group6.server.utils.AuctionCountdown;
+import com.spq.group6.server.utils.AuctionLocks;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
 
 public class AuctionService implements IAuctionService {
     IAuctionDAO auctionDAO = null;
@@ -20,16 +23,31 @@ public class AuctionService implements IAuctionService {
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) {
         Auction auction = new Auction(owner, product, dayLimit, initialPrice, null);
         auctionDAO.persistAuction(auction);
+
+        AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
+        Thread auctionCountdown = new Thread(new AuctionCountdown(auction));
+        auctionCountdown.start(); // Run thread for auction countdown
+        
         return auction;
     }
 
-    public Auction bid(Auction auction, User user, float amount) throws BidException {
-        Bid newBid = new Bid(user, amount);
-        Bid oldBid = auction.getHighestBid();
+    public Auction bid(Auction auction, User user, float amount) throws AuctionException {
+        Lock auctionLock = AuctionLocks.getLock(auction.getAuctionID());
+        auctionLock.lock();
 
+        if (!auctionDAO.isOpen(auction.getAuctionID())){
+            throw  new AuctionException("Auction is closed");
+        }
+        Bid oldBid = auctionDAO.getHighestBid(auction.getAuctionID());
+        if (oldBid.getAmount() >= amount){
+            throw  new AuctionException("Too low bid");
+        }
+        Bid newBid = new Bid(user, amount);
         auction.setHighestBid(newBid);
         auctionDAO.persistAuction(auction);
         auctionDAO.deleteBid(oldBid);
+
+        auctionLock.unlock();
         return auction;
     }
 
@@ -41,9 +59,9 @@ public class AuctionService implements IAuctionService {
         return auctionDAO.getAuctionByProductName(name);
     }
 
-    private void checkNewBid(Bid newBid, Bid oldBid) throws BidException {
+    private void checkNewBid(Bid newBid, Bid oldBid) throws AuctionException {
         if (newBid.getAmount() <= oldBid.getAmount()) {
-            throw new BidException("Invalid Bid value.");
+            throw new AuctionException("Invalid Bid value.");
         }
     }
 }

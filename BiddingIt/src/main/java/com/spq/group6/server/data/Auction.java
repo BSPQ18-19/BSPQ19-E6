@@ -1,7 +1,9 @@
 package com.spq.group6.server.data;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -9,6 +11,9 @@ import java.util.Objects;
 @PersistenceCapable(detachable = "true")
 public class Auction implements Serializable {
     public static final long serialVersionUID = 2911721842372082865L;
+    @PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
+    private long auctionID;
     @Persistent(defaultFetchGroup = "true")
     private User owner;
     @Persistent(defaultFetchGroup = "true")
@@ -29,6 +34,14 @@ public class Auction implements Serializable {
 
         this.highestBid = null;
         this.isOpen = true;
+    }
+
+    public long getAuctionID() {
+        return auctionID;
+    }
+
+    public void setAuctionID(long auctionID) {
+        this.auctionID = auctionID;
     }
 
     public User getOwner() {
