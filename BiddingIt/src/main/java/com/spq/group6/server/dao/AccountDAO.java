@@ -8,14 +8,18 @@ import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 
 import java.util.List;
+import java.util.concurrent.locks.Lock;
 
 
 public class AccountDAO implements IAccountDAO {
     private static AccountDAO accountDAO = null;
     private PersistenceManager pm;
+    private Lock pmLock;
 
     private AccountDAO(){
+
         pm = JdoManager.getPersistanceManager();
+        pmLock = JdoManager.pmLock;
     }
 
     public static AccountDAO getAccountDAO(){
@@ -24,7 +28,8 @@ public class AccountDAO implements IAccountDAO {
         }
         return accountDAO;
     }
-    public synchronized void createUser(User user) {
+    public void createUser(User user) {
+        pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
 
@@ -41,9 +46,11 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
     }
 
-    public synchronized void deleteUser(User user) {
+    public void deleteUser(User user) {
+        pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
 
@@ -61,9 +68,11 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
     }
 
-    public synchronized User getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
+        pmLock.lock();
         Transaction tx = pm.currentTransaction();
 
         User user = null;
@@ -86,18 +95,21 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
         return user;
     }
 
-    public synchronized void updateUser(User user) {
+    public void updateUser(User user) {
         updateObject(user);
     }
 
-    public synchronized void updateProduct(Product product) {
+    public void updateProduct(Product product) {
         updateObject(product);
     }
 
-    public synchronized void deleteProduct(Product product) {
+    public void deleteProduct(Product product) {
+        pmLock.lock();
+
         Transaction tx = pm.currentTransaction();
 
         try {
@@ -112,10 +124,13 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
     }
 
 
-    private synchronized void updateObject(Object obj) {
+    private void updateObject(Object obj) {
+        pmLock.lock();
+
         Transaction tx = pm.currentTransaction();
 
         try {
@@ -132,5 +147,6 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
     }
 }
