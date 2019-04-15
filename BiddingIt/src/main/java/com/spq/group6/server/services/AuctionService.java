@@ -8,26 +8,34 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.utils.AuctionCountdown;
 import com.spq.group6.server.utils.AuctionLocks;
+import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
+import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.locks.Lock;
 
 public class AuctionService implements IAuctionService {
-    IAuctionDAO auctionDAO = null;
+    private IAuctionDAO auctionDAO = null;
+    private HashMap<Long, RemoteObservable> observables;
 
     public AuctionService() {
-        // Initialize auctionDAO
+        observables = new HashMap<Long, RemoteObservable>();
     }
 
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) {
         Auction auction = new Auction(owner, product, dayLimit, initialPrice, null);
         auctionDAO.persistAuction(auction);
+        // create an observable for the auction
+        RemoteObservable observable = new RemoteObservable();
+        observables.put(auction.getAuctionID(), observable);
 
         AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
-        Thread auctionCountdown = new Thread(new AuctionCountdown(auction));
+        Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
         auctionCountdown.start(); // Run thread for auction countdown
-        
+
         return auction;
     }
 
@@ -59,9 +67,13 @@ public class AuctionService implements IAuctionService {
         return auctionDAO.getAuctionByProductName(name);
     }
 
-    private void checkNewBid(Bid newBid, Bid oldBid) throws AuctionException {
-        if (newBid.getAmount() <= oldBid.getAmount()) {
-            throw new AuctionException("Invalid Bid value.");
-        }
+    public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
+        RemoteObservable observable = observables.get(auction.getAuctionID());
+        observable.addRemoteObserver(observer);
+    }
+
+    public void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
+        RemoteObservable observable = observables.get(auction.getAuctionID());
+        observable.deleteRemoteObserver(observer);
     }
 }

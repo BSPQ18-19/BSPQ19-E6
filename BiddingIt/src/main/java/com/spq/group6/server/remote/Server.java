@@ -6,11 +6,14 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.*;
+import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
+import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Server extends UnicastRemoteObject implements IServer {
@@ -49,7 +52,6 @@ public class Server extends UnicastRemoteObject implements IServer {
     public Product updateProduct(Product product, String name, String description) throws RemoteException {
         System.out.println("Received product update petition");
         return accountService.updateProduct(product, name, description);
-        //System.out.println("User '" + user.getUsername() + "' updated.");
     }
 
     public User deleteProduct(User user, Product product) throws RemoteException {
@@ -58,7 +60,8 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException {
-        return auctionService.createPublicAuction(owner, product, dayLimit, initialPrice);
+        Auction auction = auctionService.createPublicAuction(owner, product, dayLimit, initialPrice);
+        return auction;
     }
 
     public Auction bid(Auction auction, User user, float amount) throws RemoteException, AuctionException {
@@ -81,4 +84,12 @@ public class Server extends UnicastRemoteObject implements IServer {
         adminService.deleteUser(user);
     }
 
+    // Observer calls
+    public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
+        auctionService.addRemoteObserver(auction, observer);
+    }
+
+    public void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
+        auctionService.deleteRemoteObserver(auction, observer);
+    }
 }
