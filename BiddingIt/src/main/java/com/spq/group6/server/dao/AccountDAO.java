@@ -16,18 +16,12 @@ public class AccountDAO implements IAccountDAO {
     private PersistenceManager pm;
     private Lock pmLock;
 
-    private AccountDAO(){
+    public AccountDAO(){
 
         pm = JdoManager.getPersistanceManager();
         pmLock = JdoManager.pmLock;
     }
 
-    public static AccountDAO getAccountDAO(){
-        if (accountDAO == null){
-            accountDAO = new AccountDAO();
-        }
-        return accountDAO;
-    }
     public void createUser(User user) {
         pmLock.lock();
 
