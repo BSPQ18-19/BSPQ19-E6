@@ -154,9 +154,8 @@ public class ClientController {
     			+ " and initial price " + initialPrice;
         try {
         	System.out.println("Trying to " + info + ".");
-        	currentUser = serviceLocator.getService().(currentUser, name, description);
-			Product newProduct = currentUser.getOwnedProducts().get(currentUser.getOwnedProducts().size()-1);
-        	if (newProduct != null) {
+        	Auction auction = serviceLocator.getService().createPublicAuction(currentUser, product, dayLimit, initialPrice);
+        	if (auction != null) {
 				System.out.println(info + " correct.");
 			}
 			else

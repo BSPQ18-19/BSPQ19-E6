@@ -80,28 +80,33 @@ public class UserAuctionsPanel extends JPanel {
 			}
 		});
 
-		String[] auctionsColumnNames = {"Name", "Description", "", ""};
+		String[] auctionsColumnNames = {"Prod. Name", "Initial Price", "Highest Bid", "Status", "Day Limit, ""};
 		Object[][] auctionsData = null;
 		if (controller.getCurrentUser() != null) {
 			auctionsData = new Object[controller.getCurrentUserAuctions().size() + 1][auctionsColumnNames.length];
 			int i = 0;
 			for (i = 0; i < controller.getCurrentUserAuctions().size(); i++) {
 				Auction tempAuction = controller.getCurrentUserAuctions().get(i);
-				auctionsData[i][0] = tempAuction.getName();
-				auctionsData[i][1] = tempAuction.getDescription();
-				auctionsData[i][2] = "Save";
-				auctionsData[i][3] = "Delete";
+				auctionsData[i][0] = tempAuction.getProduct().getName();
+				auctionsData[i][1] = tempAuction.getInitialPrice();
+				auctionsData[i][2] = tempAuction.getHighestBid();
+				if (tempAuction.isOpen())
+					auctionsData[i][3] = "Open";
+				else
+					auctionsData[i][3] = "Closed";
+				auctionsData[i][4] = tempAuction.getDayLimit();
+				auctionsData[i][5] = "";
 			}
 			auctionsData[i][0] = "";
 			auctionsData[i][1] = "";
-			auctionsData[i][2] = "Create";
-			auctionsData[i][3] = "";
+			auctionsData[i][2] = "-";
+			auctionsData[i][3] = "-";
+			auctionsData[i][4] = "";
+			auctionsData[i][5] = "Create";
 		}
 		auctionsTable = new JTable(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller));
 		@SuppressWarnings("unused")
-		ButtonColumn updateButtonColumn = new ButtonColumn(auctionsTable, new ActionUpdate(), 2);
-		@SuppressWarnings("unused")
-		ButtonColumn deleteButtonColumn = new ButtonColumn(auctionsTable, new ActionDelete(), 3);
+		ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 5);
 		
 		auctionsTableScrollPane = new JScrollPane(auctionsTable);
 		auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);

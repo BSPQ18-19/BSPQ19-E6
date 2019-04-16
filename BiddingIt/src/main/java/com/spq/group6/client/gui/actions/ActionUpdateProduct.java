@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JTable;
 
-public class ActionUpdate extends AbstractAction {
+public class ActionUpdateProduct extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 

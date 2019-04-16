@@ -1,5 +1,7 @@
 package com.spq.group6.client.gui.elements;
 
+import java.sql.Timestamp;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,38 +24,16 @@ public class AuctionJTableModel extends DefaultTableModel {
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return columnIndex == 0 || columnIndex == 1 || columnIndex == 2 || columnIndex == 3 ? true : false;
+		return rowIndex == this.getRowCount() - 1 ? true : false;
 	}
 	
-	public void updateProductAt(int rowIndex, String name, String description) {
-		if (rowIndex == this.getRowCount() - 1) { // last row (new) product (create product)
-			if (controller.createProduct(name, description)) {
-				this.setValueAt("Save", rowIndex, 2);
-				this.setValueAt("Delete", rowIndex, 3);
-				this.addRow(new String[] {"", "", "Create", ""}); // add new row for a new product
-				JOptionPane.showConfirmDialog(null, "Product created correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-			} else
-				JOptionPane.showConfirmDialog(null, "Error creating a product.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-		} else { // (update product)
-			if (controller.updateProduct(controller.getCurrentUserProducts().get(rowIndex), name, description)) {
-				JOptionPane.showConfirmDialog(null, "Product modified correctly", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-			} else
-				JOptionPane.showConfirmDialog(null, "Error creating a product.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-		}
-		
-	}
-
-	public void removeProductAt(int rowIndex) {
-    	if (rowIndex != this.getRowCount() - 1) { // not last row (new) product
-    		Product product = controller.getCurrentUser().getOwnedProducts().get(rowIndex);
-    		if (controller.deleteProduct(product)) {
-    			JOptionPane.showConfirmDialog(null, "Product deleted correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-    			this.removeRow(rowIndex);
-
-    		} else
-    			JOptionPane.showConfirmDialog(null, "Error deleting a product.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-			
-    	}
+	public void createAuction(int rowIndex, Product product, String dayLimit, String initialPrice) {
+		if (controller.createPublicAuction(product, Timestamp.valueOf(dayLimit), Float.parseFloat(initialPrice))) {
+			this.setValueAt("", rowIndex, 4);
+			this.addRow(new String[] {"", "", "", "", "", "Create"}); // add new row for a new auction
+			JOptionPane.showConfirmDialog(null, "Auction created correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		} else
+			JOptionPane.showConfirmDialog(null, "Error creating an auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 	}
 	
 }

@@ -14,8 +14,8 @@ import javax.swing.SwingConstants;
 
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
-import com.spq.group6.client.gui.actions.ActionDelete;
-import com.spq.group6.client.gui.actions.ActionUpdate;
+import com.spq.group6.client.gui.actions.ActionDeleteProduct;
+import com.spq.group6.client.gui.actions.ActionUpdateProduct;
 import com.spq.group6.client.gui.elements.AuctionJTableModel;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.MarketJTableModel;
@@ -102,9 +102,9 @@ public class MarketPanel extends JPanel {
 		}
 		auctionsTable = new JTable(new MarketJTableModel(auctionsData, auctionsColumnNames, controller));
 		@SuppressWarnings("unused")
-		ButtonColumn updateButtonColumn = new ButtonColumn(auctionsTable, new ActionUpdate(), 2);
+		ButtonColumn updateButtonColumn = new ButtonColumn(auctionsTable, new ActionUpdateProduct(), 2);
 		@SuppressWarnings("unused")
-		ButtonColumn deleteButtonColumn = new ButtonColumn(auctionsTable, new ActionDelete(), 3);
+		ButtonColumn deleteButtonColumn = new ButtonColumn(auctionsTable, new ActionDeleteProduct(), 3);
 		
 		auctionsTableScrollPane = new JScrollPane(auctionsTable);
 		auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);

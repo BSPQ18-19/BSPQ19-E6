@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JTable;
 
-public class ActionDelete extends AbstractAction {
+public class ActionDeleteProduct extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 

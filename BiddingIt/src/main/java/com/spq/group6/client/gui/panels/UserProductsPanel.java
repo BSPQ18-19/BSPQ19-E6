@@ -10,8 +10,8 @@ import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.ProductJTableModel;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.actions.ActionDelete;
-import com.spq.group6.client.gui.actions.ActionUpdate;
+import com.spq.group6.client.gui.actions.ActionDeleteProduct;
+import com.spq.group6.client.gui.actions.ActionUpdateProduct;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.client.gui.utils.SDG2Util;
 
@@ -100,9 +100,9 @@ public class UserProductsPanel extends JPanel{
 		}
 		productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames, controller));
 		@SuppressWarnings("unused")
-		ButtonColumn updateButtonColumn = new ButtonColumn(productsTable, new ActionUpdate(), 2);
+		ButtonColumn updateButtonColumn = new ButtonColumn(productsTable, new ActionUpdateProduct(), 2);
 		@SuppressWarnings("unused")
-		ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDelete(), 3);
+		ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDeleteProduct(), 3);
 		
 		productsTableScrollPane = new JScrollPane(productsTable);
 		productsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);
