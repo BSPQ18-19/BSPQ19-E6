@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import com.spq.group6.client.remote.ServiceLocator;
+import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
@@ -96,6 +97,10 @@ public class ClientController {
     
     public List<Product> getCurrentUserProducts() {
     	return currentUser.getOwnedProducts();
+    }
+    
+    public List<Auction> getCurrentUserAuctions() {
+    	return currentUser.getOwnedAuctions();
     }
     
     public boolean createProduct(String name, String description) {

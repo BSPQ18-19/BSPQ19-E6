@@ -62,6 +62,9 @@ public class ClientWindow extends JFrame {
 		case USER_PRODUCTS:
 			mainPanel = new UserProductsPanel(screenWidth, screenHeight, controller);
 			break;
+		case USER_AUCTIONS:
+			mainPanel = new UserAuctionsPanel(screenWidth, screenHeight, controller);
+			break;
 		default:
 			break;
 		}

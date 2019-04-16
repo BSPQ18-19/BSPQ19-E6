@@ -17,6 +17,7 @@ public class MainMenuPanel extends JPanel {
 	private JLabel infoLabel;
 	private JButton marketButton;
 	private JButton userProductsButton;
+	private JButton userAuctionsButton;
 	private JButton logOutButton;
 	
 	private ClientController controller;
@@ -36,10 +37,36 @@ public class MainMenuPanel extends JPanel {
 				(int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 10));
 		SDG2Util.fixJLabelFontSize(infoLabel);	
 		
+		userAuctionsButton = new JButton("My auctions");
+		userAuctionsButton.setSize(screenWidth / 5, screenHeight / 8);
+		userAuctionsButton.setLocation((int) (titleLabel.getLocation().getX()), 
+				(int) (infoLabel.getLocation().getY() + infoLabel.getFont().getSize() + screenHeight / 5));
+		SDG2Util.fixJButtonFontSize(userAuctionsButton);
+		userAuctionsButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_AUCTIONS);
+			}
+		});
+		
+		userProductsButton = new JButton("My products");
+		userProductsButton.setSize(screenWidth / 5, screenHeight / 8);
+		userProductsButton.setLocation((int) (userAuctionsButton.getLocation().getX()), 
+				(int) (userAuctionsButton.getLocation().getY() + userProductsButton.getSize().getHeight() + screenHeight / 20));
+		SDG2Util.fixJButtonFontSize(userProductsButton);
+		userProductsButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_PRODUCTS);
+			}
+		});
+		
 		marketButton = new JButton("Market");		
 		marketButton.setSize(screenWidth / 5, screenHeight / 8);
-		marketButton.setLocation((int) (titleLabel.getLocation().getX()), 
-				(int) (infoLabel.getLocation().getY() + infoLabel.getFont().getSize() + screenHeight / 5));
+		marketButton.setLocation((int) (titleLabel.getLocation().getX() + marketButton.getSize().getWidth() + screenWidth/ 20), 
+				(int) (userAuctionsButton.getLocation().getY()));
 		SDG2Util.fixJButtonFontSize(marketButton);
 		marketButton.addActionListener(new ActionListener() {
 			
@@ -48,19 +75,6 @@ public class MainMenuPanel extends JPanel {
 				JOptionPane.showConfirmDialog(MainMenuPanel.this, "This feature is not implemented yet. Sorry.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				// ClientWindow.getClientWindow(null).changeScreen(ScreenType.MARKET);
 
-			}
-		});
-		
-		userProductsButton = new JButton("My products");
-		userProductsButton.setSize(screenWidth / 5, screenHeight / 8);
-		userProductsButton.setLocation((int) (titleLabel.getLocation().getX()), 
-				(int) (marketButton.getLocation().getY() + userProductsButton.getSize().getHeight() + screenHeight / 20));
-		SDG2Util.fixJButtonFontSize(userProductsButton);
-		userProductsButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_PRODUCTS);
 			}
 		});
 		
@@ -85,6 +99,7 @@ public class MainMenuPanel extends JPanel {
 		this.add(infoLabel);
 		this.add(marketButton);
 		this.add(userProductsButton);
+		this.add(userAuctionsButton);
 		this.add(logOutButton);
 	}
 	
