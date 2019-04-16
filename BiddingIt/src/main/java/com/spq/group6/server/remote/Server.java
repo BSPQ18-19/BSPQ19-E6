@@ -6,12 +6,8 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.*;
-<<<<<<< HEAD
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
-import com.spq.group6.server.utils.observer.remote.RemoteObservable;
-=======
 import com.spq.group6.server.utils.logger.ServerLogger;
->>>>>>> server_db
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
