@@ -6,21 +6,19 @@ import com.spq.group6.server.data.Bid;
 import java.util.ArrayList;
 
 public interface IAuctionDAO {
-    public void persistAuction(Auction auction);
+    void persistAuction(Auction auction);
 
-    public void deleteAuction(Auction auction);
+    void persistBid(Auction auction, Bid bid);
 
-    public void persistBid(long auctionID, Bid bid);
+    void deleteBid(Bid bid);
 
-    public void deleteBid(Bid bid);
+    ArrayList<Auction> getAuctionByCountry(String country);
 
-    public ArrayList<Auction> getAuctionByCountry(String country);
+    ArrayList<Auction> getAuctionByProductName(String name);
 
-    public ArrayList<Auction> getAuctionByProductName(String name);
+    boolean isOpen(long auctionID);
 
-    public boolean isOpen(long auctionID);
+    Bid getHighestBid(long auctionID);
 
-    public Bid getHighestBid(long auctionID);
-
-    public void closeAuction(long auctionID);
+    void closeAuction(long auctionID);
 }

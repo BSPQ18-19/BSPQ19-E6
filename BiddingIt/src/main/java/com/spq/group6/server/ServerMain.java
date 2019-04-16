@@ -2,6 +2,7 @@ package com.spq.group6.server;
 
 import com.spq.group6.server.remote.IServer;
 import com.spq.group6.server.remote.Server;
+import com.spq.group6.server.utils.logger.ServerLogger;
 
 import java.rmi.Naming;
 
@@ -22,14 +23,13 @@ public class ServerMain {
         try {
             IServer objServer = new Server();
             Naming.rebind(name, objServer);
-            System.out.println("Server '" + name + "' active and waiting...");
             java.io.InputStreamReader inputStreamReader = new java.io.InputStreamReader(System.in);
             java.io.BufferedReader stdin = new java.io.BufferedReader(inputStreamReader);
-            @SuppressWarnings("unused")
+            ServerLogger.logger.info("BiddingIt active and listening...");
             String line = stdin.readLine();
 
         } catch (Exception e) {
-            System.err.println("Exception ocurred: " + e.getMessage());
+            ServerLogger.logger.error("Exception ocurred: " + e.getMessage());
             e.printStackTrace();
         }
     }

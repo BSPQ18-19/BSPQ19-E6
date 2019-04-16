@@ -4,6 +4,7 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
+
 import com.spq.group6.server.utils.observer.remote.IRemoteObservable;
 
 import java.sql.Timestamp;

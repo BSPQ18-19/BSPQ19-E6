@@ -6,8 +6,12 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.*;
+<<<<<<< HEAD
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
+=======
+import com.spq.group6.server.utils.logger.ServerLogger;
+>>>>>>> server_db
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -28,34 +32,36 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     public User logIn(String username, String password) throws RemoteException, UserException {
-        System.out.println("Received Log in petition");
+        ServerLogger.logger.debug("Received Log in petition");
         User user = accountService.logIn(username, password);
-        System.out.println("User " + username + " has logged in.");
+        ServerLogger.logger.debug("User " + username + " has logged in.");
         return user;
     }
 
     public User signIn(String username, String password, String country) throws RemoteException, UserException {
-        System.out.println("Received Sign in petition");
+        ServerLogger.logger.debug("Received Sign in petition");
         return accountService.signIn(username, password, country);
     }
 
     public User updateUser(User user) throws RemoteException, UserException {
-        System.out.println("Received update petition");
+        ServerLogger.logger.debug("Received update petition");
         return accountService.updateUser(user);
     }
 
     public User createProduct(User user, String name, String description) throws RemoteException {
-        System.out.println("Received product create petition");
+        ServerLogger.logger.debug("Received product create petition");
         return accountService.createProduct(user, name, description);
     }
 
     public Product updateProduct(Product product, String name, String description) throws RemoteException {
-        System.out.println("Received product update petition");
-        return accountService.updateProduct(product, name, description);
+        ServerLogger.logger.debug("Received product update petition");
+        Product newProduct = accountService.updateProduct(product, name, description);
+        ServerLogger.logger.debug("Product '" + newProduct.getName() + "' updated.");
+        return newProduct;
     }
 
     public User deleteProduct(User user, Product product) throws RemoteException {
-        System.out.println("Received product delete petition");
+        ServerLogger.logger.debug("Received product delete petition");
         return accountService.deleteProduct(user, product);
     }
 
