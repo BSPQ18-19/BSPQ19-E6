@@ -6,14 +6,14 @@ import javax.swing.table.DefaultTableModel;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.server.data.Product;
 
-public class AuctionJTableModel extends DefaultTableModel {
+public class MarketJTableModel extends DefaultTableModel {
 
 	// TODO
 	
 	private static final long serialVersionUID = 1L;
 	private ClientController controller;
 	
-	public AuctionJTableModel(Object[][] data, String[] columnNames, ClientController controller) {
+	public MarketJTableModel(Object[][] data, String[] columnNames, ClientController controller) {
     	super(data, columnNames);
 		
 		this.controller = controller;

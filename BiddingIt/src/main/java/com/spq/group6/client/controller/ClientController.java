@@ -1,6 +1,7 @@
 package com.spq.group6.client.controller;
 
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.spq.group6.client.remote.ServiceLocator;
@@ -99,10 +100,6 @@ public class ClientController {
     	return currentUser.getOwnedProducts();
     }
     
-    public List<Auction> getCurrentUserAuctions() {
-    	return currentUser.getOwnedAuctions();
-    }
-    
     public boolean createProduct(String name, String description) {
     	String info = "Create the product " + name + " with description " + description;
         try {
@@ -146,6 +143,30 @@ public class ClientController {
 		}
     	return true;
     }
+    
+    
+    public List<Auction> getCurrentUserAuctions() {
+    	return currentUser.getOwnedAuctions();
+    }
+    
+    public boolean createPublicAuction(Product product, Timestamp dayLimit, float initialPrice) {
+    	String info = "Create the auction for product " + product.getName() + " with day limit " + dayLimit
+    			+ " and initial price " + initialPrice;
+        try {
+        	System.out.println("Trying to " + info + ".");
+        	currentUser = serviceLocator.getService().(currentUser, name, description);
+			Product newProduct = currentUser.getOwnedProducts().get(currentUser.getOwnedProducts().size()-1);
+        	if (newProduct != null) {
+				System.out.println(info + " correct.");
+			}
+			else
+            	System.out.println(info + " incorrect. Server returned null.");
+        } catch (RemoteException e) {
+			e.printStackTrace();
+		}
+    	return true;
+    }
+
 
 	public void exit(){
     	System.exit(0);

@@ -73,7 +73,7 @@ public class MainMenuPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showConfirmDialog(MainMenuPanel.this, "This feature is not implemented yet. Sorry.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				// ClientWindow.getClientWindow(null).changeScreen(ScreenType.MARKET);
+				ClientWindow.getClientWindow(null).changeScreen(ScreenType.MARKET);
 
 			}
 		});

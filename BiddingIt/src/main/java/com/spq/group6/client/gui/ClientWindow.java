@@ -56,8 +56,7 @@ public class ClientWindow extends JFrame {
 			mainPanel = new MainMenuPanel(screenWidth, screenHeight, controller);
 			break;	
 		case MARKET:
-			// TODO
-			mainPanel = new InitialPanel(screenWidth, screenHeight);
+			mainPanel = new MarketPanel(screenWidth, screenHeight, controller);
 			break;
 		case USER_PRODUCTS:
 			mainPanel = new UserProductsPanel(screenWidth, screenHeight, controller);
