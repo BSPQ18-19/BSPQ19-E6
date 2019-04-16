@@ -1,8 +1,6 @@
 package com.spq.group6.server.dao;
 
-import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
@@ -10,19 +8,22 @@ import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 
 import java.util.List;
+import java.util.concurrent.locks.Lock;
 
 
 public class AccountDAO implements IAccountDAO {
-    private static PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+    private static AccountDAO accountDAO = null;
     private PersistenceManager pm;
+    private Lock pmLock;
 
-    public AccountDAO() {
-        pm = pmf.getPersistenceManager();
-        pm.setDetachAllOnCommit(true);
-        pm.getFetchPlan().setMaxFetchDepth(3);
+    public AccountDAO(){
+
+        pm = JdoManager.getPersistanceManager();
+        pmLock = JdoManager.pmLock;
     }
 
     public void createUser(User user) {
+        pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
 
@@ -39,9 +40,11 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
     }
 
     public void deleteUser(User user) {
+        pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
 
@@ -59,9 +62,11 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
     }
 
     public User getUserByUsername(String username) {
+        pmLock.lock();
         Transaction tx = pm.currentTransaction();
 
         User user = null;
@@ -84,6 +89,7 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
         return user;
     }
 
@@ -96,6 +102,8 @@ public class AccountDAO implements IAccountDAO {
     }
 
     public void deleteProduct(Product product) {
+        pmLock.lock();
+
         Transaction tx = pm.currentTransaction();
 
         try {
@@ -110,10 +118,13 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
     }
 
 
     private void updateObject(Object obj) {
+        pmLock.lock();
+
         Transaction tx = pm.currentTransaction();
 
         try {
@@ -130,5 +141,6 @@ public class AccountDAO implements IAccountDAO {
                 tx.rollback();
             }
         }
+        pmLock.unlock();
     }
 }

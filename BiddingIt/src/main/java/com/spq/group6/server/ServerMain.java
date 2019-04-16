@@ -4,10 +4,8 @@ import com.spq.group6.server.remote.IServer;
 import com.spq.group6.server.remote.Server;
 
 import java.rmi.Naming;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
-public class ServerMain{
+public class ServerMain {
 
     public static void main(String[] args) {
         if (args.length != 3) {
@@ -25,10 +23,10 @@ public class ServerMain{
             IServer objServer = new Server();
             Naming.rebind(name, objServer);
             System.out.println("Server '" + name + "' active and waiting...");
-            java.io.InputStreamReader inputStreamReader = new java.io.InputStreamReader ( System.in );
-            java.io.BufferedReader stdin = new java.io.BufferedReader ( inputStreamReader );
+            java.io.InputStreamReader inputStreamReader = new java.io.InputStreamReader(System.in);
+            java.io.BufferedReader stdin = new java.io.BufferedReader(inputStreamReader);
             @SuppressWarnings("unused")
-            String line  = stdin.readLine();
+            String line = stdin.readLine();
 
         } catch (Exception e) {
             System.err.println("Exception ocurred: " + e.getMessage());

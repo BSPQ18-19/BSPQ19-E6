@@ -6,17 +6,17 @@ import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
 
-public class Account implements IAccount {
+public class AccountService implements IAccountService {
     IAccountDAO accountDAO;
 
-    public Account() {
+    public AccountService() {
         accountDAO = new AccountDAO();
     }
 
-    public User logIn(String username, String password) throws UserException{
+    public User logIn(String username, String password) throws UserException {
         User user = accountDAO.getUserByUsername(username);
-        if(user == null) throw new UserException("User does not exist");
-        if (! password.equals(user.getPassword())) throw new UserException("Invalid username or password");
+        if (user == null) throw new UserException("User does not exist");
+        if (!password.equals(user.getPassword())) throw new UserException("Invalid username or password");
         return user;
     }
 
@@ -34,30 +34,28 @@ public class Account implements IAccount {
         return user;
     }
 
-    @Override
     public User createProduct(User user, String name, String description) {
         Product newProduct = new Product(name, description);
-    	user.getOwnedProducts().add(newProduct);
+        user.getOwnedProducts().add(newProduct);
         accountDAO.updateUser(user);
         return user;
     }
 
-    @Override
     public Product updateProduct(Product product, String name, String description) {
         product.setName(name);
         product.setDescription(description);
-    	accountDAO.updateProduct(product);
-    	return product;
+        accountDAO.updateProduct(product);
+        return product;
     }
 
-    public User deleteProduct(User user, Product product){
+    public User deleteProduct(User user, Product product) {
         user.getOwnedProducts().remove(product);
         accountDAO.updateUser(user);
         accountDAO.deleteProduct(product);
         return user;
     }
 
-    private void checkDuplicatedUser(User user) throws UserException{
+    private void checkDuplicatedUser(User user) throws UserException {
         String username = user.getUsername();
         if (accountDAO.getUserByUsername(username) != null) throw new UserException("Username already in use.");
     }
