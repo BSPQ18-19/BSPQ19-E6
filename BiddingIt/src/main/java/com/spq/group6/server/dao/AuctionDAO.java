@@ -8,6 +8,7 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.utils.logger.ServerLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class AuctionDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception deleting data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -68,7 +69,7 @@ public class AuctionDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception deleting data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -92,7 +93,7 @@ public class AuctionDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception deleting data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -121,7 +122,7 @@ public class AuctionDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception deleting data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -146,7 +147,7 @@ public class AuctionDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception deleting data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -173,7 +174,7 @@ public class AuctionDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception deleting data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -194,7 +195,7 @@ public class AuctionDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception inserting/updating data into db: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception inserting/updating data into db: " + ex.getMessage());
 
         } finally {
             if (tx.isActive()) {

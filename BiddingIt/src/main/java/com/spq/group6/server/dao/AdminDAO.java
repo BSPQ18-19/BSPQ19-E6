@@ -8,6 +8,7 @@ import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.utils.logger.ServerLogger;
 
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -41,7 +42,7 @@ public class AdminDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception taking data from db: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data from db: " + ex.getMessage());
 
         } finally {
             if (tx.isActive()) {
@@ -64,7 +65,7 @@ public class AdminDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception inserting data into db: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception inserting data into db: " + ex.getMessage());
 
         } finally {
             if (tx.isActive()) {
@@ -85,7 +86,7 @@ public class AdminDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            System.err.println("* Exception deleting data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
         } finally {
             if (tx.isActive()) {
                 tx.rollback();

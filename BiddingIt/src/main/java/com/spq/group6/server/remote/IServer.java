@@ -3,7 +3,7 @@ package com.spq.group6.server.remote;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
-import com.spq.group6.server.exceptions.BidException;
+import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 
 import java.rmi.Remote;
@@ -28,7 +28,7 @@ public interface IServer extends Remote {
     // Auctions API
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException;
 
-    public Auction bid(Auction auction, User user, float amount) throws RemoteException, BidException;
+    public Auction bid(Auction auction, User user, float amount) throws RemoteException, AuctionException;
 
     public ArrayList<Auction> searchAuctionByCountry(String country) throws RemoteException;
 
