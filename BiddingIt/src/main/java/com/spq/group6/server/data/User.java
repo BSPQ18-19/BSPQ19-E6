@@ -2,6 +2,7 @@ package com.spq.group6.server.data;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @PersistenceCapable(detachable = "true")
 public class User implements Serializable {
     private static final long serialVersionUID = 1067819197739525240L;
+    @PrimaryKey
     private String username;
     private String password;
     private String country;

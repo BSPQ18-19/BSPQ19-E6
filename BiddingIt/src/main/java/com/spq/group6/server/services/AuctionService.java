@@ -67,6 +67,10 @@ public class AuctionService implements IAuctionService {
         return auctionDAO.getAuctionByProductName(name);
     }
 
+    public ArrayList<Auction> searchAuctionByUser(User user) {
+        return auctionDAO.getAuctionByUser(user);
+    }
+
     public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
         RemoteObservable observable = observables.get(auction.getAuctionID());
         observable.addRemoteObserver(observer);

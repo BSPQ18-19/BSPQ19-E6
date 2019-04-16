@@ -31,6 +31,8 @@ public interface IServer extends Remote, IRemoteObservable {
 
     public Auction bid(Auction auction, User user, float amount) throws RemoteException, AuctionException;
 
+    public ArrayList<Auction> searchAuctionByUser(User user) throws RemoteException;
+
     public ArrayList<Auction> searchAuctionByCountry(String country) throws RemoteException;
 
     public ArrayList<Auction> searchAuctionByProductName(String name) throws RemoteException;

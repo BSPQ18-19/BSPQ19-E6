@@ -13,7 +13,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class Server extends UnicastRemoteObject implements IServer {
@@ -68,6 +67,10 @@ public class Server extends UnicastRemoteObject implements IServer {
 
     public Auction bid(Auction auction, User user, float amount) throws RemoteException, AuctionException {
         return auctionService.bid(auction, user, amount);
+    }
+
+    public ArrayList<Auction> searchAuctionByUser(User user) throws RemoteException {
+        return auctionService.searchAuctionByUser(user);
     }
 
     public ArrayList<Auction> searchAuctionByCountry(String country) throws RemoteException {

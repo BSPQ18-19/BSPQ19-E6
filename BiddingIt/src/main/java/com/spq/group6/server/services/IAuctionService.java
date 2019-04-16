@@ -18,4 +18,6 @@ public interface IAuctionService extends IRemoteObservable {
     public ArrayList<Auction> searchAuctionByCountry(String country);
 
     public ArrayList<Auction> searchAuctionByProductName(String name);
+
+    public ArrayList<Auction> searchAuctionByUser(User user);
 }
