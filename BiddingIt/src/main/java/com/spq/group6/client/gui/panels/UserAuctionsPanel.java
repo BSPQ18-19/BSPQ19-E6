@@ -14,8 +14,7 @@ import javax.swing.SwingConstants;
 
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
-import com.spq.group6.client.gui.actions.ActionDelete;
-import com.spq.group6.client.gui.actions.ActionUpdate;
+import com.spq.group6.client.gui.actions.ActionCreateAuction;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.AuctionJTableModel;
 import com.spq.group6.client.gui.utils.SDG2Util;
@@ -80,7 +79,7 @@ public class UserAuctionsPanel extends JPanel {
 			}
 		});
 
-		String[] auctionsColumnNames = {"Prod. Name", "Initial Price", "Highest Bid", "Status", "Day Limit, ""};
+		String[] auctionsColumnNames = {"Prod. Name", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
 		Object[][] auctionsData = null;
 		if (controller.getCurrentUser() != null) {
 			auctionsData = new Object[controller.getCurrentUserAuctions().size() + 1][auctionsColumnNames.length];
@@ -106,7 +105,7 @@ public class UserAuctionsPanel extends JPanel {
 		}
 		auctionsTable = new JTable(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller));
 		@SuppressWarnings("unused")
-		ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 5);
+		ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 6);
 		
 		auctionsTableScrollPane = new JScrollPane(auctionsTable);
 		auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);

@@ -29,7 +29,7 @@ public class AuctionJTableModel extends DefaultTableModel {
 	
 	public void createAuction(int rowIndex, Product product, String dayLimit, String initialPrice) {
 		if (controller.createPublicAuction(product, Timestamp.valueOf(dayLimit), Float.parseFloat(initialPrice))) {
-			this.setValueAt("", rowIndex, 4);
+			this.setValueAt("", rowIndex, 5);
 			this.addRow(new String[] {"", "", "", "", "", "Create"}); // add new row for a new auction
 			JOptionPane.showConfirmDialog(null, "Auction created correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 		} else
