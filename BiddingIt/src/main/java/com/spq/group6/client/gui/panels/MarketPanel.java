@@ -90,8 +90,8 @@ public class MarketPanel extends JPanel {
 			int i = 0;
 			for (i = 0; i < controller.getCurrentUserAuctions().size(); i++) {
 				Auction tempAuction = controller.getCurrentUserAuctions().get(i);
-				auctionsData[i][0] = tempAuction.getName();
-				auctionsData[i][1] = tempAuction.getDescription();
+				auctionsData[i][0] = tempAuction.getProduct().getName();
+				auctionsData[i][1] = tempAuction.getProduct().getDescription();
 				auctionsData[i][2] = "Save";
 				auctionsData[i][3] = "Delete";
 			}

@@ -2,6 +2,7 @@ package com.spq.group6.client.controller;
 
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.spq.group6.client.remote.ServiceLocator;
@@ -146,7 +147,16 @@ public class ClientController {
     
     
     public List<Auction> getCurrentUserAuctions() {
-    	return currentUser.getOwnedAuctions();
+		ArrayList<Auction> userAuctions = new ArrayList<>();
+    	String info = "Get auctions from user " + currentUser;
+        try {
+        	System.out.println("Trying to " + info + ".");
+			userAuctions = serviceLocator.getService().searchAuctionByUser(currentUser);
+			System.out.println(info + " correct.");
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+    	return userAuctions;
     }
     
     public boolean createPublicAuction(Product product, Timestamp dayLimit, float initialPrice) {
