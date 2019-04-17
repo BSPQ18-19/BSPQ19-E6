@@ -1,6 +1,7 @@
 package com.spq.group6.server.services;
 
 import com.spq.group6.server.dao.AccountDAO;
+import com.spq.group6.server.dao.AdminDAO;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
@@ -9,7 +10,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AccountTest {
-    private AccountDAO dao = new AccountDAO();
+    private AccountDAO accountDao = new AccountDAO();
+    private AdminDAO adminDao = new AdminDAO();
     private AccountService service = new AccountService();
 
     @Test
@@ -34,7 +36,7 @@ public class AccountTest {
             assertTrue(true);
         }
         // Clean
-        dao.deleteUser(testUser);
+        adminDao.deleteUser(testUser);
     }
 
     @Test
@@ -43,7 +45,7 @@ public class AccountTest {
         // Setup
         String username = "test_user", pass = "test_pass", country = "uk";
         User testUser = new User(username, pass, country);
-        dao.createUser(testUser);
+        accountDao.createUser(testUser);
         // Test
 
         try {
@@ -57,7 +59,7 @@ public class AccountTest {
             assertTrue(true);
         }
         // Clean
-        dao.deleteUser(testUser);
+        adminDao.deleteUser(testUser);
     }
 
     @Test
@@ -66,18 +68,18 @@ public class AccountTest {
         // Setup
         User persistedUser;
         User testUser = new User("test_user", "test_pass", "uk");
-        dao.createUser(testUser);
+        accountDao.createUser(testUser);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);
         Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() -1);
         // Test
         assertEquals(prodName, testProduct.getName());
         assertEquals(prodDescription, testProduct.getDescription());
-        persistedUser = dao.getUserByUsername(testUser.getUsername());
+        persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertEquals(1, persistedUser.getOwnedProducts().size());
         assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
         // Clean
-        dao.deleteUser(testUser);
+        adminDao.deleteUser(testUser);
     }
 
     @Test
@@ -85,7 +87,7 @@ public class AccountTest {
     {
         // Setup
         User testUser = new User("test_user", "test_pass", "uk");
-        dao.createUser(testUser);
+        accountDao.createUser(testUser);
         String oldName = "test_prod", newName = "test_super_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, newName, prodDescription);
         Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() -1);
@@ -93,10 +95,10 @@ public class AccountTest {
         // Test
         service.updateProduct(testProduct, newName, prodDescription);
         assertEquals(newName, testProduct.getName());
-        User persistedUser = dao.getUserByUsername(testUser.getUsername());
+        User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertEquals(newName, persistedUser.getOwnedProducts().get(0).getName());
         // Clean
-        dao.deleteUser(testUser);
+        adminDao.deleteUser(testUser);
     }
 
     @Test
@@ -104,16 +106,16 @@ public class AccountTest {
     {
         // Setup
         User testUser = new User("test_user", "test_pass", "uk");
-        dao.createUser(testUser);
+        accountDao.createUser(testUser);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);
         Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() -1);
         // Test
         service.deleteProduct(testUser, testProduct);
-        User persistedUser = dao.getUserByUsername(testUser.getUsername());
+        User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertEquals(0, persistedUser.getOwnedProducts().size());
         assertEquals(0, testUser.getOwnedProducts().size());
         // Clean
-        dao.deleteUser(testUser);
+        adminDao.deleteUser(testUser);
     }
 }
