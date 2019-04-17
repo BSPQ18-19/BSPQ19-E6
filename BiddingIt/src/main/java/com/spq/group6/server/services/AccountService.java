@@ -5,6 +5,7 @@ import com.spq.group6.server.dao.IAccountDAO;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
+import com.spq.group6.server.utils.logger.ServerLogger;
 
 public class AccountService implements IAccountService {
     IAccountDAO accountDAO;
@@ -24,7 +25,7 @@ public class AccountService implements IAccountService {
         User user = new User(username, password, country);
         checkDuplicatedUser(user);
         accountDAO.createUser(user);
-        if (user != null) System.out.println("User '" + username + "' has signed in.");
+        if (user != null) ServerLogger.logger.debug("User '" + username + "' has signed in.");
         return user;
     }
 

@@ -4,10 +4,9 @@ import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 
 public interface IAccountDAO {
-    public void createUser(User user);
-    public void deleteUser(User user);
-    public User getUserByUsername(String username);
-    public void updateUser(User user);
-    public void updateProduct(Product product);
-    public void deleteProduct(Product product);
+    void createUser(User user);
+    User getUserByUsername(String username);
+    void updateUser(User user);
+    void updateProduct(Product product);
+    void deleteProduct(Product product);
 }

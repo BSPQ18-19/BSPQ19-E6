@@ -4,6 +4,7 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
+
 import com.spq.group6.server.utils.observer.remote.IRemoteObservable;
 
 import java.sql.Timestamp;
@@ -17,4 +18,6 @@ public interface IAuctionService extends IRemoteObservable {
     public ArrayList<Auction> searchAuctionByCountry(String country);
 
     public ArrayList<Auction> searchAuctionByProductName(String name);
+
+    public ArrayList<Auction> searchAuctionByUser(User user);
 }
