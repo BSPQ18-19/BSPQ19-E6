@@ -24,7 +24,7 @@ public class AuctionJTableModel extends DefaultTableModel {
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return rowIndex == this.getRowCount() - 1 ? true : false;
+		return (rowIndex == this.getRowCount() - 1 && columnIndex != 2 && columnIndex != 3) ? true : false;
 	}
 	
 	public void createAuction(int rowIndex, Product product, String dayLimit, String initialPrice) {

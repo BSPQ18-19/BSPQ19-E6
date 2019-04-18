@@ -148,14 +148,15 @@ public class ClientController {
     
     public List<Auction> getCurrentUserAuctions() {
 		ArrayList<Auction> userAuctions = new ArrayList<>();
-    	String info = "Get auctions from user " + currentUser;
-        try {
+    	String info = "Get auctions from user " + currentUser.getUsername();
+//        try {
         	System.out.println("Trying to " + info + ".");
-			userAuctions = serviceLocator.getService().searchAuctionByUser(currentUser);
+			//userAuctions = serviceLocator.getService().searchAuctionByUser(currentUser);
+        	userAuctions.add(new Auction(currentUser, new Product("Prod1", "desc1"), new Timestamp(1000), 10, null));
 			System.out.println(info + " correct.");
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
     	return userAuctions;
     }
     

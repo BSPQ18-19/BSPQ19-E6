@@ -44,4 +44,9 @@ public class Product implements Serializable {
         return name.equals(product.name) &&
                 description.equals(product.description);
     }
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }
