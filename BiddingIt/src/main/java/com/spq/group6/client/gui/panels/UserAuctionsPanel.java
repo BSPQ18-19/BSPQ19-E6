@@ -116,18 +116,16 @@ public class UserAuctionsPanel extends JPanel {
 		@SuppressWarnings("unused")
 		ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 5);
 		
-		// set column 1 to combobox
-		
+		// set column 0 to combobox
 		List<Product> userProductsNotAuction = controller.getCurrentUserProducts(); // get all user products		
 		for (int i = userProductsNotAuction.size() - 1; i >= 0; i--) // remove products already in an auction
 			for (int j = 0; j < userAuctions.size(); j++)
 				if (userProductsNotAuction.get(i).equals(userAuctions.get(j).getProduct()))
 					userProductsNotAuction.remove(i);
-		Product[] userProductsNotAuctionString = new Product[userProductsNotAuction.size()];
+		Product[] userProductsNotAuctionArray = new Product[userProductsNotAuction.size()];
 		for (int i = 0; i < userProductsNotAuction.size(); i++)
-			userProductsNotAuctionString[i] = userProductsNotAuction.get(i);
-		JComboBox<Product> prodComboBox = new JComboBox<Product>(userProductsNotAuctionString);
-					
+			userProductsNotAuctionArray[i] = userProductsNotAuction.get(i);
+		JComboBox<Product> prodComboBox = new JComboBox<Product>(userProductsNotAuctionArray);
 		auctionsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(prodComboBox));
 		
 		auctionsTableScrollPane = new JScrollPane(auctionsTable);
