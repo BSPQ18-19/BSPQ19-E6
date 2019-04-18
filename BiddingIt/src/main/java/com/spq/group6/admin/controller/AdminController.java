@@ -9,7 +9,7 @@ import com.spq.group6.admin.remote.AdminServiceLocator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.Administrator;
-import com.spq.group6.server.exceptions.UserException; //AdminException needed
+import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.admin.Admin;
 import com.spq.group6.admin.gui.AdminWindow;
 
@@ -28,14 +28,14 @@ public class AdminController {
     	String info = "Log in with email " + email + " and password " + password;
         try {
         	System.out.println("Trying to " + info + ".");
-            Administrator admin = adminServiceLocator.getService().logIn(email, password);
+            Administrator admin = adminServiceLocator.getService().adminLogIn(email, password);
         	if (admin != null) {
             	System.out.println(info + " correct.");
             	this.currentAdmin = admin;
             	return true;
             } else
             	System.out.println(info + " incorrect. Server returned null.");
-        } catch (UserException re) {
+        } catch (AdministratorException re) {
         	System.out.println(info + ". Exception found in server: " + re);
         }
         return false;

@@ -4,7 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.spq.group6.admin.controller.AdminController;
-import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.admin.gui.panels.LogInPanel;
+import com.spq.group6.admin.gui.utils.ScreenType;
 
 public class AdminWindow extends JFrame {
 
@@ -30,7 +31,7 @@ public class AdminWindow extends JFrame {
 		this.screenWidth = (int) windowSize.getWidth();
 		this.screenHeight = (int) windowSize.getHeight();
 		
-		changeScreen(ScreenType.INITIAL);
+		changeScreen(ScreenType.LOG_IN);
 		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
@@ -39,15 +40,9 @@ public class AdminWindow extends JFrame {
 		this.currentScreenType = nextScreenType;
 		
 		switch(nextScreenType) {
-//		case INITIAL:
-//			mainPanel = new InitialPanel(screenWidth, screenHeight);
-//			break;
-//		case REGISTER:
-//			mainPanel = new RegisterPanel(screenWidth, screenHeight, controller);
-//			break;
-//		case LOG_IN:
-//			mainPanel = new LogInPanel(screenWidth, screenHeight, controller);
-//			break;
+		case LOG_IN:
+			mainPanel = new LogInPanel(screenWidth, screenHeight, controller);
+			break;
 //		case LOG_IN_SUCCESFUL:
 //			mainPanel = new LogInSuccesfulPanel(screenWidth, screenHeight, data[0]);
 //			break;
