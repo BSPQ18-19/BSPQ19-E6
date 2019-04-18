@@ -110,7 +110,7 @@ public class AuctionDAO implements IAuctionDAO{
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("auctionID == '" + auctionID + "'");
+            query.setFilter("auctionID == " + auctionID );
             List<Auction> result = (List<Auction>) query.execute();
             Auction auction = result.size() != 1 ? null : result.get(0); // Retrieves and detaches the Auction
             if(auction == null){
@@ -139,7 +139,7 @@ public class AuctionDAO implements IAuctionDAO{
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("auctionID == '" + auctionID + "'");
+            query.setFilter("auctionID == " + auctionID);
             List<Auction> result = (List<Auction>) query.execute();
             highestBid = result.size() != 1 ? null : result.get(0).getHighestBid(); // Retrieves and detaches the Bid
 
@@ -163,7 +163,7 @@ public class AuctionDAO implements IAuctionDAO{
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("auctionID == '" + auctionID + "'");
+            query.setFilter("auctionID == " + auctionID );
             List<Auction> result = (ArrayList<Auction>) query.execute();
             Auction auction = (result.size() != 1) ? null : result.get(0);
             if(auction != null) {

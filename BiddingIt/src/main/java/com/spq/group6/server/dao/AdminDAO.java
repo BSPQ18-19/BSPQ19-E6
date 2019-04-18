@@ -4,10 +4,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import com.spq.group6.server.data.Administrator;
-import com.spq.group6.server.data.Auction;
-import com.spq.group6.server.data.Product;
-import com.spq.group6.server.data.User;
+import com.spq.group6.server.data.*;
 import com.spq.group6.server.utils.logger.ServerLogger;
 
 import java.util.List;
@@ -80,6 +77,8 @@ public class AdminDAO implements IAdminDAO{
         try {
             tx.begin();
             pm.deletePersistent(auction);
+            Bid bid = auction.getHighestBid();
+            pm.deletePersistent(bid);
             tx.commit();
         } catch (Exception ex) {
 

@@ -50,7 +50,7 @@ public class AuctionService implements IAuctionService {
             throw  new AuctionException("Auction is closed");
         }
         Bid oldBid = auctionDAO.getHighestBid(auction.getAuctionID());
-        if (oldBid.getAmount() >= amount){
+        if (amount< auction.getInitialPrice() || (oldBid != null && oldBid.getAmount() >= amount)){
             throw  new AuctionException("Too low bid");
         }
         Bid newBid = new Bid(user, amount);
