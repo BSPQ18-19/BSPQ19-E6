@@ -13,7 +13,6 @@ import java.util.concurrent.locks.Lock;
 
 
 public class AccountDAO implements IAccountDAO {
-    private static AccountDAO accountDAO = null;
     private PersistenceManager pm;
     private Lock pmLock;
 

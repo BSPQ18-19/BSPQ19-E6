@@ -14,9 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
-public class AuctionDAO {
+public class AuctionDAO implements IAuctionDAO{
 
-    private static AccountDAO accountDAO = null;
     private PersistenceManager pm;
     private Lock pmLock;
 
@@ -181,6 +180,11 @@ public class AuctionDAO {
             }
         }
         pmLock.unlock();
+    }
+
+    @Override
+    public ArrayList<Auction> getAuctionByUser(User user) {
+        return null;
     }
 
     private void updateObject(Object obj) {

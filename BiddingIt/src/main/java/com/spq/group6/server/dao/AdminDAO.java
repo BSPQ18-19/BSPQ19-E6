@@ -13,9 +13,8 @@ import com.spq.group6.server.utils.logger.ServerLogger;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
-public class AdminDAO {
+public class AdminDAO implements IAdminDAO{
 
-    private static AccountDAO accountDAO = null;
     private PersistenceManager pm;
     private Lock pmLock;
 
