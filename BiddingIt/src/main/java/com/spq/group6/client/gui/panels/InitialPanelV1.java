@@ -28,7 +28,7 @@ public class InitialPanelV1 extends JPanel {
 		this.setLayout(null);
 		this.setBackground(Color.CYAN);
 		titleLabel = new JLabel("", SwingConstants.CENTER);
-		titleLabel.setIcon(new ImageIcon(InitialPanelV1.class.getResource("/com/spq/group6/util/BiddingIt300x300.png")));
+		titleLabel.setIcon(new ImageIcon(InitialPanelV1.class.getResource("/com/spq/group6/client/gui/utils/BiddingIt300x300.png")));
 		titleLabel.setBounds(0, 0, 640, 480);
 		titleLabel.setSize(screenWidth / 2, screenHeight / 2);
 		titleLabel.setLocation(screenWidth / 2 - titleLabel.getWidth() / 2, screenHeight / 3 - titleLabel.getHeight() / 2);	

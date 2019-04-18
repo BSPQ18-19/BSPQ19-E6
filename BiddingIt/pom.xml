@@ -287,6 +287,38 @@
                 </plugins>
             </build>
         </profile>
+        
+        <!-- run as 'mvn exec:java -Padmin' -->
+        <profile>
+            <id>admin</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <configuration>
+                            <mainClass>com.spq.group6.admin.Admin</mainClass>
+                            <systemProperties>
+                                <systemProperty>
+                                    <key>java.security.manager</key>
+                                    <value>java.rmi.RMISecurityManager</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <key>java.security.policy</key>
+                                    <value>${policy.file}</value>
+                                </systemProperty>
+                            </systemProperties>
+                            <arguments>
+                                <argument>${server.IP}</argument>
+                                <argument>${server.port}</argument>
+                                <argument>${server.Name}</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <repositories>
