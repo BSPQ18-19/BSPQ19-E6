@@ -4,28 +4,24 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import com.spq.group6.server.data.Administrator;
-import com.spq.group6.server.data.Auction;
-import com.spq.group6.server.data.Product;
-import com.spq.group6.server.data.User;
+import com.spq.group6.server.data.*;
 import com.spq.group6.server.utils.logger.ServerLogger;
 
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
-public class AdminDAO {
+public class AdminDAO implements IAdminDAO{
 
-    private static AccountDAO accountDAO = null;
     private PersistenceManager pm;
     private Lock pmLock;
 
-    public AdminDAO(){
+    public AdminDAO() {
 
         pm = JdoManager.getPersistanceManager();
         pmLock = JdoManager.pmLock;
     }
 
-    public Administrator getAdministratorByUsername(String username){
+    public Administrator getAdministratorByUsername(String username) {
         pmLock.lock();
         Transaction tx = pm.currentTransaction();
 
@@ -53,9 +49,8 @@ public class AdminDAO {
         return admin;
     }
 
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
         pmLock.lock();
-
         Transaction tx = pm.currentTransaction();
 
         try {
@@ -64,7 +59,6 @@ public class AdminDAO {
             pm.deletePersistent(user); // Saves user in the Database
             tx.commit();
         } catch (Exception ex) {
-
             ServerLogger.logger.error("* Exception inserting data into db: " + ex.getMessage());
 
         } finally {
@@ -75,7 +69,7 @@ public class AdminDAO {
         pmLock.unlock();
     }
 
-    public void deleteAuction(Auction auction){ //debería poderse hacer un método genérico para todos los delete
+    public void deleteAuction(Auction auction) { //debería poderse hacer un método genérico para todos los delete
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
@@ -83,6 +77,8 @@ public class AdminDAO {
         try {
             tx.begin();
             pm.deletePersistent(auction);
+            Bid bid = auction.getHighestBid();
+            pm.deletePersistent(bid);
             tx.commit();
         } catch (Exception ex) {
 
