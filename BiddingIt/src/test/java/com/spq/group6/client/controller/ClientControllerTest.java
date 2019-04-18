@@ -127,7 +127,7 @@ public class ClientControllerTest {
         assertEquals(product, createdProduct);
     }
 
-    //@Test
+    @Test
     public void updateProductTest() throws RemoteException {
         assertTrue(clientController.signIn(user.getUsername(), user.getPassword(), user.getCountry()));
         assertTrue(clientController.createProduct(product.getName(), product.getDescription()));
@@ -140,6 +140,16 @@ public class ClientControllerTest {
         assertEquals(newName, createdProduct.getName());
         assertEquals(newDescription, createdProduct.getDescription());
     }
+
+    @Test
+    public void deleteProductTest() throws RemoteException {
+        assertTrue(clientController.signIn(user.getUsername(), user.getPassword(), user.getCountry()));
+        assertTrue(clientController.createProduct(product.getName(), product.getDescription()));
+        product = clientController.getCurrentUser().getOwnedProducts().get(0);
+
+        assertTrue(clientController.deleteProduct(product));
+    }
+
 
 
     @After

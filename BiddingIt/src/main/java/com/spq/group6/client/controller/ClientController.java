@@ -119,11 +119,15 @@ public class ClientController {
     	String info = "Update the product " + name + " with description " + description;
         try {
         	System.out.println("Trying to " + info + ".");
-			product = serviceLocator.getService().updateProduct(product, name, description);
-			if (product != null)
+			Product updatedProduct = serviceLocator.getService().updateProduct(product, name, description);
+			if (updatedProduct != null){
 				System.out.println(info + " correct.");
-			else
-            	System.out.println(info + " incorrect. Server returned null.");
+				int index = currentUser.getOwnedProducts().indexOf(product);
+				currentUser.getOwnedProducts().set(index, updatedProduct);
+			}
+			else {
+				System.out.println(info + " incorrect. Server returned null.");
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

@@ -8,8 +8,9 @@ import com.spq.group6.server.exceptions.UserException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.*;
 
-public class AccountTest {
+public class AccountServiceTest {
     private AccountDAO accountDao = new AccountDAO();
     private AdminDAO adminDao = new AdminDAO();
     private AccountService service = new AccountService();
