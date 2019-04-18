@@ -1,8 +1,10 @@
 package com.spq.group6.server.remote;
 
+import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.utils.observer.remote.IRemoteObservable;
@@ -38,6 +40,8 @@ public interface IServer extends Remote, IRemoteObservable {
     public ArrayList<Auction> searchAuctionByProductName(String name) throws RemoteException;
 
     // Administrator API
+    public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException;
+
     public void deleteAuction(Auction auction) throws RemoteException;
 
     public void deleteUser(User user) throws RemoteException;

@@ -1,8 +1,10 @@
 package com.spq.group6.server.remote;
 
+import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.*;
@@ -79,6 +81,10 @@ public class Server extends UnicastRemoteObject implements IServer {
 
     public ArrayList<Auction> searchAuctionByProductName(String name) throws RemoteException {
         return auctionService.searchAuctionByProductName(name);
+    }
+
+    public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException {
+        return adminService.logIn(username, password);
     }
 
     public void deleteAuction(Auction auction) throws RemoteException {

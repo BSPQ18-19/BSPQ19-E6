@@ -41,7 +41,6 @@ public class ClientController {
     	String info = "Sign in with email " + email + " and password " + password + " and country " + country;
         try {
         	System.out.println("Trying to " + info + ".");
-			System.out.println(serviceLocator);
             User user = serviceLocator.getService().signIn(email, password, country);
         	if (user != null) {
             	System.out.println(info + " correct.");

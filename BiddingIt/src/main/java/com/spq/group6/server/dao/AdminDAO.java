@@ -19,13 +19,13 @@ public class AdminDAO {
     private PersistenceManager pm;
     private Lock pmLock;
 
-    public AdminDAO(){
+    public AdminDAO() {
 
         pm = JdoManager.getPersistanceManager();
         pmLock = JdoManager.pmLock;
     }
 
-    public Administrator getAdministratorByUsername(String username){
+    public Administrator getAdministratorByUsername(String username) {
         pmLock.lock();
         Transaction tx = pm.currentTransaction();
 
@@ -53,9 +53,8 @@ public class AdminDAO {
         return admin;
     }
 
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
         pmLock.lock();
-
         Transaction tx = pm.currentTransaction();
 
         try {
@@ -64,7 +63,6 @@ public class AdminDAO {
             pm.deletePersistent(user); // Saves user in the Database
             tx.commit();
         } catch (Exception ex) {
-
             ServerLogger.logger.error("* Exception inserting data into db: " + ex.getMessage());
 
         } finally {
@@ -75,7 +73,7 @@ public class AdminDAO {
         pmLock.unlock();
     }
 
-    public void deleteAuction(Auction auction){ //debería poderse hacer un método genérico para todos los delete
+    public void deleteAuction(Auction auction) { //debería poderse hacer un método genérico para todos los delete
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
