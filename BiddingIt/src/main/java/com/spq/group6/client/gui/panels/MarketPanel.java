@@ -24,8 +24,6 @@ import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.server.data.Auction;
 
 public class MarketPanel extends JPanel {
-
-	// TODO
 	
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
@@ -42,12 +40,12 @@ public class MarketPanel extends JPanel {
 		
 		this.setLayout(null);
 		
-		titleLabel = new JLabel("My auctions", SwingConstants.LEFT);
+		titleLabel = new JLabel("Market", SwingConstants.LEFT);
 		titleLabel.setSize(screenWidth / 4, screenHeight / 15);
 		titleLabel.setLocation((int) (screenWidth / 2 - titleLabel.getWidth()*1.75), (int) (screenHeight / 4 - titleLabel.getHeight() / 2));
 		SDG2Util.fixJLabelFontSize(titleLabel);	
 				
-		infoLabel = new JLabel("Here you can see your auctions. Start selling and check your earnings!", SwingConstants.LEFT);
+		infoLabel = new JLabel("Here you can see others' auctions. Start bidding!", SwingConstants.LEFT);
 		infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
 		infoLabel.setLocation((int) titleLabel.getLocation().getX(), 
 				(int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));

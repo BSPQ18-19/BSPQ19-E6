@@ -9,6 +9,7 @@ import com.spq.group6.client.remote.ServiceLocator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.client.gui.ClientWindow;
 
@@ -176,6 +177,22 @@ public class ClientController {
 			else
             	System.out.println(info + " incorrect. Server returned null.");
         } catch (RemoteException e) {
+			e.printStackTrace();
+		}
+    	return true;
+    }
+    
+    public boolean bid(Auction auction, float amount) {
+    	String info = "Bid " + amount + " for " + auction.getProduct().getName();
+        try {
+        	System.out.println("Trying to " + info + ".");
+        	Auction auctionReturn = serviceLocator.getService().bid(auction, currentUser, amount);
+        	if (auctionReturn != null) {
+				System.out.println(info + " correct.");
+			}
+			else
+            	System.out.println(info + " incorrect. Server returned null.");
+        } catch (RemoteException | AuctionException e) {
 			e.printStackTrace();
 		}
     	return true;
