@@ -2,6 +2,7 @@ package com.spq.group6.client.gui.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
+import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.actions.ActionCreateAuction;
@@ -127,6 +129,12 @@ public class UserAuctionsPanel extends JPanel {
 			userProductsNotAuctionArray[i] = userProductsNotAuction.get(i);
 		JComboBox<Product> prodComboBox = new JComboBox<Product>(userProductsNotAuctionArray);
 		auctionsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(prodComboBox));
+		
+		// set column 4 to limit day
+		auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
+		auctionsTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
+		auctionsTable.getColumnModel().getColumn(4).setCellEditor(auctionsTable.getDefaultEditor(LocalDateTime.class));
+		auctionsTable.getColumnModel().getColumn(4).setCellRenderer(auctionsTable.getDefaultRenderer(LocalDateTime.class));
 		
 		auctionsTableScrollPane = new JScrollPane(auctionsTable);
 		auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);
