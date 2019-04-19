@@ -104,7 +104,7 @@ public class UserAuctionsPanel extends JPanel {
 					auctionsData[i][3] = "Open";
 				else
 					auctionsData[i][3] = "Closed";
-				auctionsData[i][4] = tempAuction.getDayLimit();
+				auctionsData[i][4] = tempAuction.getDayLimit().toLocalDateTime();
 				auctionsData[i][5] = "";
 			}
 			auctionsData[i][0] = "";
@@ -128,6 +128,7 @@ public class UserAuctionsPanel extends JPanel {
 		for (int i = 0; i < userProductsNotAuction.size(); i++)
 			userProductsNotAuctionArray[i] = userProductsNotAuction.get(i);
 		JComboBox<Product> prodComboBox = new JComboBox<Product>(userProductsNotAuctionArray);
+		prodComboBox.setSelectedIndex(0);
 		auctionsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(prodComboBox));
 		
 		// set column 4 to limit day

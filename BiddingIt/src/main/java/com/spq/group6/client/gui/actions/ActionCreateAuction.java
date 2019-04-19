@@ -1,6 +1,7 @@
 package com.spq.group6.client.gui.actions;
 
 import java.awt.event.ActionEvent;
+import java.time.LocalDateTime;
 
 import javax.swing.AbstractAction;
 import javax.swing.JTable;
@@ -17,7 +18,7 @@ public class ActionCreateAuction extends AbstractAction {
 		JTable table = (JTable)e.getSource();
         int modelRow = Integer.valueOf( e.getActionCommand() );
         ((AuctionJTableModel)table.getModel()).createAuction(modelRow,
-        		(Product) table.getValueAt(modelRow, 0), (String) table.getValueAt(modelRow, 1),
-        		(String) table.getValueAt(modelRow, 2));
+        		(Product) table.getValueAt(modelRow, 0), (LocalDateTime) table.getValueAt(modelRow, 4),
+        		(String) table.getValueAt(modelRow, 1));
 	}
 }

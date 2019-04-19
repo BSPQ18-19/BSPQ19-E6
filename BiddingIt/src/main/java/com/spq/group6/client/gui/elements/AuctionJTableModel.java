@@ -1,6 +1,7 @@
 package com.spq.group6.client.gui.elements;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,10 +28,12 @@ public class AuctionJTableModel extends DefaultTableModel {
 		return (rowIndex == this.getRowCount() - 1 && columnIndex != 2 && columnIndex != 3) ? true : false;
 	}
 	
-	public void createAuction(int rowIndex, Product product, String dayLimit, String initialPrice) {
+	public void createAuction(int rowIndex, Product product, LocalDateTime dayLimit, String initialPrice) {
 		if (controller.createPublicAuction(product, Timestamp.valueOf(dayLimit), Float.parseFloat(initialPrice))) {
+			this.setValueAt("0", rowIndex, 2);
+			this.setValueAt("Open", rowIndex, 3);
 			this.setValueAt("", rowIndex, 5);
-			this.addRow(new String[] {"", "", "", "", "", "Create"}); // add new row for a new auction
+			this.addRow(new String[] {"", "", "-", "-", "", "Create"}); // add new row for a new auction
 			JOptionPane.showConfirmDialog(null, "Auction created correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 		} else
 			JOptionPane.showConfirmDialog(null, "Error creating an auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
