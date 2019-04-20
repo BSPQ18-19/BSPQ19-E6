@@ -5,7 +5,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.server.data.Auction;
-import com.spq.group6.server.data.Product;
 
 public class MarketJTableModel extends DefaultTableModel {
 

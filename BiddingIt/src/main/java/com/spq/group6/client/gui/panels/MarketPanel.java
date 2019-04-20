@@ -1,14 +1,12 @@
 package com.spq.group6.client.gui.panels;
 
 import java.awt.FlowLayout;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -24,17 +22,13 @@ import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.actions.ActionBid;
-import com.spq.group6.client.gui.actions.ActionCreateAuction;
-import com.spq.group6.client.gui.actions.ActionDeleteProduct;
-import com.spq.group6.client.gui.actions.ActionUpdateProduct;
-import com.spq.group6.client.gui.elements.AuctionJTableModel;
+import com.spq.group6.client.gui.elements.AuctionTimeLeftRunnable;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.MarketJTableModel;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.SPQG6Util;
 import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.server.data.Auction;
-import com.spq.group6.server.data.Product;
 
 public class MarketPanel extends JPanel {
 	
@@ -53,6 +47,7 @@ public class MarketPanel extends JPanel {
 	
 	@SuppressWarnings("unused")
 	private ClientController controller;
+	private ArrayList<Thread> auctionsTimeLeftThread;
 	
 	public MarketPanel(int screenWidth, int screenHeight, ClientController controller) {
 		
@@ -80,6 +75,11 @@ public class MarketPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// stop previous threads
+				if (auctionsTimeLeftThread != null)
+					for (int i = 0; i < auctionsTimeLeftThread.size(); i++)
+						auctionsTimeLeftThread.get(i).interrupt();
+				
 				Object[][] auctionsData = null;
 				List<Auction> auctions = null;
 				switch(searchComboBox.getSelectedIndex()) {
@@ -99,6 +99,7 @@ public class MarketPanel extends JPanel {
 				} else {
 					auctionsData = new Object[auctions.size()][auctionsColumnNames.length];
 					int i = 0;
+					auctionsTimeLeftThread = new ArrayList<>();
 					for (i = 0; i < auctions.size(); i++) {
 						Auction tempAuction = auctions.get(i);
 						auctionsData[i][0] = tempAuction;
@@ -109,6 +110,9 @@ public class MarketPanel extends JPanel {
 							auctionsData[i][2] = tempAuction.getHighestBid().getAmount();
 						auctionsData[i][3] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
 						auctionsData[i][4] = "Bid";
+						
+						Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
+						auctionsTimeLeftThread.add(tempAuctionThread);
 					}
 					JOptionPane.showConfirmDialog(MarketPanel.this, "Auctions found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
@@ -116,6 +120,10 @@ public class MarketPanel extends JPanel {
 				auctionsTable.setModel(new MarketJTableModel(auctionsData, auctionsColumnNames, controller));
 				@SuppressWarnings("unused")
 				ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 4);
+				
+				// start countdown threads
+				for (int i = 0; i < auctionsData.length; i++)
+					auctionsTimeLeftThread.get(i).start();
 			}
 		});
 		searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -154,9 +162,8 @@ public class MarketPanel extends JPanel {
 		});
 
 		auctionsTable = new JTable(new MarketJTableModel(new Object[][] {}, auctionsColumnNames, controller));
-		@SuppressWarnings("unused")
-		ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 4);
-		
+		auctionsTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
 		// set column 4 to limit day
 		auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
 		auctionsTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
