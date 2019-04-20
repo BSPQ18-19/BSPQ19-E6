@@ -112,4 +112,9 @@ public class Auction implements Serializable {
                 Objects.equals(highestBid, auction.highestBid) &&
                 Objects.equals(password, auction.password);
     }
+
+	@Override
+	public String toString() {
+		return product.getName();
+	}
 }

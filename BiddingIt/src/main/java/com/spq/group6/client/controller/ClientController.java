@@ -197,6 +197,34 @@ public class ClientController {
 		}
     	return true;
     }
+    
+    public ArrayList<Auction> searchAuctionByCountry(String country) {
+    	ArrayList<Auction> countryAuctions = new ArrayList<>();
+    	String info = "Get auctions from country " + country;
+//        try {
+        	System.out.println("Trying to " + info + ".");
+			//userAuctions = serviceLocator.getService().searchAuctionByCountry(country);
+        	countryAuctions.add(new Auction(currentUser, new Product("Prod2", "desc2"), new Timestamp(1560085000000l), 10, null));
+			System.out.println(info + " correct.");
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
+    	return countryAuctions;
+    }
+    
+    public ArrayList<Auction> searchAuctionByProductName(String name) {
+    	ArrayList<Auction> prodNameAuctions = new ArrayList<>();
+    	String info = "Get auctions with prod. name " + name;
+//        try {
+        	System.out.println("Trying to " + info + ".");
+			//userAuctions = serviceLocator.getService().searchAuctionByProductName(name);
+        	prodNameAuctions.add(new Auction(currentUser, new Product("Prod3", "desc3"), new Timestamp(1560000000000l), 10, null));
+			System.out.println(info + " correct.");
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
+    	return prodNameAuctions;
+    }
 
 
 	public void exit(){

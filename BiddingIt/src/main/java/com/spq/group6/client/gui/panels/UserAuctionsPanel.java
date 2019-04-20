@@ -90,7 +90,7 @@ public class UserAuctionsPanel extends JPanel {
 		Object[][] auctionsData = null;
 		List<Auction> userAuctions = controller.getCurrentUserAuctions();
 		if (controller.getCurrentUser() != null) {
-			auctionsData = new Object[controller.getCurrentUserAuctions().size() + 1][auctionsColumnNames.length];
+			auctionsData = new Object[userAuctions.size() + 1][auctionsColumnNames.length];
 			int i = 0;
 			for (i = 0; i < userAuctions.size(); i++) {
 				Auction tempAuction = userAuctions.get(i);

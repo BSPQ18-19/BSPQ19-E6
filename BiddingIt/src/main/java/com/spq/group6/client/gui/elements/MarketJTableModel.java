@@ -23,13 +23,18 @@ public class MarketJTableModel extends DefaultTableModel {
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return columnIndex == 0 || columnIndex == 1 || columnIndex == 2 || columnIndex == 3 ? true : false;
+		return columnIndex == 4 ? true : false;
 	}
 
 	public void bidAuctionAt(int rowIndex, Auction auction) {
+		float actualHighestBid = 0;
+		if (auction.getHighestBid() != null)
+			actualHighestBid = auction.getHighestBid().getAmount();
+		else
+			actualHighestBid = auction.getInitialPrice();
 		String bidValue = JOptionPane.showInputDialog(null, 
-				"Please enter the amount you want to bid (greater than " + auction.getHighestBid(), "Bid", JOptionPane.QUESTION_MESSAGE);
-		if (Float.parseFloat(bidValue) > auction.getHighestBid().getAmount())
+				"Please enter the amount you want to bid (greater than " + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
+		if (Float.parseFloat(bidValue) > actualHighestBid)
 			if (controller.bid(auction, Float.parseFloat(bidValue))) {
 				JOptionPane.showConfirmDialog(null, "Auction bidded correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				this.removeRow(rowIndex);

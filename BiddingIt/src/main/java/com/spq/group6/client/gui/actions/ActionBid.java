@@ -16,7 +16,7 @@ public class ActionBid extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		JTable table = (JTable)e.getSource();
         int modelRow = Integer.valueOf( e.getActionCommand() );
-        ((MarketJTableModel)table.getModel()).bidAuctionAt(modelRow, (Auction) table.getValueAt(modelRow, 1));
+        ((MarketJTableModel)table.getModel()).bidAuctionAt(modelRow, (Auction) table.getValueAt(modelRow, 0));
 	}
 	
 }
