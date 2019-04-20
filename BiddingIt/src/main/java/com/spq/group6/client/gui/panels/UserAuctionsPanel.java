@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import com.spq.group6.client.controller.ClientController;
@@ -115,6 +116,7 @@ public class UserAuctionsPanel extends JPanel {
 			auctionsData[i][5] = "Create";
 		}
 		auctionsTable = new JTable(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller));
+		auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth()+150);
 		@SuppressWarnings("unused")
 		ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 5);
 		
@@ -130,7 +132,7 @@ public class UserAuctionsPanel extends JPanel {
 		JComboBox<Product> prodComboBox = new JComboBox<Product>(userProductsNotAuctionArray);
 		prodComboBox.setSelectedIndex(0);
 		auctionsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(prodComboBox));
-		
+
 		// set column 4 to limit day
 		auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
 		auctionsTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
@@ -141,13 +143,13 @@ public class UserAuctionsPanel extends JPanel {
 		auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);
 		auctionsTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
 				(int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
-
 		
 		this.add(titleLabel);
 		this.add(infoLabel);
 		this.add(auctionsTableScrollPane);
 		this.add(backButton);
 		this.add(logOutButton);
+
 	}
 	
 	public static void main(String[] args) {

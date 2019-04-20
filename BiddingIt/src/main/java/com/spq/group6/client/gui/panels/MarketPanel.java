@@ -118,6 +118,8 @@ public class MarketPanel extends JPanel {
 
 				}
 				auctionsTable.setModel(new MarketJTableModel(auctionsData, auctionsColumnNames, controller));
+				auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
+
 				@SuppressWarnings("unused")
 				ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 4);
 				
@@ -162,7 +164,7 @@ public class MarketPanel extends JPanel {
 		});
 
 		auctionsTable = new JTable(new MarketJTableModel(new Object[][] {}, auctionsColumnNames, controller));
-		auctionsTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 		// set column 4 to limit day
 		auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());

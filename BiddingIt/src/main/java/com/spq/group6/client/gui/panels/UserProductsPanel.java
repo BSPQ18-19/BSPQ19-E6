@@ -99,6 +99,8 @@ public class UserProductsPanel extends JPanel{
 			productsData[i][3] = "";
 		}
 		productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames, controller));
+		productsTable.getColumnModel().getColumn(1).setPreferredWidth(productsTable.getColumnModel().getColumn(1).getPreferredWidth()+200);
+
 		@SuppressWarnings("unused")
 		ButtonColumn updateButtonColumn = new ButtonColumn(productsTable, new ActionUpdateProduct(), 2);
 		@SuppressWarnings("unused")
