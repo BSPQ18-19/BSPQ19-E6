@@ -14,7 +14,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.rmi.RemoteException;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class AuctionServiceTest {
@@ -71,11 +70,15 @@ public class AuctionServiceTest {
     }
 
     public void testSearchAuctionByCountry(){
-
+        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+        user = auction.getOwner();
+         //TODO: arreglar el DAO
+        //auctionService.searchAuctionByCountry()
     }
 
     public void testSearchAuctionByProductName() {
-
+        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+        user = auction.getOwner();
     }
 
     public void testSearchAuctionByUser() {
