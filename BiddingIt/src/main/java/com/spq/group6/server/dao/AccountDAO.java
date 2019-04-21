@@ -3,6 +3,7 @@ package com.spq.group6.server.dao;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+import javax.rmi.CORBA.Util;
 
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
@@ -15,15 +16,16 @@ import java.util.concurrent.locks.Lock;
 public class AccountDAO implements IAccountDAO {
     private PersistenceManager pm;
     private Lock pmLock;
-
+    private UtilsDAO utilsDAO;
     public AccountDAO(){
 
         pm = JdoManager.getPersistanceManager();
         pmLock = JdoManager.pmLock;
+        utilsDAO = new UtilsDAO();
     }
 
     public void createUser(User user) {
-        updateObject(user);
+        utilsDAO.updateObject(user);
     }
 
     public User getUserByUsername(String username) {
@@ -55,11 +57,11 @@ public class AccountDAO implements IAccountDAO {
     }
 
     public void updateUser(User user) {
-        updateObject(user);
+        utilsDAO.updateObject(user);
     }
 
     public void updateProduct(Product product) {
-        updateObject(product);
+        utilsDAO.updateObject(product);
     }
 
     public void deleteProduct(Product product) {
@@ -83,25 +85,4 @@ public class AccountDAO implements IAccountDAO {
     }
 
 
-    private void updateObject(Object obj) {
-        pmLock.lock();
-
-        Transaction tx = pm.currentTransaction();
-
-        try {
-            tx.begin();
-
-            pm.makePersistent(obj);
-            tx.commit();
-        } catch (Exception ex) {
-
-            ServerLogger.logger.error("* Exception inserting/updating data into db: " + ex.getMessage());
-
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-        }
-        pmLock.unlock();
-    }
 }

@@ -7,8 +7,10 @@ import javax.jdo.Transaction;
 import com.spq.group6.server.data.*;
 import com.spq.group6.server.utils.logger.ServerLogger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
+
 
 public class AdminDAO implements IAdminDAO{
 
@@ -52,14 +54,16 @@ public class AdminDAO implements IAdminDAO{
     public void deleteUser(User user) {
         pmLock.lock();
         Transaction tx = pm.currentTransaction();
-
+        AuctionDAO auctionDAO = new AuctionDAO();
         try {
             tx.begin();
+            ArrayList<Auction> auctions = auctionDAO.getAuctionByUser(user);
+            for (Auction auction : auctions) deleteAuction(auction); //deletes each auction owned by the user being deleted
             for (Product product : user.getOwnedProducts()) pm.deletePersistent(product);
-            pm.deletePersistent(user); // Saves user in the Database
+            pm.deletePersistent(user); // Deletes user in the Database
             tx.commit();
         } catch (Exception ex) {
-            ServerLogger.logger.error("* Exception inserting data into db: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data into db: " + ex.getMessage());
 
         } finally {
             if (tx.isActive()) {
@@ -69,15 +73,15 @@ public class AdminDAO implements IAdminDAO{
         pmLock.unlock();
     }
 
-    public void deleteAuction(Auction auction) { //debería poderse hacer un método genérico para todos los delete
+    public void deleteAuction(Auction auction) {
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
 
         try {
             tx.begin();
-            pm.deletePersistent(auction);
             Bid bid = auction.getHighestBid();
+            pm.deletePersistent(auction);
             pm.deletePersistent(bid);
             tx.commit();
         } catch (Exception ex) {
