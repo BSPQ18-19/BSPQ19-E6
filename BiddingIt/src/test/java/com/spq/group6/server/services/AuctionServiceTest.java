@@ -14,7 +14,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.rmi.RemoteException;
+import java.sql.Array;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class AuctionServiceTest {
     private static AuctionService auctionService;
@@ -69,20 +71,32 @@ public class AuctionServiceTest {
         assertEquals(bid, auction.getHighestBid());
     }
 
+
     public void testSearchAuctionByCountry(){
         auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         user = auction.getOwner();
-         //TODO: arreglar el DAO
-        //auctionService.searchAuctionByCountry()
+
+        ArrayList<Auction> auctions = auctionService.searchAuctionByCountry(user.getCountry());
+        assertEquals(1, auctions.size());
+        assertEquals(auction, auctions.get(0));
     }
 
     public void testSearchAuctionByProductName() {
         auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         user = auction.getOwner();
+
+        ArrayList<Auction> auctions = auctionService.searchAuctionByProductName(product.getName());
+        assertEquals(1, auctions.size());
+        assertEquals(auction, auctions.get(0));
     }
 
     public void testSearchAuctionByUser() {
+        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+        user = auction.getOwner();
 
+        ArrayList<Auction> auctions = auctionService.searchAuctionByUser(user);
+        assertEquals(1, auctions.size());
+        assertEquals(auction, auctions.get(0));
     }
 
     @After
