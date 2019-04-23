@@ -1,7 +1,5 @@
 package com.spq.group6.server.services;
 
-import com.spq.group6.client.controller.ClientController;
-import com.spq.group6.server.dao.AdminDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
@@ -14,7 +12,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.rmi.RemoteException;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class AuctionServiceTest {
