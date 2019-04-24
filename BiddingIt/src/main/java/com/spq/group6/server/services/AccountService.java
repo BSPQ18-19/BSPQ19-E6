@@ -25,7 +25,7 @@ public class AccountService implements IAccountService {
         User user = new User(username, password, country);
         checkDuplicatedUser(user);
         biddingDAO.createUser(user);
-        if (user != null) ServerLogger.logger.debug("User '" + username + "' has signed in.");
+        ServerLogger.logger.debug("User '" + username + "' has signed in.");
         return user;
     }
 

@@ -29,22 +29,26 @@ public class AuctionCountdown implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // Set as 'closed' the auction
         Lock auctionLock = AuctionLocks.getLock(auction.getAuctionID());
         auctionLock.lock();
+
         biddingDAO.closeAuction(auction.getAuctionID());
         Bid bid = biddingDAO.getHighestBid(auction.getAuctionID());
+
         auctionLock.unlock();
 
-        Product product = auction.getProduct();
-        User seller = auction.getOwner();
-        User buyer = bid.getUser();
-        // Check if there was any bid and if the bid maker has enough money
-        if (buyer != null && buyer.getMoney()>=bid.getAmount()){
-            seller.getOwnedProducts().remove(product);
-            buyer.getOwnedProducts().add(product);
-            biddingDAO.updateUser(seller);
-            biddingDAO.updateUser(buyer);
+        if (bid != null) {
+            User buyer = bid.getUser();
+            // Check if there was any bid and if the bid maker has enough money
+            if (buyer != null && buyer.getMoney() >= bid.getAmount()) {
+                Product product = auction.getProduct();
+                User seller = auction.getOwner();
+
+                seller.getOwnedProducts().remove(product);
+                buyer.getOwnedProducts().add(product);
+                biddingDAO.updateUser(seller);
+                biddingDAO.updateUser(buyer);
+            }
         }
         // TODO: what to do if user has not enough money
 

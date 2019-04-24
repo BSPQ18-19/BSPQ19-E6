@@ -9,6 +9,7 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.utils.AuctionCountdown;
 import com.spq.group6.server.utils.AuctionLocks;
+import com.spq.group6.server.utils.observer.events.NewBidEvent;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
@@ -31,7 +32,6 @@ public class AuctionService implements IAuctionService {
         Auction auction = new Auction(owner, product, dayLimit, initialPrice, null);
         biddingDAO.persistAuction(auction);
 
-        // create an observable for the auction
         RemoteObservable observable = new RemoteObservable();
         observables.put(auction.getAuctionID(), observable);
 
@@ -57,6 +57,9 @@ public class AuctionService implements IAuctionService {
         auction.setHighestBid(newBid);
         biddingDAO.persistAuction(auction);
         biddingDAO.deleteBid(oldBid);
+        // Notify about new Bid
+        NewBidEvent newBidEvent = new NewBidEvent(auction);
+        observables.get(auction.getAuctionID()).notifyRemoteObservers(newBidEvent);
 
         auctionLock.unlock();
         return auction;
