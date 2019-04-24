@@ -30,6 +30,28 @@ public class AuctionDAO implements IAuctionDAO{
         utilsDAO.updateObject(auction);
     }
 
+    public void deleteAuction(Auction auction) {
+        pmLock.lock();
+
+        Transaction tx = pm.currentTransaction();
+
+        try {
+            tx.begin();
+            Bid bid = auction.getHighestBid();
+            pm.deletePersistent(auction);
+            pm.deletePersistent(bid);
+            tx.commit();
+        } catch (Exception ex) {
+
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+        pmLock.unlock();
+    }
+
     public void persistBid(Auction auction, Bid bid){
         auction.setHighestBid(bid);
         utilsDAO.updateObject(auction);
@@ -209,7 +231,7 @@ public class AuctionDAO implements IAuctionDAO{
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("owner == '" + user + "'");
+            query.setFilter("owner == '" + user.getUsername() + "'");
             ArrayList<Auction> auctionsTest = (ArrayList<Auction>) query.execute();
             for (Auction auction : auctionsTest) {
                 if (auction.isOpen()) {

@@ -1,5 +1,6 @@
 package com.spq.group6.server.dao;
 
+import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import org.junit.Test;
@@ -8,7 +9,6 @@ import static org.junit.Assert.*;
 
 public class AccountDAOTest {
     private AccountDAO accountDao = new AccountDAO();
-    private AdminDAO adminDao = new AdminDAO();
 
     @Test
     public void getUserByUsername()
@@ -20,7 +20,7 @@ public class AccountDAOTest {
         accountDao.createUser(testUser);
         assertEquals(testUser, accountDao.getUserByUsername(testUser.getUsername()));
         // Clean
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class AccountDAOTest {
         User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertNotEquals(country1, persistedUser.getCountry());
         // Clean
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class AccountDAOTest {
         assertEquals(1, persistedUser.getOwnedProducts().size());
         assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
         // Clean
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
     }
     @Test
     public void deleteProductUpdatingUser(){
@@ -69,7 +69,7 @@ public class AccountDAOTest {
         assertEquals(0, persistedUser.getOwnedProducts().size());
         // Clean
         accountDao.deleteProduct(testProduct);
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
 
     }
 
@@ -87,7 +87,7 @@ public class AccountDAOTest {
         User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertEquals(prodNewName, persistedUser.getOwnedProducts().get(0).getName());
         // Clean
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
     }
 
     @Test
@@ -112,8 +112,17 @@ public class AccountDAOTest {
         assertEquals(1, persistedUser.getOwnedProducts().size());
         assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
         // Clean
-        adminDao.deleteUser(testUser1);
-        adminDao.deleteUser(testUser2);
+        accountDao.deleteUser(testUser1);
+        accountDao.deleteUser(testUser2);
     }
 
+    @Test
+    public void getAdministratorByUsername(){
+        // Setup
+        Administrator testAdmin = new Administrator("test_user", "test_pass");
+        //Administrator with this same parameters shall be created before running the test
+        // Test
+        assertEquals(testAdmin, accountDao.getAdministratorByUsername(testAdmin.getUsername()));
+        // Clean
+    }
 }
