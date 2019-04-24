@@ -1,18 +1,15 @@
 package com.spq.group6.server.services;
 
 import com.spq.group6.server.dao.AccountDAO;
-import com.spq.group6.server.dao.AdminDAO;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.*;
 
 public class AccountServiceTest {
     private AccountDAO accountDao = new AccountDAO();
-    private AdminDAO adminDao = new AdminDAO();
     private AccountService service = new AccountService();
 
     @Test
@@ -25,7 +22,7 @@ public class AccountServiceTest {
         try {
             testUser = service.signIn(username, pass, country);
         } catch (UserException e) {
-            assertTrue(false);
+            fail();
         }
         assertEquals(username, testUser.getUsername());
         assertEquals(pass, testUser.getPassword());
@@ -37,7 +34,7 @@ public class AccountServiceTest {
             assertTrue(true);
         }
         // Clean
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
     }
 
     @Test
@@ -52,7 +49,7 @@ public class AccountServiceTest {
         try {
             testUser = service.logIn(testUser.getUsername(), testUser.getPassword());
         } catch (UserException e) {
-            assertTrue(false);
+            fail();
         }
         try {
             testUser = service.logIn("wrong_user", "wrong_pass");
@@ -60,7 +57,7 @@ public class AccountServiceTest {
             assertTrue(true);
         }
         // Clean
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
     }
 
     @Test
@@ -80,7 +77,7 @@ public class AccountServiceTest {
         assertEquals(1, persistedUser.getOwnedProducts().size());
         assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
         // Clean
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
     }
 
     @Test
@@ -99,7 +96,7 @@ public class AccountServiceTest {
         User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertEquals(newName, persistedUser.getOwnedProducts().get(0).getName());
         // Clean
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
     }
 
     @Test
@@ -117,6 +114,6 @@ public class AccountServiceTest {
         assertEquals(0, persistedUser.getOwnedProducts().size());
         assertEquals(0, testUser.getOwnedProducts().size());
         // Clean
-        adminDao.deleteUser(testUser);
+        accountDao.deleteUser(testUser);
     }
 }

@@ -1,7 +1,6 @@
 package com.spq.group6.client.controller;
 
 import com.spq.group6.client.remote.ServiceLocator;
-import com.spq.group6.server.dao.AdminDAO;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.remote.IServer;

@@ -1,6 +1,5 @@
 package com.spq.group6.server.services;
 
-import com.spq.group6.server.dao.IAdminDAO;
 import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.User;

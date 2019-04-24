@@ -1,7 +1,5 @@
 package com.spq.group6.server.services;
 
-import com.spq.group6.client.controller.ClientController;
-import com.spq.group6.server.dao.AdminDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
