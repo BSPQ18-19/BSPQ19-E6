@@ -45,11 +45,12 @@ public class AuctionService implements IAuctionService {
     public Auction bid(Auction auction, User user, float amount) throws AuctionException {
         Lock auctionLock = AuctionLocks.getLock(auction.getAuctionID());
         auctionLock.lock();
+        auction = biddingDAO.getAuctionByID(auction.getAuctionID());
 
-        if (!biddingDAO.isOpen(auction.getAuctionID())){
+        if (!auction.isOpen()){
             throw  new AuctionException("Auction is closed");
         }
-        Bid oldBid = biddingDAO.getHighestBid(auction.getAuctionID());
+        Bid oldBid = auction.getHighestBid();
         if (amount< auction.getInitialPrice() || (oldBid != null && oldBid.getAmount() >= amount)){
             throw  new AuctionException("Too low bid");
         }

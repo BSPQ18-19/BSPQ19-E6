@@ -6,6 +6,7 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.utils.observer.events.AuctionClosedEvent;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
 import java.sql.Timestamp;
@@ -32,11 +33,13 @@ public class AuctionCountdown implements Runnable {
         Lock auctionLock = AuctionLocks.getLock(auction.getAuctionID());
         auctionLock.lock();
 
-        biddingDAO.closeAuction(auction.getAuctionID());
-        Bid bid = biddingDAO.getHighestBid(auction.getAuctionID());
+        auction = biddingDAO.getAuctionByID(auction.getAuctionID());
+        auction.setOpen(false);
+        biddingDAO.persistAuction(auction);
 
         auctionLock.unlock();
 
+        Bid bid = auction.getHighestBid();
         if (bid != null) {
             User buyer = bid.getUser();
             // Check if there was any bid and if the bid maker has enough money
@@ -53,6 +56,6 @@ public class AuctionCountdown implements Runnable {
         // TODO: what to do if user has not enough money
 
         // notify remote observers
-        observable.notifyRemoteObservers(auction);
+        observable.notifyRemoteObservers(new AuctionClosedEvent(auction));
     }
 }

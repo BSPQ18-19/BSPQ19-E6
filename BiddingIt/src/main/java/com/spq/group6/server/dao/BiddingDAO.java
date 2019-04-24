@@ -161,11 +161,6 @@ public class BiddingDAO implements IBiddingDAO {
         updateObject(auction);
     }
 
-    public void persistBid(Auction auction, Bid bid) {
-        auction.setHighestBid(bid);
-        updateObject(auction);
-    }
-
     public void deleteBid(Bid bid) {
         pmLock.lock();
 
@@ -252,112 +247,14 @@ public class BiddingDAO implements IBiddingDAO {
         return auctions;
     }
 
-    public boolean isOpen(long auctionID) {
-        pmLock.lock();
-
-        Transaction tx = pm.currentTransaction();
-        boolean isOpen = true;
-        try {
-            tx.begin();
-            Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("auctionID == " + auctionID);
-            List<Auction> result = (List<Auction>) query.execute();
-            Auction auction = result.size() != 1 ? null : result.get(0); // Retrieves and detaches the Auction
-            if (auction == null) {
-                isOpen = false;
-            } else {
-                isOpen = auction.isOpen();
-            }
-            tx.commit();
-        } catch (Exception ex) {
-
-            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-        }
-        pmLock.unlock();
-        return isOpen;
+    @Override
+    public Auction getAuctionByID(long auctionID) {
+        return null;
     }
 
-    public Bid getHighestBid(long auctionID) {
-        pmLock.lock();
-
-        Transaction tx = pm.currentTransaction();
-        Bid highestBid = null;
-        try {
-            tx.begin();
-            Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("auctionID == '" + auctionID + "'");
-            List<Auction> result = (List<Auction>) query.execute();
-            highestBid = result.size() != 1 ? null : result.get(0).getHighestBid(); // Retrieves and detaches the Bid
-
-            tx.commit();
-        } catch (Exception ex) {
-
-            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-        }
-        pmLock.unlock();
-        return highestBid;
-    }
-
-    public void closeAuction(long auctionID) {
-        pmLock.lock();
-
-        Transaction tx = pm.currentTransaction();
-        try {
-            tx.begin();
-            Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("auctionID == '" + auctionID + "'");
-            List<Auction> result = (ArrayList<Auction>) query.execute();
-            Auction auction = (result.size() != 1) ? null : result.get(0);
-            if (auction != null) {
-                auction.setOpen(false);
-                pm.makePersistent(auction);
-            }
-            tx.commit();
-        } catch (Exception ex) {
-
-            ServerLogger.logger.error("* Exception updating data: " + ex.getMessage());
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-        }
-        pmLock.unlock();
-    }
-
+    @Override
     public ArrayList<Auction> getAuctionByUser(User user) {
-        pmLock.lock();
-
-        Transaction tx = pm.currentTransaction();
-        ArrayList<Auction> auctions = null;
-        try {
-            tx.begin();
-            Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("owner == '" + user.getUsername() + "'");
-            ArrayList<Auction> auctionsTest = (ArrayList<Auction>) query.execute();
-            for (Auction auction : auctionsTest) {
-                if (auction.isOpen()) {
-                    auctions.add(auction);
-                }
-            }
-            tx.commit();
-        } catch (Exception ex) {
-
-            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-        }
-        pmLock.unlock();
-        return auctions;
+        return null;
     }
 
     // Utils
