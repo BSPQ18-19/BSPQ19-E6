@@ -19,7 +19,7 @@ public class AccountDAOTest {
         user = new User("test_user", "test_pass", "spain");
         product = new Product("cd", "Mikel Urdangarin cd");
     }
-    
+
     @Test
     public void getUserByUsername()
     {

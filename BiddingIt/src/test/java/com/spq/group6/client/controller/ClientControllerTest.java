@@ -20,7 +20,7 @@ public class ClientControllerTest {
     private static Thread rmiServerThread = null;
 
     private static ClientController clientController;
-    private static BiddingDAO biddingDAO;
+    private static BiddingDAO biddingDao;
     private static User user;
     private static Product product;
 
@@ -80,7 +80,7 @@ public class ClientControllerTest {
         clientController = new ClientController();
         user = new User("test_user", "test_pass", "uk");
         product = new Product("test_product", "test_description");
-        biddingDAO = new BiddingDAO();
+        biddingDao = new BiddingDAO();
     }
 
     @Test
@@ -113,8 +113,7 @@ public class ClientControllerTest {
 
         clientController.logOut();
         assertNull(clientController.getCurrentUser());
-
-        biddingDAO.deleteUser(user);
+        biddingDao.deleteUser(user);
     }
 
     @Test
@@ -156,7 +155,7 @@ public class ClientControllerTest {
     public void tearDown(){
         User user = clientController.getCurrentUser();
         if (user != null){
-            biddingDAO.deleteUser(clientController.getCurrentUser());
+            biddingDao.deleteUser(clientController.getCurrentUser());
         }
     }
 

@@ -64,23 +64,7 @@ public class BiddingDAO implements IBiddingDAO {
     }
 
     public void deleteProduct(Product product) {
-        pmLock.lock();
-
-        Transaction tx = pm.currentTransaction();
-
-        try {
-            tx.begin();
-            pm.deletePersistent(product);
-            tx.commit();
-        } catch (Exception ex) {
-
-            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-        }
-        pmLock.unlock();
+        deleteObject(product);
     }
 
     // Admin DAO
@@ -96,7 +80,7 @@ public class BiddingDAO implements IBiddingDAO {
             Query<Administrator> query = pm.newQuery(Administrator.class);
             query.setFilter("username == '" + username + "'");
             List<Administrator> result = (List<Administrator>) query.execute();
-            admin = (result.size() != 1) ? null : result.get(0); // Retrieves and detaches the User
+            admin = (result.size() != 1) ? null : result.get(0); // Retrieves and detaches the Admin
 
             tx.commit();
         } catch (Exception ex) {
@@ -139,10 +123,19 @@ public class BiddingDAO implements IBiddingDAO {
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            ArrayList<Auction> auctions = getAuctionByUser(user);
+            ArrayList<Auction> auctions = null;
+            Query<Auction> query = pm.newQuery(Auction.class);
+            query.setFilter("owner.username == '" + user.getUsername() + "'");
+            ArrayList<Auction> auctionsTest = (ArrayList<Auction>) query.execute();
+            for (Auction auction : auctionsTest) {
+                    auctions.add(auction);
+            }
+            tx.commit();
             for (Auction auction : auctions)
                 deleteAuction(auction); //deletes each auction owned by the user being deleted
+            tx.begin();
             for (Product product : user.getOwnedProducts()) pm.deletePersistent(product);
+            user.getOwnedProducts().clear();
             pm.deletePersistent(user); // Deletes user in the Database
             tx.commit();
         } catch (Exception ex) {
@@ -162,23 +155,7 @@ public class BiddingDAO implements IBiddingDAO {
     }
 
     public void deleteBid(Bid bid) {
-        pmLock.lock();
-
-        Transaction tx = pm.currentTransaction();
-
-        try {
-            tx.begin();
-            pm.deletePersistent(bid);
-            tx.commit();
-        } catch (Exception ex) {
-
-            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-        }
-        pmLock.unlock();
+        deleteObject(bid);
     }
 
     public ArrayList<Auction> getAuctionByCountry(String country) {
@@ -194,7 +171,7 @@ public class BiddingDAO implements IBiddingDAO {
 
             for (int i = 0; i < users.size(); i++) {
                 Query<Auction> query2 = pm.newQuery(Auction.class);
-                query2.setFilter("owner == '" + users.get(i) + "'");
+                query2.setFilter("owner.username == '" + users.get(i).getUsername() + "'");
                 Auction isNull = (Auction) query2.execute();
                 if (isNull != null && isNull.isOpen()) {
                     auctions.add(i, isNull);// Retrieves and detaches the ArrayList of auctions
@@ -247,9 +224,33 @@ public class BiddingDAO implements IBiddingDAO {
         return auctions;
     }
 
-    @Override
     public Auction getAuctionByID(long auctionID) {
-        return null;
+
+        pmLock.lock();
+        Transaction tx = pm.currentTransaction();
+
+        Auction auction = null;
+        try {
+            pm.setDetachAllOnCommit(true);
+            tx.begin();
+
+            Query<Auction> query = pm.newQuery(Auction.class);
+            query.setFilter("auctionID == '" + auctionID + "'");
+            List<Auction> result = (List<Auction>) query.execute();
+            auction = (result.size() != 1) ? null : result.get(0); // Retrieves and detaches the Auction
+
+            tx.commit();
+        } catch (Exception ex) {
+
+            ServerLogger.logger.error("* Exception taking data from db: " + ex.getMessage());
+
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+        pmLock.unlock();
+        return auction;
     }
 
     public ArrayList<Auction> getAuctionByUser(User user) {
@@ -260,7 +261,7 @@ public class BiddingDAO implements IBiddingDAO {
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("owner == '" + user.getUsername() + "'");
+            query.setFilter("owner.username == '" + user.getUsername() + "'");
             ArrayList<Auction> auctionsTest = (ArrayList<Auction>) query.execute();
             for (Auction auction : auctionsTest) {
                 if (auction.isOpen()) {
@@ -295,6 +296,26 @@ public class BiddingDAO implements IBiddingDAO {
 
             ServerLogger.logger.error("* Exception inserting/updating data into db: " + ex.getMessage());
 
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+        pmLock.unlock();
+    }
+
+    public void deleteObject(Object obj) {
+        pmLock.lock();
+
+        Transaction tx = pm.currentTransaction();
+
+        try {
+            tx.begin();
+            pm.deletePersistent(obj);
+            tx.commit();
+        } catch (Exception ex) {
+
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
