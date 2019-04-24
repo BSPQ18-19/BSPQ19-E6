@@ -5,6 +5,8 @@ import com.spq.group6.server.data.*;
 import java.util.ArrayList;
 
 public interface IBiddingDAO {
+    // Common
+    boolean isProductInUse(Product product);
     // Account DAO
     void createUser(User user);
 
@@ -37,5 +39,7 @@ public interface IBiddingDAO {
     Auction getAuctionByID(long auctionID);
 
     ArrayList<Auction> getAuctionByUser(User user);
+
+    ArrayList<Auction> getAllAuctions();
 
 }
