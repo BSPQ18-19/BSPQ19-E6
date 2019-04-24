@@ -15,8 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class AuctionDAOTest {
-    private AuctionDAO auctionDao = new AuctionDAO();
-    private AccountDAO accountDao = new AccountDAO();
+    private BiddingDAO biddingDAO;
 
     private User testUser;
     private Product testProduct;
@@ -25,6 +24,8 @@ public class AuctionDAOTest {
 
     @Before
     public void setUp(){
+        biddingDAO = new BiddingDAO();
+
         testUser = new User("test_user", "test_pass", "uk");
         testProduct = new Product("Mobile Phone", "Iphone X");
         int seconds = 10;
@@ -37,30 +38,30 @@ public class AuctionDAOTest {
     @Test
     public void getAuctionByCountry(){
         //Test
-        assertNull(auctionDao.getAuctionByCountry(testUser.getCountry()));
-        auctionDao.persistAuction(testAuction);
+        assertNull(biddingDAO.getAuctionByCountry(testUser.getCountry()));
+        biddingDAO.persistAuction(testAuction);
         for(int i = 0; i < testArray.size(); i++) {
-            assertEquals(testArray.get(i), auctionDao.getAuctionByCountry(testUser.getCountry()).get(i));
+            assertEquals(testArray.get(i), biddingDAO.getAuctionByCountry(testUser.getCountry()).get(i));
         }
     }
 
     @Test
     public void getAuctionByProductName(){
         //Test
-        assertNull(auctionDao.getAuctionByProductName(testProduct.getName()));
-        auctionDao.persistAuction(testAuction);
+        assertNull(biddingDAO.getAuctionByProductName(testProduct.getName()));
+        biddingDAO.persistAuction(testAuction);
         for(int i = 0; i < testArray.size(); i++) {
-            assertEquals(testArray.get(i), auctionDao.getAuctionByProductName(testProduct.getName()).get(i));
+            assertEquals(testArray.get(i), biddingDAO.getAuctionByProductName(testProduct.getName()).get(i));
         }
     }
 
     @Test
     public void getAuctionByUser(){
         //Test
-        assertNull(auctionDao.getAuctionByUser(testUser));
-        auctionDao.persistAuction(testAuction);
+        assertNull(biddingDAO.getAuctionByUser(testUser));
+        biddingDAO.persistAuction(testAuction);
         for(int i = 0; i < testArray.size(); i++) {
-            assertEquals(testArray.get(i), auctionDao.getAuctionByUser(testUser).get(i));
+            assertEquals(testArray.get(i), biddingDAO.getAuctionByUser(testUser).get(i));
         }
     }
 
@@ -71,24 +72,24 @@ public class AuctionDAOTest {
         Bid testBid = new Bid(testUser2,600);
         testAuction.setHighestBid(testBid);
         // Test
-        assertNull(auctionDao.getHighestBid(testAuction.getAuctionID()));
-        accountDao.createUser(testUser2);
-        auctionDao.persistAuction(testAuction);
-        assertEquals(testBid, auctionDao.getHighestBid(testAuction.getAuctionID()));
+        assertNull(biddingDAO.getHighestBid(testAuction.getAuctionID()));
+        biddingDAO.createUser(testUser2);
+        biddingDAO.persistAuction(testAuction);
+        assertEquals(testBid, biddingDAO.getHighestBid(testAuction.getAuctionID()));
         // Clean
-        accountDao.deleteUser(testUser2);
+        biddingDAO.deleteUser(testUser2);
     }
 
     @Test
     public void isOpen(){
         //Test
-        assertNull(auctionDao.isOpen(testAuction.getAuctionID()));
-        auctionDao.persistAuction(testAuction);
-        assertEquals(testAuction.isOpen(), auctionDao.isOpen(testAuction.getAuctionID()));
+        assertNull(biddingDAO.isOpen(testAuction.getAuctionID()));
+        biddingDAO.persistAuction(testAuction);
+        assertEquals(testAuction.isOpen(), biddingDAO.isOpen(testAuction.getAuctionID()));
     }
 
     @After
     public void tearDown(){
-        accountDao.deleteUser(testUser);
+        biddingDAO.deleteUser(testUser);
     }
 }

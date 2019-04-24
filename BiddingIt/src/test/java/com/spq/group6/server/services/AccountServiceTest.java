@@ -1,6 +1,6 @@
 package com.spq.group6.server.services;
 
-import com.spq.group6.server.dao.AccountDAO;
+import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AccountServiceTest {
-    private AccountDAO accountDao = new AccountDAO();
+    private BiddingDAO accountDao = new BiddingDAO();
     private AccountService service = new AccountService();
 
     @Test

@@ -1,9 +1,7 @@
 package com.spq.group6.server.utils;
 
-import com.spq.group6.server.dao.AccountDAO;
-import com.spq.group6.server.dao.AuctionDAO;
-import com.spq.group6.server.dao.IAccountDAO;
-import com.spq.group6.server.dao.IAuctionDAO;
+import com.spq.group6.server.dao.BiddingDAO;
+import com.spq.group6.server.dao.IBiddingDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
@@ -11,14 +9,12 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
 import java.sql.Timestamp;
-import java.util.Observable;
 import java.util.concurrent.locks.Lock;
 
 public class AuctionCountdown implements Runnable {
     private Auction auction;
     private RemoteObservable observable;
-    private static IAuctionDAO auctionDAO = new AuctionDAO();
-    private static IAccountDAO accountDAO = new AccountDAO();
+    private static IBiddingDAO biddingDAO = new BiddingDAO();
 
     public AuctionCountdown(Auction auction, RemoteObservable observable){
         this.auction = auction;
@@ -36,8 +32,8 @@ public class AuctionCountdown implements Runnable {
         // Set as 'closed' the auction
         Lock auctionLock = AuctionLocks.getLock(auction.getAuctionID());
         auctionLock.lock();
-        auctionDAO.closeAuction(auction.getAuctionID());
-        Bid bid = auctionDAO.getHighestBid(auction.getAuctionID());
+        biddingDAO.closeAuction(auction.getAuctionID());
+        Bid bid = biddingDAO.getHighestBid(auction.getAuctionID());
         auctionLock.unlock();
 
         Product product = auction.getProduct();
@@ -47,8 +43,8 @@ public class AuctionCountdown implements Runnable {
         if (buyer != null && buyer.getMoney()>=bid.getAmount()){
             seller.getOwnedProducts().remove(product);
             buyer.getOwnedProducts().add(product);
-            accountDAO.updateUser(seller);
-            accountDAO.updateUser(buyer);
+            biddingDAO.updateUser(seller);
+            biddingDAO.updateUser(buyer);
         }
         // TODO: what to do if user has not enough money
 

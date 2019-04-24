@@ -1,6 +1,7 @@
 package com.spq.group6.server.services;
 
 
+import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class AuctionServiceTest {
     private static AuctionService auctionService;
-    private static AdminDAO adminDao;
+    private static BiddingDAO biddingDAO;
     private static User user;
     private static Product product;
     private Auction auction;
@@ -31,7 +32,7 @@ public class AuctionServiceTest {
         user.getOwnedProducts().add(product);
         Timestamp t1 = new Timestamp(System.currentTimeMillis() + 10000);
         auction = new Auction(user, product, t1, 12, null);
-        adminDao = new AdminDAO();
+        biddingDAO = new BiddingDAO();
     }
 
     @Test
@@ -102,10 +103,10 @@ public class AuctionServiceTest {
     @After
     public void tearDown(){
         if (auction != null){
-            adminDao.deleteAuction(auction);
+            biddingDAO.deleteAuction(auction);
         }
         if (user != null){
-            adminDao.deleteUser(user);
+            biddingDAO.deleteUser(user);
         }
 
     }

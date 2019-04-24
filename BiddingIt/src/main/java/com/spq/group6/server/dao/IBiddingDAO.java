@@ -1,12 +1,24 @@
 package com.spq.group6.server.dao;
 
-import com.spq.group6.server.data.Auction;
-import com.spq.group6.server.data.Bid;
-import com.spq.group6.server.data.User;
+import com.spq.group6.server.data.*;
 
 import java.util.ArrayList;
 
-public interface IAuctionDAO {
+public interface IBiddingDAO {
+    void createUser(User user);
+
+    User getUserByUsername(String username);
+
+    void updateUser(User user);
+
+    void deleteUser(User user);
+
+    void updateProduct(Product product);
+
+    void deleteProduct(Product product);
+
+    Administrator getAdministratorByUsername(String username);
+
     void persistAuction(Auction auction);
 
     void persistBid(Auction auction, Bid bid);
@@ -26,4 +38,5 @@ public interface IAuctionDAO {
     void closeAuction(long auctionID);
 
     ArrayList<Auction> getAuctionByUser(User user);
+
 }
