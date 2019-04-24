@@ -37,16 +37,15 @@ public class AuctionService implements IAuctionService {
 
         AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
         Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
-        //auctionCountdown.start(); // Run thread for auction countdown
+        auctionCountdown.start(); // Run thread for auction countdown
 
         return auction;
     }
 
     public Auction bid(Auction auction, User user, float amount) throws AuctionException {
-        Lock auctionLock = AuctionLocks.getLock(auction.getAuctionID());
-        auctionLock.lock();
-        auction = biddingDAO.getAuctionByID(auction.getAuctionID());
+        AuctionLocks.getLock(auction.getAuctionID()).lock();
 
+        auction = biddingDAO.getAuctionByID(auction.getAuctionID());
         if (!auction.isOpen()){
             throw  new AuctionException("Auction is closed");
         }
@@ -62,7 +61,7 @@ public class AuctionService implements IAuctionService {
         NewBidEvent newBidEvent = new NewBidEvent(auction);
         observables.get(auction.getAuctionID()).notifyRemoteObservers(newBidEvent);
 
-        auctionLock.unlock();
+        AuctionLocks.getLock(auction.getAuctionID()).unlock();
         return auction;
     }
 

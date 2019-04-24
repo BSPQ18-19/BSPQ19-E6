@@ -64,30 +64,7 @@ public class AuctionDAOTest {
             assertEquals(testArray.get(i), biddingDAO.getAuctionByUser(testUser).get(i));
         }
     }
-
-    @Test
-    public void getHighestBid(){
-        // Setup
-        User testUser2 = new User("test_user2", "test_pass2", "uk");
-        Bid testBid = new Bid(testUser2,600);
-        testAuction.setHighestBid(testBid);
-        // Test
-        assertNull(biddingDAO.getHighestBid(testAuction.getAuctionID()));
-        biddingDAO.createUser(testUser2);
-        biddingDAO.persistAuction(testAuction);
-        assertEquals(testBid, biddingDAO.getHighestBid(testAuction.getAuctionID()));
-        // Clean
-        biddingDAO.deleteUser(testUser2);
-    }
-
-    @Test
-    public void isOpen(){
-        //Test
-        assertNull(biddingDAO.isOpen(testAuction.getAuctionID()));
-        biddingDAO.persistAuction(testAuction);
-        assertEquals(testAuction.isOpen(), biddingDAO.isOpen(testAuction.getAuctionID()));
-    }
-
+    
     @After
     public void tearDown(){
         biddingDAO.deleteUser(testUser);

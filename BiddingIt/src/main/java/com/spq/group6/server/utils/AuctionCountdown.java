@@ -52,8 +52,13 @@ public class AuctionCountdown implements Runnable {
                 biddingDAO.updateUser(seller);
                 biddingDAO.updateUser(buyer);
             }
+            else if (buyer != null && buyer.getMoney() < bid.getAmount()) {
+                auction.setHighestBid(null);
+                auctionLock.lock();
+                biddingDAO.persistAuction(auction);
+                auctionLock.unlock();
+            }
         }
-        // TODO: what to do if user has not enough money
 
         // notify remote observers
         observable.notifyRemoteObservers(new AuctionClosedEvent(auction));
