@@ -252,9 +252,32 @@ public class BiddingDAO implements IBiddingDAO {
         return null;
     }
 
-    @Override
     public ArrayList<Auction> getAuctionByUser(User user) {
-        return null;
+        pmLock.lock();
+
+        Transaction tx = pm.currentTransaction();
+        ArrayList<Auction> auctions = null;
+        try {
+            tx.begin();
+            Query<Auction> query = pm.newQuery(Auction.class);
+            query.setFilter("owner == '" + user.getUsername() + "'");
+            ArrayList<Auction> auctionsTest = (ArrayList<Auction>) query.execute();
+            for (Auction auction : auctionsTest) {
+                if (auction.isOpen()) {
+                    auctions.add(auction);
+                }
+            }
+            tx.commit();
+        } catch (Exception ex) {
+
+            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+        pmLock.unlock();
+        return auctions;
     }
 
     // Utils
