@@ -41,6 +41,7 @@ public class AuctionDAOTest {
         assertNull(biddingDAO.getAuctionByCountry(testUser.getCountry()));
         biddingDAO.persistAuction(testAuction);
         for(int i = 0; i < testArray.size(); i++) {
+
             assertEquals(testArray.get(i), biddingDAO.getAuctionByCountry(testUser.getCountry()).get(i));
         }
     }
