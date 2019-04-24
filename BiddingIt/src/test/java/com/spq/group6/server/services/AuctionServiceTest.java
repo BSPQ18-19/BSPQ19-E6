@@ -1,6 +1,5 @@
 package com.spq.group6.server.services;
 
-import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.server.dao.AdminDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
@@ -14,7 +13,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.rmi.RemoteException;
-import java.sql.Array;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -71,7 +69,7 @@ public class AuctionServiceTest {
         assertEquals(bid, auction.getHighestBid());
     }
 
-
+    @Test
     public void testSearchAuctionByCountry(){
         auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         user = auction.getOwner();
@@ -81,6 +79,7 @@ public class AuctionServiceTest {
         assertEquals(auction, auctions.get(0));
     }
 
+    @Test
     public void testSearchAuctionByProductName() {
         auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         user = auction.getOwner();
@@ -90,6 +89,7 @@ public class AuctionServiceTest {
         assertEquals(auction, auctions.get(0));
     }
 
+    @Test
     public void testSearchAuctionByUser() {
         auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         user = auction.getOwner();

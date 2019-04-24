@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.concurrent.locks.Lock;
 
 public class AuctionService implements IAuctionService {
-    private IAuctionDAO auctionDAO = null;
+    private IAuctionDAO auctionDAO;
     private HashMap<Long, RemoteObservable> observables;
 
     public AuctionService() {
