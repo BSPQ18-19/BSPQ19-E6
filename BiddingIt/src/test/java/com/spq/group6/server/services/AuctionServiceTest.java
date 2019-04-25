@@ -1,12 +1,13 @@
 package com.spq.group6.server.services;
 
-import com.spq.group6.client.controller.ClientController;
-import com.spq.group6.server.dao.AdminDAO;
+
+import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
+import com.spq.group6.server.utils.AuctionLocks;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,15 +15,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.rmi.RemoteException;
-import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class AuctionServiceTest {
     private static AuctionService auctionService;
-    private static AdminDAO adminDao;
+    private static BiddingDAO biddingDAO;
     private static User user;
     private static Product product;
     private Auction auction;
+    private int offsetSeconds;
 
     @Before
     public void setUp() throws RemoteException {
@@ -30,9 +32,10 @@ public class AuctionServiceTest {
         product = new Product("test_product", "test_description");
         user = new User("test_user", "test_pass", "uk");
         user.getOwnedProducts().add(product);
-        Timestamp t1 = new Timestamp(System.currentTimeMillis() + 10000);
+        offsetSeconds = 1;
+        Timestamp t1 = new Timestamp(System.currentTimeMillis() + offsetSeconds * 1000);
         auction = new Auction(user, product, t1, 12, null);
-        adminDao = new AdminDAO();
+        biddingDAO = new BiddingDAO();
     }
 
     @Test
@@ -70,25 +73,69 @@ public class AuctionServiceTest {
         assertEquals(bid, auction.getHighestBid());
     }
 
-    public void testSearchAuctionByCountry(){
+    @Test
+    public void testSearchAuctionByCountry() throws InterruptedException {
+        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+        user = auction.getOwner();
+
+        ArrayList<Auction> auctions = auctionService.searchAuctionByCountry(user.getCountry());
+        assertEquals(1, auctions.size());
+        assertEquals(auction, auctions.get(0));
+
+        Thread.sleep((offsetSeconds +1) * 1000);
+        AuctionLocks.getLock(auction.getAuctionID()).lock();
+        auctions = auctionService.searchAuctionByCountry(user.getCountry());
+        AuctionLocks.getLock(auction.getAuctionID()).unlock();
+
+        assertEquals(0, auctions.size());
+    }
+
+    @Test
+    public void testSearchAuctionByProductName() throws InterruptedException {
+        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+        user = auction.getOwner();
+
+        ArrayList<Auction> auctions = auctionService.searchAuctionByProductName(product.getName());
+        assertEquals(1, auctions.size());
+        assertEquals(auction, auctions.get(0));
+
+        Thread.sleep((offsetSeconds +1) * 1000);
+        AuctionLocks.getLock(auction.getAuctionID()).lock();
+        auctions = auctionService.searchAuctionByProductName(product.getName());
+        AuctionLocks.getLock(auction.getAuctionID()).unlock();
+
+        assertEquals(0, auctions.size());
 
     }
 
-    public void testSearchAuctionByProductName() {
+    @Test
+    public void testSearchAuctionByUser() throws InterruptedException {
+        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+        user = auction.getOwner();
 
-    }
+        ArrayList<Auction> auctions = auctionService.searchAuctionByUser(user);
+        assertEquals(1, auctions.size());
+        assertEquals(auction, auctions.get(0));
 
-    public void testSearchAuctionByUser() {
+        Thread.sleep((offsetSeconds +1) * 1000);
+        AuctionLocks.getLock(auction.getAuctionID()).lock();
+        auctions = auctionService.searchAuctionByUser(user);
+        AuctionLocks.getLock(auction.getAuctionID()).unlock();
 
+        assertEquals(0, auctions.size());
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() throws InterruptedException {
+        // Wait for any countdown left
+        long countdownLeft = (auction.getDayLimit().getTime() - System.currentTimeMillis()) + 1000;
+        Thread.sleep(Math.max(0, countdownLeft));
+
         if (auction != null){
-            adminDao.deleteAuction(auction);
+            biddingDAO.deleteAuction(auction);
         }
         if (user != null){
-            adminDao.deleteUser(user);
+            biddingDAO.deleteUser(user);
         }
 
     }

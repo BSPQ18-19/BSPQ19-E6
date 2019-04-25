@@ -1,7 +1,7 @@
 package com.spq.group6.client.controller;
 
 import com.spq.group6.client.remote.ServiceLocator;
-import com.spq.group6.server.dao.AdminDAO;
+import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.remote.IServer;
@@ -20,7 +20,7 @@ public class ClientControllerTest {
     private static Thread rmiServerThread = null;
 
     private static ClientController clientController;
-    private static AdminDAO adminDao;
+    private static BiddingDAO biddingDao;
     private static User user;
     private static Product product;
 
@@ -80,7 +80,7 @@ public class ClientControllerTest {
         clientController = new ClientController();
         user = new User("test_user", "test_pass", "uk");
         product = new Product("test_product", "test_description");
-        adminDao = new AdminDAO();
+        biddingDao = new BiddingDAO();
     }
 
     @Test
@@ -113,8 +113,7 @@ public class ClientControllerTest {
 
         clientController.logOut();
         assertNull(clientController.getCurrentUser());
-
-        adminDao.deleteUser(user);
+        biddingDao.deleteUser(user);
     }
 
     @Test
@@ -156,7 +155,7 @@ public class ClientControllerTest {
     public void tearDown(){
         User user = clientController.getCurrentUser();
         if (user != null){
-            adminDao.deleteUser(clientController.getCurrentUser());
+            biddingDao.deleteUser(clientController.getCurrentUser());
         }
     }
 
