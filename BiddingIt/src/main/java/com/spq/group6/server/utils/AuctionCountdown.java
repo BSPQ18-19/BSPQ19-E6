@@ -6,6 +6,7 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.utils.logger.ServerLogger;
 import com.spq.group6.server.utils.observer.events.AuctionClosedEvent;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
@@ -23,10 +24,12 @@ public class AuctionCountdown implements Runnable {
     }
 
     public void run() {
+        ServerLogger.logger.debug("Countdown started for auction: " + auction.getAuctionID());
         Timestamp now = new Timestamp(System.currentTimeMillis());
         long remainingMilis = auction.getDayLimit().getTime() - now.getTime();
         try {
             Thread.sleep(remainingMilis);
+            ServerLogger.logger.debug("Countdown ended for auction: " + auction.getAuctionID());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

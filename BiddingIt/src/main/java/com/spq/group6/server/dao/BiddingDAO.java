@@ -22,6 +22,11 @@ public class BiddingDAO implements IBiddingDAO {
         pmLock = JdoManager.pmLock;
     }
 
+    @Override
+    public boolean isProductInUse(Product product) {
+        return false;
+    }
+
     // Account DAO
     public void createUser(User user) {
         updateObject(user);
@@ -125,9 +130,9 @@ public class BiddingDAO implements IBiddingDAO {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
             query.setFilter("owner.username == '" + user.getUsername() + "'");
-            List<Auction> auctionsTest = (List<Auction>) query.execute();
+            List<Auction> auctions = (List<Auction>) query.execute();
             tx.commit();
-            for (Auction auction : auctionsTest)
+            for (Auction auction : auctions)
                 deleteAuction(auction); //deletes each auction owned by the user being deleted
             tx.begin();
             for (Product product : user.getOwnedProducts()) pm.deletePersistent(product);
@@ -161,18 +166,10 @@ public class BiddingDAO implements IBiddingDAO {
         ArrayList<Auction> auctions = new ArrayList<>();
         try {
             tx.begin();
-            Query<User> query = pm.newQuery(User.class);
-            query.setFilter("country == '" + country + "'");
-            List<User> users = (List<User>) query.execute();// Retrieves and detaches the ArrayList of users
-
-            for (int i = 0; i < users.size(); i++) {
-                Query<Auction> query2 = pm.newQuery(Auction.class);
-                query2.setFilter("owner.username == '" + users.get(i).getUsername() + "'");
-                Auction isNull = (Auction) query2.execute();
-                if (isNull != null && isNull.isOpen()) {
-                    auctions.add(i, isNull);// Retrieves and detaches the ArrayList of auctions
-                }
-            }
+            Query<Auction> query = pm.newQuery(Auction.class);
+            query.setFilter("isOpen == true && owner.country == '" + country + "'");
+            List<Auction> result = (List<Auction>) query.execute();// Retrieves and detaches the ArrayList of users
+            auctions.addAll(result);
             tx.commit();
         } catch (Exception ex) {
 
@@ -194,19 +191,10 @@ public class BiddingDAO implements IBiddingDAO {
         try {
             tx.begin();
 
-            Query<Product> query = pm.newQuery(Product.class);
-            query.setFilter("name == '" + name + "'");
-            List<Product> products = (List<Product>) query.execute();
-
-            for (int i = 0; i < products.size(); i++) {
-                Query<Auction> query2 = pm.newQuery(Auction.class);
-                query2.setFilter("product == '" + products.get(i) + "'");
-                Auction isNull = (Auction) query2.execute();
-                if (isNull != null && isNull.isOpen()) {
-                    auctions.add(i, isNull);// Retrieves and detaches the ArrayList of auctions
-                }
-            }
-
+            Query<Auction> query = pm.newQuery(Auction.class);
+            query.setFilter("isOpen == true && product.name == '" + name + "'");
+            List<Auction> result = (List<Auction>) query.execute();
+            auctions.addAll(result);
             tx.commit();
         } catch (Exception ex) {
 
@@ -231,7 +219,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.begin();
 
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("auctionID == '" + auctionID + "'");
+            query.setFilter("auctionID == " + auctionID );
             List<Auction> result = (List<Auction>) query.execute();
             auction = (result.size() != 1) ? null : result.get(0); // Retrieves and detaches the Auction
 
@@ -257,13 +245,9 @@ public class BiddingDAO implements IBiddingDAO {
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("owner.username == '" + user.getUsername() + "'");
-            List<Auction> auctionsTest = (List<Auction>) query.execute();
-            for (Auction auction : auctionsTest) {
-                if (auction.isOpen()) {
-                    auctions.add(auction);
-                }
-            }
+            query.setFilter("isOpen == true && owner.username == '" + user.getUsername() + "'");
+            List<Auction> result = (List<Auction>) query.execute();
+            auctions.addAll(result);
             tx.commit();
         } catch (Exception ex) {
 
@@ -275,6 +259,11 @@ public class BiddingDAO implements IBiddingDAO {
         }
         pmLock.unlock();
         return auctions;
+    }
+
+    @Override
+    public ArrayList<Auction> getAllAuctions() {
+        return null;
     }
 
     // Utils

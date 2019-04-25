@@ -4,6 +4,8 @@ import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.UserException;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,14 +13,18 @@ import static org.junit.Assert.*;
 public class AccountServiceTest {
     private BiddingDAO accountDao = new BiddingDAO();
     private AccountService service = new AccountService();
+    private User testUser;
+
+    @Before
+    public void setUp(){
+        String username = "test_user", pass = "test_pass", country = "uk";
+        testUser = new User(username, pass, country);
+    }
 
     @Test
     public void testSignIn()
     {
-        // Setup
-        String username = "test_user", pass = "test_pass", country = "uk";
-        User testUser = null;
-        // Test
+        String username = testUser.getUsername(), pass = testUser.getPassword(), country = testUser.getCountry();
         try {
             testUser = service.signIn(username, pass, country);
         } catch (UserException e) {
@@ -33,19 +39,14 @@ public class AccountServiceTest {
         } catch (UserException e) {
             assertTrue(true);
         }
-        // Clean
-        accountDao.deleteUser(testUser);
     }
 
     @Test
     public void testLogIn()
     {
         // Setup
-        String username = "test_user", pass = "test_pass", country = "uk";
-        User testUser = new User(username, pass, country);
         accountDao.createUser(testUser);
         // Test
-
         try {
             testUser = service.logIn(testUser.getUsername(), testUser.getPassword());
         } catch (UserException e) {
@@ -56,8 +57,6 @@ public class AccountServiceTest {
         } catch (UserException e) {
             assertTrue(true);
         }
-        // Clean
-        accountDao.deleteUser(testUser);
     }
 
     @Test
@@ -65,7 +64,6 @@ public class AccountServiceTest {
     {
         // Setup
         User persistedUser;
-        User testUser = new User("test_user", "test_pass", "uk");
         accountDao.createUser(testUser);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);
@@ -76,15 +74,12 @@ public class AccountServiceTest {
         persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertEquals(1, persistedUser.getOwnedProducts().size());
         assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
-        // Clean
-        accountDao.deleteUser(testUser);
     }
 
     @Test
     public void testUpdateProduct()
     {
         // Setup
-        User testUser = new User("test_user", "test_pass", "uk");
         accountDao.createUser(testUser);
         String oldName = "test_prod", newName = "test_super_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, newName, prodDescription);
@@ -95,15 +90,12 @@ public class AccountServiceTest {
         assertEquals(newName, testProduct.getName());
         User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertEquals(newName, persistedUser.getOwnedProducts().get(0).getName());
-        // Clean
-        accountDao.deleteUser(testUser);
     }
 
     @Test
     public void testDeleteProduct()
     {
         // Setup
-        User testUser = new User("test_user", "test_pass", "uk");
         accountDao.createUser(testUser);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);
@@ -113,7 +105,10 @@ public class AccountServiceTest {
         User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertEquals(0, persistedUser.getOwnedProducts().size());
         assertEquals(0, testUser.getOwnedProducts().size());
-        // Clean
+    }
+
+    @After
+    public void tearDown(){
         accountDao.deleteUser(testUser);
     }
 }
