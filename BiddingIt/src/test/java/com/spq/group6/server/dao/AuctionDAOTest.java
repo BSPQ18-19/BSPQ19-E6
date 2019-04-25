@@ -38,19 +38,19 @@ public class AuctionDAOTest {
     @Test
     public void getAuctionByCountry(){
         //Test
-        assertEquals(0, biddingDAO.getAuctionByCountry(testUser.getCountry()).size());
+        assertEquals(0, biddingDAO.getAuctionByCountry(testUser, testUser.getCountry()).size());
         biddingDAO.persistAuction(testAuction);
-        auctions = biddingDAO.getAuctionByCountry(testUser.getCountry());
-        assertTrue(testArray.size() == auctions.size());
+        auctions = biddingDAO.getAuctionByCountry(testUser, testUser.getCountry());
+        assertEquals(testArray.size(), auctions.size());
         assertTrue(testArray.containsAll(auctions) && auctions.containsAll(testArray));
     }
 
     @Test
     public void getAuctionByProductName(){
         //Test
-        assertEquals(0, biddingDAO.getAuctionByProductName(testProduct.getName()).size());
+        assertEquals(0, biddingDAO.getAuctionByProductName(testUser, testProduct.getName()).size());
         biddingDAO.persistAuction(testAuction);
-        auctions = biddingDAO.getAuctionByProductName(testProduct.getName());
+        auctions = biddingDAO.getAuctionByProductName(testUser, testProduct.getName());
         assertTrue(testArray.size() == auctions.size() &&
                 testArray.containsAll(auctions) && auctions.containsAll(testArray));
     }

@@ -40,6 +40,8 @@ public interface IBiddingDAO {
 
     Auction getAuctionByID(long auctionID);
 
-    ArrayList<Auction> getAllAuctions(User requester);
+    ArrayList<Auction> getAllAuctionsExceptRequester(User requester);
+
+    ArrayList<Auction> getAllAuctions();
 
 }
