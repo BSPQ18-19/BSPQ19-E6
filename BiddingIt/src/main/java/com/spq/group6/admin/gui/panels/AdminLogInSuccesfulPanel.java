@@ -76,7 +76,7 @@ public class AdminLogInSuccesfulPanel extends JPanel {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new AdminLogInSuccesfulPanel(800, 600, "Iñaki"));
+		testFrame.add(new AdminLogInSuccesfulPanel(800, 600, "Inaki"));
 		testFrame.setVisible(true);
 	}
 	

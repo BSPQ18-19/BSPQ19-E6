@@ -2,3 +2,7 @@ INSTALLATION:
 
 https://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html
 mvn install:install-file -Dfile=<path-to-file> -DpomFile=<path-to-pomfile>
+
+
+To use at /BiddingIt:
+mvn install:install-file -Dfile="lib/LGoodDatePicker-10.4.1.jar" -DpomFile="lib/LGoodDatePicker-10.4.1.pom"

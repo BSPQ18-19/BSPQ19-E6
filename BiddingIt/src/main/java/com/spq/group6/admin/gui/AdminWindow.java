@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.spq.group6.admin.controller.AdminController;
+import com.spq.group6.admin.gui.panels.AdminLogInSuccesfulPanel;
 import com.spq.group6.admin.gui.panels.LogInPanel;
 import com.spq.group6.admin.gui.utils.ScreenType;
 
@@ -43,9 +44,9 @@ public class AdminWindow extends JFrame {
 		case LOG_IN:
 			mainPanel = new LogInPanel(screenWidth, screenHeight, controller);
 			break;
-//		case LOG_IN_SUCCESFUL:
-//			mainPanel = new LogInSuccesfulPanel(screenWidth, screenHeight, data[0]);
-//			break;
+		case LOG_IN_SUCCESFUL:
+			mainPanel = new AdminLogInSuccesfulPanel(screenWidth, screenHeight, data[0]);
+			break;
 //		case MAIN_MENU:
 //			mainPanel = new MainMenuPanel(screenWidth, screenHeight, controller);
 //			break;	
