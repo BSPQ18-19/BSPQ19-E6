@@ -55,15 +55,25 @@ public class AuctionCountdown implements Runnable {
                 biddingDAO.updateUser(seller);
                 biddingDAO.updateUser(buyer);
             }
-            else if (buyer != null && buyer.getMoney() < bid.getAmount()) {
-                auction.setHighestBid(null);
-                auctionLock.lock();
-                biddingDAO.persistAuction(auction);
-                auctionLock.unlock();
+            else {
+                endUnsoldAuction();
             }
+        } else{
+            endUnsoldAuction();
         }
-
         // notify remote observers
         observable.notifyRemoteObservers(new AuctionClosedEvent(auction));
+    }
+
+    private void endUnsoldAuction(){
+        ServerLogger.logger.debug("Eneded auction without exchange: " + auction.getAuctionID());
+        Lock auctionLock = AuctionLocks.getLock(auction.getAuctionID());
+
+        auctionLock.lock();
+        auction.setHighestBid(null);
+        auction.getOwner().getOwnedProducts().add(auction.getProduct());
+        biddingDAO.persistAuction(auction);
+        biddingDAO.updateUser(auction.getOwner());
+        auctionLock.unlock();
     }
 }
