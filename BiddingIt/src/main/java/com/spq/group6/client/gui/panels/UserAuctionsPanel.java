@@ -39,12 +39,13 @@ public class UserAuctionsPanel extends JPanel {
 	private JButton backButton;
 	private JButton logOutButton;
 	
-	@SuppressWarnings("unused")
 	private ClientController controller;
+	private List<Auction> userAuctions;
 	
 	public UserAuctionsPanel(int screenWidth, int screenHeight, ClientController controller) {
 		
 		this.setLayout(null);
+		this.controller = controller;
 		
 		titleLabel = new JLabel("My auctions", SwingConstants.LEFT);
 		titleLabel.setSize(screenWidth / 4, screenHeight / 15);
@@ -89,7 +90,7 @@ public class UserAuctionsPanel extends JPanel {
 
 		String[] auctionsColumnNames = {"Prod. Name", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
 		Object[][] auctionsData = null;
-		List<Auction> userAuctions = controller.getCurrentUserAuctions();
+		userAuctions = controller.getCurrentUserAuctions();
 		if (controller.getCurrentUser() != null) {
 			auctionsData = new Object[userAuctions.size() + 1][auctionsColumnNames.length];
 			int i = 0;
@@ -115,23 +116,13 @@ public class UserAuctionsPanel extends JPanel {
 			auctionsData[i][4] = "";
 			auctionsData[i][5] = "Create";
 		}
-		auctionsTable = new JTable(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller));
+		auctionsTable = new JTable(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller, this));
 		auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth()+150);
 		@SuppressWarnings("unused")
 		ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 5);
 		
 		// set column 0 to combobox
-		List<Product> userProductsNotAuction = controller.getCurrentUserProducts(); // get all user products		
-		for (int i = userProductsNotAuction.size() - 1; i >= 0; i--) // remove products already in an auction
-			for (int j = 0; j < userAuctions.size(); j++)
-				if (userProductsNotAuction.get(i).equals(userAuctions.get(j).getProduct()))
-					userProductsNotAuction.remove(i);
-		Product[] userProductsNotAuctionArray = new Product[userProductsNotAuction.size()];
-		for (int i = 0; i < userProductsNotAuction.size(); i++)
-			userProductsNotAuctionArray[i] = userProductsNotAuction.get(i);
-		JComboBox<Product> prodComboBox = new JComboBox<Product>(userProductsNotAuctionArray);
-		prodComboBox.setSelectedIndex(0);
-		auctionsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(prodComboBox));
+		updateUserProductsComboBox();
 
 		// set column 4 to limit day
 		auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
@@ -152,6 +143,24 @@ public class UserAuctionsPanel extends JPanel {
 
 	}
 	
+	public void updateUserProductsComboBox() {
+		List<Product> userProductsNotAuction = controller.getCurrentUserProducts(); // get all user products		
+		for (int i = userProductsNotAuction.size() - 1; i >= 0; i--) // remove products already in an auction
+			for (int j = 0; j < userAuctions.size(); j++)
+				if (userProductsNotAuction.get(i).equals(userAuctions.get(j).getProduct()))
+					userProductsNotAuction.remove(i);
+		Product[] userProductsNotAuctionArray = new Product[userProductsNotAuction.size()];
+		for (int i = 0; i < userProductsNotAuction.size(); i++)
+			userProductsNotAuctionArray[i] = userProductsNotAuction.get(i);
+		JComboBox<Product> prodComboBox = new JComboBox<Product>(userProductsNotAuctionArray);
+		auctionsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(prodComboBox));
+		
+		// display a message if there are no new products for creating auctions
+		if (userProductsNotAuctionArray.length == 0)
+			JOptionPane.showConfirmDialog(UserAuctionsPanel.this, "All your products are already in an auction. You can't create new ones until you obtain a new product.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		
+	}
+
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);

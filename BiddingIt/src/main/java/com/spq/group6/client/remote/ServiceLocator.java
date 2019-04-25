@@ -1,5 +1,6 @@
 package com.spq.group6.client.remote;
 
+import com.spq.group6.client.utils.logger.ClientLogger;
 import com.spq.group6.server.remote.IServer;
 
 public class ServiceLocator {

@@ -155,14 +155,13 @@ public class ClientController {
     public List<Auction> getCurrentUserAuctions() {
 		ArrayList<Auction> userAuctions = new ArrayList<>();
     	String info = "Get auctions from user " + currentUser.getUsername();
-//      try {
+      try {
 			ClientLogger.logger.debug("Trying to " + info + ".");
-			//userAuctions = serviceLocator.getService().searchAuctionByUser(currentUser);
-	    	userAuctions.add(new Auction(currentUser, new Product("Prod1", "desc1"), new Timestamp(1000), 10, null));
+			userAuctions = serviceLocator.getService().searchAuctionByUser(currentUser);
 	    	ClientLogger.logger.debug(info + " correct.");
-//		} catch (RemoteException e) {
-//			ClientLogger.logger.error("Error getting user auctions: " + e.getMessage());
-//		}
+		} catch (RemoteException e) {
+			ClientLogger.logger.error("Error getting user auctions: " + e.getMessage());
+		}
     	return userAuctions;
     }
     
@@ -202,28 +201,26 @@ public class ClientController {
     public ArrayList<Auction> searchAuctionByCountry(String country) {
     	ArrayList<Auction> countryAuctions = new ArrayList<>();
     	String info = "Get auctions from country " + country;
-//        try {
+        try {
     		ClientLogger.logger.debug("Trying to " + info + ".");
-			//userAuctions = serviceLocator.getService().searchAuctionByCountry(country);
-        	countryAuctions.add(new Auction(currentUser, new Product("Prod2", "desc2"), new Timestamp(1560085000000l), 10, null));
+    		countryAuctions = serviceLocator.getService().searchAuctionByCountry(country);
         	ClientLogger.logger.debug(info + " correct.");
-//		} catch (RemoteException e) {
-//			ClientLogger.logger.error("Error searching auctions by country: " + e.getMessage());
-//		}
+		} catch (RemoteException e) {
+			ClientLogger.logger.error("Error searching auctions by country: " + e.getMessage());
+		}
     	return countryAuctions;
     }
     
     public ArrayList<Auction> searchAuctionByProductName(String name) {
     	ArrayList<Auction> prodNameAuctions = new ArrayList<>();
     	String info = "Get auctions with prod. name " + name;
-//        try {
+        try {
     		ClientLogger.logger.debug("Trying to " + info + ".");
-			//userAuctions = serviceLocator.getService().searchAuctionByProductName(name);
-        	prodNameAuctions.add(new Auction(currentUser, new Product("Prod3", "desc3"), new Timestamp(1560000000000l), 10, null));
+    		prodNameAuctions = serviceLocator.getService().searchAuctionByProductName(name);
         	ClientLogger.logger.debug(info + " correct.");
-//		} catch (RemoteException e) {
-//			ClientLogger.logger.error("Error searching auctions by prod name: " + e.getMessage());
-//		}
+		} catch (RemoteException e) {
+			ClientLogger.logger.error("Error searching auctions by prod name: " + e.getMessage());
+		}
     	return prodNameAuctions;
     }
 
