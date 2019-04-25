@@ -2,6 +2,7 @@ package com.spq.group6.server.dao;
 
 import com.spq.group6.server.data.*;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public interface IBiddingDAO {
@@ -19,12 +20,13 @@ public interface IBiddingDAO {
     void deleteProduct(Product product);
 
     // Admin DAO
+    Administrator getAdministratorByUsername(String username);
 
     void deleteUser(User user);
 
-    Administrator getAdministratorByUsername(String username);
-
     void deleteAuction(Auction auction);
+
+    ArrayList<User> getAllUsers();
 
     // Auction DAO
 

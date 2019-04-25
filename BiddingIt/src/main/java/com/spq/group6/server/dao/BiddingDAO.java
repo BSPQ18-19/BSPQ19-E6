@@ -123,6 +123,11 @@ public class BiddingDAO implements IBiddingDAO {
         pmLock.unlock();
     }
 
+    @Override
+    public ArrayList<User> getAllUsers() {
+        return null;
+    }
+
     public void deleteUser(User user) {
         pmLock.lock();
         Transaction tx = pm.currentTransaction();

@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.sql.Timestamp;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class CountDownTest {
     private User seller, buyer;
@@ -44,9 +45,14 @@ public class CountDownTest {
         RemoteObservable observable = new RemoteObservable();
         auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
         auctionCountdown.start();
+        // Add observer
+        ObserverDemo observerDemo = new ObserverDemo();
+        observable.addRemoteObserver(observerDemo);
+        assertFalse(observerDemo.updated);
 
         Thread.sleep(offset + 1000);
 
+        assertTrue(observerDemo.updated);
         AuctionLocks.getLock(auction.getAuctionID()).lock();
         auction = biddingDAO.getAuctionByID(auction.getAuctionID());
         assertFalse(auction.isOpen());
