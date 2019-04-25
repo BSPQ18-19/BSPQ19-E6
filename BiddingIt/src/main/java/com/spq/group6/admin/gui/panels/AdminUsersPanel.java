@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import com.spq.group6.admin.controller.AdminController;
 import com.spq.group6.admin.gui.AdminWindow;
+import com.spq.group6.admin.gui.actions.ActionDeleteUser;
 import com.spq.group6.admin.gui.elements.AuctionTimeLeftRunnable;
 import com.spq.group6.admin.gui.elements.ButtonColumn;
 import com.spq.group6.admin.gui.elements.MarketJTableModel;
@@ -64,7 +65,7 @@ public class AdminUsersPanel extends JPanel {
 					if (dots++ == 3)
 						dots = 0;
 					
-					String tempText = titleLabel.getText().substring(0, 23);
+					String tempText = titleLabel.getText().substring(0, 20);
 					for (int i = 0; i < dots; i++)
 						tempText += ".";
 					titleLabel.setText(tempText);
@@ -123,7 +124,7 @@ public class AdminUsersPanel extends JPanel {
 				auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 				@SuppressWarnings("unused")
-				ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 4);
+				ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionDeleteUser(), 4);
 				
 				// start countdown threads
 				for (int i = 0; i < auctionsData.length; i++)

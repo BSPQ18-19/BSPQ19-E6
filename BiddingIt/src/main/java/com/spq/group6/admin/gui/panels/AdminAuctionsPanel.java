@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import com.spq.group6.admin.controller.AdminController;
 import com.spq.group6.admin.gui.AdminWindow;
+import com.spq.group6.admin.gui.actions.ActionDeleteAuction;
 import com.spq.group6.admin.gui.elements.AuctionTimeLeftRunnable;
 import com.spq.group6.admin.gui.elements.ButtonColumn;
 import com.spq.group6.admin.gui.elements.MarketJTableModel;
@@ -140,7 +141,7 @@ public class AdminAuctionsPanel extends JPanel {
 				auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 				@SuppressWarnings("unused")
-				ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 4);
+				ButtonColumn deleteAuctionButtonColumn = new ButtonColumn(auctionsTable, new ActionDeleteAuction(), 4);
 				
 				// start countdown threads
 				for (int i = 0; i < auctionsData.length; i++)
