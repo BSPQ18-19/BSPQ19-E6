@@ -123,15 +123,11 @@ public class BiddingDAO implements IBiddingDAO {
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            ArrayList<Auction> auctions = null;
             Query<Auction> query = pm.newQuery(Auction.class);
             query.setFilter("owner.username == '" + user.getUsername() + "'");
-            ArrayList<Auction> auctionsTest = (ArrayList<Auction>) query.execute();
-            for (Auction auction : auctionsTest) {
-                    auctions.add(auction);
-            }
+            List<Auction> auctionsTest = (List<Auction>) query.execute();
             tx.commit();
-            for (Auction auction : auctions)
+            for (Auction auction : auctionsTest)
                 deleteAuction(auction); //deletes each auction owned by the user being deleted
             tx.begin();
             for (Product product : user.getOwnedProducts()) pm.deletePersistent(product);
@@ -162,12 +158,12 @@ public class BiddingDAO implements IBiddingDAO {
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
-        ArrayList<Auction> auctions = null;
+        ArrayList<Auction> auctions = new ArrayList<>();
         try {
             tx.begin();
             Query<User> query = pm.newQuery(User.class);
             query.setFilter("country == '" + country + "'");
-            ArrayList<User> users = (ArrayList<User>) query.execute();// Retrieves and detaches the ArrayList of users
+            List<User> users = (List<User>) query.execute();// Retrieves and detaches the ArrayList of users
 
             for (int i = 0; i < users.size(); i++) {
                 Query<Auction> query2 = pm.newQuery(Auction.class);
@@ -194,13 +190,13 @@ public class BiddingDAO implements IBiddingDAO {
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
-        ArrayList<Auction> auctions = null;
+        ArrayList<Auction> auctions = new ArrayList<>();
         try {
             tx.begin();
 
             Query<Product> query = pm.newQuery(Product.class);
             query.setFilter("name == '" + name + "'");
-            ArrayList<Product> products = (ArrayList<Product>) query.execute();
+            List<Product> products = (List<Product>) query.execute();
 
             for (int i = 0; i < products.size(); i++) {
                 Query<Auction> query2 = pm.newQuery(Auction.class);
@@ -257,12 +253,12 @@ public class BiddingDAO implements IBiddingDAO {
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
-        ArrayList<Auction> auctions = null;
+        ArrayList<Auction> auctions = new ArrayList<>();
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
             query.setFilter("owner.username == '" + user.getUsername() + "'");
-            ArrayList<Auction> auctionsTest = (ArrayList<Auction>) query.execute();
+            List<Auction> auctionsTest = (List<Auction>) query.execute();
             for (Auction auction : auctionsTest) {
                 if (auction.isOpen()) {
                     auctions.add(auction);
