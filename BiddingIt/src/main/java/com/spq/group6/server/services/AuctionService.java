@@ -26,6 +26,10 @@ public class AuctionService implements IAuctionService {
     public AuctionService() {
         biddingDAO = new BiddingDAO();
         observables = new HashMap<Long, RemoteObservable>();
+
+        for (Auction auction: biddingDAO.getAllAuctions()){
+            initAuction(auction);
+        }
     }
 
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) {
@@ -35,13 +39,7 @@ public class AuctionService implements IAuctionService {
         owner.getOwnedProducts().remove(product);
         biddingDAO.updateUser(owner);
 
-        RemoteObservable observable = new RemoteObservable();
-        observables.put(auction.getAuctionID(), observable);
-
-        AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
-        Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
-        auctionCountdown.start(); // Run thread for auction countdown
-
+        initAuction(auction);
         return auction;
     }
 
@@ -88,5 +86,13 @@ public class AuctionService implements IAuctionService {
     public void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
         RemoteObservable observable = observables.get(auction.getAuctionID());
         observable.deleteRemoteObserver(observer);
+    }
+
+    private void initAuction(Auction auction){
+        RemoteObservable observable = new RemoteObservable();
+        observables.put(auction.getAuctionID(), observable);
+        AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
+        Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
+        auctionCountdown.start(); // Run thread for auction countdown
     }
 }
