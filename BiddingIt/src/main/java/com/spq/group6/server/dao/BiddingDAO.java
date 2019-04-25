@@ -185,7 +185,7 @@ public class BiddingDAO implements IBiddingDAO {
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("isOpen == true && owner.country == '" + country + "'");
+            query.setFilter("isOpen == true && owner.country == '" + country + "' && owner.username != '" + requester.getUsername() +"'");
             List<Auction> result = (List<Auction>) query.execute();// Retrieves and detaches the ArrayList of users
             auctions.addAll(result);
             tx.commit();
@@ -210,7 +210,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.begin();
 
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("isOpen == true && product.name == '" + name + "'");
+            query.setFilter("isOpen == true && product.name == '" + name + "' && owner.username != '" + requester.getUsername() + "'");
             List<Auction> result = (List<Auction>) query.execute();
             auctions.addAll(result);
             tx.commit();
@@ -279,7 +279,31 @@ public class BiddingDAO implements IBiddingDAO {
         return auctions;
     }
 
-    public ArrayList<Auction> getAllAuctions(User requester) {
+    public ArrayList<Auction> getAllAuctionsExceptRequester(User requester) {
+        pmLock.lock();
+
+        Transaction tx = pm.currentTransaction();
+        ArrayList<Auction> auctions = new ArrayList<>();
+        try {
+            tx.begin();
+            Query<Auction> query = pm.newQuery(Auction.class);
+            query.setFilter("isOpen == true && owner.username != '" + requester.getUsername() +"'");
+            List<Auction> result = (List<Auction>) query.execute();
+            auctions.addAll(result);
+            tx.commit();
+        } catch (Exception ex) {
+
+            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+        pmLock.unlock();
+        return auctions;
+    }
+
+    public ArrayList<Auction> getAllAuctions() {
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
