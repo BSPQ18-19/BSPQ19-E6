@@ -6,8 +6,6 @@ import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public interface IBiddingDAO {
-    // Common
-    boolean isProductInUse(Product product);
     // Account DAO
     void createUser(User user);
 
