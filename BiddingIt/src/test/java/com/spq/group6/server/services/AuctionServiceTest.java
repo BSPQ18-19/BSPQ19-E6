@@ -39,12 +39,18 @@ public class AuctionServiceTest {
     }
 
     @Test
-    public void testCreatePublicAuction() {
+    public void testCreatePublicAuction() throws InterruptedException {
         Auction createdAuction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         assertEquals(auction, createdAuction);
 
+        assertEquals(0, auction.getOwner().getOwnedProducts().size());
         auction = createdAuction;
         user = auction.getOwner();
+        Thread.sleep((offsetSeconds +1) * 1000);
+
+        user = biddingDAO.getUserByUsername(user.getUsername());
+        assertEquals(1, user.getOwnedProducts().size());
+
     }
 
 

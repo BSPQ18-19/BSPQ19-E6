@@ -2,6 +2,8 @@ package com.spq.group6.client.controller;
 
 import com.spq.group6.client.remote.ServiceLocator;
 import com.spq.group6.server.dao.BiddingDAO;
+import com.spq.group6.server.data.Auction;
+import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.remote.IServer;
@@ -14,6 +16,8 @@ import static org.junit.Assert.*;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class ClientControllerTest {
     private static Thread rmiRegistryThread = null;
@@ -21,8 +25,10 @@ public class ClientControllerTest {
 
     private static ClientController clientController;
     private static BiddingDAO biddingDao;
-    private static User user;
+    private static User seller, buyer;
     private static Product product;
+    private static Auction auction;
+    private static Bid bid;
 
     @BeforeClass
     static public void setUpClass() {
@@ -78,36 +84,41 @@ public class ClientControllerTest {
     @Before
     public void setUp() throws RemoteException {
         clientController = new ClientController();
-        user = new User("test_user", "test_pass", "uk");
+        seller = new User("test_seller", "test_pass", "uk");
+        buyer = new User("test_buyer", "test_pass", "uk");
         product = new Product("test_product", "test_description");
         biddingDao = new BiddingDAO();
+        int offset = 10;
+        Timestamp limit = new Timestamp(System.currentTimeMillis() +offset*1000);
+        auction = new Auction(seller, product, limit, 12, null);
+        bid = new Bid(buyer, auction.getInitialPrice()+1);
     }
 
     @Test
     public void signInTest() throws RemoteException {
-        assertTrue(clientController.signIn(user.getUsername(), user.getPassword(), user.getCountry()));
-        assertEquals(user, clientController.getCurrentUser());
-        assertFalse(clientController.signIn(user.getUsername(), user.getPassword(), user.getCountry()));
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
+        assertEquals(seller, clientController.getCurrentUser());
+        assertFalse(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
         System.out.println(clientController.getCurrentUser());
     }
 
 
     @Test
     public void logInInTest() throws RemoteException {
-        assertFalse(clientController.logIn(user.getUsername(), user.getPassword()));
-        // Creates a new user for trying to login
-        assertTrue(clientController.signIn(user.getUsername(), user.getPassword(), user.getCountry()));
+        assertFalse(clientController.logIn(seller.getUsername(), seller.getPassword()));
+        // Creates a new seller for trying to login
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
 
-        assertTrue(clientController.logIn(user.getUsername(), user.getPassword()));
-        assertEquals(user, clientController.getCurrentUser());
+        assertTrue(clientController.logIn(seller.getUsername(), seller.getPassword()));
+        assertEquals(seller, clientController.getCurrentUser());
     }
 
     @Test
     public void logOutInTest() throws RemoteException {
         assertNull(clientController.getCurrentUser());
-        // Creates a new user and logs in
-        assertTrue(clientController.signIn(user.getUsername(), user.getPassword(), user.getCountry()));
-        assertTrue(clientController.logIn(user.getUsername(), user.getPassword()));
+        // Creates a new seller and logs in
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
+        assertTrue(clientController.logIn(seller.getUsername(), seller.getPassword()));
         User user = clientController.getCurrentUser(); // We save it for deleting it later
         assertNotNull(user);
 
@@ -118,7 +129,7 @@ public class ClientControllerTest {
 
     @Test
     public void createProductTest() throws RemoteException {
-        assertTrue(clientController.signIn(user.getUsername(), user.getPassword(), user.getCountry()));
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
         assertTrue(clientController.createProduct(product.getName(), product.getDescription()));
 
         assertEquals(1, clientController.getCurrentUser().getOwnedProducts().size());
@@ -128,7 +139,7 @@ public class ClientControllerTest {
 
     @Test
     public void updateProductTest() throws RemoteException {
-        assertTrue(clientController.signIn(user.getUsername(), user.getPassword(), user.getCountry()));
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
         assertTrue(clientController.createProduct(product.getName(), product.getDescription()));
         product = clientController.getCurrentUser().getOwnedProducts().get(0);
 
@@ -142,14 +153,39 @@ public class ClientControllerTest {
 
     @Test
     public void deleteProductTest() throws RemoteException {
-        assertTrue(clientController.signIn(user.getUsername(), user.getPassword(), user.getCountry()));
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
         assertTrue(clientController.createProduct(product.getName(), product.getDescription()));
         product = clientController.getCurrentUser().getOwnedProducts().get(0);
 
         assertTrue(clientController.deleteProduct(product));
     }
 
+    @Test
+    public void createPublicAuctionTest() throws RemoteException {
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
 
+        assertTrue(clientController.createPublicAuction(auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice()));
+        ArrayList<Auction> auctions = clientController.searchAuctionByProductName(product.getName());
+        assertEquals(1, auctions.size());
+        Auction persistedAuction = auctions.get(0);
+        auction.setAuctionID(auctions.get(0).getAuctionID());
+        assertEquals(auction, auctions.get(0));
+    }
+
+    @Test
+    public void bidTest() throws RemoteException {
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
+        assertTrue(clientController.createPublicAuction(auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice()));
+        seller = clientController.getCurrentUser();
+        assertTrue(clientController.signIn(buyer.getUsername(), buyer.getPassword(), buyer.getCountry()));
+        auction = clientController.searchAuctionByProductName(product.getName()).get(0);
+
+        assertTrue(clientController.bid(auction, auction.getInitialPrice()+1));
+        auction = clientController.searchAuctionByProductName(product.getName()).get(0);
+        assertEquals(bid, auction.getHighestBid());
+        // Clean up
+        biddingDao.deleteUser(seller);
+    }
 
     @After
     public void tearDown(){

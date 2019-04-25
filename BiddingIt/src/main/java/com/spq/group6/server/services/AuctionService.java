@@ -31,6 +31,9 @@ public class AuctionService implements IAuctionService {
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) {
         Auction auction = new Auction(owner, product, dayLimit, initialPrice, null);
         biddingDAO.persistAuction(auction);
+        // Remove product from Owner until auction is finished
+        owner.getOwnedProducts().remove(product);
+        biddingDAO.updateUser(owner);
 
         RemoteObservable observable = new RemoteObservable();
         observables.put(auction.getAuctionID(), observable);
