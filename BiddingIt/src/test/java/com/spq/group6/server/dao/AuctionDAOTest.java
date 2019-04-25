@@ -18,6 +18,7 @@ public class AuctionDAOTest {
     private BiddingDAO biddingDAO;
 
     private User testUser;
+    private static User fakeUser;
     private Product testProduct;
     private Auction testAuction;
     private List<Auction> testArray;
@@ -26,21 +27,22 @@ public class AuctionDAOTest {
     @Before
     public void setUp(){
         biddingDAO = new BiddingDAO();
-
         testUser = new User("test_user", "test_pass", "uk");
         testProduct = new Product("Mobile Phone", "Iphone X");
+        fakeUser = new User("test_fake", "test_pass", "uk");
         int seconds = 10;
         Timestamp limit = new Timestamp(System.currentTimeMillis() + seconds*1000);
         testAuction = new Auction(testUser, testProduct, limit, 600, "123" );
+        testArray = new ArrayList<>();
         testArray.add(testAuction);
     }
 
     @Test
     public void getAuctionByCountry(){
         //Test
-        assertEquals(0, biddingDAO.getAuctionByCountry(testUser, testUser.getCountry()).size());
+        assertEquals(0, biddingDAO.getAuctionByCountry(fakeUser, testUser.getCountry()).size());
         biddingDAO.persistAuction(testAuction);
-        auctions = biddingDAO.getAuctionByCountry(testUser, testUser.getCountry());
+        auctions = biddingDAO.getAuctionByCountry(fakeUser, testUser.getCountry());
         assertEquals(testArray.size(), auctions.size());
         assertTrue(testArray.containsAll(auctions) && auctions.containsAll(testArray));
     }
@@ -48,9 +50,9 @@ public class AuctionDAOTest {
     @Test
     public void getAuctionByProductName(){
         //Test
-        assertEquals(0, biddingDAO.getAuctionByProductName(testUser, testProduct.getName()).size());
+        assertEquals(0, biddingDAO.getAuctionByProductName(fakeUser, testProduct.getName()).size());
         biddingDAO.persistAuction(testAuction);
-        auctions = biddingDAO.getAuctionByProductName(testUser, testProduct.getName());
+        auctions = biddingDAO.getAuctionByProductName(fakeUser, testProduct.getName());
         assertTrue(testArray.size() == auctions.size() &&
                 testArray.containsAll(auctions) && auctions.containsAll(testArray));
     }
@@ -73,10 +75,10 @@ public class AuctionDAOTest {
     }
 
     @Test
-    public void getAllAuctions(){
-        assertEquals(0, biddingDAO.getAllAuctions().size());
+    public void getAllAuctionsExceptRequester(){
+        assertEquals(0, biddingDAO.getAllAuctionsExceptRequester(fakeUser).size());
         biddingDAO.persistAuction(testAuction);
-        auctions = biddingDAO.getAllAuctions();
+        auctions = biddingDAO.getAllAuctionsExceptRequester(fakeUser);
         assertTrue(testArray.size() == auctions.size() &&
                 testArray.containsAll(auctions) && auctions.containsAll(testArray));
     }

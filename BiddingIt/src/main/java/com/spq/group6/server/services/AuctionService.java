@@ -27,7 +27,7 @@ public class AuctionService implements IAuctionService {
         biddingDAO = new BiddingDAO();
         observables = new HashMap<Long, RemoteObservable>();
 
-        for (Auction auction: biddingDAO.getAllAuctions(null)){ // TODO: getAllAuctions
+        for (Auction auction: biddingDAO.getAllAuctions()){
             initAuction(auction);
         }
     }
@@ -75,7 +75,7 @@ public class AuctionService implements IAuctionService {
     }
 
     public ArrayList<Auction> getAllAuctions(User requester) {
-        return biddingDAO.getAllAuctions(requester);
+        return biddingDAO.getAllAuctionsExceptRequester(requester);
     }
 
     public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {

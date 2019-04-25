@@ -32,7 +32,7 @@ public class AuctionServiceTest {
         auctionService = new AuctionService();
         product = new Product("test_product", "test_description");
         user = new User("test_user", "test_pass", "uk");
-        user = new User("test_fake", "test_pass", "uk");
+        fakeUser = new User("test_fake", "test_pass", "uk");
         user.getOwnedProducts().add(product);
         offsetSeconds = 1;
         Timestamp t1 = new Timestamp(System.currentTimeMillis() + offsetSeconds * 1000);
@@ -85,6 +85,9 @@ public class AuctionServiceTest {
     public void testSearchAuctionByCountry() throws InterruptedException {
         auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         user = auction.getOwner();
+
+        ArrayList<Auction> myAuctions = auctionService.searchAuctionByCountry(user, user.getCountry());
+        assertEquals(0, myAuctions.size());
 
         ArrayList<Auction> auctions = auctionService.searchAuctionByCountry(fakeUser, user.getCountry());
         assertEquals(1, auctions.size());
