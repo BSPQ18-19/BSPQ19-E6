@@ -51,16 +51,17 @@ public class AdminController {
 		return currentAdmin;
 	}
 
-    public boolean deleteAuction(Auction auction) {
-    	String info = "Delete the auction of the product " + auction.getProduct().getName() + " with description " + auction.getProduct().getDescription();
+    public ArrayList<User> getAllUsers(){
+    	ArrayList<User> users = new ArrayList<>();
+    	String info = "Get all users";
         try {
         	System.out.println("Trying to " + info + ".");
-			adminServiceLocator.getService().deleteAuction(auction);
+			users = adminServiceLocator.getService().getAllUsers();
 			System.out.println(info + " correct.");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-    	return true;
+    	return users;
     }
     
     public boolean deleteUser(User user) {
@@ -68,6 +69,18 @@ public class AdminController {
         try {
         	System.out.println("Trying to " + info + ".");
 			adminServiceLocator.getService().deleteUser(user);
+			System.out.println(info + " correct.");
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+    	return true;
+    }
+    
+    public boolean deleteAuction(Auction auction) {
+    	String info = "Delete the auction of the product " + auction.getProduct().getName() + " with description " + auction.getProduct().getDescription();
+        try {
+        	System.out.println("Trying to " + info + ".");
+			adminServiceLocator.getService().deleteAuction(auction);
 			System.out.println(info + " correct.");
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -100,6 +113,19 @@ public class AdminController {
 		}
     	return prodNameAuctions;
     }
+    
+//    public ArrayList<Auction> searchAuctionByUser(String name) {
+//    	ArrayList<Auction> userAuctions = new ArrayList<>();
+//    	String info = "Get auctions with user's name " + name;
+//        try {
+//        	System.out.println("Trying to " + info + ".");
+//			userAuctions = adminServiceLocator.getService().getAuctionByUser(name);
+//			System.out.println(info + " correct.");
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
+//    	return userAuctions;
+//    }
     
 	public void exit(){
     	System.exit(0);

@@ -29,14 +29,11 @@ import com.spq.group6.admin.gui.utils.SPQG6Util;
 import com.spq.group6.admin.gui.utils.ScreenType;
 import com.spq.group6.server.data.Auction;
 
-public class AdminAuctionsPanel extends JPanel {
+public class AdminUsersPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
 	private JPanel searchPanel;
-	private JLabel searchLabel, searchLabel2;
-	private JComboBox<String> searchComboBox;
-	private JTextField searchTF;
 	private JButton searchButton;
 	private JScrollPane auctionsTableScrollPane;
 	private JTable auctionsTable;
@@ -47,11 +44,11 @@ public class AdminAuctionsPanel extends JPanel {
 	private AdminController controller;
 	private ArrayList<Thread> auctionsTimeLeftThread;
 	
-	public AdminAuctionsPanel(int screenWidth, int screenHeight, AdminController controller) {
+	public AdminUsersPanel(int screenWidth, int screenHeight, AdminController controller) {
 		
 		this.setLayout(null);
 		
-		titleLabel = new JLabel("Administrating auctions...", SwingConstants.LEFT);
+		titleLabel = new JLabel("Administrating users...", SwingConstants.LEFT);
 		titleLabel.setSize((int)(screenWidth * 0.5), screenHeight / 15);
 		titleLabel.setLocation((int) (screenWidth / 15), (int) (screenHeight / 4 - titleLabel.getHeight() / 2));
 		SDG2Util.fixJLabelFontSize(titleLabel);	
@@ -62,7 +59,7 @@ public class AdminAuctionsPanel extends JPanel {
 			@Override
 			public void run() {
 				
-				while(AdminAuctionsPanel.this.isEnabled()) {
+				while(AdminUsersPanel.this.isEnabled()) {
 					
 					if (dots++ == 3)
 						dots = 0;
@@ -84,10 +81,6 @@ public class AdminAuctionsPanel extends JPanel {
 		animationThread.start();	
 				
 		// searching filter
-		searchLabel = new JLabel("Search for auctions where");
-		searchComboBox = new JComboBox<>(new String[] {"Country", "Name"});
-		searchLabel2 = new JLabel("is");
-		searchTF = new JTextField(10);
 		searchButton = new JButton("Search");
 		String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
 		searchButton.addActionListener(new ActionListener() {
@@ -101,19 +94,9 @@ public class AdminAuctionsPanel extends JPanel {
 				
 				Object[][] auctionsData = null;
 				List<Auction> auctions = null;
-				switch(searchComboBox.getSelectedIndex()) {
-				case 0: 
-					auctions = controller.searchAuctionByCountry(searchTF.getText());
-					break;
-				case 1:
-					auctions = controller.searchAuctionByProductName(searchTF.getText());
-					break;
-				default:
-					auctions = new ArrayList<>();
-				}
 				if (auctions.size() == 0) {
 					auctionsData = new Object[][] {};
-					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				
 				} else {
 					auctionsData = new Object[auctions.size()][auctionsColumnNames.length];
@@ -133,7 +116,7 @@ public class AdminAuctionsPanel extends JPanel {
 						Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
 						auctionsTimeLeftThread.add(tempAuctionThread);
 					}
-					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "Auctions found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "Auctions found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				}
 				auctionsTable.setModel(new MarketJTableModel(auctionsData, auctionsColumnNames, controller));
@@ -177,7 +160,7 @@ public class AdminAuctionsPanel extends JPanel {
 				if (controller.logOut())
 					AdminWindow.getAdminWindow(null).changeScreen(ScreenType.LOG_IN);
 				else
-					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
 			}
 		});
@@ -199,10 +182,6 @@ public class AdminAuctionsPanel extends JPanel {
 
 		
 		this.add(titleLabel);
-		searchPanel.add(searchLabel);
-		searchPanel.add(searchComboBox);
-		searchPanel.add(searchLabel2);
-		searchPanel.add(searchTF);
 		searchPanel.add(searchButton);
 		this.add(searchPanel);
 		this.add(auctionsTableScrollPane);
@@ -214,7 +193,7 @@ public class AdminAuctionsPanel extends JPanel {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new AdminAuctionsPanel(800, 600, null));
+		testFrame.add(new AdminUsersPanel(800, 600, null));
 		testFrame.setVisible(true);
 	}
 	

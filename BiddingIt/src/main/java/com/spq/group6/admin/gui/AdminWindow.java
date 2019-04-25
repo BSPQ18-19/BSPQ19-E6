@@ -4,7 +4,10 @@ import java.awt.*;
 import javax.swing.*;
 
 import com.spq.group6.admin.controller.AdminController;
+import com.spq.group6.admin.gui.panels.AdminAuctionsPanel;
 import com.spq.group6.admin.gui.panels.AdminLogInSuccesfulPanel;
+import com.spq.group6.admin.gui.panels.AdminMainMenuPanel;
+import com.spq.group6.admin.gui.panels.AdminUsersPanel;
 import com.spq.group6.admin.gui.panels.LogInPanel;
 import com.spq.group6.admin.gui.utils.ScreenType;
 
@@ -47,18 +50,15 @@ public class AdminWindow extends JFrame {
 		case LOG_IN_SUCCESFUL:
 			mainPanel = new AdminLogInSuccesfulPanel(screenWidth, screenHeight, data[0]);
 			break;
-//		case MAIN_MENU:
-//			mainPanel = new MainMenuPanel(screenWidth, screenHeight, controller);
-//			break;	
-//		case MARKET:
-//			mainPanel = new MarketPanel(screenWidth, screenHeight, controller);
-//			break;
-//		case USER_PRODUCTS:
-//			mainPanel = new UserProductsPanel(screenWidth, screenHeight, controller);
-//			break;
-//		case USER_AUCTIONS:
-//			mainPanel = new UserAuctionsPanel(screenWidth, screenHeight, controller);
-//			break;
+		case MAIN_MENU:
+			mainPanel = new AdminMainMenuPanel(screenWidth, screenHeight, controller);
+			break;	
+		case ADMIN_USERS:
+			mainPanel = new AdminUsersPanel(screenWidth, screenHeight, controller);
+			break;
+		case ADMIN_AUCTIONS:
+			mainPanel = new AdminAuctionsPanel(screenWidth, screenHeight, controller);
+			break;
 		default:
 			break;
 		}

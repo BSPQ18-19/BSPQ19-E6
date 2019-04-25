@@ -38,7 +38,7 @@ public class AdminMainMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AdminWindow.getAdminWindow(null).changeScreen(ScreenType.USER_AUCTIONS);
+				AdminWindow.getAdminWindow(null).changeScreen(ScreenType.ADMIN_AUCTIONS);
 			}
 		});
 		
@@ -51,7 +51,7 @@ public class AdminMainMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AdminWindow.getAdminWindow(null).changeScreen(ScreenType.MARKET);
+				AdminWindow.getAdminWindow(null).changeScreen(ScreenType.ADMIN_USERS);
 
 			}
 		});
