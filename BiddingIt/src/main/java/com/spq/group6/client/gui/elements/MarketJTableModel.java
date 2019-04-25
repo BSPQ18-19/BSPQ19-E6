@@ -36,8 +36,8 @@ public class MarketJTableModel extends DefaultTableModel {
 		if (bidValue != null && Float.parseFloat(bidValue) > actualHighestBid)
 			if (controller.bid(auction, Float.parseFloat(bidValue))) {
 				JOptionPane.showConfirmDialog(null, "Auction bidded correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				this.removeRow(rowIndex);
-	
+				this.setValueAt(bidValue, rowIndex, 2);
+				
 			} else
 				JOptionPane.showConfirmDialog(null, "Error bidding the auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		else

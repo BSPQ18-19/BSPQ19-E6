@@ -166,7 +166,7 @@ public class MarketPanel extends JPanel {
 		auctionsTable = new JTable(new MarketJTableModel(new Object[][] {}, auctionsColumnNames, controller));
 		auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
-		// set column 4 to limit day
+		// set column 3 to limit day
 		auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
 		auctionsTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
 		auctionsTable.getColumnModel().getColumn(4).setCellEditor(auctionsTable.getDefaultEditor(LocalDateTime.class));
