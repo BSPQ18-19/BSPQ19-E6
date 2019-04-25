@@ -174,8 +174,10 @@ public class ClientController {
         	if (auction != null) {
         		ClientLogger.logger.debug(info + " correct.");
 			}
-			else
+			else {
 				ClientLogger.logger.warn(info + " incorrect. Server returned null.");
+				return false;
+			}
         } catch (RemoteException e) {
 			ClientLogger.logger.error("Error creating a public auction: " + e.getMessage());
 		}
@@ -190,8 +192,10 @@ public class ClientController {
         	if (auctionReturn != null) {
         		ClientLogger.logger.debug(info + " correct.");
 			}
-			else
+			else {
 				ClientLogger.logger.warn(info + " incorrect. Server returned null.");
+				return false;
+			}
         } catch (RemoteException | AuctionException e) {
 			ClientLogger.logger.error("Error bidding an auction: " + e.getMessage());
 		}
