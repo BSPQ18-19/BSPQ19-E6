@@ -10,9 +10,6 @@ import com.spq.group6.client.gui.utils.SDG2Util;
 
 public class InitialPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
 	private JLabel infoLabel;
