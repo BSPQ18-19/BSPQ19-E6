@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JTable;
 
-import com.spq.group6.admin.gui.elements.MarketJTableModel;
+import com.spq.group6.admin.gui.elements.UserJTableModel;
 import com.spq.group6.server.data.Auction;
 
 public class ActionDeleteUser extends AbstractAction {
@@ -15,6 +15,6 @@ public class ActionDeleteUser extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		JTable table = (JTable)e.getSource();
         int modelRow = Integer.valueOf( e.getActionCommand() );
-        ((MarketJTableModel)table.getModel()).bidAuctionAt(modelRow, (Auction) table.getValueAt(modelRow, 0));
+        ((UserJTableModel)table.getModel()).deleteUserAt(modelRow, (Auction) table.getValueAt(modelRow, 0));
 	}
 }

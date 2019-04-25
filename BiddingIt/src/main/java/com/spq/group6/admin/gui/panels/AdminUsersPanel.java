@@ -24,7 +24,7 @@ import com.spq.group6.admin.gui.AdminWindow;
 import com.spq.group6.admin.gui.actions.ActionDeleteUser;
 import com.spq.group6.admin.gui.elements.AuctionTimeLeftRunnable;
 import com.spq.group6.admin.gui.elements.ButtonColumn;
-import com.spq.group6.admin.gui.elements.MarketJTableModel;
+import com.spq.group6.admin.gui.elements.UserJTableModel;
 import com.spq.group6.admin.gui.utils.SDG2Util;
 import com.spq.group6.admin.gui.utils.SPQG6Util;
 import com.spq.group6.admin.gui.utils.ScreenType;
@@ -120,7 +120,7 @@ public class AdminUsersPanel extends JPanel {
 					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "Auctions found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				}
-				auctionsTable.setModel(new MarketJTableModel(auctionsData, auctionsColumnNames, controller));
+				auctionsTable.setModel(new UserJTableModel(auctionsData, auctionsColumnNames, controller));
 				auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 				@SuppressWarnings("unused")
@@ -166,7 +166,7 @@ public class AdminUsersPanel extends JPanel {
 			}
 		});
 
-		auctionsTable = new JTable(new MarketJTableModel(new Object[][] {}, auctionsColumnNames, controller));
+		auctionsTable = new JTable(new UserJTableModel(new Object[][] {}, auctionsColumnNames, controller));
 		auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 		// set column 4 to limit day

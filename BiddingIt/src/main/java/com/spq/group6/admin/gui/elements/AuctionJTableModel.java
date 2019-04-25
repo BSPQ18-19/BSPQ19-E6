@@ -6,14 +6,14 @@ import javax.swing.table.DefaultTableModel;
 import com.spq.group6.admin.controller.AdminController;
 import com.spq.group6.server.data.Auction;
 
-public class MarketJTableModel extends DefaultTableModel {
+public class AuctionJTableModel extends DefaultTableModel {
 
 	// TODO
 	
 	private static final long serialVersionUID = 1L;
 	private AdminController controller;
 	
-	public MarketJTableModel(Object[][] data, String[] columnNames, AdminController controller) {
+	public AuctionJTableModel(Object[][] data, String[] columnNames, AdminController controller) {
     	super(data, columnNames);
 		
 		this.controller = controller;
@@ -45,10 +45,6 @@ public class MarketJTableModel extends DefaultTableModel {
 //	}
 	
 	public void deleteAuctionAt(int rowIndex, Auction auction) {
-		
-	}
-	
-	public void deleteUserAt(int rowIndex, Auction auction) {
 		
 	}
 	
