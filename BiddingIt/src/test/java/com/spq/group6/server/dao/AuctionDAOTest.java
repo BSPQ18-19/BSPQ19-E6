@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class AuctionDAOTest {
     private BiddingDAO biddingDAO;
@@ -38,7 +37,7 @@ public class AuctionDAOTest {
     @Test
     public void getAuctionByCountry(){
         //Test
-        assertNull(biddingDAO.getAuctionByCountry(testUser.getCountry()));
+        assertEquals(0, biddingDAO.getAuctionByCountry(testUser.getCountry()).size());
         biddingDAO.persistAuction(testAuction);
         for(int i = 0; i < testArray.size(); i++) {
 
@@ -49,7 +48,7 @@ public class AuctionDAOTest {
     @Test
     public void getAuctionByProductName(){
         //Test
-        assertNull(biddingDAO.getAuctionByProductName(testProduct.getName()));
+        assertEquals(0, biddingDAO.getAuctionByProductName(testProduct.getName()).size());
         biddingDAO.persistAuction(testAuction);
         for(int i = 0; i < testArray.size(); i++) {
             assertEquals(testArray.get(i), biddingDAO.getAuctionByProductName(testProduct.getName()).get(i));
@@ -59,7 +58,7 @@ public class AuctionDAOTest {
     @Test
     public void getAuctionByUser(){
         //Test
-        assertNull(biddingDAO.getAuctionByUser(testUser));
+        assertEquals(0, biddingDAO.getAuctionByUser(testUser).size());
         biddingDAO.persistAuction(testAuction);
         for(int i = 0; i < testArray.size(); i++) {
             assertEquals(testArray.get(i), biddingDAO.getAuctionByUser(testUser).get(i));
@@ -68,6 +67,6 @@ public class AuctionDAOTest {
     
     @After
     public void tearDown(){
-        biddingDAO.deleteUser(testUser);
+        biddingDAO.deleteUser(testAuction.getOwner());
     }
 }
