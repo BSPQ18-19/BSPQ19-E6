@@ -16,9 +16,9 @@ public interface IAuctionService extends IRemoteObservable {
 
     public Auction bid(Auction auction, User user, float amount) throws AuctionException;
 
-    public ArrayList<Auction> searchAuctionByCountry(String country);
+    public ArrayList<Auction> searchAuctionByCountry(User requester, String country);
 
-    public ArrayList<Auction> searchAuctionByProductName(String name);
+    public ArrayList<Auction> searchAuctionByProductName(User requester, String name);
 
-    public ArrayList<Auction> getAllAuctions();
+    public ArrayList<Auction> getAllAuctions(User requester);
 }

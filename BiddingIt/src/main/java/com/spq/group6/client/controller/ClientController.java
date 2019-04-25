@@ -207,7 +207,7 @@ public class ClientController {
     	String info = "Get auctions from country " + country;
         try {
     		ClientLogger.logger.debug("Trying to " + info + ".");
-    		countryAuctions = serviceLocator.getService().searchAuctionByCountry(country);
+    		countryAuctions = serviceLocator.getService().searchAuctionByCountry(currentUser, country);
         	ClientLogger.logger.debug(info + " correct.");
 		} catch (RemoteException e) {
 			ClientLogger.logger.error("Error searching auctions by country: " + e.getMessage());
@@ -220,7 +220,7 @@ public class ClientController {
     	String info = "Get auctions with prod. name " + name;
         try {
     		ClientLogger.logger.debug("Trying to " + info + ".");
-    		prodNameAuctions = serviceLocator.getService().searchAuctionByProductName(name);
+    		prodNameAuctions = serviceLocator.getService().searchAuctionByProductName(currentUser, name);
         	ClientLogger.logger.debug(info + " correct.");
 		} catch (RemoteException e) {
 			ClientLogger.logger.error("Error searching auctions by prod name: " + e.getMessage());

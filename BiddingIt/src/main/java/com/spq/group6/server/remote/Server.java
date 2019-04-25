@@ -74,19 +74,19 @@ public class Server extends UnicastRemoteObject implements IServer {
         return auctionService.bid(auction, user, amount);
     }
 
-    public ArrayList<Auction> searchAuctionByCountry(String country) throws RemoteException {
+    public ArrayList<Auction> searchAuctionByCountry(User requester, String country) throws RemoteException {
         ServerLogger.logger.debug("Received auction search petition by country: " + country);
-        return auctionService.searchAuctionByCountry(country);
+        return auctionService.searchAuctionByCountry(requester, country);
     }
 
-    public ArrayList<Auction> searchAuctionByProductName(String name) throws RemoteException {
+    public ArrayList<Auction> searchAuctionByProductName(User requester, String name) throws RemoteException {
         ServerLogger.logger.debug("Received auction search petition by product name: " + name);
-        return auctionService.searchAuctionByProductName(name);
+        return auctionService.searchAuctionByProductName(requester, name);
     }
 
-    public ArrayList<Auction> getAllAuctions() throws RemoteException {
+    public ArrayList<Auction> getAllAuctions(User requester) throws RemoteException {
         ServerLogger.logger.debug("Received all auctions retrieval petition");
-        return auctionService.getAllAuctions();
+        return auctionService.getAllAuctions(requester);
     }
 
     public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException {
