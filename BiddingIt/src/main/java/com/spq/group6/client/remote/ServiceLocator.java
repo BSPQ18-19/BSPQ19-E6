@@ -1,5 +1,6 @@
 package com.spq.group6.client.remote;
 
+import com.spq.group6.client.utils.logger.ClientLogger;
 import com.spq.group6.server.remote.IServer;
 
 public class ServiceLocator {
@@ -22,9 +23,9 @@ public class ServiceLocator {
 		String name = "//" + ip + ":" + port + "/" + serviceName;
 		try {
 			service = (IServer) java.rmi.Naming.lookup(name);
-			System.out.println("Connected to BiddingIt server");
+			ClientLogger.logger.info("Connected to BiddingIt server");
 		}catch (Exception e) {
-			System.err.println("- Exception running the client: " + e.getMessage());
+			ClientLogger.logger.fatal("- Exception running the client: " + e.getMessage());
 			e.printStackTrace();
 		}
     }
