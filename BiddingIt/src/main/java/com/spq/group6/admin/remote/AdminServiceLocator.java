@@ -1,5 +1,6 @@
 package com.spq.group6.admin.remote;
 
+import com.spq.group6.admin.utils.logger.AdminLogger;
 import com.spq.group6.server.remote.IServer;
 
 public class AdminServiceLocator {
@@ -22,9 +23,9 @@ public class AdminServiceLocator {
 		String name = "//" + ip + ":" + port + "/" + serviceName;
 		try {
 			service = (IServer) java.rmi.Naming.lookup(name);
-			System.out.println("Connected to BiddingIt server");
+			AdminLogger.logger.info("Connected to BiddingIt server");
 		}catch (Exception e) {
-			System.err.println("- Exception running the client: " + e.getMessage());
+			AdminLogger.logger.fatal("- Exception running the admin: " + e.getMessage());
 			e.printStackTrace();
 		}
     }

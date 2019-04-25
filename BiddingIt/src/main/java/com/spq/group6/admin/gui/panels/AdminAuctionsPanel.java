@@ -8,23 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import com.spq.group6.admin.controller.AdminController;
 import com.spq.group6.admin.gui.AdminWindow;
 import com.spq.group6.admin.gui.actions.ActionDeleteAuction;
+import com.spq.group6.admin.gui.elements.AuctionJTableModel;
 import com.spq.group6.admin.gui.elements.AuctionTimeLeftRunnable;
 import com.spq.group6.admin.gui.elements.ButtonColumn;
-import com.spq.group6.admin.gui.elements.UserJTableModel;
 import com.spq.group6.admin.gui.utils.SDG2Util;
 import com.spq.group6.admin.gui.utils.SPQG6Util;
 import com.spq.group6.admin.gui.utils.ScreenType;
@@ -35,9 +33,6 @@ public class AdminAuctionsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
 	private JPanel searchPanel;
-	private JLabel searchLabel, searchLabel2;
-	private JComboBox<String> searchComboBox;
-	private JTextField searchTF;
 	private JButton searchButton;
 	private JScrollPane auctionsTableScrollPane;
 	private JTable auctionsTable;
@@ -85,14 +80,11 @@ public class AdminAuctionsPanel extends JPanel {
 		animationThread.start();	
 				
 		// searching filter
-		searchLabel = new JLabel("Search for auctions where");
-		searchComboBox = new JComboBox<>(new String[] {"Country", "Name"});
-		searchLabel2 = new JLabel("is");
-		searchTF = new JTextField(10);
 		searchButton = new JButton("Search");
 		String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
 		searchButton.addActionListener(new ActionListener() {
 			
+			@SuppressWarnings("null")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// stop previous threads
@@ -102,16 +94,6 @@ public class AdminAuctionsPanel extends JPanel {
 				
 				Object[][] auctionsData = null;
 				List<Auction> auctions = null;
-				switch(searchComboBox.getSelectedIndex()) {
-				case 0: 
-					auctions = controller.searchAuctionByCountry(searchTF.getText());
-					break;
-				case 1:
-					auctions = controller.searchAuctionByProductName(searchTF.getText());
-					break;
-				default:
-					auctions = new ArrayList<>();
-				}
 				if (auctions.size() == 0) {
 					auctionsData = new Object[][] {};
 					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -137,7 +119,7 @@ public class AdminAuctionsPanel extends JPanel {
 					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "Auctions found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				}
-				auctionsTable.setModel(new UserJTableModel(auctionsData, auctionsColumnNames, controller));
+				auctionsTable.setModel(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller));
 				auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 				@SuppressWarnings("unused")
@@ -183,7 +165,7 @@ public class AdminAuctionsPanel extends JPanel {
 			}
 		});
 
-		auctionsTable = new JTable(new UserJTableModel(new Object[][] {}, auctionsColumnNames, controller));
+		auctionsTable = new JTable(new AuctionJTableModel(new Object[][] {}, auctionsColumnNames, controller));
 		auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 		// set column 4 to limit day
@@ -200,10 +182,6 @@ public class AdminAuctionsPanel extends JPanel {
 
 		
 		this.add(titleLabel);
-		searchPanel.add(searchLabel);
-		searchPanel.add(searchComboBox);
-		searchPanel.add(searchLabel2);
-		searchPanel.add(searchTF);
 		searchPanel.add(searchButton);
 		this.add(searchPanel);
 		this.add(auctionsTableScrollPane);

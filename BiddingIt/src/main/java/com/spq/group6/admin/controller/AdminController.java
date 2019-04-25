@@ -1,17 +1,14 @@
 package com.spq.group6.admin.controller;
 
 import java.rmi.RemoteException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.spq.group6.admin.remote.AdminServiceLocator;
+import com.spq.group6.admin.utils.logger.AdminLogger;
 import com.spq.group6.server.data.Auction;
-import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.exceptions.AdministratorException;
-import com.spq.group6.admin.Admin;
 import com.spq.group6.admin.gui.AdminWindow;
 
 public class AdminController {
@@ -28,16 +25,16 @@ public class AdminController {
     public boolean logIn(String email, String password) throws RemoteException {
     	String info = "Log in with email " + email + " and password " + password;
         try {
-        	System.out.println("Trying to " + info + ".");
+        	AdminLogger.logger.debug("Trying to " + info + ".");
             Administrator admin = adminServiceLocator.getService().adminLogIn(email, password);
         	if (admin != null) {
-            	System.out.println(info + " correct.");
+        		AdminLogger.logger.debug(info + " correct.");
             	this.currentAdmin = admin;
             	return true;
             } else
-            	System.out.println(info + " incorrect. Server returned null.");
+            	AdminLogger.logger.warn(info + " incorrect. Server returned null.");
         } catch (AdministratorException re) {
-        	System.out.println(info + ". Exception found in server: " + re);
+        	AdminLogger.logger.error(info + ". Exception found in server: " + re.getMessage());
         }
         return false;
      }
@@ -55,23 +52,36 @@ public class AdminController {
     	ArrayList<User> users = new ArrayList<>();
     	String info = "Get all users";
         try {
-        	System.out.println("Trying to " + info + ".");
+        	AdminLogger.logger.debug("Trying to " + info + ".");
 			users = adminServiceLocator.getService().getAllUsers();
-			System.out.println(info + " correct.");
+			AdminLogger.logger.debug(info + " correct.");
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			AdminLogger.logger.error("Error serching for users: " + e.getMessage());
 		}
     	return users;
+    }
+    
+    public ArrayList<Auction> getAllAuctions(){
+    	ArrayList<Auction> auctions = new ArrayList<>();
+    	String info = "Get all users";
+        try {
+        	AdminLogger.logger.debug("Trying to " + info + ".");
+			auctions = adminServiceLocator.getService().getAllAuctions();
+			AdminLogger.logger.debug(info + " correct.");
+		} catch (RemoteException e) {
+			AdminLogger.logger.error("Error searching for auctions: " + e.getMessage());
+		}
+    	return auctions;
     }
     
     public boolean deleteUser(User user) {
     	String info = "Delete the user " + user.getUsername() + " with country " + user.getCountry();
         try {
-        	System.out.println("Trying to " + info + ".");
+        	AdminLogger.logger.debug("Trying to " + info + ".");
 			adminServiceLocator.getService().deleteUser(user);
-			System.out.println(info + " correct.");
+			AdminLogger.logger.debug(info + " correct.");
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			AdminLogger.logger.error("Error deleting user: " + e.getMessage());
 		}
     	return true;
     }
@@ -79,53 +89,14 @@ public class AdminController {
     public boolean deleteAuction(Auction auction) {
     	String info = "Delete the auction of the product " + auction.getProduct().getName() + " with description " + auction.getProduct().getDescription();
         try {
-        	System.out.println("Trying to " + info + ".");
+        	AdminLogger.logger.debug("Trying to " + info + ".");
 			adminServiceLocator.getService().deleteAuction(auction);
-			System.out.println(info + " correct.");
+			AdminLogger.logger.debug(info + " correct.");
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			AdminLogger.logger.error("Error deleting auction: " + e.getMessage());
 		}
     	return true;
     }
-    
-    public ArrayList<Auction> searchAuctionByCountry(String country){
-    	ArrayList<Auction> countryAuctions = new ArrayList<>();
-    	String info = "Get auctions from country " + country;
-        try {
-        	System.out.println("Trying to " + info + ".");
-			countryAuctions = adminServiceLocator.getService().searchAuctionByCountry(country);
-			System.out.println(info + " correct.");
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-    	return countryAuctions;
-    }
-    
-    public ArrayList<Auction> searchAuctionByProductName(String name) {
-    	ArrayList<Auction> prodNameAuctions = new ArrayList<>();
-    	String info = "Get auctions with prod. name " + name;
-        try {
-        	System.out.println("Trying to " + info + ".");
-			prodNameAuctions = adminServiceLocator.getService().searchAuctionByProductName(name);
-			System.out.println(info + " correct.");
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-    	return prodNameAuctions;
-    }
-    
-//    public ArrayList<Auction> searchAuctionByUser(String name) {
-//    	ArrayList<Auction> userAuctions = new ArrayList<>();
-//    	String info = "Get auctions with user's name " + name;
-//        try {
-//        	System.out.println("Trying to " + info + ".");
-//			userAuctions = adminServiceLocator.getService().getAuctionByUser(name);
-//			System.out.println(info + " correct.");
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//		}
-//    	return userAuctions;
-//    }
     
 	public void exit(){
     	System.exit(0);

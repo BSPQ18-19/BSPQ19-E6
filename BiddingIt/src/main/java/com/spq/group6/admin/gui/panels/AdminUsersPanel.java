@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
@@ -86,6 +84,7 @@ public class AdminUsersPanel extends JPanel {
 		String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
 		searchButton.addActionListener(new ActionListener() {
 			
+			@SuppressWarnings("null")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// stop previous threads
