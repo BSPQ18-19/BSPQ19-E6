@@ -22,27 +22,27 @@ public class RemoteObservable {
 		this.remoteObservers = new ArrayList<>();
 	}
 
-	public void addRemoteObserver(IRemoteObserver observer) {
+	public synchronized void  addRemoteObserver(IRemoteObserver observer) {
 		if (observer != null) {
 			this.remoteObservers.add(observer);
 		}
 	}
 
-	public void deleteRemoteObserver(IRemoteObserver observer) {
+	public synchronized void deleteRemoteObserver(IRemoteObserver observer) {
 		if (observer != null) {
 			this.remoteObservers.remove(observer);
 		}
 	}
 	
-	public void deleteRemoteObservers() {
+	public synchronized void deleteRemoteObservers() {
 		this.remoteObservers.clear();
 	}
 	
-	public int countRemoteObservers() {
+	public synchronized int countRemoteObservers() {
 		return this.remoteObservers.size();
 	}
 	
-	public void notifyRemoteObservers(Object arg) {
+	public synchronized void notifyRemoteObservers(Object arg) {
 		for (IRemoteObserver observer : remoteObservers) {
 			try {
 				if (observer != null) {
