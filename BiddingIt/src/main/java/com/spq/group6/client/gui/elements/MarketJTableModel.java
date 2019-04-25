@@ -33,7 +33,7 @@ public class MarketJTableModel extends DefaultTableModel {
 			actualHighestBid = auction.getInitialPrice();
 		String bidValue = JOptionPane.showInputDialog(null, 
 				"Please enter the amount you want to bid (greater than " + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
-		if (Float.parseFloat(bidValue) > actualHighestBid)
+		if (bidValue != null && Float.parseFloat(bidValue) > actualHighestBid)
 			if (controller.bid(auction, Float.parseFloat(bidValue))) {
 				JOptionPane.showConfirmDialog(null, "Auction bidded correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				this.removeRow(rowIndex);

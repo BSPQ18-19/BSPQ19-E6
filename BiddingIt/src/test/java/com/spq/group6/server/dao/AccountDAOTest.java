@@ -2,118 +2,95 @@ package com.spq.group6.server.dao;
 
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
 
 import static org.junit.Assert.*;
 
 public class AccountDAOTest {
-    private AccountDAO accountDao = new AccountDAO();
-    private AdminDAO adminDao = new AdminDAO();
+    private BiddingDAO biddingDAO = new BiddingDAO();
+    private User user;
+    private Product product;
+
+    @Before
+    public void setUp(){
+        user = new User("test_user", "test_pass", "spain");
+        product = new Product("cd", "Mikel Urdangarin cd");
+    }
 
     @Test
     public void getUserByUsername()
     {
-        // Setup
-        User testUser = new User("test_user", "test_pass", "uk");
-        // Test
-        assertNull(accountDao.getUserByUsername(testUser.getUsername()));
-        accountDao.createUser(testUser);
-        assertEquals(testUser, accountDao.getUserByUsername(testUser.getUsername()));
-        // Clean
-        adminDao.deleteUser(testUser);
+        assertNull(biddingDAO.getUserByUsername(user.getUsername()));
+        biddingDAO.createUser(user);
+        assertEquals(user, biddingDAO.getUserByUsername(user.getUsername()));
     }
 
     @Test
     public void updateUser(){
-        // Setup
-        String country1 = "spain", country2 = "uk";
-        String username1 = "carlos";
-        User testUser = new User(username1, "test_pass", country1);
-        accountDao.createUser(testUser);
+        // Set-up
+        String oldCountry = user.getCountry(), newCountry = "uk";
+        biddingDAO.createUser(user);
         // Test
-        testUser.setCountry(country2);
-        accountDao.updateUser(testUser);
-        User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
-        assertNotEquals(country1, persistedUser.getCountry());
-        // Clean
-        adminDao.deleteUser(testUser);
+        user.setCountry(newCountry);
+        biddingDAO.updateUser(user);
+        User persistedUser = biddingDAO.getUserByUsername(user.getUsername());
+        assertNotEquals(oldCountry, persistedUser.getCountry());
+        assertEquals(newCountry, persistedUser.getCountry());
     }
 
     @Test
     public void createProductUpdatingUser(){
         // Setup
-        User testUser = new User("charles", "test_pass", "uk");
-        Product testProduct = new Product("cd", "Mikel Urdangarin cd");
-        accountDao.createUser(testUser);
+        biddingDAO.createUser(user);
         // Test
-        testUser.getOwnedProducts().add(testProduct);
-        //accountDao.updateProduct(testProduct);
-        accountDao.updateUser(testUser);
-        User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
+        user.getOwnedProducts().add(product);
+        biddingDAO.updateUser(user);
+        User persistedUser = biddingDAO.getUserByUsername(user.getUsername());
         assertEquals(1, persistedUser.getOwnedProducts().size());
-        assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
-        // Clean
-        adminDao.deleteUser(testUser);
-    }
-    @Test
-    public void deleteProductUpdatingUser(){
-        // Setup
-        User testUser = new User("charles", "test_pass", "uk");
-        Product testProduct = new Product("cd", "Mikel Urdangarin cd");
-        testUser.getOwnedProducts().add(testProduct);
-        accountDao.createUser(testUser);
-        // Test
-        testUser.getOwnedProducts().clear();
-        accountDao.updateUser(testUser);
-        User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
-        assertEquals(0, persistedUser.getOwnedProducts().size());
-        // Clean
-        accountDao.deleteProduct(testProduct);
-        adminDao.deleteUser(testUser);
-
+        assertEquals(product, persistedUser.getOwnedProducts().get(0));
     }
 
     @Test
-    public void updateProductUpdatingUser(){
+    public void updateProductUpdatingUser() {
         // Setup
-        String prodOldName = "cd", prodNewName = "dvd";
-        User testUser = new User("charles", "test_pass", "uk");
-        Product testProduct = new Product(prodOldName, "Mikel Urdangarin cd");
-        testUser.getOwnedProducts().add(testProduct);
-        accountDao.createUser(testUser);
+        String prodOldName = product.getName(), prodNewName = "dvd";
+        user.getOwnedProducts().add(product);
+        biddingDAO.createUser(user);
         // Test
-        testProduct.setName(prodNewName);
-        accountDao.updateUser(testUser);
-        User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
+        product.setName(prodNewName);
+        biddingDAO.updateUser(user);
+        User persistedUser = biddingDAO.getUserByUsername(user.getUsername());
         assertEquals(prodNewName, persistedUser.getOwnedProducts().get(0).getName());
-        // Clean
-        adminDao.deleteUser(testUser);
     }
 
     @Test
     public void updateExchange(){
         // Setup
-        User testUser1 = new User("charles", "test_pass", "uk");
-        User testUser2 = new User("xavier", "test_pass", "uk");
-        Product testProduct = new Product("cd", "Mikel Urdangarin cd");
-        testUser1.getOwnedProducts().add(testProduct);
-        accountDao.createUser(testUser1);
-        accountDao.createUser(testUser2);
+        User user2 = new User("xavier", "test_pass", "uk");
+        user.getOwnedProducts().add(product);
+        biddingDAO.createUser(user);
+        biddingDAO.createUser(user2);
         // Test
         User persistedUser;
-        testUser1.getOwnedProducts().clear();
-        testUser2.getOwnedProducts().add(testProduct);
-        accountDao.updateUser(testUser2);
-        accountDao.updateUser(testUser1);
-        persistedUser = accountDao.getUserByUsername(testUser1.getUsername());
+        user.getOwnedProducts().clear();
+        user2.getOwnedProducts().add(product);
+        biddingDAO.updateUser(user2);
+        biddingDAO.updateUser(user);
+        persistedUser = biddingDAO.getUserByUsername(user.getUsername());
         assertEquals(0, persistedUser.getOwnedProducts().size());
 
-        persistedUser = accountDao.getUserByUsername(testUser2.getUsername());
+        persistedUser = biddingDAO.getUserByUsername(user2.getUsername());
         assertEquals(1, persistedUser.getOwnedProducts().size());
-        assertEquals(testProduct, persistedUser.getOwnedProducts().get(0));
-        // Clean
-        adminDao.deleteUser(testUser1);
-        adminDao.deleteUser(testUser2);
+        assertEquals(product, persistedUser.getOwnedProducts().get(0));
+        // Clean-up
+        biddingDAO.deleteUser(user2);
     }
 
+    @After
+    public void tearDown() {
+        biddingDAO.deleteUser(user);
+    }
 }

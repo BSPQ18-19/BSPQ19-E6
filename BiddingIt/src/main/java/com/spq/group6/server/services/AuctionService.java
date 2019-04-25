@@ -1,7 +1,7 @@
 package com.spq.group6.server.services;
 
-import com.spq.group6.server.dao.AuctionDAO;
-import com.spq.group6.server.dao.IAuctionDAO;
+import com.spq.group6.server.dao.BiddingDAO;
+import com.spq.group6.server.dao.IBiddingDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
@@ -9,6 +9,7 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.utils.AuctionCountdown;
 import com.spq.group6.server.utils.AuctionLocks;
+import com.spq.group6.server.utils.observer.events.NewBidEvent;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
@@ -19,59 +20,61 @@ import java.util.HashMap;
 import java.util.concurrent.locks.Lock;
 
 public class AuctionService implements IAuctionService {
-    private IAuctionDAO auctionDAO = null;
+    private IBiddingDAO biddingDAO;
     private HashMap<Long, RemoteObservable> observables;
 
     public AuctionService() {
-        auctionDAO = new AuctionDAO();
+        biddingDAO = new BiddingDAO();
         observables = new HashMap<Long, RemoteObservable>();
     }
 
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) {
         Auction auction = new Auction(owner, product, dayLimit, initialPrice, null);
-        auctionDAO.persistAuction(auction);
+        biddingDAO.persistAuction(auction);
 
-        // create an observable for the auction
         RemoteObservable observable = new RemoteObservable();
         observables.put(auction.getAuctionID(), observable);
 
         AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
         Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
-        //auctionCountdown.start(); // Run thread for auction countdown
+        auctionCountdown.start(); // Run thread for auction countdown
 
         return auction;
     }
 
     public Auction bid(Auction auction, User user, float amount) throws AuctionException {
-        Lock auctionLock = AuctionLocks.getLock(auction.getAuctionID());
-        auctionLock.lock();
+        AuctionLocks.getLock(auction.getAuctionID()).lock();
 
-        if (!auctionDAO.isOpen(auction.getAuctionID())){
+        auction = biddingDAO.getAuctionByID(auction.getAuctionID());
+        if (!auction.isOpen()){
             throw  new AuctionException("Auction is closed");
         }
-        Bid oldBid = auctionDAO.getHighestBid(auction.getAuctionID());
+        Bid oldBid = auction.getHighestBid();
         if (amount< auction.getInitialPrice() || (oldBid != null && oldBid.getAmount() >= amount)){
             throw  new AuctionException("Too low bid");
         }
         Bid newBid = new Bid(user, amount);
         auction.setHighestBid(newBid);
-        auctionDAO.persistAuction(auction);
-        auctionDAO.deleteBid(oldBid);
+        biddingDAO.persistAuction(auction);
+        biddingDAO.deleteBid(oldBid);
+        // Notify about new Bid
+        NewBidEvent newBidEvent = new NewBidEvent(auction);
+        observables.get(auction.getAuctionID()).notifyRemoteObservers(newBidEvent);
 
-        auctionLock.unlock();
+        AuctionLocks.getLock(auction.getAuctionID()).unlock();
         return auction;
     }
 
     public ArrayList<Auction> searchAuctionByCountry(String country) {
-        return auctionDAO.getAuctionByCountry(country);
+        return biddingDAO.getAuctionByCountry(country);
     }
 
     public ArrayList<Auction> searchAuctionByProductName(String name) {
-        return auctionDAO.getAuctionByProductName(name);
+        return biddingDAO.getAuctionByProductName(name);
     }
 
     public ArrayList<Auction> searchAuctionByUser(User user) {
-        return auctionDAO.getAuctionByUser(user);
+        return biddingDAO.getAuctionByUser(user);
     }
 
     public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
