@@ -1,6 +1,7 @@
 package com.spq.group6.server.services;
 
 import com.spq.group6.server.data.Auction;
+import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
@@ -19,5 +20,5 @@ public interface IAuctionService extends IRemoteObservable {
 
     public ArrayList<Auction> searchAuctionByProductName(String name);
 
-    public ArrayList<Auction> searchAuctionByUser(User user);
+    public ArrayList<Auction> getAllAuctions();
 }

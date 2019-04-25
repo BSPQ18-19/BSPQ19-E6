@@ -157,7 +157,7 @@ public class ClientController {
     	String info = "Get auctions from user " + currentUser.getUsername();
       try {
 			ClientLogger.logger.debug("Trying to " + info + ".");
-			userAuctions = serviceLocator.getService().searchAuctionByUser(currentUser);
+			userAuctions = serviceLocator.getService().getAuctionByUser(currentUser);
 	    	ClientLogger.logger.debug(info + " correct.");
 		} catch (RemoteException e) {
 			ClientLogger.logger.error("Error getting user auctions: " + e.getMessage());

@@ -28,6 +28,8 @@ public interface IBiddingDAO {
 
     ArrayList<User> getAllUsers();
 
+    ArrayList<Auction> getAuctionByUser(User user);
+
     // Auction DAO
 
     void persistAuction(Auction auction);
@@ -39,8 +41,6 @@ public interface IBiddingDAO {
     ArrayList<Auction> getAuctionByProductName(String name);
 
     Auction getAuctionByID(long auctionID);
-
-    ArrayList<Auction> getAuctionByUser(User user);
 
     ArrayList<Auction> getAllAuctions();
 

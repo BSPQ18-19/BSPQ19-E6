@@ -7,6 +7,8 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
 
+import java.util.ArrayList;
+
 
 public class AdminService implements IAdminService {
     private IBiddingDAO biddingDAO;
@@ -29,5 +31,13 @@ public class AdminService implements IAdminService {
 
     public void deleteUser(User user) {
         biddingDAO.deleteUser(user);
+    }
+
+    public ArrayList<User> getAllUsers() {
+        return biddingDAO.getAllUsers();
+    }
+
+    public ArrayList<Auction> getAuctionByUser(User user) {
+        return biddingDAO.getAuctionByUser(user);
     }
 }

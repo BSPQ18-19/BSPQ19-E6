@@ -71,16 +71,16 @@ public class Server extends UnicastRemoteObject implements IServer {
         return auctionService.bid(auction, user, amount);
     }
 
-    public ArrayList<Auction> searchAuctionByUser(User user) throws RemoteException {
-        return auctionService.searchAuctionByUser(user);
-    }
-
     public ArrayList<Auction> searchAuctionByCountry(String country) throws RemoteException {
         return auctionService.searchAuctionByCountry(country);
     }
 
     public ArrayList<Auction> searchAuctionByProductName(String name) throws RemoteException {
         return auctionService.searchAuctionByProductName(name);
+    }
+
+    public ArrayList<Auction> getAllAuctions() throws RemoteException {
+        return auctionService.getAllAuctions();
     }
 
     public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException {
@@ -93,6 +93,14 @@ public class Server extends UnicastRemoteObject implements IServer {
 
     public void deleteUser(User user) throws RemoteException {
         adminService.deleteUser(user);
+    }
+
+    public ArrayList<User> getAllUsers() throws RemoteException {
+        return adminService.getAllUsers();
+    }
+
+    public ArrayList<Auction> getAuctionByUser(User user) throws RemoteException {
+        return adminService.getAuctionByUser(user);
     }
 
     // Observer calls

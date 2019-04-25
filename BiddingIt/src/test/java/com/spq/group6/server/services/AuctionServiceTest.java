@@ -39,12 +39,18 @@ public class AuctionServiceTest {
     }
 
     @Test
-    public void testCreatePublicAuction() {
+    public void testCreatePublicAuction() throws InterruptedException {
         Auction createdAuction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         assertEquals(auction, createdAuction);
 
+        assertEquals(0, auction.getOwner().getOwnedProducts().size());
         auction = createdAuction;
         user = auction.getOwner();
+        Thread.sleep((offsetSeconds +1) * 1000);
+
+        user = biddingDAO.getUserByUsername(user.getUsername());
+        assertEquals(1, user.getOwnedProducts().size());
+
     }
 
 
@@ -108,23 +114,6 @@ public class AuctionServiceTest {
 
     }
 
-    @Test
-    public void testSearchAuctionByUser() throws InterruptedException {
-        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
-        user = auction.getOwner();
-
-        ArrayList<Auction> auctions = auctionService.searchAuctionByUser(user);
-        assertEquals(1, auctions.size());
-        assertEquals(auction, auctions.get(0));
-
-        Thread.sleep((offsetSeconds +1) * 1000);
-        AuctionLocks.getLock(auction.getAuctionID()).lock();
-        auctions = auctionService.searchAuctionByUser(user);
-        AuctionLocks.getLock(auction.getAuctionID()).unlock();
-
-        assertEquals(0, auctions.size());
-    }
-
     @After
     public void tearDown() throws InterruptedException {
         // Wait for any countdown left
@@ -137,6 +126,5 @@ public class AuctionServiceTest {
         if (user != null){
             biddingDAO.deleteUser(user);
         }
-
     }
 }
