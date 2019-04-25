@@ -73,8 +73,8 @@ public class AuctionService implements IAuctionService {
         return biddingDAO.getAuctionByProductName(name);
     }
 
-    public ArrayList<Auction> searchAuctionByUser(User user) {
-        return biddingDAO.getAuctionByUser(user);
+    public ArrayList<Auction> getAllAuctions() {
+        return biddingDAO.getAllAuctions();
     }
 
     public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {

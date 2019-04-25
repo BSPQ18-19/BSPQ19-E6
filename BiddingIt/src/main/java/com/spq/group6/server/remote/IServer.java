@@ -33,11 +33,11 @@ public interface IServer extends Remote, IRemoteObservable {
 
     public Auction bid(Auction auction, User user, float amount) throws RemoteException, AuctionException;
 
-    public ArrayList<Auction> searchAuctionByUser(User user) throws RemoteException;
-
     public ArrayList<Auction> searchAuctionByCountry(String country) throws RemoteException;
 
     public ArrayList<Auction> searchAuctionByProductName(String name) throws RemoteException;
+
+    public ArrayList<Auction> getAllAuctions() throws RemoteException;
 
     // Administrator API
     public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException;
@@ -45,4 +45,8 @@ public interface IServer extends Remote, IRemoteObservable {
     public void deleteAuction(Auction auction) throws RemoteException;
 
     public void deleteUser(User user) throws RemoteException;
+
+    public ArrayList<User> getAllUsers() throws RemoteException;
+
+    public ArrayList<Auction> getAuctionByUser(User user) throws RemoteException;
 }
