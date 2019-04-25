@@ -34,12 +34,12 @@ public interface IBiddingDAO {
 
     void deleteBid(Bid bid);
 
-    ArrayList<Auction> getAuctionByCountry(String country);
+    ArrayList<Auction> getAuctionByCountry(User requester, String country);
 
-    ArrayList<Auction> getAuctionByProductName(String name);
+    ArrayList<Auction> getAuctionByProductName(User requester, String name);
 
     Auction getAuctionByID(long auctionID);
 
-    ArrayList<Auction> getAllAuctions();
+    ArrayList<Auction> getAllAuctions(User requester);
 
 }

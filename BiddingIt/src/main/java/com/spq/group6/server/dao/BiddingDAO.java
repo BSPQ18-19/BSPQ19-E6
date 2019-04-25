@@ -177,7 +177,7 @@ public class BiddingDAO implements IBiddingDAO {
         deleteObject(bid);
     }
 
-    public ArrayList<Auction> getAuctionByCountry(String country) {
+    public ArrayList<Auction> getAuctionByCountry(User requester, String country) {
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
@@ -201,7 +201,7 @@ public class BiddingDAO implements IBiddingDAO {
         return auctions;
     }
 
-    public ArrayList<Auction> getAuctionByProductName(String name) {
+    public ArrayList<Auction> getAuctionByProductName(User requester, String name) {
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
@@ -279,7 +279,7 @@ public class BiddingDAO implements IBiddingDAO {
         return auctions;
     }
 
-    public ArrayList<Auction> getAllAuctions() {
+    public ArrayList<Auction> getAllAuctions(User requester) {
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();
