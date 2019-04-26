@@ -20,6 +20,8 @@ public interface IBiddingDAO {
     void deleteProduct(Product product);
 
     // Admin DAO
+    void createAdministrator(Administrator administrator);
+    
     Administrator getAdministratorByUsername(String username);
 
     void deleteUser(User user);

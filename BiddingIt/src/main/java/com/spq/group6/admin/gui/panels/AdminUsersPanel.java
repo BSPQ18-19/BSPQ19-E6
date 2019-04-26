@@ -20,13 +20,12 @@ import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import com.spq.group6.admin.controller.AdminController;
 import com.spq.group6.admin.gui.AdminWindow;
 import com.spq.group6.admin.gui.actions.ActionDeleteUser;
-import com.spq.group6.admin.gui.elements.AuctionTimeLeftRunnable;
 import com.spq.group6.admin.gui.elements.ButtonColumn;
 import com.spq.group6.admin.gui.elements.UserJTableModel;
 import com.spq.group6.admin.gui.utils.SDG2Util;
-import com.spq.group6.admin.gui.utils.SPQG6Util;
 import com.spq.group6.admin.gui.utils.ScreenType;
-import com.spq.group6.server.data.Auction;
+import com.spq.group6.admin.utils.logger.AdminLogger;
+import com.spq.group6.server.data.User;
 
 public class AdminUsersPanel extends JPanel {
 	
@@ -34,14 +33,14 @@ public class AdminUsersPanel extends JPanel {
 	private JLabel titleLabel;
 	private JPanel searchPanel;
 	private JButton searchButton;
-	private JScrollPane auctionsTableScrollPane;
-	private JTable auctionsTable;
+	private JScrollPane usersTableScrollPane;
+	private JTable usersTable;
 	private JButton backButton;
 	private JButton logOutButton;
 	
 	@SuppressWarnings("unused")
 	private AdminController controller;
-	private ArrayList<Thread> auctionsTimeLeftThread;
+	private ArrayList<Thread> usersTimeLeftThread;
 	
 	public AdminUsersPanel(int screenWidth, int screenHeight, AdminController controller) {
 		
@@ -81,53 +80,46 @@ public class AdminUsersPanel extends JPanel {
 				
 		// searching filter
 		searchButton = new JButton("Search");
-		String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
+		String[] usersColumnNames = {"Username", "Password", "Country", "Money", ""};
 		searchButton.addActionListener(new ActionListener() {
 			
-			@SuppressWarnings("null")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// stop previous threads
-				if (auctionsTimeLeftThread != null)
-					for (int i = 0; i < auctionsTimeLeftThread.size(); i++)
-						auctionsTimeLeftThread.get(i).interrupt();
+				if (usersTimeLeftThread != null)
+					for (int i = 0; i < usersTimeLeftThread.size(); i++)
+						usersTimeLeftThread.get(i).interrupt();
 				
-				Object[][] auctionsData = null;
-				List<Auction> auctions = null;
-				if (auctions.size() == 0) {
-					auctionsData = new Object[][] {};
+				Object[][] usersData = null;
+				List<User> users = controller.getAllUsers();
+				if (users.size() == 0) {
+					usersData = new Object[][] {};
 					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				
 				} else {
-					auctionsData = new Object[auctions.size()][auctionsColumnNames.length];
+					usersData = new Object[users.size()][usersColumnNames.length];
 					int i = 0;
-					auctionsTimeLeftThread = new ArrayList<>();
-					for (i = 0; i < auctions.size(); i++) {
-						Auction tempAuction = auctions.get(i);
-						auctionsData[i][0] = tempAuction;
-						auctionsData[i][1] = tempAuction.getProduct().getDescription();
-						if (tempAuction.getHighestBid() == null)
-							auctionsData[i][2] = 0 + " (initial:" + tempAuction.getInitialPrice() + ")";
-						else
-							auctionsData[i][2] = tempAuction.getHighestBid().getAmount();
-						auctionsData[i][3] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
-						auctionsData[i][4] = "Bid";
-						
-						Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
-						auctionsTimeLeftThread.add(tempAuctionThread);
+					usersTimeLeftThread = new ArrayList<>();
+					for (i = 0; i < users.size(); i++) {
+						User tempUser = users.get(i);
+						usersData[i][0] = tempUser.getUsername();
+						usersData[i][1] = tempUser.getPassword();
+						usersData[i][2] = tempUser.getCountry();
+						usersData[i][3] = tempUser.getMoney();
+						usersData[i][4] = "Delete User";
 					}
-					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "Auctions found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "Users found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				}
-				auctionsTable.setModel(new UserJTableModel(auctionsData, auctionsColumnNames, controller));
-				auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
+				usersTable.setModel(new UserJTableModel(usersData, usersColumnNames, controller));
+				usersTable.getColumnModel().getColumn(3).setPreferredWidth(usersTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 				@SuppressWarnings("unused")
-				ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionDeleteUser(), 4);
+				ButtonColumn bidButtonColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
 				
 				// start countdown threads
-				for (int i = 0; i < auctionsData.length; i++)
-					auctionsTimeLeftThread.get(i).start();
+				for (int i = 0; i < usersData.length; i++)
+					usersTimeLeftThread.get(i).start();
 			}
 		});
 		searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -165,26 +157,26 @@ public class AdminUsersPanel extends JPanel {
 			}
 		});
 
-		auctionsTable = new JTable(new UserJTableModel(new Object[][] {}, auctionsColumnNames, controller));
-		auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
+		usersTable = new JTable(new UserJTableModel(new Object[][] {}, usersColumnNames, controller));
+		usersTable.getColumnModel().getColumn(3).setPreferredWidth(usersTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 		// set column 4 to limit day
-		auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
-		auctionsTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
-		auctionsTable.getColumnModel().getColumn(4).setCellEditor(auctionsTable.getDefaultEditor(LocalDateTime.class));
-		auctionsTable.getColumnModel().getColumn(4).setCellRenderer(auctionsTable.getDefaultRenderer(LocalDateTime.class));
+		usersTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
+		usersTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
+		usersTable.getColumnModel().getColumn(4).setCellEditor(usersTable.getDefaultEditor(LocalDateTime.class));
+		usersTable.getColumnModel().getColumn(4).setCellRenderer(usersTable.getDefaultRenderer(LocalDateTime.class));
 		
-		auctionsTableScrollPane = new JScrollPane(auctionsTable);
-		auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), 
+		usersTableScrollPane = new JScrollPane(usersTable);
+		usersTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), 
 				(int) (screenHeight/2.25));
-		auctionsTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
+		usersTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
 				(int) (searchPanel.getLocation().getY() + searchPanel.getHeight()));
 
 		
 		this.add(titleLabel);
 		searchPanel.add(searchButton);
 		this.add(searchPanel);
-		this.add(auctionsTableScrollPane);
+		this.add(usersTableScrollPane);
 		this.add(backButton);
 		this.add(logOutButton);
 	}

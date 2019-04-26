@@ -26,6 +26,7 @@ import com.spq.group6.admin.gui.elements.ButtonColumn;
 import com.spq.group6.admin.gui.utils.SDG2Util;
 import com.spq.group6.admin.gui.utils.SPQG6Util;
 import com.spq.group6.admin.gui.utils.ScreenType;
+import com.spq.group6.admin.utils.logger.AdminLogger;
 import com.spq.group6.server.data.Auction;
 
 public class AdminAuctionsPanel extends JPanel {
@@ -84,7 +85,6 @@ public class AdminAuctionsPanel extends JPanel {
 		String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
 		searchButton.addActionListener(new ActionListener() {
 			
-			@SuppressWarnings("null")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// stop previous threads
@@ -93,7 +93,7 @@ public class AdminAuctionsPanel extends JPanel {
 						auctionsTimeLeftThread.get(i).interrupt();
 				
 				Object[][] auctionsData = null;
-				List<Auction> auctions = null;
+				List<Auction> auctions = controller.getAllAuctions();
 				if (auctions.size() == 0) {
 					auctionsData = new Object[][] {};
 					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -111,7 +111,7 @@ public class AdminAuctionsPanel extends JPanel {
 						else
 							auctionsData[i][2] = tempAuction.getHighestBid().getAmount();
 						auctionsData[i][3] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
-						auctionsData[i][4] = "Bid";
+						auctionsData[i][4] = "Delete Auction";
 						
 						Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
 						auctionsTimeLeftThread.add(tempAuctionThread);

@@ -31,6 +31,10 @@ public class BiddingDAO implements IBiddingDAO {
     public void createUser(User user) {
         updateObject(user);
     }
+    
+    public void createAdministrator(Administrator administrator) {
+        updateObject(administrator);
+    }
 
     public User getUserByUsername(String username) {
         pmLock.lock();

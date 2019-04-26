@@ -44,6 +44,11 @@ public class Server extends UnicastRemoteObject implements IServer {
         ServerLogger.logger.debug("Received update petition");
         return accountService.updateUser(user);
     }
+    
+    public Administrator createAdministrator(Administrator admin) throws RemoteException, AdministratorException {
+        ServerLogger.logger.debug("Received admin creation petition");
+        return accountService.createAdministrator(admin);
+    }
 
     public User createProduct(User user, String name, String description) throws RemoteException {
         ServerLogger.logger.debug("Received product create petition");

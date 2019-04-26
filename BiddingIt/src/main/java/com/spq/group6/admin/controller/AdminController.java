@@ -63,7 +63,7 @@ public class AdminController {
     
     public ArrayList<Auction> getAllAuctions(){
     	ArrayList<Auction> auctions = new ArrayList<>();
-    	String info = "Get all users";
+    	String info = "Get all auctions";
         try {
         	AdminLogger.logger.debug("Trying to " + info + ".");
 			auctions = adminServiceLocator.getService().getAllAuctions();

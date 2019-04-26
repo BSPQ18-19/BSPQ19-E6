@@ -2,8 +2,10 @@ package com.spq.group6.server.services;
 
 import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.dao.IBiddingDAO;
+import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.utils.logger.ServerLogger;
 
@@ -33,6 +35,11 @@ public class AccountService implements IAccountService {
         checkDuplicatedUser(user);
         biddingDAO.updateUser(user);
         return user;
+    }
+    
+    public Administrator createAdministrator(Administrator admin) throws AdministratorException {
+        biddingDAO.createAdministrator(admin);
+        return admin;
     }
 
     public User createProduct(User user, String name, String description) {

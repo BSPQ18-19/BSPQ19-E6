@@ -1,5 +1,6 @@
 package com.spq.group6.server;
 
+import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.remote.IServer;
 import com.spq.group6.server.remote.Server;
 import com.spq.group6.server.utils.logger.ServerLogger;
@@ -26,6 +27,9 @@ public class ServerMain {
             java.io.InputStreamReader inputStreamReader = new java.io.InputStreamReader(System.in);
             java.io.BufferedReader stdin = new java.io.BufferedReader(inputStreamReader);
             ServerLogger.logger.info("BiddingIt active and listening...");
+            Administrator admin = new Administrator("admin", "pass");
+            objServer.createAdministrator(admin);
+            ServerLogger.logger.info("Administrator "+admin.getUsername() + " " + admin.getPassword() + "created");
             String line = stdin.readLine();
 
         } catch (Exception e) {
