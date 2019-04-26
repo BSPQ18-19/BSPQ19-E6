@@ -6,8 +6,6 @@ import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public interface IBiddingDAO {
-    // Common
-    boolean isProductInUse(Product product);
     // Account DAO
     void createUser(User user);
 
@@ -38,11 +36,13 @@ public interface IBiddingDAO {
 
     void deleteBid(Bid bid);
 
-    ArrayList<Auction> getAuctionByCountry(String country);
+    ArrayList<Auction> getAuctionByCountry(User requester, String country);
 
-    ArrayList<Auction> getAuctionByProductName(String name);
+    ArrayList<Auction> getAuctionByProductName(User requester, String name);
 
     Auction getAuctionByID(long auctionID);
+
+    ArrayList<Auction> getAllAuctionsExceptRequester(User requester);
 
     ArrayList<Auction> getAllAuctions();
 

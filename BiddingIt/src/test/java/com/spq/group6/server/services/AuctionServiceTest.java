@@ -22,6 +22,7 @@ public class AuctionServiceTest {
     private static AuctionService auctionService;
     private static BiddingDAO biddingDAO;
     private static User user;
+    private static User fakeUser;
     private static Product product;
     private Auction auction;
     private int offsetSeconds;
@@ -31,6 +32,7 @@ public class AuctionServiceTest {
         auctionService = new AuctionService();
         product = new Product("test_product", "test_description");
         user = new User("test_user", "test_pass", "uk");
+        fakeUser = new User("test_fake", "test_pass", "uk");
         user.getOwnedProducts().add(product);
         offsetSeconds = 1;
         Timestamp t1 = new Timestamp(System.currentTimeMillis() + offsetSeconds * 1000);
@@ -84,13 +86,16 @@ public class AuctionServiceTest {
         auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         user = auction.getOwner();
 
-        ArrayList<Auction> auctions = auctionService.searchAuctionByCountry(user.getCountry());
+        ArrayList<Auction> myAuctions = auctionService.searchAuctionByCountry(user, user.getCountry());
+        assertEquals(0, myAuctions.size());
+
+        ArrayList<Auction> auctions = auctionService.searchAuctionByCountry(fakeUser, user.getCountry());
         assertEquals(1, auctions.size());
         assertEquals(auction, auctions.get(0));
 
         Thread.sleep((offsetSeconds +1) * 1000);
         AuctionLocks.getLock(auction.getAuctionID()).lock();
-        auctions = auctionService.searchAuctionByCountry(user.getCountry());
+        auctions = auctionService.searchAuctionByCountry(fakeUser, user.getCountry());
         AuctionLocks.getLock(auction.getAuctionID()).unlock();
 
         assertEquals(0, auctions.size());
@@ -101,13 +106,13 @@ public class AuctionServiceTest {
         auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         user = auction.getOwner();
 
-        ArrayList<Auction> auctions = auctionService.searchAuctionByProductName(product.getName());
+        ArrayList<Auction> auctions = auctionService.searchAuctionByProductName(fakeUser, product.getName());
         assertEquals(1, auctions.size());
         assertEquals(auction, auctions.get(0));
 
         Thread.sleep((offsetSeconds +1) * 1000);
         AuctionLocks.getLock(auction.getAuctionID()).lock();
-        auctions = auctionService.searchAuctionByProductName(product.getName());
+        auctions = auctionService.searchAuctionByProductName(fakeUser, product.getName());
         AuctionLocks.getLock(auction.getAuctionID()).unlock();
 
         assertEquals(0, auctions.size());

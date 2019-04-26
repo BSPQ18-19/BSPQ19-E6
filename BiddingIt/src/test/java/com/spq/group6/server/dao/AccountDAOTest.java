@@ -21,8 +21,7 @@ public class AccountDAOTest {
     }
 
     @Test
-    public void getUserByUsername()
-    {
+    public void getUserByUsername() {
         assertNull(biddingDAO.getUserByUsername(user.getUsername()));
         biddingDAO.createUser(user);
         assertEquals(user, biddingDAO.getUserByUsername(user.getUsername()));
@@ -88,6 +87,8 @@ public class AccountDAOTest {
         // Clean-up
         biddingDAO.deleteUser(user2);
     }
+
+
 
     @After
     public void tearDown() {

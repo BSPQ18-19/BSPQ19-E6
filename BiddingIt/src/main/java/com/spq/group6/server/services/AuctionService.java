@@ -26,6 +26,10 @@ public class AuctionService implements IAuctionService {
     public AuctionService() {
         biddingDAO = new BiddingDAO();
         observables = new HashMap<Long, RemoteObservable>();
+
+        for (Auction auction: biddingDAO.getAllAuctions()){
+            initAuction(auction);
+        }
     }
 
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) {
@@ -35,13 +39,7 @@ public class AuctionService implements IAuctionService {
         owner.getOwnedProducts().remove(product);
         biddingDAO.updateUser(owner);
 
-        RemoteObservable observable = new RemoteObservable();
-        observables.put(auction.getAuctionID(), observable);
-
-        AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
-        Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
-        auctionCountdown.start(); // Run thread for auction countdown
-
+        initAuction(auction);
         return auction;
     }
 
@@ -68,16 +66,16 @@ public class AuctionService implements IAuctionService {
         return auction;
     }
 
-    public ArrayList<Auction> searchAuctionByCountry(String country) {
-        return biddingDAO.getAuctionByCountry(country);
+    public ArrayList<Auction> searchAuctionByCountry(User requester, String country) {
+        return biddingDAO.getAuctionByCountry(requester, country);
     }
 
-    public ArrayList<Auction> searchAuctionByProductName(String name) {
-        return biddingDAO.getAuctionByProductName(name);
+    public ArrayList<Auction> searchAuctionByProductName(User requester, String name) {
+        return biddingDAO.getAuctionByProductName(requester, name);
     }
 
-    public ArrayList<Auction> getAllAuctions() {
-        return biddingDAO.getAllAuctions();
+    public ArrayList<Auction> getAllAuctions(User requester) {
+        return biddingDAO.getAllAuctionsExceptRequester(requester);
     }
 
     public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
@@ -88,5 +86,13 @@ public class AuctionService implements IAuctionService {
     public void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
         RemoteObservable observable = observables.get(auction.getAuctionID());
         observable.deleteRemoteObserver(observer);
+    }
+
+    private void initAuction(Auction auction){
+        RemoteObservable observable = new RemoteObservable();
+        observables.put(auction.getAuctionID(), observable);
+        AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
+        Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
+        auctionCountdown.start(); // Run thread for auction countdown
     }
 }
