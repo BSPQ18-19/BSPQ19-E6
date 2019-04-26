@@ -7,8 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class AccountDAOTest {
@@ -23,8 +21,7 @@ public class AccountDAOTest {
     }
 
     @Test
-    public void getUserByUsername()
-    {
+    public void getUserByUsername() {
         assertNull(biddingDAO.getUserByUsername(user.getUsername()));
         biddingDAO.createUser(user);
         assertEquals(user, biddingDAO.getUserByUsername(user.getUsername()));
