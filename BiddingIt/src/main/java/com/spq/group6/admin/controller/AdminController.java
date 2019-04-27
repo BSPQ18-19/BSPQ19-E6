@@ -66,7 +66,7 @@ public class AdminController {
     	String info = "Get all auctions";
         try {
         	AdminLogger.logger.debug("Trying to " + info + ".");
-			auctions = adminServiceLocator.getService().getAllAuctions();
+			auctions = adminServiceLocator.getService().getAllAuctionsAdmin();
 			AdminLogger.logger.debug(info + " correct.");
 		} catch (RemoteException e) {
 			AdminLogger.logger.error("Error searching for auctions: " + e.getMessage());

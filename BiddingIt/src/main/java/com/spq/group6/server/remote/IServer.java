@@ -41,7 +41,7 @@ public interface IServer extends Remote, IRemoteObservable {
 
     // Administrator API
     public Administrator createAdministrator(Administrator admin) throws RemoteException, AdministratorException;
-    
+
     public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException;
 
     public void deleteAuction(Auction auction) throws RemoteException;
@@ -51,4 +51,6 @@ public interface IServer extends Remote, IRemoteObservable {
     public ArrayList<User> getAllUsers() throws RemoteException;
 
     public ArrayList<Auction> getAuctionByUser(User user) throws RemoteException;
+
+    public ArrayList<Auction> getAllAuctionsAdmin() throws RemoteException;
 }

@@ -5,6 +5,7 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface IAdminService {
@@ -17,5 +18,7 @@ public interface IAdminService {
     public ArrayList<User> getAllUsers();
 
     public ArrayList<Auction> getAuctionByUser(User user);
+
+    public ArrayList<Auction> getAllAuctions() throws RemoteException;
 
 }
