@@ -37,6 +37,8 @@ public class AdminUsersPanel extends JPanel {
 	private JTable usersTable;
 	private JButton backButton;
 	private JButton logOutButton;
+	private List<User> users;
+	private Object[][] usersData;
 	
 	@SuppressWarnings("unused")
 	private AdminController controller;
@@ -50,6 +52,47 @@ public class AdminUsersPanel extends JPanel {
 		titleLabel.setSize((int)(screenWidth * 0.5), screenHeight / 15);
 		titleLabel.setLocation((int) (screenWidth / 15), (int) (screenHeight / 4 - titleLabel.getHeight() / 2));
 		SDG2Util.fixJLabelFontSize(titleLabel);	
+		
+		String[] usersColumnNames = {"Username", "Password", "Country", "Money", ""};
+//		//JTABLE BEGIN
+//		//JTABLE BEGIN
+//		// stop previous threads
+//		if (usersTimeLeftThread != null)
+//			for (int i = 0; i < usersTimeLeftThread.size(); i++)
+//				usersTimeLeftThread.get(i).interrupt();
+//		
+//		usersData = null;
+//		users = controller.getAllUsers();
+//		if (users.size() == 0) {
+//			usersData = new Object[][] {};
+//			JOptionPane.showConfirmDialog(AdminUsersPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+//		
+//		} else {
+//			usersData = new Object[users.size()][usersColumnNames.length];
+//			int i = 0;
+//			usersTimeLeftThread = new ArrayList<>();
+//			for (i = 0; i < users.size(); i++) {
+//				User tempUser = users.get(i);
+//				usersData[i][0] = tempUser.getUsername();
+//				usersData[i][1] = tempUser.getPassword();
+//				usersData[i][2] = tempUser.getCountry();
+//				usersData[i][3] = tempUser.getMoney();
+//				usersData[i][4] = "Delete User";
+//			}
+//			JOptionPane.showConfirmDialog(AdminUsersPanel.this, "Users found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+//
+//		}
+//		usersTable.setModel(new UserJTableModel(usersData, usersColumnNames, controller));
+//		usersTable.getColumnModel().getColumn(3).setPreferredWidth(usersTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
+//
+//		@SuppressWarnings("unused")
+//		ButtonColumn bidButtonColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
+//		
+//		// start countdown threads
+//		for (int i = 0; i < usersData.length; i++)
+//			usersTimeLeftThread.get(i).start();
+//		//JTABLE END
+//		//JTABLE END
 		
 		Thread animationThread = new Thread(new Runnable() {
 			int dots = 0;
@@ -79,8 +122,7 @@ public class AdminUsersPanel extends JPanel {
 		animationThread.start();	
 				
 		// searching filter
-		searchButton = new JButton("Search");
-		String[] usersColumnNames = {"Username", "Password", "Country", "Money", ""};
+		searchButton = new JButton("Update");
 		searchButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -90,11 +132,11 @@ public class AdminUsersPanel extends JPanel {
 					for (int i = 0; i < usersTimeLeftThread.size(); i++)
 						usersTimeLeftThread.get(i).interrupt();
 				
-				Object[][] usersData = null;
-				List<User> users = controller.getAllUsers();
+				usersData = null;
+				users = controller.getAllUsers();
 				if (users.size() == 0) {
 					usersData = new Object[][] {};
-					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "No users found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				
 				} else {
 					usersData = new Object[users.size()][usersColumnNames.length];
@@ -115,7 +157,7 @@ public class AdminUsersPanel extends JPanel {
 				usersTable.getColumnModel().getColumn(3).setPreferredWidth(usersTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 				@SuppressWarnings("unused")
-				ButtonColumn bidButtonColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
+				ButtonColumn deleteUserColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
 				
 				// start countdown threads
 				for (int i = 0; i < usersData.length; i++)

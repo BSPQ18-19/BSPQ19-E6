@@ -23,6 +23,7 @@ public class ServerMain {
 
         try {
             IServer objServer = new Server();
+//            objServer.createAdministrator(new Administrator("admin","pass"));
             Naming.rebind(name, objServer);
             java.io.InputStreamReader inputStreamReader = new java.io.InputStreamReader(System.in);
             java.io.BufferedReader stdin = new java.io.BufferedReader(inputStreamReader);

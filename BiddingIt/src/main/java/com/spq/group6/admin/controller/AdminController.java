@@ -1,11 +1,13 @@
 package com.spq.group6.admin.controller;
 
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.spq.group6.admin.remote.AdminServiceLocator;
 import com.spq.group6.admin.utils.logger.AdminLogger;
 import com.spq.group6.server.data.Auction;
+import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.exceptions.AdministratorException;
@@ -63,6 +65,18 @@ public class AdminController {
     
     public ArrayList<Auction> getAllAuctions(){
     	ArrayList<Auction> auctions = new ArrayList<>();
+    	
+    	
+//    	//PRUEBA
+//    	Auction as = new Auction(new User("user1", "pass1", "c1"), new Product("casa", "buena"), new Timestamp(0), 20, "pass");
+//    	Auction cs = new Auction(new User("user2", "pass2", "c2"), new Product("vaso", "limpio"), new Timestamp(1), 30, "pass");
+//    	ArrayList<Auction> auctionArray = new ArrayList<Auction>();
+//    	auctionArray.add(as);
+//    	auctionArray.add(cs);
+//    	auctions = auctionArray;
+//    	//PRUEBA
+    	
+    	
     	String info = "Get all auctions";
         try {
         	AdminLogger.logger.debug("Trying to " + info + ".");
@@ -71,6 +85,7 @@ public class AdminController {
 		} catch (RemoteException e) {
 			AdminLogger.logger.error("Error searching for auctions: " + e.getMessage());
 		}
+    	
     	return auctions;
     }
     

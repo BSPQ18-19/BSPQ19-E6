@@ -3,6 +3,7 @@ package com.spq.group6.admin.gui.panels;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +40,9 @@ public class AdminAuctionsPanel extends JPanel {
 	private JTable auctionsTable;
 	private JButton backButton;
 	private JButton logOutButton;
+	private List<Auction> auctions;
+	private Object[][] auctionsData;
 	
-	@SuppressWarnings("unused")
-	private AdminController controller;
 	private ArrayList<Thread> auctionsTimeLeftThread;
 	
 	public AdminAuctionsPanel(int screenWidth, int screenHeight, AdminController controller) {
@@ -52,6 +53,57 @@ public class AdminAuctionsPanel extends JPanel {
 		titleLabel.setSize((int)(screenWidth * 0.5), screenHeight / 15);
 		titleLabel.setLocation((int) (screenWidth / 15), (int) (screenHeight / 4 - titleLabel.getHeight() / 2));
 		SDG2Util.fixJLabelFontSize(titleLabel);	
+		
+		String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
+		
+//		//JTABLE BEGIN
+//		//JTABLE BEGIN
+//		// stop previous threads
+//		if (auctionsTimeLeftThread != null)
+//			for (int i = 0; i < auctionsTimeLeftThread.size(); i++)
+//				auctionsTimeLeftThread.get(i).interrupt();
+//		
+//		auctionsData = null;
+//		auctions = controller.getAllAuctions();
+//		
+//		if (auctions.size() == 0) {
+//			auctionsData = new Object[][] {};
+//			JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+//		
+//		} else {
+//			auctionsData = new Object[auctions.size()][auctionsColumnNames.length];
+//			int i = 0;
+//			auctionsTimeLeftThread = new ArrayList<>();
+//			for (i = 0; i < auctions.size(); i++) {
+//				Auction tempAuction = auctions.get(i);
+//				auctionsData[i][0] = tempAuction;
+//				auctionsData[i][1] = tempAuction.getProduct().getDescription();
+//				if (tempAuction.getHighestBid() == null)
+//					auctionsData[i][2] = 0 + " (initial:" + tempAuction.getInitialPrice() + ")";
+//				else
+//					auctionsData[i][2] = tempAuction.getHighestBid().getAmount();
+//				auctionsData[i][3] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
+//				auctionsData[i][4] = "Delete Auction";
+//				
+//				Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
+//				auctionsTimeLeftThread.add(tempAuctionThread);
+//			}
+//			JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "Auctions found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+//
+//		}
+//		auctionsTable.setModel(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller));
+//		auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
+//
+//		@SuppressWarnings("unused")
+//		ButtonColumn deleteAuctionButtonColumn = new ButtonColumn(auctionsTable, new ActionDeleteAuction(), 4);
+//		
+//		// start countdown threads
+//		for (int i = 0; i < auctionsData.length; i++)
+//			auctionsTimeLeftThread.get(i).start();
+//		//JTABLE END
+//		//JTABLE END
+		
+		
 		
 		Thread animationThread = new Thread(new Runnable() {
 			int dots = 0;
@@ -80,9 +132,8 @@ public class AdminAuctionsPanel extends JPanel {
 		});
 		animationThread.start();	
 				
-		// searching filter
-		searchButton = new JButton("Search");
-		String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
+		
+		searchButton = new JButton("Update");
 		searchButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -92,8 +143,9 @@ public class AdminAuctionsPanel extends JPanel {
 					for (int i = 0; i < auctionsTimeLeftThread.size(); i++)
 						auctionsTimeLeftThread.get(i).interrupt();
 				
-				Object[][] auctionsData = null;
-				List<Auction> auctions = controller.getAllAuctions();
+				auctionsData = null;
+				auctions = controller.getAllAuctions();
+				
 				if (auctions.size() == 0) {
 					auctionsData = new Object[][] {};
 					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -193,7 +245,12 @@ public class AdminAuctionsPanel extends JPanel {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new AdminAuctionsPanel(800, 600, null));
+		try {
+			testFrame.add(new AdminAuctionsPanel(800, 600, new AdminController()));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		testFrame.setVisible(true);
 	}
 	
