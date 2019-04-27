@@ -26,7 +26,7 @@ public class AccountServiceTest {
     {
         String username = testUser.getUsername(), pass = testUser.getPassword(), country = testUser.getCountry();
         try {
-            testUser = service.signIn(username, pass, country);
+            testUser = service.signIn(username, pass, country, null);
         } catch (UserException e) {
             fail();
         }
@@ -35,25 +35,25 @@ public class AccountServiceTest {
         assertEquals(country, testUser.getCountry());
 
         try {
-            testUser = service.signIn(testUser.getUsername(), testUser.getPassword(), testUser.getCountry());
+            testUser = service.signIn(testUser.getUsername(), testUser.getPassword(), testUser.getCountry(), null);
         } catch (UserException e) {
             assertTrue(true);
         }
     }
 
     @Test
-    public void testLogIn()
-    {
+    public void testLogIn() throws UserException {
         // Setup
         accountDao.createUser(testUser);
+        service.init_user(testUser);
         // Test
         try {
-            testUser = service.logIn(testUser.getUsername(), testUser.getPassword());
+            testUser = service.logIn(testUser.getUsername(), testUser.getPassword(), null);
         } catch (UserException e) {
             fail();
         }
         try {
-            testUser = service.logIn("wrong_user", "wrong_pass");
+            testUser = service.logIn("wrong_user", "wrong_pass", null);
         } catch (UserException e) {
             assertTrue(true);
         }
@@ -93,10 +93,10 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void testDeleteProduct()
-    {
+    public void testDeleteProduct(){
         // Setup
         accountDao.createUser(testUser);
+        service.init_user(testUser);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);
         Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() -1);
@@ -104,7 +104,6 @@ public class AccountServiceTest {
         service.deleteProduct(testUser, testProduct);
         User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
         assertEquals(0, persistedUser.getOwnedProducts().size());
-        assertEquals(0, testUser.getOwnedProducts().size());
     }
 
     @After

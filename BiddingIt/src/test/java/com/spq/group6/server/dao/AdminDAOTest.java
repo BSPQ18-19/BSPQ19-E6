@@ -1,16 +1,17 @@
 package com.spq.group6.server.dao;
 
+import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class AdminDAOTest {
     private BiddingDAO biddingDAO = new BiddingDAO();
@@ -19,6 +20,8 @@ public class AdminDAOTest {
     private Product product;
     private List<User> users;
     private List<User> testUsers;
+    private Auction auction;
+    private ArrayList<Auction> auctionArray;
 
     @Before
     public void setUp(){
@@ -29,6 +32,12 @@ public class AdminDAOTest {
         testUsers = new ArrayList<User>();
         users.add(user);
         users.add(user2);
+
+        int seconds = 10;
+        Timestamp limit = new Timestamp(System.currentTimeMillis() + seconds*1000);
+        auction = new Auction(user, product, limit, 600, "123" );
+        auctionArray = new ArrayList<>();
+        auctionArray.add(auction);
 
     }
 
@@ -42,11 +51,22 @@ public class AdminDAOTest {
         testUsers = biddingDAO.getAllUsers();
         assertTrue(users.size() == testUsers.size() &&
                 users.containsAll(testUsers) && testUsers.containsAll(users));
+        // Clean-up
+        biddingDAO.deleteUser(user2);
+    }
+
+
+    @Test
+    public void getAllAuctions(){
+        assertEquals(0, biddingDAO.getAllAuctions().size());
+        biddingDAO.persistAuction(auction);
+        ArrayList<Auction> auctions = biddingDAO.getAllAuctions();
+        assertTrue(auctionArray.size() == auctions.size() &&
+                auctionArray.containsAll(auctions) && auctions.containsAll(auctionArray));
     }
 
     @After
     public void tearDown() {
         biddingDAO.deleteUser(user);
-        biddingDAO.deleteUser(user2);
     }
 }

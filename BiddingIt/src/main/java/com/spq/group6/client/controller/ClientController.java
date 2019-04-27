@@ -26,10 +26,11 @@ public class ClientController {
 	}
     
     public boolean logIn(String email, String password) throws RemoteException {
-    	String info = "Log in with email " + email + " and password " + password;
+    	String info = "Log in with username " + email + " and password " + password;
         try {
 			ClientLogger.logger.debug("Trying to " + info + ".");
-            User user = serviceLocator.getService().logIn(email, password);
+			// TODO: create a real Observer for login
+            User user = serviceLocator.getService().logIn(email, password, null);
         	if (user != null) {
         		ClientLogger.logger.debug(info + " correct.");
             	this.currentUser = user;
@@ -43,10 +44,10 @@ public class ClientController {
      }
     
     public boolean signIn(String email, String password, String country) throws RemoteException {
-    	String info = "Sign in with email " + email + " and password " + password + " and country " + country;
+    	String info = "Sign in with username " + email + " and password " + password + " and country " + country;
         try {
         	ClientLogger.logger.debug("Trying to " + info + ".");
-            User user = serviceLocator.getService().signIn(email, password, country);
+            User user = serviceLocator.getService().signIn(email, password, country, null);
         	if (user != null) {
         		ClientLogger.logger.debug(info + " correct.");
             	this.currentUser = user;
@@ -60,7 +61,14 @@ public class ClientController {
      }
     
     public boolean logOut() {
-    	this.currentUser = null;
+		String info = "Log in with username " + currentUser.getUsername();
+		try {
+			serviceLocator.getService().logOut(currentUser.getUsername(), null);
+		} catch (Exception e) {
+			ClientLogger.logger.error(info + ". Exception found in server: " + e.getMessage());
+			e.printStackTrace();
+		}
+		this.currentUser = null;
     	return true;
     }
     

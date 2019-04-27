@@ -6,6 +6,9 @@ import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
+import com.spq.group6.server.utils.BiddingLocks;
+import com.spq.group6.server.utils.observer.events.AuctionDeletedEvent;
+import com.spq.group6.server.utils.observer.events.UserDeletedEvent;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -27,11 +30,20 @@ public class AdminService implements IAdminService {
     }
 
     public void deleteAuction(Auction auction) {
+        auction = BiddingLocks.lockAndGetAuction(auction);
+        auction = biddingDAO.getAuctionByID(auction.getAuctionID());
         biddingDAO.deleteAuction(auction);
+        AccountService.observable.notifyRemoteObservers(new AuctionDeletedEvent(auction));
+        AuctionService.countdownObservables.get(auction.getAuctionID()).interrupt();
+        BiddingLocks.unlockAuction(auction);
     }
 
     public void deleteUser(User user) {
+        for(Auction auction: biddingDAO.getAuctionByUser(user)){
+            deleteAuction(auction);
+        }
         biddingDAO.deleteUser(user);
+        AccountService.observable.notifyRemoteObservers(new UserDeletedEvent(user));
     }
 
     public ArrayList<User> getAllUsers() {

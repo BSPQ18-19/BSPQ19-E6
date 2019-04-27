@@ -8,8 +8,8 @@ import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.*;
-import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 import com.spq.group6.server.utils.logger.ServerLogger;
+import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -28,16 +28,20 @@ public class Server extends UnicastRemoteObject implements IServer {
         adminService = new AdminService();
     }
 
-    public User logIn(String username, String password) throws RemoteException, UserException {
+    public User logIn(String username, String password, IRemoteObserver observer) throws RemoteException, UserException {
         ServerLogger.logger.debug("Received Log in petition");
-        User user = accountService.logIn(username, password);
+        User user = accountService.logIn(username, password, observer);
         ServerLogger.logger.debug("User " + username + " has logged in.");
         return user;
     }
 
-    public User signIn(String username, String password, String country) throws RemoteException, UserException {
+    public void logOut(String username, IRemoteObserver observer) throws RemoteException, UserException {
+        accountService.logOut(username, observer);
+    }
+
+    public User signIn(String username, String password, String country, IRemoteObserver observer) throws RemoteException, UserException {
         ServerLogger.logger.debug("Received Sign in petition");
-        return accountService.signIn(username, password, country);
+        return accountService.signIn(username, password, country, observer);
     }
 
     public User updateUser(User user) throws RemoteException, UserException {
@@ -123,14 +127,4 @@ public class Server extends UnicastRemoteObject implements IServer {
         return adminService.getAllAuctions();
     }
 
-    // Observer calls
-    public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
-        ServerLogger.logger.debug("Received obersver addition petition");
-        auctionService.addRemoteObserver(auction, observer);
-    }
-
-    public void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
-        ServerLogger.logger.debug("Received obersver removal petition");
-        auctionService.deleteRemoteObserver(auction, observer);
-    }
 }

@@ -50,6 +50,7 @@ public class RemoteObservable {
 				}
 			} catch (Exception ex) {
 				System.err.println("$ Error notifying remote observers: " + ex);
+				deleteRemoteObserver(observer);
 			}
 		}
 	}

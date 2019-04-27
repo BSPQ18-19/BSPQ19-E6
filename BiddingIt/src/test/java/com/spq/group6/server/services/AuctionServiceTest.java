@@ -7,7 +7,7 @@ import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
-import com.spq.group6.server.utils.AuctionLocks;
+import com.spq.group6.server.utils.BiddingLocks;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -85,7 +85,6 @@ public class AuctionServiceTest {
     public void testSearchAuctionByCountry() throws InterruptedException {
         auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         user = auction.getOwner();
-
         ArrayList<Auction> myAuctions = auctionService.searchAuctionByCountry(user, user.getCountry());
         assertEquals(0, myAuctions.size());
 
@@ -94,9 +93,9 @@ public class AuctionServiceTest {
         assertEquals(auction, auctions.get(0));
 
         Thread.sleep((offsetSeconds +1) * 1000);
-        AuctionLocks.getLock(auction.getAuctionID()).lock();
+        BiddingLocks.lockAndGetAuction(auction);
         auctions = auctionService.searchAuctionByCountry(fakeUser, user.getCountry());
-        AuctionLocks.getLock(auction.getAuctionID()).unlock();
+        BiddingLocks.unlockAuction(auction);
 
         assertEquals(0, auctions.size());
     }
@@ -111,9 +110,9 @@ public class AuctionServiceTest {
         assertEquals(auction, auctions.get(0));
 
         Thread.sleep((offsetSeconds +1) * 1000);
-        AuctionLocks.getLock(auction.getAuctionID()).lock();
+        BiddingLocks.lockAndGetAuction(auction);
         auctions = auctionService.searchAuctionByProductName(fakeUser, product.getName());
-        AuctionLocks.getLock(auction.getAuctionID()).unlock();
+        BiddingLocks.unlockAuction(auction);
 
         assertEquals(0, auctions.size());
 
@@ -126,9 +125,11 @@ public class AuctionServiceTest {
         Thread.sleep(Math.max(0, countdownLeft));
 
         if (auction != null){
+            auction = biddingDAO.getAuctionByID(auction.getAuctionID());
             biddingDAO.deleteAuction(auction);
         }
         if (user != null){
+            user = biddingDAO.getUserByUsername(user.getUsername());
             biddingDAO.deleteUser(user);
         }
     }

@@ -71,6 +71,30 @@ public class BiddingDAO implements IBiddingDAO {
         deleteObject(product);
     }
 
+    public ArrayList<Auction> getAuctionsByUserBid(User user) {
+        pmLock.lock();
+
+        Transaction tx = pm.currentTransaction();
+        ArrayList<Auction> auctions = new ArrayList<>();
+        try {
+            tx.begin();
+            Query<Auction> query = pm.newQuery(Auction.class);
+            query.setFilter("highestBid != null && highestBid.user.username == '" + user.getUsername() + "'");
+            List<Auction> result = (List<Auction>) query.execute();
+            auctions.addAll(result);
+            tx.commit();
+        } catch (Exception ex) {
+
+            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+        pmLock.unlock();
+        return auctions;
+    }
+
     // Admin DAO
     public Administrator getAdministratorByUsername(String username) {
         pmLock.lock();
@@ -109,7 +133,9 @@ public class BiddingDAO implements IBiddingDAO {
             tx.begin();
             Bid bid = auction.getHighestBid();
             pm.deletePersistent(auction);
-            pm.deletePersistent(bid);
+            if (bid!= null){
+                pm.deletePersistent(bid);
+            }
             tx.commit();
         } catch (Exception ex) {
 
@@ -155,8 +181,9 @@ public class BiddingDAO implements IBiddingDAO {
             query.setFilter("owner.username == '" + user.getUsername() + "'");
             List<Auction> auctions = (List<Auction>) query.execute();
             tx.commit();
-            for (Auction auction : auctions)
+            for (Auction auction : auctions) {
                 deleteAuction(auction); //deletes each auction owned by the user being deleted
+            }
             tx.begin();
             for (Product product : user.getOwnedProducts()) pm.deletePersistent(product);
             user.getOwnedProducts().clear();
