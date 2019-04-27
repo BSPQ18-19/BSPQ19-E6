@@ -40,8 +40,7 @@ public class ClientControllerTest {
                     java.rmi.registry.LocateRegistry.createRegistry(1099);
                     System.out.println("RMI registry ready.");
                 } catch (Exception e) {
-                    System.out.println("Exception starting RMI registry:");
-                    e.printStackTrace();
+                    System.out.println("RMI registry already started");
                 }
             }
         }
@@ -232,7 +231,7 @@ public class ClientControllerTest {
     }
 
     @AfterClass
-    static public void tearDownClass() {
+    static public void tearDownClass(){
         try	{
             rmiServerThread.join();
             rmiRegistryThread.join();

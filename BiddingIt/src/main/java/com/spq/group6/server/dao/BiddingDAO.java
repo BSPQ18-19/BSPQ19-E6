@@ -149,6 +149,7 @@ public class BiddingDAO implements IBiddingDAO {
         pmLock.lock();
         Transaction tx = pm.currentTransaction();
         try {
+            user = getUserByUsername(user.getUsername());
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
             query.setFilter("owner.username == '" + user.getUsername() + "'");
@@ -343,7 +344,7 @@ public class BiddingDAO implements IBiddingDAO {
             pm.makePersistent(obj);
             tx.commit();
         } catch (Exception ex) {
-
+            ex.printStackTrace();
             ServerLogger.logger.error("* Exception inserting/updating data into db: " + ex.getMessage());
 
         } finally {

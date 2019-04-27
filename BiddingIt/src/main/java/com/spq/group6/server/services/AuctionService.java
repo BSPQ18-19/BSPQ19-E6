@@ -45,23 +45,26 @@ public class AuctionService implements IAuctionService {
 
     public Auction bid(Auction auction, User user, float amount) throws AuctionException {
         AuctionLocks.getLock(auction.getAuctionID()).lock();
-
-        auction = biddingDAO.getAuctionByID(auction.getAuctionID());
-        if (!auction.isOpen()){
-            throw  new AuctionException("Auction is closed");
+        try {
+            auction = biddingDAO.getAuctionByID(auction.getAuctionID());
+            if (!auction.isOpen()) {
+                throw new AuctionException("Auction is closed");
+            }
+            Bid oldBid = auction.getHighestBid();
+            if (amount < auction.getInitialPrice() || (oldBid != null && oldBid.getAmount() >= amount)) {
+                throw new AuctionException("Too low bid");
+            }
+            Bid newBid = new Bid(user, amount);
+            auction.setHighestBid(newBid);
+            biddingDAO.persistAuction(auction);
+            biddingDAO.deleteBid(oldBid);
+            // Notify about new Bid
+            NewBidEvent newBidEvent = new NewBidEvent(auction);
+            observables.get(auction.getAuctionID()).notifyRemoteObservers(newBidEvent);
+        } catch (Exception e){
+            AuctionLocks.getLock(auction.getAuctionID()).unlock();
+            throw e;
         }
-        Bid oldBid = auction.getHighestBid();
-        if (amount< auction.getInitialPrice() || (oldBid != null && oldBid.getAmount() >= amount)){
-            throw  new AuctionException("Too low bid");
-        }
-        Bid newBid = new Bid(user, amount);
-        auction.setHighestBid(newBid);
-        biddingDAO.persistAuction(auction);
-        biddingDAO.deleteBid(oldBid);
-        // Notify about new Bid
-        NewBidEvent newBidEvent = new NewBidEvent(auction);
-        observables.get(auction.getAuctionID()).notifyRemoteObservers(newBidEvent);
-
         AuctionLocks.getLock(auction.getAuctionID()).unlock();
         return auction;
     }
