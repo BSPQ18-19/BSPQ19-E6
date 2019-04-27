@@ -10,6 +10,7 @@ import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.services.*;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 import com.spq.group6.server.utils.logger.ServerLogger;
+import com.spq.group6.server.utils.observer.remote.RemoteObserver;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -28,16 +29,20 @@ public class Server extends UnicastRemoteObject implements IServer {
         adminService = new AdminService();
     }
 
-    public User logIn(String username, String password) throws RemoteException, UserException {
+    public User logIn(String username, String password, RemoteObserver observer) throws RemoteException, UserException {
         ServerLogger.logger.debug("Received Log in petition");
-        User user = accountService.logIn(username, password);
+        User user = accountService.logIn(username, password, observer);
         ServerLogger.logger.debug("User " + username + " has logged in.");
         return user;
     }
 
-    public User signIn(String username, String password, String country) throws RemoteException, UserException {
+    public void logOut(String username, RemoteObserver observer) throws RemoteException, UserException {
+        accountService.logOut(username, observer);
+    }
+
+    public User signIn(String username, String password, String country, RemoteObserver observer) throws RemoteException, UserException {
         ServerLogger.logger.debug("Received Sign in petition");
-        return accountService.signIn(username, password, country);
+        return accountService.signIn(username, password, country, observer);
     }
 
     public User updateUser(User user) throws RemoteException, UserException {

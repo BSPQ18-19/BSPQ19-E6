@@ -8,6 +8,7 @@ import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.utils.observer.remote.IRemoteObservable;
+import com.spq.group6.server.utils.observer.remote.RemoteObserver;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -16,9 +17,11 @@ import java.util.ArrayList;
 
 public interface IServer extends Remote, IRemoteObservable {
     // User account management API
-    public User logIn(String username, String password) throws RemoteException, UserException;
+    public User logIn(String username, String password, RemoteObserver observer) throws RemoteException, UserException;
 
-    public User signIn(String username, String password, String country) throws RemoteException, UserException;
+    public void logOut(String username, RemoteObserver observer) throws RemoteException, UserException;
+
+    public User signIn(String username, String password, String country, RemoteObserver observer) throws RemoteException, UserException;
 
     public User updateUser(User user) throws RemoteException, UserException;
 

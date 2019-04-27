@@ -8,25 +8,41 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.utils.logger.ServerLogger;
+import com.spq.group6.server.utils.observer.remote.RemoteObservable;
+import com.spq.group6.server.utils.observer.remote.RemoteObserver;
+
+import java.util.HashMap;
 
 public class AccountService implements IAccountService {
     private IBiddingDAO biddingDAO;
+    static HashMap<String, RemoteObservable> userObservables;
 
     public AccountService() {
         biddingDAO = new BiddingDAO();
+        userObservables = new HashMap<String, RemoteObservable>();
+        for(User user: biddingDAO.getAllUsers()){
+            userObservables.put(user.getUsername(), new RemoteObservable());
+        }
     }
 
-    public User logIn(String username, String password) throws UserException {
+    public User logIn(String username, String password, RemoteObserver observer) throws UserException {
         User user = biddingDAO.getUserByUsername(username);
         if (user == null) throw new UserException("User does not exist");
         if (!password.equals(user.getPassword())) throw new UserException("Invalid username or password");
+        userObservables.get(username).addRemoteObserver(observer);
         return user;
     }
 
-    public User signIn(String username, String password, String country) throws UserException {
+    public void logOut(String username, RemoteObserver observer) {
+        userObservables.get(username).deleteRemoteObserver(observer);
+    }
+
+    public User signIn(String username, String password, String country, RemoteObserver observer) throws UserException {
         User user = new User(username, password, country);
         checkDuplicatedUser(user);
         biddingDAO.createUser(user);
+        userObservables.put(username, new RemoteObservable());
+        userObservables.get(username).addRemoteObserver(observer);
         ServerLogger.logger.debug("User '" + username + "' has signed in.");
         return user;
     }

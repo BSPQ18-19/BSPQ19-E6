@@ -29,7 +29,8 @@ public class ClientController {
     	String info = "Log in with email " + email + " and password " + password;
         try {
 			ClientLogger.logger.debug("Trying to " + info + ".");
-            User user = serviceLocator.getService().logIn(email, password);
+			// TODO: create a real Observer for login
+            User user = serviceLocator.getService().logIn(email, password, null);
         	if (user != null) {
         		ClientLogger.logger.debug(info + " correct.");
             	this.currentUser = user;
@@ -46,7 +47,7 @@ public class ClientController {
     	String info = "Sign in with email " + email + " and password " + password + " and country " + country;
         try {
         	ClientLogger.logger.debug("Trying to " + info + ".");
-            User user = serviceLocator.getService().signIn(email, password, country);
+            User user = serviceLocator.getService().signIn(email, password, country, null);
         	if (user != null) {
         		ClientLogger.logger.debug(info + " correct.");
             	this.currentUser = user;

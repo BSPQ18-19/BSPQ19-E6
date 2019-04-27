@@ -17,15 +17,16 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.Lock;
 
 public class AuctionService implements IAuctionService {
     private IBiddingDAO biddingDAO;
-    private HashMap<Long, RemoteObservable> observables;
+    public static HashMap<Long, RemoteObservable> auctionObservables;
+    public static HashMap<Long, Thread> countdownObservables;
 
     public AuctionService() {
         biddingDAO = new BiddingDAO();
-        observables = new HashMap<Long, RemoteObservable>();
+        auctionObservables = new HashMap<Long, RemoteObservable>();
+        countdownObservables = new HashMap<Long, Thread>();
 
         for (Auction auction: biddingDAO.getAllAuctions()){
             initAuction(auction);
@@ -60,7 +61,7 @@ public class AuctionService implements IAuctionService {
             biddingDAO.deleteBid(oldBid);
             // Notify about new Bid
             NewBidEvent newBidEvent = new NewBidEvent(auction);
-            observables.get(auction.getAuctionID()).notifyRemoteObservers(newBidEvent);
+            auctionObservables.get(auction.getAuctionID()).notifyRemoteObservers(newBidEvent);
         } catch (Exception e){
             AuctionLocks.getLock(auction.getAuctionID()).unlock();
             throw e;
@@ -82,20 +83,21 @@ public class AuctionService implements IAuctionService {
     }
 
     public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
-        RemoteObservable observable = observables.get(auction.getAuctionID());
+        RemoteObservable observable = auctionObservables.get(auction.getAuctionID());
         observable.addRemoteObserver(observer);
     }
 
     public void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
-        RemoteObservable observable = observables.get(auction.getAuctionID());
+        RemoteObservable observable = auctionObservables.get(auction.getAuctionID());
         observable.deleteRemoteObserver(observer);
     }
 
     private void initAuction(Auction auction){
         RemoteObservable observable = new RemoteObservable();
-        observables.put(auction.getAuctionID(), observable);
+        auctionObservables.put(auction.getAuctionID(), observable);
         AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
         Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
         auctionCountdown.start(); // Run thread for auction countdown
+        countdownObservables.put(auction.getAuctionID(), auctionCountdown);
     }
 }
