@@ -198,6 +198,7 @@ public class ClientController {
 			}
         } catch (RemoteException | AuctionException e) {
 			ClientLogger.logger.error("Error bidding an auction: " + e.getMessage());
+			return false;
 		}
     	return true;
     }

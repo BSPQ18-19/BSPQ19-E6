@@ -233,6 +233,7 @@ public class ClientControllerTest {
 
     @AfterClass
     static public void tearDownClass() {
+
         try	{
             rmiServerThread.join();
             rmiRegistryThread.join();
