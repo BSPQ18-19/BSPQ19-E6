@@ -28,7 +28,6 @@ public class AuctionCountdown implements Runnable {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         long remainingMilis = auction.getDayLimit().getTime() - now.getTime();
         try {
-            System.out.println(remainingMilis);
             Thread.sleep(Math.max(remainingMilis, 0));
             ServerLogger.logger.debug("Countdown ended for auction: " + auction.getAuctionID());
         } catch (InterruptedException e) {
