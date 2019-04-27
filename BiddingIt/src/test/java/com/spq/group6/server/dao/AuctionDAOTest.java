@@ -75,15 +75,6 @@ public class AuctionDAOTest {
     }
 
     @Test
-    public void getAllAuctions(){
-        assertEquals(0, biddingDAO.getAllAuctions().size());
-        biddingDAO.persistAuction(testAuction);
-        auctions = biddingDAO.getAllAuctions();
-        assertTrue(testArray.size() == auctions.size() &&
-                testArray.containsAll(auctions) && auctions.containsAll(testArray));
-    }
-
-    @Test
     public void getAllAuctionsExceptRequester(){
         assertEquals(0, biddingDAO.getAllAuctionsExceptRequester(fakeUser).size());
         biddingDAO.persistAuction(testAuction);

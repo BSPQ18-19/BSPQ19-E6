@@ -109,7 +109,9 @@ public class BiddingDAO implements IBiddingDAO {
             tx.begin();
             Bid bid = auction.getHighestBid();
             pm.deletePersistent(auction);
-            pm.deletePersistent(bid);
+            if (bid!= null){
+                pm.deletePersistent(bid);
+            }
             tx.commit();
         } catch (Exception ex) {
 
@@ -155,8 +157,9 @@ public class BiddingDAO implements IBiddingDAO {
             query.setFilter("owner.username == '" + user.getUsername() + "'");
             List<Auction> auctions = (List<Auction>) query.execute();
             tx.commit();
-            for (Auction auction : auctions)
+            for (Auction auction : auctions) {
                 deleteAuction(auction); //deletes each auction owned by the user being deleted
+            }
             tx.begin();
             for (Product product : user.getOwnedProducts()) pm.deletePersistent(product);
             user.getOwnedProducts().clear();

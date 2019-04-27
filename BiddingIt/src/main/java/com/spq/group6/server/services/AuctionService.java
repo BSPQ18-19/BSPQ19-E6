@@ -8,7 +8,7 @@ import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.utils.AuctionCountdown;
-import com.spq.group6.server.utils.AuctionLocks;
+import com.spq.group6.server.utils.BiddingLocks;
 import com.spq.group6.server.utils.observer.events.NewBidEvent;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
@@ -45,9 +45,9 @@ public class AuctionService implements IAuctionService {
     }
 
     public Auction bid(Auction auction, User user, float amount) throws AuctionException {
-        AuctionLocks.getLock(auction.getAuctionID()).lock();
+        auction = BiddingLocks.lockAndGetAuction(auction);
+
         try {
-            auction = biddingDAO.getAuctionByID(auction.getAuctionID());
             if (!auction.isOpen()) {
                 throw new AuctionException("Auction is closed");
             }
@@ -63,10 +63,10 @@ public class AuctionService implements IAuctionService {
             NewBidEvent newBidEvent = new NewBidEvent(auction);
             auctionObservables.get(auction.getAuctionID()).notifyRemoteObservers(newBidEvent);
         } catch (Exception e){
-            AuctionLocks.getLock(auction.getAuctionID()).unlock();
+            BiddingLocks.unlockAuction(auction);
             throw e;
         }
-        AuctionLocks.getLock(auction.getAuctionID()).unlock();
+        BiddingLocks.unlockAuction(auction);
         return auction;
     }
 
@@ -95,9 +95,10 @@ public class AuctionService implements IAuctionService {
     private void initAuction(Auction auction){
         RemoteObservable observable = new RemoteObservable();
         auctionObservables.put(auction.getAuctionID(), observable);
-        AuctionLocks.setLock(auction.getAuctionID()); // create lock for auction
+        BiddingLocks.setAuctionLock(auction); // create lock for auction
         Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
         auctionCountdown.start(); // Run thread for auction countdown
         countdownObservables.put(auction.getAuctionID(), auctionCountdown);
     }
+
 }
