@@ -48,8 +48,7 @@ public class ConcurrentClientControllerTest {
                     java.rmi.registry.LocateRegistry.createRegistry(1099);
                     System.out.println("RMI registry ready.");
                 } catch (Exception e) {
-                    System.out.println("Exception starting RMI registry:");
-                    e.printStackTrace();
+                    System.out.println("RMI registry already started");
                 }
             }
         }
@@ -98,7 +97,7 @@ public class ConcurrentClientControllerTest {
         seller.getOwnedProducts().add(freeProduct);
         biddingDao.updateUser(seller);
 
-        int offset = 20;
+        int offset = 60;
         Timestamp limit = new Timestamp(System.currentTimeMillis() +offset*1000);
         notPersistedAuction = new Auction(seller, product, limit, 12, null);
         auction = new Auction(seller, product, limit, 12, null);
@@ -127,7 +126,7 @@ public class ConcurrentClientControllerTest {
 
     @Test
     @PerfTest(invocations = 1000, threads = 20)
-    @Required(max = 350, average = 180)
+    @Required(max = 350, average = 200)
     public void createProductTest() throws RemoteException {
         assertTrue(buyerClientController.logIn(seller.getUsername(), seller.getPassword())); // If we do not use unique user objects, JDO throw error
         assertTrue(buyerClientController.createProduct(product.getName(), product.getDescription()));
@@ -169,7 +168,7 @@ public class ConcurrentClientControllerTest {
     }
 
     @AfterClass
-    static public void tearDownClass() {
+    static public void tearDownClass(){
         biddingDao.deleteUser(seller);
         biddingDao.deleteUser(buyer);
         try	{
