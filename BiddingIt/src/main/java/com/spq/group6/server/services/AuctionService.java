@@ -20,12 +20,10 @@ import java.util.HashMap;
 
 public class AuctionService implements IAuctionService {
     private IBiddingDAO biddingDAO;
-    public static HashMap<Long, RemoteObservable> auctionObservables;
     public static HashMap<Long, Thread> countdownObservables;
 
     public AuctionService() {
         biddingDAO = new BiddingDAO();
-        auctionObservables = new HashMap<Long, RemoteObservable>();
         countdownObservables = new HashMap<Long, Thread>();
 
         for (Auction auction: biddingDAO.getAllAuctions()){
@@ -61,7 +59,7 @@ public class AuctionService implements IAuctionService {
             biddingDAO.deleteBid(oldBid);
             // Notify about new Bid
             NewBidEvent newBidEvent = new NewBidEvent(auction);
-            auctionObservables.get(auction.getAuctionID()).notifyRemoteObservers(newBidEvent);
+            AccountService.observable.notifyRemoteObservers(newBidEvent);
         } catch (Exception e){
             BiddingLocks.unlockAuction(auction);
             throw e;
@@ -82,21 +80,10 @@ public class AuctionService implements IAuctionService {
         return biddingDAO.getAllAuctionsExceptRequester(requester);
     }
 
-    public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
-        RemoteObservable observable = auctionObservables.get(auction.getAuctionID());
-        observable.addRemoteObserver(observer);
-    }
-
-    public void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
-        RemoteObservable observable = auctionObservables.get(auction.getAuctionID());
-        observable.deleteRemoteObserver(observer);
-    }
 
     private void initAuction(Auction auction){
-        RemoteObservable observable = new RemoteObservable();
-        auctionObservables.put(auction.getAuctionID(), observable);
         BiddingLocks.setAuctionLock(auction); // create lock for auction
-        Thread auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
+        Thread auctionCountdown = new Thread(new AuctionCountdown(auction));
         auctionCountdown.start(); // Run thread for auction countdown
         countdownObservables.put(auction.getAuctionID(), auctionCountdown);
     }

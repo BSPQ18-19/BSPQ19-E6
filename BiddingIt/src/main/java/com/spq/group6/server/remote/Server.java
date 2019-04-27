@@ -127,14 +127,4 @@ public class Server extends UnicastRemoteObject implements IServer {
         return adminService.getAllAuctions();
     }
 
-    // Observer calls
-    public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
-        ServerLogger.logger.debug("Received obersver addition petition");
-        auctionService.addRemoteObserver(auction, observer);
-    }
-
-    public void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException {
-        ServerLogger.logger.debug("Received obersver removal petition");
-        auctionService.deleteRemoteObserver(auction, observer);
-    }
 }

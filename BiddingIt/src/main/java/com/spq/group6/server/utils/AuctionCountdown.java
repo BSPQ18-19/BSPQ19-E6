@@ -6,10 +6,10 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.services.AccountService;
 import com.spq.group6.server.services.AuctionService;
 import com.spq.group6.server.utils.logger.ServerLogger;
 import com.spq.group6.server.utils.observer.events.AuctionClosedEvent;
-import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
 import java.sql.Timestamp;
 import java.util.concurrent.locks.Lock;
@@ -17,13 +17,11 @@ import java.util.concurrent.locks.Lock;
 public class AuctionCountdown implements Runnable {
     private Auction auction;
     private long auctionID;
-    private RemoteObservable observable;
     private static IBiddingDAO biddingDAO = new BiddingDAO();
 
-    public AuctionCountdown(Auction auction, RemoteObservable observable){
+    public AuctionCountdown(Auction auction){
         this.auction = auction;
         auctionID = auction.getAuctionID();
-        this.observable = observable;
     }
 
     public void run() {
@@ -38,10 +36,8 @@ public class AuctionCountdown implements Runnable {
         }
         Auction oldAuction = auction;
         auction = BiddingLocks.lockAndGetAuction(auction);
-        System.out.println("Lock got H1");
         if (auction == null){ // This means it has been deleted by Admin
             AuctionService.countdownObservables.remove(auctionID);
-            AuctionService.auctionObservables.remove(auctionID);
             BiddingLocks.unlockAuction(oldAuction);
             return;
         }
@@ -75,7 +71,7 @@ public class AuctionCountdown implements Runnable {
             endUnsoldAuction();
         }
         // notify remote observers
-        observable.notifyRemoteObservers(new AuctionClosedEvent(auction));
+        AccountService.observable.notifyRemoteObservers(new AuctionClosedEvent(auction));
         BiddingLocks.unlockAuction(auction);
     }
 

@@ -6,6 +6,7 @@ import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.remote.IServer;
 import com.spq.group6.server.remote.Server;
+import com.spq.group6.server.services.AccountService;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 import org.junit.After;
 import org.junit.Before;
@@ -22,14 +23,12 @@ public class CountDownTest {
     private Product product;
     private Auction auction;
     private BiddingDAO biddingDAO = new BiddingDAO();
-    private IServer server;
     private int offset;
     private Thread auctionCountdown;
     private ObserverDemo observerDemo;
 
     @Before
     public void setUp() throws RemoteException {
-        server = new Server();
         String usernameSeller = "seller", usernameBuyer = "buyer", pass = "test_pass", country = "uk";
         String prodctName = "product", productDescription = "Description";
         offset = 1000;
@@ -45,12 +44,13 @@ public class CountDownTest {
         biddingDAO.persistAuction(auction);
         BiddingLocks.setAuctionLock(auction); // create lock for auction
         observerDemo = new ObserverDemo();
+        AccountService.observable.addRemoteObserver(observerDemo);
     }
 
     @Test
     public void testNormalCountDown() throws InterruptedException {
         RemoteObservable observable = new RemoteObservable();
-        auctionCountdown = new Thread(new AuctionCountdown(auction, observable));
+        auctionCountdown = new Thread(new AuctionCountdown(auction));
         auctionCountdown.start();
         // Add observer
 

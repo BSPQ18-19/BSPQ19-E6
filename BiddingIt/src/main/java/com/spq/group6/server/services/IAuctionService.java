@@ -11,7 +11,7 @@ import com.spq.group6.server.utils.observer.remote.IRemoteObservable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public interface IAuctionService extends IRemoteObservable {
+public interface IAuctionService{
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice);
 
     public Auction bid(Auction auction, User user, float amount) throws AuctionException;

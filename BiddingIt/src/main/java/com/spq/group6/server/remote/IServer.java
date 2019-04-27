@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public interface IServer extends Remote, IRemoteObservable {
+public interface IServer extends Remote{
     // User account management API
     public User logIn(String username, String password, IRemoteObserver observer) throws RemoteException, UserException;
 

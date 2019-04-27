@@ -3,6 +3,7 @@ package com.spq.group6.server.services;
 import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.dao.IBiddingDAO;
 import com.spq.group6.server.data.Administrator;
+import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
@@ -11,17 +12,16 @@ import com.spq.group6.server.utils.BiddingLocks;
 import com.spq.group6.server.utils.logger.ServerLogger;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
+import com.spq.group6.server.utils.observer.remote.RemoteObserver;
 
 import java.util.HashMap;
-import java.util.concurrent.locks.Lock;
 
 public class AccountService implements IAccountService {
     private IBiddingDAO biddingDAO;
-    static HashMap<String, RemoteObservable> userObservables;
+    public static RemoteObservable observable = new RemoteObservable();
 
     public AccountService() {
         biddingDAO = new BiddingDAO();
-        userObservables = new HashMap<String, RemoteObservable>();
         for(User user: biddingDAO.getAllUsers()){
             init_user(user);
         }
@@ -32,15 +32,12 @@ public class AccountService implements IAccountService {
         User user = biddingDAO.getUserByUsername(username);
         if (user == null) throw new UserException("User does not exist");
         if (!password.equals(user.getPassword())) throw new UserException("Invalid username or password");
-        if(!userObservables.containsKey(username)){
-            userObservables.put(user.getUsername(), new RemoteObservable());
-        }
-        userObservables.get(username).addRemoteObserver(observer);
+        observable.addRemoteObserver(observer);
         return user;
     }
 
     public void logOut(String username, IRemoteObserver observer) {
-        userObservables.get(username).deleteRemoteObserver(observer);
+        observable.deleteRemoteObserver(observer);
     }
 
     public User signIn(String username, String password, String country, IRemoteObserver observer) throws UserException {
@@ -116,7 +113,6 @@ public class AccountService implements IAccountService {
 
     void init_user(User user) {
         BiddingLocks.setUserLock(user);
-        userObservables.put(user.getUsername(), new RemoteObservable());
     }
 
 }

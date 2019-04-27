@@ -17,6 +17,8 @@ public interface IBiddingDAO {
 
     void deleteProduct(Product product);
 
+    ArrayList<Auction> getAuctionsByUserBid(User user);
+
     // Admin DAO
     void createAdministrator(Administrator administrator);
     

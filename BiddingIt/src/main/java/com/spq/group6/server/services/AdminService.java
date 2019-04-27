@@ -33,7 +33,7 @@ public class AdminService implements IAdminService {
         auction = BiddingLocks.lockAndGetAuction(auction);
         auction = biddingDAO.getAuctionByID(auction.getAuctionID());
         biddingDAO.deleteAuction(auction);
-        AuctionService.auctionObservables.get(auction.getAuctionID()).notifyRemoteObservers(new AuctionDeletedEvent(auction));
+        AccountService.observable.notifyRemoteObservers(new AuctionDeletedEvent(auction));
         AuctionService.countdownObservables.get(auction.getAuctionID()).interrupt();
         BiddingLocks.unlockAuction(auction);
     }
@@ -43,8 +43,7 @@ public class AdminService implements IAdminService {
             deleteAuction(auction);
         }
         biddingDAO.deleteUser(user);
-        AccountService.userObservables.get(user.getUsername()).notifyRemoteObservers(new UserDeletedEvent(user));
-        AccountService.userObservables.remove(user.getUsername());
+        AccountService.observable.notifyRemoteObservers(new UserDeletedEvent(user));
     }
 
     public ArrayList<User> getAllUsers() {
