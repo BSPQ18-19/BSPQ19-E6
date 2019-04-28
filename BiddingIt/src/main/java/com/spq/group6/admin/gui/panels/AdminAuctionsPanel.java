@@ -143,9 +143,14 @@ public class AdminAuctionsPanel extends JPanel {
 					for (int i = 0; i < auctionsTimeLeftThread.size(); i++)
 						auctionsTimeLeftThread.get(i).interrupt();
 				
+<<<<<<< HEAD
 				auctionsData = null;
 				auctions = controller.getAllAuctions();
 				
+=======
+				Object[][] auctionsData = null;
+				ArrayList<Auction> auctions = controller.getAllAuctions();
+>>>>>>> server
 				if (auctions.size() == 0) {
 					auctionsData = new Object[][] {};
 					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -171,7 +176,7 @@ public class AdminAuctionsPanel extends JPanel {
 					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "Auctions found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				}
-				auctionsTable.setModel(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller));
+				auctionsTable.setModel(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller, auctions));
 				auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 				@SuppressWarnings("unused")
@@ -217,7 +222,7 @@ public class AdminAuctionsPanel extends JPanel {
 			}
 		});
 
-		auctionsTable = new JTable(new AuctionJTableModel(new Object[][] {}, auctionsColumnNames, controller));
+		auctionsTable = new JTable(new AuctionJTableModel(new Object[][] {}, auctionsColumnNames, controller, new ArrayList<Auction>()));
 		auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 		// set column 4 to limit day

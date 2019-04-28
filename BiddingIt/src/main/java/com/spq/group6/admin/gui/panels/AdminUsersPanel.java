@@ -42,8 +42,7 @@ public class AdminUsersPanel extends JPanel {
 	
 	@SuppressWarnings("unused")
 	private AdminController controller;
-	private ArrayList<Thread> usersTimeLeftThread;
-	
+
 	public AdminUsersPanel(int screenWidth, int screenHeight, AdminController controller) {
 		
 		this.setLayout(null);
@@ -127,6 +126,7 @@ public class AdminUsersPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 				// stop previous threads
 				if (usersTimeLeftThread != null)
 					for (int i = 0; i < usersTimeLeftThread.size(); i++)
@@ -134,6 +134,10 @@ public class AdminUsersPanel extends JPanel {
 				
 				usersData = null;
 				users = controller.getAllUsers();
+=======
+				Object[][] usersData = null;
+				ArrayList<User> users = controller.getAllUsers();
+>>>>>>> server
 				if (users.size() == 0) {
 					usersData = new Object[][] {};
 					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "No users found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -141,7 +145,6 @@ public class AdminUsersPanel extends JPanel {
 				} else {
 					usersData = new Object[users.size()][usersColumnNames.length];
 					int i = 0;
-					usersTimeLeftThread = new ArrayList<>();
 					for (i = 0; i < users.size(); i++) {
 						User tempUser = users.get(i);
 						usersData[i][0] = tempUser.getUsername();
@@ -153,15 +156,19 @@ public class AdminUsersPanel extends JPanel {
 					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "Users found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				}
-				usersTable.setModel(new UserJTableModel(usersData, usersColumnNames, controller));
+				usersTable.setModel(new UserJTableModel(usersData, usersColumnNames, controller, users));
 				usersTable.getColumnModel().getColumn(3).setPreferredWidth(usersTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 				@SuppressWarnings("unused")
+<<<<<<< HEAD
 				ButtonColumn deleteUserColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
 				
 				// start countdown threads
 				for (int i = 0; i < usersData.length; i++)
 					usersTimeLeftThread.get(i).start();
+=======
+				ButtonColumn bidButtonColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
+>>>>>>> server
 			}
 		});
 		searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -199,7 +206,7 @@ public class AdminUsersPanel extends JPanel {
 			}
 		});
 
-		usersTable = new JTable(new UserJTableModel(new Object[][] {}, usersColumnNames, controller));
+		usersTable = new JTable(new UserJTableModel(new Object[][] {}, usersColumnNames, controller, new ArrayList<User>()));
 		usersTable.getColumnModel().getColumn(3).setPreferredWidth(usersTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 		// set column 4 to limit day
