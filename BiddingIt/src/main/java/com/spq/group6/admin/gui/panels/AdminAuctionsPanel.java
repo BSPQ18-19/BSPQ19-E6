@@ -142,15 +142,12 @@ public class AdminAuctionsPanel extends JPanel {
 				if (auctionsTimeLeftThread != null)
 					for (int i = 0; i < auctionsTimeLeftThread.size(); i++)
 						auctionsTimeLeftThread.get(i).interrupt();
-				
-<<<<<<< HEAD
+
 				auctionsData = null;
 				auctions = controller.getAllAuctions();
-				
-=======
+
 				Object[][] auctionsData = null;
 				ArrayList<Auction> auctions = controller.getAllAuctions();
->>>>>>> server
 				if (auctions.size() == 0) {
 					auctionsData = new Object[][] {};
 					JOptionPane.showConfirmDialog(AdminAuctionsPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);

@@ -28,7 +28,7 @@ import com.spq.group6.admin.utils.logger.AdminLogger;
 import com.spq.group6.server.data.User;
 
 public class AdminUsersPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 	private JLabel titleLabel;
 	private JPanel searchPanel;
@@ -39,19 +39,19 @@ public class AdminUsersPanel extends JPanel {
 	private JButton logOutButton;
 	private List<User> users;
 	private Object[][] usersData;
-	
+
 	@SuppressWarnings("unused")
 	private AdminController controller;
 
 	public AdminUsersPanel(int screenWidth, int screenHeight, AdminController controller) {
-		
+
 		this.setLayout(null);
-		
+
 		titleLabel = new JLabel("Administrating users...", SwingConstants.LEFT);
 		titleLabel.setSize((int)(screenWidth * 0.5), screenHeight / 15);
 		titleLabel.setLocation((int) (screenWidth / 15), (int) (screenHeight / 4 - titleLabel.getHeight() / 2));
-		SDG2Util.fixJLabelFontSize(titleLabel);	
-		
+		SDG2Util.fixJLabelFontSize(titleLabel);
+
 		String[] usersColumnNames = {"Username", "Password", "Country", "Money", ""};
 //		//JTABLE BEGIN
 //		//JTABLE BEGIN
@@ -59,13 +59,13 @@ public class AdminUsersPanel extends JPanel {
 //		if (usersTimeLeftThread != null)
 //			for (int i = 0; i < usersTimeLeftThread.size(); i++)
 //				usersTimeLeftThread.get(i).interrupt();
-//		
+//
 //		usersData = null;
 //		users = controller.getAllUsers();
 //		if (users.size() == 0) {
 //			usersData = new Object[][] {};
 //			JOptionPane.showConfirmDialog(AdminUsersPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-//		
+//
 //		} else {
 //			usersData = new Object[users.size()][usersColumnNames.length];
 //			int i = 0;
@@ -86,29 +86,29 @@ public class AdminUsersPanel extends JPanel {
 //
 //		@SuppressWarnings("unused")
 //		ButtonColumn bidButtonColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
-//		
+//
 //		// start countdown threads
 //		for (int i = 0; i < usersData.length; i++)
 //			usersTimeLeftThread.get(i).start();
 //		//JTABLE END
 //		//JTABLE END
-		
+
 		Thread animationThread = new Thread(new Runnable() {
 			int dots = 0;
-			
+
 			@Override
 			public void run() {
-				
+
 				while(AdminUsersPanel.this.isEnabled()) {
-					
+
 					if (dots++ == 3)
 						dots = 0;
-					
+
 					String tempText = titleLabel.getText().substring(0, 20);
 					for (int i = 0; i < dots; i++)
 						tempText += ".";
 					titleLabel.setText(tempText);
-					
+
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -118,30 +118,23 @@ public class AdminUsersPanel extends JPanel {
 				}
 			}
 		});
-		animationThread.start();	
-				
+		animationThread.start();
+
 		// searching filter
 		searchButton = new JButton("Update");
 		searchButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-				// stop previous threads
-				if (usersTimeLeftThread != null)
-					for (int i = 0; i < usersTimeLeftThread.size(); i++)
-						usersTimeLeftThread.get(i).interrupt();
-				
+
 				usersData = null;
 				users = controller.getAllUsers();
-=======
 				Object[][] usersData = null;
 				ArrayList<User> users = controller.getAllUsers();
->>>>>>> server
 				if (users.size() == 0) {
 					usersData = new Object[][] {};
 					JOptionPane.showConfirmDialog(AdminUsersPanel.this, "No users found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				
+
 				} else {
 					usersData = new Object[users.size()][usersColumnNames.length];
 					int i = 0;
@@ -160,42 +153,36 @@ public class AdminUsersPanel extends JPanel {
 				usersTable.getColumnModel().getColumn(3).setPreferredWidth(usersTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 				@SuppressWarnings("unused")
-<<<<<<< HEAD
 				ButtonColumn deleteUserColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
-				
-				// start countdown threads
-				for (int i = 0; i < usersData.length; i++)
-					usersTimeLeftThread.get(i).start();
-=======
+
 				ButtonColumn bidButtonColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
->>>>>>> server
 			}
 		});
 		searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		searchPanel.setSize((int) (screenWidth / 1.2), screenHeight / 14);
-		searchPanel.setLocation((int) titleLabel.getLocation().getX(), 
+		searchPanel.setLocation((int) titleLabel.getLocation().getX(),
 				(int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));
-		
-		backButton = new JButton("Back");		
+
+		backButton = new JButton("Back");
 		backButton.setSize(screenWidth / 8, screenHeight / 15);
-		backButton.setLocation(backButton.getWidth()/2, 
+		backButton.setLocation(backButton.getWidth()/2,
 				(int) (screenHeight / 10));
 		SDG2Util.fixJButtonFontSize(backButton);
 		backButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AdminWindow.getAdminWindow(null).changeScreen(ScreenType.MAIN_MENU);
 			}
 		});
-		
+
 		logOutButton = new JButton("Log out");
 		logOutButton.setSize(backButton.getSize());
-		logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth()*1.5), 
+		logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth()*1.5),
 				(int) backButton.getLocation().getY());
 		SDG2Util.fixJButtonFontSize(logOutButton);
 		logOutButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (controller.logOut())
@@ -214,14 +201,14 @@ public class AdminUsersPanel extends JPanel {
 		usersTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
 		usersTable.getColumnModel().getColumn(4).setCellEditor(usersTable.getDefaultEditor(LocalDateTime.class));
 		usersTable.getColumnModel().getColumn(4).setCellRenderer(usersTable.getDefaultRenderer(LocalDateTime.class));
-		
+
 		usersTableScrollPane = new JScrollPane(usersTable);
-		usersTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), 
+		usersTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()),
 				(int) (screenHeight/2.25));
 		usersTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
 				(int) (searchPanel.getLocation().getY() + searchPanel.getHeight()));
 
-		
+
 		this.add(titleLabel);
 		searchPanel.add(searchButton);
 		this.add(searchPanel);
@@ -229,7 +216,7 @@ public class AdminUsersPanel extends JPanel {
 		this.add(backButton);
 		this.add(logOutButton);
 	}
-	
+
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
@@ -237,5 +224,5 @@ public class AdminUsersPanel extends JPanel {
 		testFrame.add(new AdminUsersPanel(800, 600, null));
 		testFrame.setVisible(true);
 	}
-	
+
 }
