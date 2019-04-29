@@ -15,18 +15,11 @@ public class Client
 			ClientLogger.logger.error("Invalid number of arguments.");
 			return;
 		}
-    	try {
-			ClientController controller = new ClientController();
-			ServiceLocator serviceLocator = ServiceLocator.getServiceLocator();
-			serviceLocator.setService(args[0], args[1], args[2]);
+		ClientController controller = ClientController.getClientController();
+		ServiceLocator serviceLocator = ServiceLocator.getServiceLocator();
+		serviceLocator.setService(args[0], args[1], args[2]);
 
-			ClientWindow.getClientWindow(controller).setVisible(true);
-			ClientLogger.logger.info("Client running correctly.");
-		} catch (RemoteException e) {
-			ClientLogger.logger.error("Error starting client.");
-
-			e.printStackTrace();
-		}
-		
+		ClientWindow.getClientWindow().setVisible(true);
+		ClientLogger.logger.info("Client running correctly.");
 	}
 }

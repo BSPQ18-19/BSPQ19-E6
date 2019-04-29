@@ -38,14 +38,17 @@ public class UserAuctionsPanel extends JPanel {
 	private JTable auctionsTable;
 	private JButton backButton;
 	private JButton logOutButton;
-	
+	private int screenWidth, screenHeight;
+	private String[] auctionsColumnNames = {"Prod. Name", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
+
 	private ClientController controller;
 	private List<Auction> userAuctions;
 	
-	public UserAuctionsPanel(int screenWidth, int screenHeight, ClientController controller) {
-		
+	public UserAuctionsPanel(int screenWidth, int screenHeight) {
+		this.screenWidth = screenWidth;
+		this.screenHeight = screenHeight;
 		this.setLayout(null);
-		this.controller = controller;
+		this.controller = ClientController.getClientController();
 		
 		titleLabel = new JLabel("My auctions", SwingConstants.LEFT);
 		titleLabel.setSize(screenWidth / 4, screenHeight / 15);
@@ -67,7 +70,7 @@ public class UserAuctionsPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.MAIN_MENU);
+				ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
 			}
 		});
 		
@@ -81,16 +84,25 @@ public class UserAuctionsPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (controller.logOut())
-					ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL);
+					ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
 				else
 					JOptionPane.showConfirmDialog(UserAuctionsPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
 			}
 		});
 
-		String[] auctionsColumnNames = {"Prod. Name", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
-		Object[][] auctionsData = null;
 		userAuctions = controller.getCurrentUserAuctions();
+		updateAuctions();
+
+		this.add(titleLabel);
+		this.add(infoLabel);
+		this.add(backButton);
+		this.add(logOutButton);
+
+	}
+
+	public void updateAuctions() {
+		Object[][] auctionsData = null;
 		if (controller.getCurrentUser() != null) {
 			auctionsData = new Object[userAuctions.size() + 1][auctionsColumnNames.length];
 			int i = 0;
@@ -116,11 +128,10 @@ public class UserAuctionsPanel extends JPanel {
 			auctionsData[i][4] = "";
 			auctionsData[i][5] = "Create";
 		}
-		auctionsTable = new JTable(new AuctionJTableModel(auctionsData, auctionsColumnNames, controller, this));
+		auctionsTable = new JTable(new AuctionJTableModel(auctionsData, auctionsColumnNames, this));
 		auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth()+150);
-		@SuppressWarnings("unused")
 		ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 5);
-		
+
 		// set column 0 to combobox
 		updateUserProductsComboBox();
 
@@ -129,22 +140,18 @@ public class UserAuctionsPanel extends JPanel {
 		auctionsTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
 		auctionsTable.getColumnModel().getColumn(4).setCellEditor(auctionsTable.getDefaultEditor(LocalDateTime.class));
 		auctionsTable.getColumnModel().getColumn(4).setCellRenderer(auctionsTable.getDefaultRenderer(LocalDateTime.class));
-		
+
 		auctionsTableScrollPane = new JScrollPane(auctionsTable);
 		auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight/2);
 		auctionsTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
 				(int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
-		
-		this.add(titleLabel);
-		this.add(infoLabel);
-		this.add(auctionsTableScrollPane);
-		this.add(backButton);
-		this.add(logOutButton);
 
+		this.add(auctionsTableScrollPane);
 	}
-	
+
 	public void updateUserProductsComboBox() {
-		List<Product> userProductsNotAuction = controller.getCurrentUserProducts(); // get all user products		
+		List<Product> userProductsNotAuction = controller.getCurrentUserProducts(); // get all user products
+		System.out.println(userProductsNotAuction.size());
 		for (int i = userProductsNotAuction.size() - 1; i >= 0; i--) // remove products already in an auction
 			for (int j = 0; j < userAuctions.size(); j++)
 				if (userProductsNotAuction.get(i).equals(userAuctions.get(j).getProduct()))
@@ -165,7 +172,15 @@ public class UserAuctionsPanel extends JPanel {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new UserAuctionsPanel(800, 600, null));
+		testFrame.add(new UserAuctionsPanel(800, 600));
 		testFrame.setVisible(true);
+	}
+
+	public List<Auction> getUserAuctions() {
+		return userAuctions;
+	}
+
+	public void setUserAuctions(List<Auction> userAuctions) {
+		this.userAuctions = userAuctions;
 	}
 }

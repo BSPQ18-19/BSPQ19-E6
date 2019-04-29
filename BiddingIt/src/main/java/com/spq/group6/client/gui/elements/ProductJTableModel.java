@@ -11,10 +11,10 @@ public class ProductJTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
 	private ClientController controller;
 	
-	public ProductJTableModel(Object[][] data, String[] columnNames, ClientController controller) {
+	public ProductJTableModel(Object[][] data, String[] columnNames) {
     	super(data, columnNames);
 		
-		this.controller = controller;
+		this.controller = ClientController.getClientController();
 		
 	}
 	

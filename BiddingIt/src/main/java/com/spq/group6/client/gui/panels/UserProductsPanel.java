@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import com.spq.group6.client.Client;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.elements.ButtonColumn;
@@ -28,10 +29,12 @@ public class UserProductsPanel extends JPanel{
 	@SuppressWarnings("unused")
 	private ClientController controller;
 	
-	public UserProductsPanel(int screenWidth, int screenHeight, ClientController controller) {
+	public UserProductsPanel(int screenWidth, int screenHeight) {
 		
 		this.setLayout(null);
-		
+
+		controller = ClientController.getClientController();
+
 		titleLabel = new JLabel("My products", SwingConstants.LEFT);
 		titleLabel.setSize(screenWidth / 4, screenHeight / 15);
 		titleLabel.setLocation((int) (screenWidth / 2 - titleLabel.getWidth()*1.75), (int) (screenHeight / 4 - titleLabel.getHeight() / 2));
@@ -53,7 +56,7 @@ public class UserProductsPanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.MAIN_MENU);
+				ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
 			}
 		});
 		
@@ -67,7 +70,7 @@ public class UserProductsPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (controller.logOut())
-					ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL);
+					ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
 				else
 					JOptionPane.showConfirmDialog(UserProductsPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
@@ -98,7 +101,7 @@ public class UserProductsPanel extends JPanel{
 			productsData[i][2] = "Create";
 			productsData[i][3] = "";
 		}
-		productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames, controller));
+		productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames));
 		productsTable.getColumnModel().getColumn(1).setPreferredWidth(productsTable.getColumnModel().getColumn(1).getPreferredWidth()+200);
 
 		@SuppressWarnings("unused")
@@ -123,7 +126,7 @@ public class UserProductsPanel extends JPanel{
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new UserProductsPanel(800, 600, null));
+		testFrame.add(new UserProductsPanel(800, 600));
 		testFrame.setVisible(true);
 	}
 	

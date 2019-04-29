@@ -18,7 +18,7 @@ public class ClientWindow extends JFrame {
 	private JPanel mainPanel;
 
 	// private constructor using lazy singleton
-	private ClientWindow(ClientController controller) {
+	private ClientWindow() {
 		this.controller = controller;
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -44,25 +44,25 @@ public class ClientWindow extends JFrame {
 			mainPanel = new InitialPanel(screenWidth, screenHeight);
 			break;
 		case REGISTER:
-			mainPanel = new RegisterPanel(screenWidth, screenHeight, controller);
+			mainPanel = new RegisterPanel(screenWidth, screenHeight);
 			break;
 		case LOG_IN:
-			mainPanel = new LogInPanel(screenWidth, screenHeight, controller);
+			mainPanel = new LogInPanel(screenWidth, screenHeight);
 			break;
 		case LOG_IN_SUCCESFUL:
 			mainPanel = new LogInSuccesfulPanel(screenWidth, screenHeight, data[0]);
 			break;
 		case MAIN_MENU:
-			mainPanel = new MainMenuPanel(screenWidth, screenHeight, controller);
+			mainPanel = new MainMenuPanel(screenWidth, screenHeight);
 			break;	
 		case MARKET:
-			mainPanel = new MarketPanel(screenWidth, screenHeight, controller);
+			mainPanel = new MarketPanel(screenWidth, screenHeight);
 			break;
 		case USER_PRODUCTS:
-			mainPanel = new UserProductsPanel(screenWidth, screenHeight, controller);
+			mainPanel = new UserProductsPanel(screenWidth, screenHeight);
 			break;
 		case USER_AUCTIONS:
-			mainPanel = new UserAuctionsPanel(screenWidth, screenHeight, controller);
+			mainPanel = new UserAuctionsPanel(screenWidth, screenHeight);
 			break;
 		default:
 			break;
@@ -76,10 +76,17 @@ public class ClientWindow extends JFrame {
 	}
 
 	// lazy singleton
-	public static ClientWindow getClientWindow(ClientController clientController) {
+	public static ClientWindow getClientWindow() {
 		if (clientWindow == null)
-			clientWindow = new ClientWindow(clientController);
+			clientWindow = new ClientWindow();
 		return clientWindow;
 	}
 
+	public JPanel getMainPanel() {
+		return mainPanel;
+	}
+
+	public void setMainPanel(JPanel mainPanel) {
+		this.mainPanel = mainPanel;
+	}
 }

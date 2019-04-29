@@ -43,7 +43,6 @@ public class LogInSuccesfulPanel extends JPanel {
 		Thread animationThread = new Thread(new Runnable() {
 			int dots = 0, repetitions = 0;
 			
-			@Override
 			public void run() {
 				
 				while(LogInSuccesfulPanel.this.isEnabled()) {
@@ -63,8 +62,8 @@ public class LogInSuccesfulPanel extends JPanel {
 						e.printStackTrace();
 					}
 					
-					if (repetitions == 5)
-						ClientWindow.getClientWindow(null).changeScreen(ScreenType.MAIN_MENU);
+					if (repetitions == 2)
+						ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
 					repetitions++;
 				}
 			}

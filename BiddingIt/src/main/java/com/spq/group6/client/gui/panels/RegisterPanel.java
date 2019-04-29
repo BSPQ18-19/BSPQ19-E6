@@ -32,11 +32,12 @@ public class RegisterPanel extends JPanel {
 	
 	private ClientController controller;
 	
-	public RegisterPanel(int screenWidth, int screenHeight, ClientController controller) {
+	public RegisterPanel(int screenWidth, int screenHeight) {
 		
 		this.setLayout(null);
-		this.controller = controller;
-		
+
+		this.controller = ClientController.getClientController();
+
 		titleLabel = new JLabel("Easybooking", SwingConstants.LEFT);
 		titleLabel.setSize((int) (screenWidth / 3), screenHeight / 7);
 		titleLabel.setLocation(screenWidth / 8, (int) (screenHeight / 7 - titleLabel.getHeight() / 2));
@@ -129,7 +130,7 @@ public class RegisterPanel extends JPanel {
 				
 				try {
 					controller.signIn(usernameTF.getText(), passwordTF.getText(), countryTF.getText());
-					ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
+					ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -163,7 +164,7 @@ public class RegisterPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL);
+				ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
 			}
 		});
 		
@@ -208,7 +209,7 @@ public class RegisterPanel extends JPanel {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new RegisterPanel(800, 600, null));
+		testFrame.add(new RegisterPanel(800, 600));
 		testFrame.setVisible(true);
 	}
 }

@@ -28,6 +28,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         adminService = new AdminService();
     }
 
+    // Account API
     public User logIn(String username, String password, IRemoteObserver observer) throws RemoteException, UserException {
         ServerLogger.logger.debug("Received Log in petition");
         User user = accountService.logIn(username, password, observer);
@@ -48,11 +49,6 @@ public class Server extends UnicastRemoteObject implements IServer {
         ServerLogger.logger.debug("Received update petition");
         return accountService.updateUser(user);
     }
-    
-    public Administrator createAdministrator(Administrator admin) throws RemoteException, AdministratorException {
-        ServerLogger.logger.debug("Received admin creation petition");
-        return accountService.createAdministrator(admin);
-    }
 
     public User createProduct(User user, String name, String description) throws RemoteException {
         ServerLogger.logger.debug("Received product create petition");
@@ -71,6 +67,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return accountService.deleteProduct(user, product);
     }
 
+    // Auctions API
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException {
         ServerLogger.logger.debug("Received public auction creation petition");
         Auction auction = auctionService.createPublicAuction(owner, product, dayLimit, initialPrice);
@@ -98,6 +95,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return auctionService.getAllAuctions(requester);
     }
 
+    // Admin API
     public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException {
         ServerLogger.logger.debug("Received log in petition for " + username);
         return adminService.logIn(username, password);

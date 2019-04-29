@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import com.spq.group6.client.Client;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
@@ -22,10 +23,12 @@ public class MainMenuPanel extends JPanel {
 	
 	private ClientController controller;
 	
-	public MainMenuPanel(int screenWidth, int screenHeight, ClientController controller) {
+	public MainMenuPanel(int screenWidth, int screenHeight) {
 		
 		this.setLayout(null);
-		
+
+		controller = ClientController.getClientController();
+
 		titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
 		titleLabel.setSize(screenWidth / 3, screenHeight / 3);
 		titleLabel.setLocation((int) (screenWidth / 2 - titleLabel.getWidth()*1.25), (int) (screenHeight / 4 - titleLabel.getHeight() / 1.25));
@@ -46,7 +49,7 @@ public class MainMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_AUCTIONS);
+				ClientWindow.getClientWindow().changeScreen(ScreenType.USER_AUCTIONS);
 			}
 		});
 		
@@ -59,7 +62,7 @@ public class MainMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.USER_PRODUCTS);
+				ClientWindow.getClientWindow().changeScreen(ScreenType.USER_PRODUCTS);
 			}
 		});
 		
@@ -72,7 +75,7 @@ public class MainMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.MARKET);
+				ClientWindow.getClientWindow().changeScreen(ScreenType.MARKET);
 
 			}
 		});
@@ -87,7 +90,7 @@ public class MainMenuPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (controller.logOut())
-					ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL);
+					ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
 				else
 					JOptionPane.showConfirmDialog(MainMenuPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
@@ -106,7 +109,7 @@ public class MainMenuPanel extends JPanel {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new MainMenuPanel(800, 600, null));
+		testFrame.add(new MainMenuPanel(800, 600));
 		testFrame.setVisible(true);
 	}
 

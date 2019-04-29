@@ -44,15 +44,21 @@ public class MarketPanel extends JPanel {
 	private JTable auctionsTable;
 	private JButton backButton;
 	private JButton logOutButton;
-	
+
+	private String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
+
+
 	@SuppressWarnings("unused")
 	private ClientController controller;
 	private ArrayList<Thread> auctionsTimeLeftThread;
+	private ArrayList<Auction> auctions;
 	
-	public MarketPanel(int screenWidth, int screenHeight, ClientController controller) {
+	public MarketPanel(int screenWidth, int screenHeight) {
 		
 		this.setLayout(null);
-		
+
+		controller = ClientController.getClientController();
+
 		titleLabel = new JLabel("Market", SwingConstants.LEFT);
 		titleLabel.setSize(screenWidth / 5, screenHeight / 15);
 		titleLabel.setLocation((int) (screenWidth / 15), (int) (screenHeight / 4 - titleLabel.getHeight() / 2));
@@ -70,7 +76,6 @@ public class MarketPanel extends JPanel {
 		searchLabel2 = new JLabel("is");
 		searchTF = new JTextField(10);
 		searchButton = new JButton("Search");
-		String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
 		searchButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -80,8 +85,6 @@ public class MarketPanel extends JPanel {
 					for (int i = 0; i < auctionsTimeLeftThread.size(); i++)
 						auctionsTimeLeftThread.get(i).interrupt();
 				
-				Object[][] auctionsData = null;
-				List<Auction> auctions = null;
 				switch(searchComboBox.getSelectedIndex()) {
 				case 0: 
 					auctions = controller.searchAuctionByCountry(searchTF.getText());
@@ -92,40 +95,12 @@ public class MarketPanel extends JPanel {
 				default:
 					auctions = new ArrayList<>();
 				}
-				if (auctions.size() == 0) {
-					auctionsData = new Object[][] {};
+				updateAuctions();
+				if (auctions.size() == 0){
 					JOptionPane.showConfirmDialog(MarketPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				
 				} else {
-					auctionsData = new Object[auctions.size()][auctionsColumnNames.length];
-					int i = 0;
-					auctionsTimeLeftThread = new ArrayList<>();
-					for (i = 0; i < auctions.size(); i++) {
-						Auction tempAuction = auctions.get(i);
-						auctionsData[i][0] = tempAuction;
-						auctionsData[i][1] = tempAuction.getProduct().getDescription();
-						if (tempAuction.getHighestBid() == null)
-							auctionsData[i][2] = 0 + " (initial:" + tempAuction.getInitialPrice() + ")";
-						else
-							auctionsData[i][2] = tempAuction.getHighestBid().getAmount();
-						auctionsData[i][3] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
-						auctionsData[i][4] = "Bid";
-						
-						Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
-						auctionsTimeLeftThread.add(tempAuctionThread);
-					}
 					JOptionPane.showConfirmDialog(MarketPanel.this, "Auctions found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
 				}
-				auctionsTable.setModel(new MarketJTableModel(auctionsData, auctionsColumnNames, controller));
-				auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
-
-				@SuppressWarnings("unused")
-				ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 4);
-				
-				// start countdown threads
-				for (int i = 0; i < auctionsData.length; i++)
-					auctionsTimeLeftThread.get(i).start();
 			}
 		});
 		searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -142,7 +117,7 @@ public class MarketPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.MAIN_MENU);
+				ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
 			}
 		});
 		
@@ -156,14 +131,14 @@ public class MarketPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (controller.logOut())
-					ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL);
+					ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
 				else
 					JOptionPane.showConfirmDialog(MarketPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
 			}
 		});
 
-		auctionsTable = new JTable(new MarketJTableModel(new Object[][] {}, auctionsColumnNames, controller));
+		auctionsTable = new JTable(new MarketJTableModel(new Object[][] {}, auctionsColumnNames));
 		auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
 
 		// set column 3 to limit day
@@ -191,13 +166,56 @@ public class MarketPanel extends JPanel {
 		this.add(backButton);
 		this.add(logOutButton);
 	}
-	
+
+	public void updateAuctions() {
+		Object[][] auctionsData;
+		if (auctions.size() == 0) {
+			auctionsData = new Object[][] {};
+
+		} else {
+			auctionsData = new Object[auctions.size()][auctionsColumnNames.length];
+			int i = 0;
+			auctionsTimeLeftThread = new ArrayList<>();
+			for (i = 0; i < auctions.size(); i++) {
+				Auction tempAuction = auctions.get(i);
+				auctionsData[i][0] = tempAuction;
+				auctionsData[i][1] = tempAuction.getProduct().getDescription();
+				if (tempAuction.getHighestBid() == null)
+					auctionsData[i][2] = 0 + " (initial:" + tempAuction.getInitialPrice() + ")";
+				else
+					auctionsData[i][2] = tempAuction.getHighestBid().getAmount();
+				auctionsData[i][3] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
+				auctionsData[i][4] = "Bid";
+
+				Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
+				auctionsTimeLeftThread.add(tempAuctionThread);
+			}
+
+		}
+		auctionsTable.setModel(new MarketJTableModel(auctionsData, auctionsColumnNames));
+		auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
+
+		ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 4);
+
+		// start countdown threads
+		for (int i = 0; i < auctionsData.length; i++) {
+			auctionsTimeLeftThread.get(i).start();
+		}
+	}
+
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new UserAuctionsPanel(800, 600, null));
+		testFrame.add(new UserAuctionsPanel(800, 600));
 		testFrame.setVisible(true);
 	}
-	
+
+	public ArrayList<Auction> getAuctions() {
+		return auctions;
+	}
+
+	public void setAuctions(ArrayList<Auction> auctions) {
+		this.auctions = auctions;
+	}
 }

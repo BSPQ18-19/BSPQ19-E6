@@ -15,16 +15,24 @@ import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.client.gui.ClientWindow;
 
 public class ClientController {
+	private static ClientController controller;
 
 	private ServiceLocator serviceLocator;
 	private User currentUser;
-	
-    public ClientController() throws RemoteException {
+
+    private ClientController() {
 		super();
 		serviceLocator = ServiceLocator.getServiceLocator();
-		ClientWindow.getClientWindow(this).setVisible(true);
+		ClientWindow.getClientWindow().setVisible(true);
 	}
-    
+
+	public static ClientController getClientController(){
+    	if(controller == null){
+    		controller = new ClientController();
+		}
+    	return controller;
+	}
+
     public boolean logIn(String email, String password) throws RemoteException {
     	String info = "Log in with username " + email + " and password " + password;
         try {
@@ -106,8 +114,12 @@ public class ClientController {
     public User getCurrentUser() {
 		return currentUser;
 	}
-    
-    public List<Product> getCurrentUserProducts() {
+
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
+	}
+
+	public List<Product> getCurrentUserProducts() {
     	return currentUser.getOwnedProducts();
     }
     
@@ -120,8 +132,9 @@ public class ClientController {
         	if (newProduct != null) {
         		ClientLogger.logger.debug(info + " correct.");
 			}
-			else
+			else {
 				ClientLogger.logger.warn(info + " incorrect. Server returned null.");
+			}
         } catch (RemoteException e) {
         	ClientLogger.logger.error("Error creating the product: " + e.getMessage());
 		}

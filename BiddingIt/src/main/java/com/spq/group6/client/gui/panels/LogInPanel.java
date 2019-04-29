@@ -27,10 +27,10 @@ public class LogInPanel extends JPanel {
 	
 	private ClientController controller;
 	
-	public LogInPanel(int screenWidth, int screenHeight, ClientController controller) {
+	public LogInPanel(int screenWidth, int screenHeight) {
 		
 		this.setLayout(null);
-		this.controller = controller;
+		this.controller = ClientController.getClientController();
 		
 		titleLabel = new JLabel("Easybooking", SwingConstants.LEFT);
 		titleLabel.setSize((int) (screenWidth / 3), screenHeight / 7);
@@ -80,7 +80,7 @@ public class LogInPanel extends JPanel {
 				
 				try {
 					if (controller.logIn(usernameTF.getText(), passwordTF.getText()))
-						ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
+						ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
 					else
 						JOptionPane.showConfirmDialog(LogInPanel.this, "Error logging in.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
@@ -99,7 +99,7 @@ public class LogInPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.INITIAL, usernameTF.getText());
+				ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL, usernameTF.getText());
 			}
 		});
 		
@@ -118,7 +118,7 @@ public class LogInPanel extends JPanel {
 		JFrame testFrame = new JFrame();
 		testFrame.setSize(800, 600);
 		testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		testFrame.add(new LogInPanel(800, 600, null));
+		testFrame.add(new LogInPanel(800, 600));
 		testFrame.setVisible(true);
 	}
 

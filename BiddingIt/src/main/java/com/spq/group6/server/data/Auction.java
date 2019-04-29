@@ -100,20 +100,17 @@ public class Auction implements Serializable {
         isOpen = open;
     }
 
+    public int hashCode() {
+        return Objects.hash(auctionID);
+    }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Auction auction = (Auction) o;
-        return initialPrice == auction.initialPrice &&
-                isOpen == auction.isOpen &&
-                owner.equals(auction.owner) &&
-                product.equals(auction.product) &&
-                dayLimit.equals(auction.dayLimit) &&
-                Objects.equals(highestBid, auction.highestBid) &&
-                Objects.equals(password, auction.password);
+        return auctionID == auction.getAuctionID();
     }
 
-	@Override
 	public String toString() {
 		return product.getName();
 	}

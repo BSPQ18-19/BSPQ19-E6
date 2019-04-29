@@ -16,7 +16,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public interface IServer extends Remote{
-    // User account management API
+
+    // Account API
     public User logIn(String username, String password, IRemoteObserver observer) throws RemoteException, UserException;
 
     public void logOut(String username, IRemoteObserver observer) throws RemoteException, UserException;
@@ -43,8 +44,6 @@ public interface IServer extends Remote{
     public ArrayList<Auction> getAllAuctions(User requester) throws RemoteException;
 
     // Administrator API
-    public Administrator createAdministrator(Administrator admin) throws RemoteException, AdministratorException;
-
     public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException;
 
     public void deleteAuction(Auction auction) throws RemoteException;

@@ -13,10 +13,10 @@ public class MarketJTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
 	private ClientController controller;
 	
-	public MarketJTableModel(Object[][] data, String[] columnNames, ClientController controller) {
+	public MarketJTableModel(Object[][] data, String[] columnNames) {
     	super(data, columnNames);
-		
-		this.controller = controller;
+
+		this.controller = ClientController.getClientController();
 		
 	}
 	
@@ -27,11 +27,12 @@ public class MarketJTableModel extends DefaultTableModel {
 
 	public void bidAuctionAt(int rowIndex, Auction auction) {
 		float actualHighestBid = 0;
-		if (auction.getHighestBid() != null)
+		if (auction.getHighestBid() != null) {
 			actualHighestBid = auction.getHighestBid().getAmount();
-		else
+		} else {
 			actualHighestBid = auction.getInitialPrice();
-		String bidValue = JOptionPane.showInputDialog(null, 
+		}
+		String bidValue = JOptionPane.showInputDialog(null,
 				"Please enter the amount you want to bid (greater than " + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
 		if (bidValue != null && Float.parseFloat(bidValue) > actualHighestBid)
 			if (controller.bid(auction, Float.parseFloat(bidValue))) {

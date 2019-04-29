@@ -63,7 +63,7 @@ public class AdminLogInSuccesfulPanel extends JPanel {
 						e.printStackTrace();
 					}
 					
-					if (repetitions == 5)
+					if (repetitions == 2)
 						AdminWindow.getAdminWindow(null).changeScreen(ScreenType.MAIN_MENU);
 					repetitions++;
 				}

@@ -47,7 +47,7 @@ public class InitialPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.LOG_IN);
+				ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN);
 			}
 		});
 		
@@ -60,7 +60,7 @@ public class InitialPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClientWindow.getClientWindow(null).changeScreen(ScreenType.REGISTER);	
+				ClientWindow.getClientWindow().changeScreen(ScreenType.REGISTER);
 			}
 		});
 		

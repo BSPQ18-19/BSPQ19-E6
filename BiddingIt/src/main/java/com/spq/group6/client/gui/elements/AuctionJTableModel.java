@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import com.spq.group6.client.Client;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.panels.UserAuctionsPanel;
 import com.spq.group6.server.data.Product;
@@ -16,10 +17,10 @@ public class AuctionJTableModel extends DefaultTableModel {
 	private ClientController controller;
 	private UserAuctionsPanel parentPanel;
 	
-	public AuctionJTableModel(Object[][] data, String[] columnNames, ClientController controller, UserAuctionsPanel parentPanel) {
+	public AuctionJTableModel(Object[][] data, String[] columnNames, UserAuctionsPanel parentPanel) {
     	super(data, columnNames);
 		
-		this.controller = controller;
+		this.controller = ClientController.getClientController();
 		this.parentPanel = parentPanel;
 	}
 	
