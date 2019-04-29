@@ -111,7 +111,7 @@ public class Auction implements Serializable {
         return auctionID == auction.getAuctionID();
     }
 
-	public String toString() {
-		return product.getName();
-	}
+    public String toString() {
+        return product.getName();
+    }
 }

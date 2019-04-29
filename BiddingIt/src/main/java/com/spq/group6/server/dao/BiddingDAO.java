@@ -1,12 +1,11 @@
 package com.spq.group6.server.dao;
 
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-import javax.jdo.Transaction;
-
 import com.spq.group6.server.data.*;
 import com.spq.group6.server.utils.logger.ServerLogger;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+import javax.jdo.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -26,7 +25,7 @@ public class BiddingDAO implements IBiddingDAO {
     public void createUser(User user) {
         updateObject(user);
     }
-    
+
     public void createAdministrator(Administrator administrator) {
         updateObject(administrator);
     }
@@ -48,7 +47,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception taking data from db: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data from db: " + ex.getMessage(), ex);
 
         } finally {
             if (tx.isActive()) {
@@ -89,7 +88,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception taking data from db: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data from db: " + ex.getMessage(), ex);
 
         } finally {
             if (tx.isActive()) {
@@ -109,13 +108,13 @@ public class BiddingDAO implements IBiddingDAO {
             tx.begin();
             Bid bid = auction.getHighestBid();
             pm.deletePersistent(auction);
-            if (bid!= null){
+            if (bid != null) {
                 pm.deletePersistent(bid);
             }
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage(), ex);
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -137,7 +136,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage(), ex);
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -166,7 +165,7 @@ public class BiddingDAO implements IBiddingDAO {
             pm.deletePersistent(user); // Deletes user in the Database
             tx.commit();
         } catch (Exception ex) {
-            ServerLogger.logger.error("* Exception deleting data into db: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data into db: " + ex.getMessage(), ex);
 
         } finally {
             if (tx.isActive()) {
@@ -193,13 +192,13 @@ public class BiddingDAO implements IBiddingDAO {
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("isOpen == true && owner.country == '" + country + "' && owner.username != '" + requester.getUsername() +"'");
+            query.setFilter("isOpen == true && owner.country == '" + country + "' && owner.username != '" + requester.getUsername() + "'");
             List<Auction> result = (List<Auction>) query.execute();// Retrieves and detaches the ArrayList of users
             auctions.addAll(result);
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage(), ex);
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -224,7 +223,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage(), ex);
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -245,14 +244,14 @@ public class BiddingDAO implements IBiddingDAO {
             tx.begin();
 
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("auctionID == " + auctionID );
+            query.setFilter("auctionID == " + auctionID);
             List<Auction> result = (List<Auction>) query.execute();
             auction = (result.size() != 1) ? null : result.get(0); // Retrieves and detaches the Auction
 
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception taking data from db: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data from db: " + ex.getMessage(), ex);
 
         } finally {
             if (tx.isActive()) {
@@ -277,7 +276,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage(), ex);
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -295,13 +294,13 @@ public class BiddingDAO implements IBiddingDAO {
         try {
             tx.begin();
             Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("isOpen == true && owner.username != '" + requester.getUsername() +"'");
+            query.setFilter("isOpen == true && owner.username != '" + requester.getUsername() + "'");
             List<Auction> result = (List<Auction>) query.execute();
             auctions.addAll(result);
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage(), ex);
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -325,7 +324,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception taking data: " + ex.getMessage(), ex);
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
@@ -348,7 +347,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
-            ServerLogger.logger.error("* Exception inserting/updating data into db: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception inserting/updating data into db: " + ex.getMessage(), ex);
 
         } finally {
             if (tx.isActive()) {
@@ -369,7 +368,7 @@ public class BiddingDAO implements IBiddingDAO {
             tx.commit();
         } catch (Exception ex) {
 
-            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage());
+            ServerLogger.logger.error("* Exception deleting data: " + ex.getMessage(), ex);
         } finally {
             if (tx.isActive()) {
                 tx.rollback();

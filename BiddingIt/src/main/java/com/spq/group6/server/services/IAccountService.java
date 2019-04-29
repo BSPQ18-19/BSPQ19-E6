@@ -8,20 +8,20 @@ import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 
 public interface IAccountService {
-    public User logIn(String username, String password, IRemoteObserver observer) throws UserException;
+    User logIn(String username, String password, IRemoteObserver observer) throws UserException;
 
     void logOut(String username, IRemoteObserver observer);
 
-    public User signIn(String username, String password, String country, IRemoteObserver observer) throws UserException;
+    User signIn(String username, String password, String country, IRemoteObserver observer) throws UserException;
 
-    public User updateUser(User user) throws UserException;
-    
-    public Administrator createAdministrator(Administrator admin) throws AdministratorException;
+    User updateUser(User user) throws UserException;
 
-    public User createProduct(User user, String name, String description);
+    Administrator createAdministrator(Administrator admin) throws AdministratorException;
 
-    public Product updateProduct(Product product, String name, String description);
+    User createProduct(User user, String name, String description);
 
-    public User deleteProduct(User user, Product product);
+    Product updateProduct(Product product, String name, String description);
+
+    User deleteProduct(User user, Product product);
 
 }

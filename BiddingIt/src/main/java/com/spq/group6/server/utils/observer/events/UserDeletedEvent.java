@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class UserDeletedEvent implements Serializable {
     public UserDeletedEvent(User user) {
-        this.user= user;
+        this.user = user;
     }
 
     public User user;

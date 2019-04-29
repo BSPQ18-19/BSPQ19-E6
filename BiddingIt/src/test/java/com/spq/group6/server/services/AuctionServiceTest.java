@@ -43,7 +43,9 @@ public class AuctionServiceTest {
     @Test
     public void testCreatePublicAuction() throws InterruptedException {
         Auction createdAuction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
-        assertEquals(auction, createdAuction);
+
+        assertEquals(auction.getOwner(), createdAuction.getOwner());
+        assertEquals(auction.getProduct(), createdAuction.getProduct());
 
         assertEquals(0, auction.getOwner().getOwnedProducts().size());
         auction = createdAuction;

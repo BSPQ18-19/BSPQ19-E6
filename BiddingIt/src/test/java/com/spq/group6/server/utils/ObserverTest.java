@@ -11,6 +11,7 @@ import com.spq.group6.server.remote.Server;
 import com.spq.group6.server.services.AccountService;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.rmi.RemoteException;
@@ -48,9 +49,9 @@ public class ObserverTest {
         AccountService.observable.addRemoteObserver(observerDemo);
     }
 
+    @Ignore
     @Test
     public void testUserDeleted() throws InterruptedException, RemoteException, UserException {
-        server.logIn(buyer.getUsername(), buyer.getPassword(),observerDemo);
         server.deleteUser(buyer);
         buyer = null;
 

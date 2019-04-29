@@ -1,6 +1,5 @@
 package com.spq.group6.server;
 
-import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.remote.IServer;
 import com.spq.group6.server.remote.Server;
 import com.spq.group6.server.utils.logger.ServerLogger;

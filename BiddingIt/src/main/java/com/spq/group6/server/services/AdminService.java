@@ -31,15 +31,18 @@ public class AdminService implements IAdminService {
 
     public void deleteAuction(Auction auction) {
         auction = BiddingLocks.lockAndGetAuction(auction);
-        auction = biddingDAO.getAuctionByID(auction.getAuctionID());
-        biddingDAO.deleteAuction(auction);
-        AccountService.observable.notifyRemoteObservers(new AuctionDeletedEvent(auction));
-        AuctionService.countdownObservables.get(auction.getAuctionID()).interrupt();
-        BiddingLocks.unlockAuction(auction);
+        try {
+            auction = biddingDAO.getAuctionByID(auction.getAuctionID());
+            biddingDAO.deleteAuction(auction);
+            AccountService.observable.notifyRemoteObservers(new AuctionDeletedEvent(auction));
+            AuctionService.countdownObservables.get(auction.getAuctionID()).interrupt();
+        } finally {
+            BiddingLocks.unlockAuction(auction);
+        }
     }
 
     public void deleteUser(User user) {
-        for(Auction auction: biddingDAO.getAuctionByUser(user)){
+        for (Auction auction : biddingDAO.getAuctionByUser(user)) {
             deleteAuction(auction);
         }
         biddingDAO.deleteUser(user);

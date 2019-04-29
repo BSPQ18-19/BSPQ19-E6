@@ -9,16 +9,16 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface IAdminService {
-    public Administrator logIn(String username, String password) throws AdministratorException;
+    Administrator logIn(String username, String password) throws AdministratorException;
 
-    public void deleteAuction(Auction auction);
+    void deleteAuction(Auction auction);
 
-    public void deleteUser(User user);
+    void deleteUser(User user);
 
-    public ArrayList<User> getAllUsers();
+    ArrayList<User> getAllUsers();
 
-    public ArrayList<Auction> getAuctionByUser(User user);
+    ArrayList<Auction> getAuctionByUser(User user);
 
-    public ArrayList<Auction> getAllAuctions() throws RemoteException;
+    ArrayList<Auction> getAllAuctions() throws RemoteException;
 
 }

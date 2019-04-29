@@ -21,6 +21,7 @@ public class BiddingLocks {
         auctionLocks.get(auctionID).lock();
         return biddingDAO.getAuctionByID(auctionID);
     }
+
     public static synchronized void setAuctionLock(Auction auction) {
         long auctionID = auction.getAuctionID();
         if (!auctionLocks.containsKey(auctionID)) {
@@ -28,7 +29,7 @@ public class BiddingLocks {
         }
     }
 
-    public static void unlockAuction(Auction auction){
+    public static void unlockAuction(Auction auction) {
         long auctionID = auction.getAuctionID();
         auctionLocks.get(auctionID).unlock();
     }
@@ -41,6 +42,7 @@ public class BiddingLocks {
         userLocks.get(username).lock();
         return biddingDAO.getUserByUsername(username);
     }
+
     public static synchronized void setUserLock(User user) {
         String username = user.getUsername();
         if (!userLocks.containsKey(username)) {
@@ -48,7 +50,7 @@ public class BiddingLocks {
         }
     }
 
-    public static void unlockUser(User user){
+    public static void unlockUser(User user) {
         String username = user.getUsername();
         userLocks.get(username).unlock();
     }

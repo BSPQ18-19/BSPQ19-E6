@@ -3,18 +3,14 @@ package com.spq.group6.server.services;
 import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.dao.IBiddingDAO;
 import com.spq.group6.server.data.Administrator;
-import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.UserException;
 import com.spq.group6.server.utils.BiddingLocks;
 import com.spq.group6.server.utils.logger.ServerLogger;
-import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
-import com.spq.group6.server.utils.observer.remote.RemoteObserver;
-
-import java.util.HashMap;
+import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
 public class AccountService implements IAccountService {
     private IBiddingDAO biddingDAO;
@@ -22,7 +18,7 @@ public class AccountService implements IAccountService {
 
     public AccountService() {
         biddingDAO = new BiddingDAO();
-        for(User user: biddingDAO.getAllUsers()){
+        for (User user : biddingDAO.getAllUsers()) {
             init_user(user);
         }
     }
@@ -55,7 +51,7 @@ public class AccountService implements IAccountService {
         try {
             checkDuplicatedUser(user);
             biddingDAO.updateUser(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             BiddingLocks.unlockUser(user);
             throw e;
         }
@@ -63,7 +59,7 @@ public class AccountService implements IAccountService {
         BiddingLocks.unlockUser(user);
         return user;
     }
-    
+
     public Administrator createAdministrator(Administrator admin) throws AdministratorException {
         biddingDAO.createAdministrator(admin);
         return admin;
@@ -72,11 +68,11 @@ public class AccountService implements IAccountService {
     public User createProduct(User user, String name, String description) {
         user = BiddingLocks.lockAndGetUser(user);
 
-        try{
+        try {
             Product newProduct = new Product(name, description);
             user.getOwnedProducts().add(newProduct);
             biddingDAO.updateUser(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             BiddingLocks.unlockUser(user);
             throw e;
         }
@@ -94,11 +90,11 @@ public class AccountService implements IAccountService {
     public User deleteProduct(User user, Product product) {
         user = BiddingLocks.lockAndGetUser(user);
 
-        try{
+        try {
             user.getOwnedProducts().remove(product);
             biddingDAO.updateUser(user);
             biddingDAO.deleteProduct(product);
-        }catch (Exception e){
+        } catch (Exception e) {
             BiddingLocks.unlockUser(user);
             throw e;
         }

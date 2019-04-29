@@ -6,6 +6,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface IRemoteObservable extends Remote {
-	public void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException;
-	public void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException;
+    void addRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException;
+
+    void deleteRemoteObserver(Auction auction, IRemoteObserver observer) throws RemoteException;
 }

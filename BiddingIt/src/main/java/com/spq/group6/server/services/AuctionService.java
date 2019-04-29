@@ -10,10 +10,7 @@ import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.utils.AuctionCountdown;
 import com.spq.group6.server.utils.BiddingLocks;
 import com.spq.group6.server.utils.observer.events.NewBidEvent;
-import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
-import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
-import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +23,7 @@ public class AuctionService implements IAuctionService {
         biddingDAO = new BiddingDAO();
         countdownObservables = new HashMap<Long, Thread>();
 
-        for (Auction auction: biddingDAO.getAllAuctions()){
+        for (Auction auction : biddingDAO.getAllAuctions()) {
             initAuction(auction);
         }
     }
@@ -60,7 +57,7 @@ public class AuctionService implements IAuctionService {
             // Notify about new Bid
             NewBidEvent newBidEvent = new NewBidEvent(auction);
             AccountService.observable.notifyRemoteObservers(newBidEvent);
-        } catch (Exception e){
+        } catch (Exception e) {
             BiddingLocks.unlockAuction(auction);
             throw e;
         }
@@ -81,7 +78,7 @@ public class AuctionService implements IAuctionService {
     }
 
 
-    private void initAuction(Auction auction){
+    private void initAuction(Auction auction) {
         BiddingLocks.setAuctionLock(auction); // create lock for auction
         Thread auctionCountdown = new Thread(new AuctionCountdown(auction));
         auctionCountdown.start(); // Run thread for auction countdown

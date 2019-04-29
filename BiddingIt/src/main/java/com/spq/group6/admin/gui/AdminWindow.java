@@ -1,80 +1,76 @@
 package com.spq.group6.admin.gui;
 
-import java.awt.*;
-import javax.swing.*;
-
 import com.spq.group6.admin.controller.AdminController;
-import com.spq.group6.admin.gui.panels.AdminAuctionsPanel;
-import com.spq.group6.admin.gui.panels.AdminLogInSuccesfulPanel;
-import com.spq.group6.admin.gui.panels.AdminMainMenuPanel;
-import com.spq.group6.admin.gui.panels.AdminUsersPanel;
-import com.spq.group6.admin.gui.panels.LogInPanel;
+import com.spq.group6.admin.gui.panels.*;
 import com.spq.group6.admin.gui.utils.ScreenType;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class AdminWindow extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private static AdminWindow adminWindow;
-	private AdminController controller;
-	private ScreenType currentScreenType;
-	private int screenWidth, screenHeight;
-	
-	private JPanel mainPanel;
+    private static final long serialVersionUID = 1L;
+    private static AdminWindow adminWindow;
+    private AdminController controller;
+    private ScreenType currentScreenType;
+    private int screenWidth, screenHeight;
 
-	// private constructor using lazy singleton
-	private AdminWindow(AdminController controller) {
-		this.controller = controller;
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setTitle("Easybooking Admin");
-		Dimension windowSize = new Dimension((int) (screenSize.getWidth() / 1.3), (int) (screenSize.getHeight() / 1.3));
-		this.setSize(windowSize);
-		this.setLocationRelativeTo(null);
-		mainPanel = (JPanel) this.getContentPane();
+    private JPanel mainPanel;
 
-		this.screenWidth = (int) windowSize.getWidth();
-		this.screenHeight = (int) windowSize.getHeight();
-		
-		changeScreen(ScreenType.LOG_IN);
-		
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	}
+    // private constructor using lazy singleton
+    private AdminWindow(AdminController controller) {
+        this.controller = controller;
 
-	public void changeScreen(ScreenType nextScreenType, String... data) {
-		this.currentScreenType = nextScreenType;
-		
-		switch(nextScreenType) {
-		case LOG_IN:
-			mainPanel = new LogInPanel(screenWidth, screenHeight, controller);
-			break;
-		case LOG_IN_SUCCESFUL:
-			mainPanel = new AdminLogInSuccesfulPanel(screenWidth, screenHeight, data[0]);
-			break;
-		case MAIN_MENU:
-			mainPanel = new AdminMainMenuPanel(screenWidth, screenHeight, controller);
-			break;	
-		case ADMIN_USERS:
-			mainPanel = new AdminUsersPanel(screenWidth, screenHeight, controller);
-			break;
-		case ADMIN_AUCTIONS:
-			mainPanel = new AdminAuctionsPanel(screenWidth, screenHeight, controller);
-			break;
-		default:
-			break;
-		}
-		this.setContentPane(mainPanel);
-		this.revalidate();
-	}
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setTitle("Easybooking Admin");
+        Dimension windowSize = new Dimension((int) (screenSize.getWidth() / 1.3), (int) (screenSize.getHeight() / 1.3));
+        this.setSize(windowSize);
+        this.setLocationRelativeTo(null);
+        mainPanel = (JPanel) this.getContentPane();
 
-	public AdminController getController() {
-		return controller;
-	}
+        this.screenWidth = (int) windowSize.getWidth();
+        this.screenHeight = (int) windowSize.getHeight();
 
-	// lazy singleton
-	public static AdminWindow getAdminWindow(AdminController adminController) {
-		if (adminWindow == null)
-			adminWindow = new AdminWindow(adminController);
-		return adminWindow;
-	}
+        changeScreen(ScreenType.LOG_IN);
+
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
+    public void changeScreen(ScreenType nextScreenType, String... data) {
+        this.currentScreenType = nextScreenType;
+
+        switch (nextScreenType) {
+            case LOG_IN:
+                mainPanel = new LogInPanel(screenWidth, screenHeight, controller);
+                break;
+            case LOG_IN_SUCCESFUL:
+                mainPanel = new AdminLogInSuccesfulPanel(screenWidth, screenHeight, data[0]);
+                break;
+            case MAIN_MENU:
+                mainPanel = new AdminMainMenuPanel(screenWidth, screenHeight, controller);
+                break;
+            case ADMIN_USERS:
+                mainPanel = new AdminUsersPanel(screenWidth, screenHeight, controller);
+                break;
+            case ADMIN_AUCTIONS:
+                mainPanel = new AdminAuctionsPanel(screenWidth, screenHeight, controller);
+                break;
+            default:
+                break;
+        }
+        this.setContentPane(mainPanel);
+        this.revalidate();
+    }
+
+    public AdminController getController() {
+        return controller;
+    }
+
+    // lazy singleton
+    public static AdminWindow getAdminWindow(AdminController adminController) {
+        if (adminWindow == null)
+            adminWindow = new AdminWindow(adminController);
+        return adminWindow;
+    }
 
 }

@@ -82,7 +82,7 @@ public class ClientControllerTest {
 
     @Before
     public void setUp() throws RemoteException {
-        clientController = new ClientController();
+        clientController = ClientController.getNewClientController();
         seller = new User("test_seller", "test_pass", "uk");
         buyer = new User("test_buyer", "test_pass", "uk");
         product = new Product("test_product", "test_description");
@@ -98,7 +98,6 @@ public class ClientControllerTest {
         assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
         assertEquals(seller, clientController.getCurrentUser());
         assertFalse(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
-        System.out.println(clientController.getCurrentUser());
     }
 
 

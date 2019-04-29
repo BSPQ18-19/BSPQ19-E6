@@ -7,7 +7,6 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.UserException;
-import com.spq.group6.server.utils.observer.remote.IRemoteObservable;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 
 import java.rmi.Remote;
@@ -15,44 +14,44 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public interface IServer extends Remote{
+public interface IServer extends Remote {
 
     // Account API
-    public User logIn(String username, String password, IRemoteObserver observer) throws RemoteException, UserException;
+    User logIn(String username, String password, IRemoteObserver observer) throws RemoteException, UserException;
 
-    public void logOut(String username, IRemoteObserver observer) throws RemoteException, UserException;
+    void logOut(String username, IRemoteObserver observer) throws RemoteException, UserException;
 
-    public User signIn(String username, String password, String country, IRemoteObserver observer) throws RemoteException, UserException;
+    User signIn(String username, String password, String country, IRemoteObserver observer) throws RemoteException, UserException;
 
-    public User updateUser(User user) throws RemoteException, UserException;
+    User updateUser(User user) throws RemoteException, UserException;
 
-    public User createProduct(User user, String name, String description) throws RemoteException;
+    User createProduct(User user, String name, String description) throws RemoteException;
 
-    public Product updateProduct(Product product, String name, String description) throws RemoteException;
+    Product updateProduct(Product product, String name, String description) throws RemoteException;
 
-    public User deleteProduct(User user, Product product) throws RemoteException;
+    User deleteProduct(User user, Product product) throws RemoteException;
 
     // Auctions API
-    public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException;
+    Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException;
 
-    public Auction bid(Auction auction, User user, float amount) throws RemoteException, AuctionException;
+    Auction bid(Auction auction, User user, float amount) throws RemoteException, AuctionException;
 
-    public ArrayList<Auction> searchAuctionByCountry(User requester, String country) throws RemoteException;
+    ArrayList<Auction> searchAuctionByCountry(User requester, String country) throws RemoteException;
 
-    public ArrayList<Auction> searchAuctionByProductName(User requester, String name) throws RemoteException;
+    ArrayList<Auction> searchAuctionByProductName(User requester, String name) throws RemoteException;
 
-    public ArrayList<Auction> getAllAuctions(User requester) throws RemoteException;
+    ArrayList<Auction> getAllAuctions(User requester) throws RemoteException;
 
     // Administrator API
-    public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException;
+    Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException;
 
-    public void deleteAuction(Auction auction) throws RemoteException;
+    void deleteAuction(Auction auction) throws RemoteException;
 
-    public void deleteUser(User user) throws RemoteException;
+    void deleteUser(User user) throws RemoteException;
 
-    public ArrayList<User> getAllUsers() throws RemoteException;
+    ArrayList<User> getAllUsers() throws RemoteException;
 
-    public ArrayList<Auction> getAuctionByUser(User user) throws RemoteException;
+    ArrayList<Auction> getAuctionByUser(User user) throws RemoteException;
 
-    public ArrayList<Auction> getAllAuctionsAdmin() throws RemoteException;
+    ArrayList<Auction> getAllAuctionsAdmin() throws RemoteException;
 }

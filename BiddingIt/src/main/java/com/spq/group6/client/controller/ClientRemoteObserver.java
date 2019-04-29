@@ -3,8 +3,11 @@ package com.spq.group6.client.controller;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.panels.MarketPanel;
 import com.spq.group6.client.gui.panels.UserAuctionsPanel;
+import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.utils.logger.ClientLogger;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
+import com.spq.group6.server.data.User;
 import com.spq.group6.server.utils.observer.events.AuctionClosedEvent;
 import com.spq.group6.server.utils.observer.events.AuctionDeletedEvent;
 import com.spq.group6.server.utils.observer.events.NewBidEvent;
@@ -13,62 +16,123 @@ import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 
 import javax.swing.*;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-public class ClientRemoteObserver implements IRemoteObserver {
-    ClientController controller;
-    ClientWindow window;
+public class ClientRemoteObserver extends UnicastRemoteObject implements IRemoteObserver {
+    private ClientWindow window;
 
     public ClientRemoteObserver() throws RemoteException {
-        controller = ClientController.getClientController();
         window = ClientWindow.getClientWindow();
     }
 
     public void update(Object arg) throws RemoteException {
-        if(arg instanceof NewBidEvent){
-            // TODO:
-        }
-        else if(arg instanceof AuctionClosedEvent){
-            checkAuctionClosed((AuctionClosedEvent) arg);
-        }
-        else if(arg instanceof AuctionDeletedEvent){
-            // TODO:
-        }
-        else if(arg instanceof UserDeletedEvent){
-            // TODO:
+        try {
+            ClientController controller = ClientController.getClientController();
+
+            if (arg instanceof NewBidEvent) {
+                ClientLogger.logger.debug("Received New Bid Event");
+                checkNewBid((NewBidEvent) arg, controller);
+            } else if (arg instanceof AuctionClosedEvent) {
+                ClientLogger.logger.debug("Received Auction Closed Event");
+                checkAuctionClosed((AuctionClosedEvent) arg, controller);
+            } else if (arg instanceof AuctionDeletedEvent) {
+                ClientLogger.logger.debug("Received Auction Deleted Event");
+                checkAuctionDeleted((AuctionDeletedEvent) arg, controller);
+            } else if (arg instanceof UserDeletedEvent) {
+                ClientLogger.logger.debug("Received User Deleted Event");
+                checkUserDeleted((UserDeletedEvent) arg, controller);
+            }
+        } catch (Exception e) {
+            throw new RemoteException();
         }
     }
 
-    private void checkNewBid(NewBidEvent event){
-        // TODO:
+    private void checkAuctionDeleted(AuctionDeletedEvent event, ClientController controller) {
+        Auction auction = event.auction;
+        if (auction.getOwner() == controller.getCurrentUser()) {
+            controller.setCurrentUser(auction.getOwner());
+        }
+        removeAuctionFromWindows(auction);
     }
 
-    private void checkAuctionClosed(AuctionClosedEvent event){
+    private void checkUserDeleted(UserDeletedEvent event, ClientController controller) {
+        User user = event.user;
+        if (user.getUsername().equals(controller.getCurrentUser().getUsername())) {
+            controller.logOut();
+            window.changeScreen(ScreenType.INITIAL);
+        }
+    }
+
+    private void checkNewBid(NewBidEvent event, ClientController controller) {
+        Auction auction = event.auction;
+        if (auction.getHighestBid().getUser() != controller.getCurrentUser()) {
+            updateAuctionFromWindows(auction);
+        }
+    }
+
+    private void checkAuctionClosed(AuctionClosedEvent event, ClientController controller) {
         Auction auction = event.auction;
         Bid bid = auction.getHighestBid();
-        if (auction.getOwner() == controller.getCurrentUser()){
-            controller.setCurrentUser(auction.getOwner());
-            JOptionPane.showMessageDialog(null, "One of your auction has finished!", "Info", JOptionPane.INFORMATION_MESSAGE);
 
-        } else if (bid != null && bid.getUser() == controller.getCurrentUser()){
+        if (auction.getOwner() == controller.getCurrentUser()) {
+            controller.setCurrentUser(auction.getOwner());
+        } else if (bid != null && bid.getUser() == controller.getCurrentUser()) {
             controller.setCurrentUser(bid.getUser());
-            JOptionPane.showMessageDialog(null, "One auction has finished with your Bid being the highest", "Info", JOptionPane.INFORMATION_MESSAGE);
-            // TODO: Alert message
         }
-        updateAuctionWindows(auction);
+        removeAuctionFromWindows(auction);
     }
 
-    private void updateAuctionWindows(Auction auction) {
+    private void removeAuctionFromWindows(Auction auction) {
         JPanel panel = window.getMainPanel();
-        if (panel instanceof MarketPanel){
+        String msg = "Auction closed - " + auction.getAuctionID();
+
+        if (panel instanceof MarketPanel) {
             MarketPanel marketPanel = (MarketPanel) panel;
             marketPanel.getAuctions().remove(auction);
             marketPanel.updateAuctions();
-        }else if(panel instanceof UserAuctionsPanel){
+            showNonBlockingMessage(msg);
+        } else if (panel instanceof UserAuctionsPanel) {
             UserAuctionsPanel ownAuctionsPanel = (UserAuctionsPanel) panel;
             ownAuctionsPanel.getUserAuctions().remove(auction);
             ownAuctionsPanel.updateAuctions();
+            showNonBlockingMessage(msg);
         }
     }
 
+    private void updateAuctionFromWindows(Auction auction) {
+        JPanel panel = window.getMainPanel();
+        String msg = "New bid - " + auction.getAuctionID();
+        if (panel instanceof MarketPanel) {
+            MarketPanel marketPanel = (MarketPanel) panel;
+            int index = marketPanel.getAuctions().indexOf(auction);
+            if (index != -1) {
+                marketPanel.getAuctions().set(index, auction);
+                marketPanel.updateAuctions();
+            }
+            showNonBlockingMessage(msg);
+        } else if (panel instanceof UserAuctionsPanel) {
+            UserAuctionsPanel ownAuctionsPanel = (UserAuctionsPanel) panel;
+            int index = ownAuctionsPanel.getUserAuctions().indexOf(auction);
+            if (index != -1) {
+                ownAuctionsPanel.getUserAuctions().set(index, auction);
+                ownAuctionsPanel.updateAuctions();
+                showNonBlockingMessage(msg);
+            }
+        }
+    }
+
+    private void showNonBlockingMessage(String msg) {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        t.start();
+
+    }
+
+    public User getUser() {
+        return ClientController.getClientController().getCurrentUser();
+    }
 
 }

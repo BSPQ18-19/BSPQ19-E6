@@ -125,6 +125,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/gui/**/*</exclude>
+                        <exclude>**/profiling/**/*</exclude>
                         <exclude>**/data/**/*</exclude>
                         <exclude>**/exceptions/**/*</exclude>
                         <exclude>**/logger/**/*</exclude>

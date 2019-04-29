@@ -71,7 +71,7 @@ public class Server extends UnicastRemoteObject implements IServer {
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException {
         ServerLogger.logger.debug("Received public auction creation petition");
         Auction auction = auctionService.createPublicAuction(owner, product, dayLimit, initialPrice);
-        ServerLogger.logger.debug("Public auction created "+ auction.getAuctionID());
+        ServerLogger.logger.debug("Public auction created " + auction.getAuctionID());
         return auction;
     }
 
