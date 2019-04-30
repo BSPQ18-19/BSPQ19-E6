@@ -55,12 +55,15 @@ public class AuctionCountdown implements Runnable {
                 buyer = BiddingLocks.lockAndGetUser(buyer);
 
                 try {
+                    ServerLogger.logger.debug("Ended auction with exchange: " + auction.getAuctionID());
                     Product product = auction.getProduct();
                     seller.getOwnedProducts().remove(product);
                     buyer.getOwnedProducts().add(product);
                     biddingDAO.updateUser(seller);
                     biddingDAO.updateUser(buyer);
-                    ServerLogger.logger.debug("Ended auction with exchange: " + auction.getAuctionID());
+                    auction.setOwner(seller);
+                    auction.getHighestBid().setUser(buyer);
+
                 } catch (Exception e) {
                     BiddingLocks.unlockUser(seller);
                     BiddingLocks.unlockUser(buyer);

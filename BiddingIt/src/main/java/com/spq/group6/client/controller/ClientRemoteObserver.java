@@ -51,8 +51,12 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
         Auction auction = event.auction;
         if (auction.getOwner() == controller.getCurrentUser()) {
             controller.setCurrentUser(auction.getOwner());
+            updateProductFromWindows();
         }
         removeAuctionFromWindows(auction);
+    }
+
+    private void updateProductFromWindows() {
     }
 
     private void checkUserDeleted(UserDeletedEvent event, ClientController controller) {
@@ -60,6 +64,8 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
         if (user.getUsername().equals(controller.getCurrentUser().getUsername())) {
             controller.logOut();
             window.changeScreen(ScreenType.INITIAL);
+            String msg = "Sorry, your User has been deleted";
+            showNonBlockingMessage(msg);
         }
     }
 

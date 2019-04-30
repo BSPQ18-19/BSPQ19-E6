@@ -119,7 +119,7 @@ public class ConcurrentClientControllerTest {
 
     @Test
     @PerfTest(invocations = 1000, threads = 20)
-    @Required(max = 600, average = 70)
+    @Required(max = 600, average = 200)
     public void logInInTest() throws RemoteException {
         assertTrue(buyerClientController.logIn(buyer.getUsername(), buyer.getPassword()));
         assertEquals(buyer, buyerClientController.getCurrentUser());
@@ -127,7 +127,7 @@ public class ConcurrentClientControllerTest {
 
     @Test
     @PerfTest(invocations = 1000, threads = 20)
-    @Required(max = 2500, average = 1000)
+    @Required(max = 4500, average = 1000)
     public void createProductTest() throws RemoteException {
         assertTrue(buyerClientController.logIn(seller.getUsername(), seller.getPassword())); // If we do not use unique user objects, JDO throw error
         assertTrue(buyerClientController.createProduct(product.getName(), product.getDescription()));
@@ -135,7 +135,7 @@ public class ConcurrentClientControllerTest {
 
     @Test
     @PerfTest(invocations = 1000, threads = 20)
-    @Required(max = 95, average = 35)
+    @Required(max = 2000, average = 200)
     public void updateProductTest() throws RemoteException {
         product = sellerClientController.getCurrentUser().getOwnedProducts().get(0);
         assertTrue(sellerClientController.updateProduct(product, product.getName(), product.getDescription()));
@@ -143,21 +143,22 @@ public class ConcurrentClientControllerTest {
 
     @Test
     @PerfTest(invocations = 100, threads = 20)
-    @Required(max = 1600, average = 800)
+    @Required(max = 3000, average = 2500)
     public void createPublicAuctionTest() throws RemoteException {
         assertTrue(sellerClientController.createPublicAuction(notPersistedAuction.getProduct(), notPersistedAuction.getDayLimit(), notPersistedAuction.getInitialPrice()));
     }
 
+    @Ignore
     @Test
     @PerfTest(invocations = 1000, threads = 20)
-    @Required(max = 1200, average = 300)
+    @Required(max = 2400, average = 500)
     public void bidTest() throws RemoteException {
         buyerClientController.bid(auction, System.nanoTime());
     }
 
     @Test
     @PerfTest(invocations = 1000, threads = 20)
-    @Required(max = 500, average = 300)
+    @Required(max = 1000, average = 500)
     public void searchAuctionByCountryTest() throws RemoteException {
         ArrayList<Auction> auctions = buyerClientController.searchAuctionByCountry(seller.getCountry());
         assertEquals(1, auctions.size() );

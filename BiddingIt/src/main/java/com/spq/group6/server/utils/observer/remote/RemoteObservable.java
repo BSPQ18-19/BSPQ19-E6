@@ -19,20 +19,22 @@ public class RemoteObservable {
      * List for storing remote observers
      */
     private List<IRemoteObserver> remoteObservers;
+    private List<IRemoteObserver> newRemoteObservers;
 
     public RemoteObservable() {
         this.remoteObservers = new ArrayList<>();
+        this.newRemoteObservers = new ArrayList<>();
     }
 
-    public synchronized void addRemoteObserver(IRemoteObserver observer) {
+    public void addRemoteObserver(IRemoteObserver observer) {
         if (observer != null && this.remoteObservers.indexOf(observer) == -1) {
-            this.remoteObservers.add(observer);
+            this.newRemoteObservers.add(observer);
         }
     }
 
-    public synchronized void deleteRemoteObserver(IRemoteObserver observer) {
+    public void deleteRemoteObserver(IRemoteObserver observer) {
         if (observer != null) {
-            this.remoteObservers.remove(observer);
+            this.newRemoteObservers.remove(observer);
         }
     }
 
@@ -45,6 +47,7 @@ public class RemoteObservable {
     }
 
     public synchronized void notifyRemoteObservers(Object arg) {
+        remoteObservers = new ArrayList<>(newRemoteObservers);
         for (IRemoteObserver observer : remoteObservers) {
             try {
                 if (observer != null) {
