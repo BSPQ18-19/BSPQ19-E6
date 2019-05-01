@@ -3,6 +3,7 @@ package com.spq.group6.client.controller;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.panels.MarketPanel;
 import com.spq.group6.client.gui.panels.UserAuctionsPanel;
+import com.spq.group6.client.gui.panels.UserProductsPanel;
 import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.client.utils.logger.ClientLogger;
 import com.spq.group6.server.data.Auction;
@@ -49,7 +50,7 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
 
     private void checkAuctionDeleted(AuctionDeletedEvent event, ClientController controller) {
         Auction auction = event.auction;
-        if (auction.getOwner() == controller.getCurrentUser()) {
+        if (auction.getOwner().getUsername().equals(controller.getCurrentUser().getUsername())) {
             controller.setCurrentUser(auction.getOwner());
             updateProductFromWindows();
         }
@@ -71,7 +72,7 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
 
     private void checkNewBid(NewBidEvent event, ClientController controller) {
         Auction auction = event.auction;
-        if (auction.getHighestBid().getUser() != controller.getCurrentUser()) {
+        if (!auction.getHighestBid().getUser().getUsername().equals(controller.getCurrentUser().getUsername())) {
             updateAuctionFromWindows(auction);
         }
     }
@@ -80,9 +81,9 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
         Auction auction = event.auction;
         Bid bid = auction.getHighestBid();
 
-        if (auction.getOwner() == controller.getCurrentUser()) {
+        if (auction.getOwner().getUsername().equals(controller.getCurrentUser().getUsername())) {
             controller.setCurrentUser(auction.getOwner());
-        } else if (bid != null && bid.getUser() == controller.getCurrentUser()) {
+        } else if (bid != null && bid.getUser().getUsername().equals(controller.getCurrentUser().getUsername())) {
             controller.setCurrentUser(bid.getUser());
         }
         removeAuctionFromWindows(auction);
@@ -102,6 +103,8 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
             ownAuctionsPanel.getUserAuctions().remove(auction);
             ownAuctionsPanel.updateAuctions();
             showNonBlockingMessage(msg);
+        } else if(panel instanceof UserProductsPanel){
+            window.changeScreen(ScreenType.USER_PRODUCTS);
         }
     }
 
@@ -124,6 +127,8 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
                 ownAuctionsPanel.updateAuctions();
                 showNonBlockingMessage(msg);
             }
+        } else if(panel instanceof UserProductsPanel){
+            window.changeScreen(ScreenType.USER_PRODUCTS);
         }
     }
 

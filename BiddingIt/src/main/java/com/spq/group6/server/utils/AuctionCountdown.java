@@ -59,11 +59,9 @@ public class AuctionCountdown implements Runnable {
                     Product product = auction.getProduct();
                     seller.getOwnedProducts().remove(product);
                     buyer.getOwnedProducts().add(product);
-                    biddingDAO.updateUser(seller);
-                    biddingDAO.updateUser(buyer);
                     auction.setOwner(seller);
                     auction.getHighestBid().setUser(buyer);
-
+                    biddingDAO.persistAuction(auction);
                 } catch (Exception e) {
                     BiddingLocks.unlockUser(seller);
                     BiddingLocks.unlockUser(buyer);
@@ -92,6 +90,7 @@ public class AuctionCountdown implements Runnable {
 
             auction.setHighestBid(null);
             seller.getOwnedProducts().add(auction.getProduct());
+            auction.setOwner(seller);
             biddingDAO.persistAuction(auction);
             biddingDAO.updateUser(seller);
             if (highestBid != null) {

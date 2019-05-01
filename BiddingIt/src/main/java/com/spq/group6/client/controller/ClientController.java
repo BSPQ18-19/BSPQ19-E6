@@ -202,6 +202,7 @@ public class ClientController {
             ClientLogger.logger.debug("Trying to " + info + ".");
             Auction auction = serviceLocator.getService().createPublicAuction(currentUser, product, dayLimit, initialPrice);
             if (auction != null) {
+                currentUser = auction.getOwner();
                 ClientLogger.logger.debug(info + " correct.");
             } else {
                 ClientLogger.logger.warn(info + " incorrect. Server returned null.");
