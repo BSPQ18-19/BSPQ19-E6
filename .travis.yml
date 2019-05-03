@@ -8,8 +8,10 @@ services:
 cache:
    directories:
      - $HOME/.m2
+install:
 before_install:
-  - mysql -u root -e "create database biddingdb";
-  - mysql -u root -e "CREATE USER 'bidadmin'@'localhost' IDENTIFIED BY 'bidpassword'";
+  - mysql -u root -e "CREATE SCHEMA IF NOT EXISTS biddingdb";
+  - mysql -u root -e "CREATE USER IF NOT EXISTS 'bidadmin'@'localhost' IDENTIFIED WITH mysql_native_password BY 'bidpassword'";
   - mysql -u root -e "GRANT ALL ON biddingDB.* TO 'bidadmin'@'localhost'";
-- rmiregistry -J-Djava.rmi.server.useCodebaseOnly=false &
+  - mysql -u root -e "GRANT ALL ON *.* TO 'bidadmin'@'localhost'";
+  - cd BiddingIt
