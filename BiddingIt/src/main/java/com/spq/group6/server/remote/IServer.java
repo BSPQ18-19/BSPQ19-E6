@@ -23,7 +23,7 @@ public interface IServer extends Remote {
 
     User signIn(String username, String password, String country, IRemoteObserver observer) throws RemoteException, UserException;
 
-    User updateUser(User user) throws RemoteException, UserException;
+    User updateUser(User user, String password, String country) throws RemoteException, UserException;
 
     User createProduct(User user, String name, String description) throws RemoteException;
 

@@ -45,9 +45,9 @@ public class Server extends UnicastRemoteObject implements IServer {
         return accountService.signIn(username, password, country, observer);
     }
 
-    public User updateUser(User user) throws RemoteException, UserException {
+    public User updateUser(User user, String password, String country) throws RemoteException, UserException {
         ServerLogger.logger.debug("Received update petition");
-        return accountService.updateUser(user);
+        return accountService.updateUser(user, password, country);
     }
 
     public User createProduct(User user, String name, String description) throws RemoteException {

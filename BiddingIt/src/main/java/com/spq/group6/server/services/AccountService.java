@@ -46,11 +46,11 @@ public class AccountService implements IAccountService {
         return user;
     }
 
-    public User updateUser(User user) throws UserException {
+    public User updateUser(User user, String password, String country) throws UserException {
         user = BiddingLocks.lockAndGetUser(user);
-
+        user.setPassword(password);
+        user.setCountry(country);
         try {
-            checkDuplicatedUser(user);
             biddingDAO.updateUser(user);
         } catch (Exception e) {
             BiddingLocks.unlockUser(user);

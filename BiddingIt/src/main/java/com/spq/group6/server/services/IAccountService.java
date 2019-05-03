@@ -14,7 +14,7 @@ public interface IAccountService {
 
     User signIn(String username, String password, String country, IRemoteObserver observer) throws UserException;
 
-    User updateUser(User user) throws UserException;
+    User updateUser(User user, String password, String country) throws UserException;
 
     Administrator createAdministrator(Administrator admin) throws AdministratorException;
 

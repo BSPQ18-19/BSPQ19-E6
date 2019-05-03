@@ -99,6 +99,7 @@
                         <phase>compile</phase>
                         <goals>
                             <goal>enhance</goal>
+                            <goal>schema-create</goal>
                         </goals>
                     </execution>
                 </executions>

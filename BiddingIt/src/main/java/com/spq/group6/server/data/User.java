@@ -79,10 +79,8 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return money == user.money &&
-                username.equals(user.username) &&
+        return username.equals(user.username) &&
                 password.equals(user.password) &&
-                country.equals(user.country) &&
-                ownedProducts.equals(user.ownedProducts);
+                country.equals(user.country);
     }
 }
