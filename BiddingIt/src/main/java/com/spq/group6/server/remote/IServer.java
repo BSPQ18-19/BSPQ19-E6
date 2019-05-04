@@ -4,9 +4,9 @@ import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.AuctionException;
-import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 
 import java.rmi.Remote;
@@ -29,7 +29,7 @@ public interface IServer extends Remote {
      * @param observer Client's observer responsible for handling events sent by server
      * @return Logged in User
      * @throws RemoteException
-     * @throws AccountException   in case of invalid credentials
+     * @throws AccountException in case of invalid credentials
      */
     User logIn(String username, String password, IRemoteObserver observer) throws RemoteException, AccountException;
 
@@ -51,7 +51,7 @@ public interface IServer extends Remote {
      * @param observer Client's observer responsible for handling events sent by server
      * @return Created User
      * @throws RemoteException
-     * @throws AccountException   in case of invalid credentials
+     * @throws AccountException in case of invalid credentials
      */
     User signIn(String username, String password, String country, IRemoteObserver observer) throws RemoteException, AccountException;
 
@@ -201,9 +201,9 @@ public interface IServer extends Remote {
     ArrayList<Auction> getAuctionByUser(User user) throws RemoteException;
 
     /**
-     * Method for getting all Auctions, opened and closed
+     * Method for getting all Auctions
      *
-     * @return All opened and closed Auctions
+     * @return All opened Auctions
      * @throws RemoteException
      */
     ArrayList<Auction> getAllAuctionsAdmin() throws RemoteException;

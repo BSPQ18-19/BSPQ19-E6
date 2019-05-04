@@ -4,8 +4,6 @@ import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
-import com.spq.group6.server.remote.IServer;
-import com.spq.group6.server.remote.Server;
 import com.spq.group6.server.services.AccountService;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 import org.junit.After;
@@ -39,8 +37,8 @@ public class CountDownTest {
         product = new Product(prodctName, productDescription);
         auction = new Auction(seller, product, limit, 12, null);
 
-        biddingDAO.createUser(buyer);
-        biddingDAO.updateProduct(product);
+        biddingDAO.persistUser(buyer);
+        biddingDAO.persistUser(product);
         biddingDAO.persistAuction(auction);
         BiddingLocks.setAuctionLock(auction); // create lock for auction
         observerDemo = new ObserverDemo();

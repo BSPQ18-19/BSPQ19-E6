@@ -92,7 +92,7 @@ public class AuctionCountdown implements Runnable {
             seller.getOwnedProducts().add(auction.getProduct());
             auction.setOwner(seller);
             biddingDAO.persistAuction(auction);
-            biddingDAO.updateUser(seller);
+            biddingDAO.persistUser(seller);
             if (highestBid != null) {
                 biddingDAO.deleteBid(highestBid);
             }

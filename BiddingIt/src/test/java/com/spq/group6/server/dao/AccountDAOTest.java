@@ -23,7 +23,7 @@ public class AccountDAOTest {
     @Test
     public void getUserByUsername() {
         assertNull(biddingDAO.getUserByUsername(user.getUsername()));
-        biddingDAO.createUser(user);
+        biddingDAO.persistUser(user);
         assertEquals(user, biddingDAO.getUserByUsername(user.getUsername()));
     }
 
@@ -31,10 +31,10 @@ public class AccountDAOTest {
     public void updateUser(){
         // Set-up
         String oldCountry = user.getCountry(), newCountry = "uk";
-        biddingDAO.createUser(user);
+        biddingDAO.persistUser(user);
         // Test
         user.setCountry(newCountry);
-        biddingDAO.updateUser(user);
+        biddingDAO.persistUser(user);
         User persistedUser = biddingDAO.getUserByUsername(user.getUsername());
         assertNotEquals(oldCountry, persistedUser.getCountry());
         assertEquals(newCountry, persistedUser.getCountry());
@@ -43,10 +43,10 @@ public class AccountDAOTest {
     @Test
     public void createProductUpdatingUser(){
         // Setup
-        biddingDAO.createUser(user);
+        biddingDAO.persistUser(user);
         // Test
         user.getOwnedProducts().add(product);
-        biddingDAO.updateUser(user);
+        biddingDAO.persistUser(user);
         User persistedUser = biddingDAO.getUserByUsername(user.getUsername());
         assertEquals(1, persistedUser.getOwnedProducts().size());
         assertEquals(product, persistedUser.getOwnedProducts().get(0));
@@ -57,10 +57,10 @@ public class AccountDAOTest {
         // Setup
         String prodOldName = product.getName(), prodNewName = "dvd";
         user.getOwnedProducts().add(product);
-        biddingDAO.createUser(user);
+        biddingDAO.persistUser(user);
         // Test
         product.setName(prodNewName);
-        biddingDAO.updateUser(user);
+        biddingDAO.persistUser(user);
         User persistedUser = biddingDAO.getUserByUsername(user.getUsername());
         assertEquals(prodNewName, persistedUser.getOwnedProducts().get(0).getName());
     }
@@ -70,14 +70,14 @@ public class AccountDAOTest {
         // Setup
         User user2 = new User("xavier", "test_pass", "uk");
         user.getOwnedProducts().add(product);
-        biddingDAO.createUser(user);
-        biddingDAO.createUser(user2);
+        biddingDAO.persistUser(user);
+        biddingDAO.persistUser(user2);
         // Test
         User persistedUser;
         user.getOwnedProducts().clear();
         user2.getOwnedProducts().add(product);
-        biddingDAO.updateUser(user2);
-        biddingDAO.updateUser(user);
+        biddingDAO.persistUser(user2);
+        biddingDAO.persistUser(user);
         persistedUser = biddingDAO.getUserByUsername(user.getUsername());
         assertEquals(0, persistedUser.getOwnedProducts().size());
 

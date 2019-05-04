@@ -49,7 +49,7 @@ public class AccountService implements IAccountService {
         User user = new User(username, password, country);
         user.setMoney(1000);
         checkDuplicatedUser(user);
-        biddingDAO.createUser(user);
+        biddingDAO.persistUser(user);
         init_user(user);
         ServerLogger.logger.debug("User '" + username + "' has signed in.");
         return user;
@@ -60,7 +60,7 @@ public class AccountService implements IAccountService {
         user.setPassword(password);
         user.setCountry(country);
         try {
-            biddingDAO.updateUser(user);
+            biddingDAO.persistUser(user);
         } catch (Exception e) {
             BiddingLocks.unlockUser(user);
             throw e;
@@ -71,7 +71,7 @@ public class AccountService implements IAccountService {
     }
 
     public Administrator createAdministrator(Administrator admin) throws AdministratorException {
-        biddingDAO.createAdministrator(admin);
+        biddingDAO.persistAdministrator(admin);
         return admin;
     }
 
@@ -81,7 +81,7 @@ public class AccountService implements IAccountService {
         try {
             Product newProduct = new Product(name, description);
             user.getOwnedProducts().add(newProduct);
-            biddingDAO.updateUser(user);
+            biddingDAO.persistUser(user);
         } catch (Exception e) {
             BiddingLocks.unlockUser(user);
             throw e;
@@ -93,7 +93,7 @@ public class AccountService implements IAccountService {
     public Product updateProduct(Product product, String name, String description) {
         product.setName(name);
         product.setDescription(description);
-        biddingDAO.updateProduct(product);
+        biddingDAO.persistUser(product);
         return product;
     }
 
@@ -102,7 +102,7 @@ public class AccountService implements IAccountService {
 
         try {
             user.getOwnedProducts().remove(product);
-            biddingDAO.updateUser(user);
+            biddingDAO.persistUser(user);
             biddingDAO.deleteProduct(product);
         } catch (Exception e) {
             BiddingLocks.unlockUser(user);

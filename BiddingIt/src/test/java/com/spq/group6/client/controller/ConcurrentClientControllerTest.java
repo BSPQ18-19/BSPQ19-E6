@@ -90,13 +90,13 @@ public class ConcurrentClientControllerTest {
         seller = new User("test_seller", "test_pass", "uk");
         buyer = new User("test_buyer", "test_pass", "uk");
         biddingDao = new BiddingDAO();
-        biddingDao.createUser(seller);
-        biddingDao.createUser(buyer);
+        biddingDao.persistUser(seller);
+        biddingDao.persistUser(buyer);
         product = new Product("test_product", "test_description");
         freeProduct = new Product("test_product", "test_description");
         seller.getOwnedProducts().add(product);
         seller.getOwnedProducts().add(freeProduct);
-        biddingDao.updateUser(seller);
+        biddingDao.persistUser(seller);
 
         int offset = 60;
         Timestamp limit = new Timestamp(System.currentTimeMillis() +offset*1000);

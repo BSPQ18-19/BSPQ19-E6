@@ -44,7 +44,7 @@ public class AccountServiceTest {
     @Test
     public void testLogIn() throws AccountException {
         // Setup
-        accountDao.createUser(testUser);
+        accountDao.persistUser(testUser);
         service.init_user(testUser);
         // Test
         try {
@@ -64,7 +64,7 @@ public class AccountServiceTest {
     {
         // Setup
         User persistedUser;
-        accountDao.createUser(testUser);
+        accountDao.persistUser(testUser);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);
         Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() -1);
@@ -80,7 +80,7 @@ public class AccountServiceTest {
     public void testUpdateProduct()
     {
         // Setup
-        accountDao.createUser(testUser);
+        accountDao.persistUser(testUser);
         String oldName = "test_prod", newName = "test_super_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, newName, prodDescription);
         Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() -1);
@@ -95,7 +95,7 @@ public class AccountServiceTest {
     @Test
     public void testDeleteProduct(){
         // Setup
-        accountDao.createUser(testUser);
+        accountDao.persistUser(testUser);
         service.init_user(testUser);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);

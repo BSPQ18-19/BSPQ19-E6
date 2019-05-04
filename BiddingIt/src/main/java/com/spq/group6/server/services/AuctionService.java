@@ -39,7 +39,7 @@ public class AuctionService implements IAuctionService {
         biddingDAO.persistAuction(auction);
         // Remove product from Owner until auction is finished
         owner.getOwnedProducts().remove(product);
-        biddingDAO.updateUser(owner);
+        biddingDAO.persistUser(owner);
 
         initAuction(auction);
         return auction;

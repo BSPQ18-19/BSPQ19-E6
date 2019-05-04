@@ -41,10 +41,10 @@ public class ObserverTest {
         product = new Product(prodctName, productDescription);
         auction = new Auction(seller, product, limit, 12, null);
 
-        biddingDAO.createUser(seller);
-        biddingDAO.createUser(buyer);
+        biddingDAO.persistUser(seller);
+        biddingDAO.persistUser(buyer);
         seller.getOwnedProducts().add(product);
-        biddingDAO.updateUser(seller);
+        biddingDAO.persistUser(seller);
         observerDemo = new ObserverDemo();
         AccountService.observable.addRemoteObserver(observerDemo);
     }

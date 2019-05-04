@@ -25,11 +25,11 @@ public class BiddingDAO implements IBiddingDAO {
     }
 
     // Account DAO
-    public void createUser(User user) {
+    public void persistUser(User user) {
         updateObject(user);
     }
 
-    public void createAdministrator(Administrator administrator) {
+    public void persistAdministrator(Administrator administrator) {
         updateObject(administrator);
     }
 
@@ -61,11 +61,7 @@ public class BiddingDAO implements IBiddingDAO {
         return user;
     }
 
-    public void updateUser(User user) {
-        updateObject(user);
-    }
-
-    public void updateProduct(Product product) {
+    public void persistUser(Product product) {
         updateObject(product);
     }
 

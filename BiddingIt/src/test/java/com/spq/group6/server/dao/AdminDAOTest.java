@@ -46,8 +46,8 @@ public class AdminDAOTest {
 
         assertFalse(users.size() == testUsers.size() &&
                 users.containsAll(testUsers) && testUsers.containsAll(users));
-        biddingDAO.createUser(user);
-        biddingDAO.createUser(user2);
+        biddingDAO.persistUser(user);
+        biddingDAO.persistUser(user2);
         testUsers = biddingDAO.getAllUsers();
         assertTrue(users.size() == testUsers.size() &&
                 users.containsAll(testUsers) && testUsers.containsAll(users));
