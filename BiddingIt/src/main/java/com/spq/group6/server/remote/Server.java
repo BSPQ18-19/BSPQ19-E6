@@ -79,7 +79,17 @@ public class Server extends UnicastRemoteObject implements IServer {
 
     public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException {
         ServerLogger.logger.debug("Received public auction creation petition");
-        Auction auction = auctionService.createPublicAuction(owner, product, dayLimit, initialPrice);
+        Auction auction = auctionService.createAuction(owner, product, dayLimit, initialPrice, null);
+        ServerLogger.logger.debug("Public auction created " + auction.getAuctionID());
+        return auction;
+    }
+
+    public Auction createPrivateAuction(User owner, Product product, Timestamp dayLimit, float initialPrice, String password) throws RemoteException, AuctionException {
+        ServerLogger.logger.debug("Received public auction creation petition");
+        if (password == null){
+            throw new AuctionException("Invalid null password");
+        }
+        Auction auction = auctionService.createAuction(owner, product, dayLimit, initialPrice, password);
         ServerLogger.logger.debug("Public auction created " + auction.getAuctionID());
         return auction;
     }

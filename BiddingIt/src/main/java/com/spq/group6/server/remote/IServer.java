@@ -114,6 +114,19 @@ public interface IServer extends Remote {
     Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException;
 
     /**
+     * Method for creating an Auction
+     *
+     * @param owner        Auction creator or Product's owner
+     * @param product      Product that will be sold on Auction
+     * @param dayLimit     Timestamp when Auction will be closed
+     * @param initialPrice Initial proce for Product
+     * @param password     Password that the Auction will be protected with
+     * @return Created Auction
+     * @throws RemoteException
+     */
+    public Auction createPrivateAuction(User owner, Product product, Timestamp dayLimit, float initialPrice, String password) throws RemoteException, AuctionException;
+
+    /**
      * Method for bidding an Auction
      *
      * @param auction Auction will be bidded to

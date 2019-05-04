@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Auctions related service's interface
  */
 public interface IAuctionService {
-    Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice);
+    Auction createAuction(User owner, Product product, Timestamp dayLimit, float initialPrice, String password);
 
     Auction bid(Auction auction, User user, float amount) throws AuctionException;
 

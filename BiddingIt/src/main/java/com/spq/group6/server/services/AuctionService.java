@@ -34,8 +34,8 @@ public class AuctionService implements IAuctionService {
         }
     }
 
-    public Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) {
-        Auction auction = new Auction(owner, product, dayLimit, initialPrice, null);
+    public Auction createAuction(User owner, Product product, Timestamp dayLimit, float initialPrice, String password) {
+        Auction auction = new Auction(owner, product, dayLimit, initialPrice, password);
         biddingDAO.persistAuction(auction);
         // Remove product from Owner until auction is finished
         owner.getOwnedProducts().remove(product);
