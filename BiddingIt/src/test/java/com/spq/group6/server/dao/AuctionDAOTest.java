@@ -40,7 +40,7 @@ public class AuctionDAOTest {
     @Test
     public void getAuctionByCountry() {
         //Test
-        assertEquals(0, biddingDAO.getAuctionByCountry(fakeUser, testUser.getCountry()).size());
+        assertEquals(0, biddingDAO.getAuctionByCountry(testUser, testUser.getCountry()).size());
         auctions = biddingDAO.getAuctionByCountry(fakeUser, testUser.getCountry());
         assertEquals(databaseAuctions.size(), auctions.size());
         assertTrue(databaseAuctions.containsAll(auctions) && auctions.containsAll(databaseAuctions));
@@ -49,7 +49,7 @@ public class AuctionDAOTest {
     @Test
     public void getAuctionByProductName() {
         //Test
-        assertEquals(0, biddingDAO.getAuctionByProductName(fakeUser, product.getName()).size());
+        assertEquals(0, biddingDAO.getAuctionByProductName(testUser, product.getName()).size());
         auctions = biddingDAO.getAuctionByProductName(fakeUser, product.getName());
         assertTrue(databaseAuctions.size() == auctions.size() &&
                 databaseAuctions.containsAll(auctions) && auctions.containsAll(databaseAuctions));
@@ -58,7 +58,7 @@ public class AuctionDAOTest {
     @Test
     public void getAuctionByUser() {
         //Test
-        assertEquals(0, biddingDAO.getAuctionByUser(testUser).size());
+        assertEquals(0, biddingDAO.getAuctionByUser(fakeUser).size());
         auctions = biddingDAO.getAuctionByUser(testUser);
         assertTrue(databaseAuctions.size() == auctions.size() &&
                 databaseAuctions.containsAll(auctions) && auctions.containsAll(databaseAuctions));
@@ -66,7 +66,6 @@ public class AuctionDAOTest {
 
     @Test
     public void getAuctionByID() {
-        assertNull(biddingDAO.getAuctionByID(auction.getAuctionID()));
         assertEquals(auction, biddingDAO.getAuctionByID(auction.getAuctionID()));
     }
 
