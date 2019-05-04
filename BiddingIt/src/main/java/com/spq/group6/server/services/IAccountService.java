@@ -10,7 +10,7 @@ import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 public interface IAccountService {
     User logIn(String username, String password, IRemoteObserver observer) throws UserException;
 
-    void logOut(String username, IRemoteObserver observer);
+    void logOut(IRemoteObserver observer);
 
     User signIn(String username, String password, String country, IRemoteObserver observer) throws UserException;
 

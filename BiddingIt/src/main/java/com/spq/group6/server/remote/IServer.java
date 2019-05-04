@@ -19,7 +19,7 @@ public interface IServer extends Remote {
     // Account API
     User logIn(String username, String password, IRemoteObserver observer) throws RemoteException, UserException;
 
-    void logOut(String username, IRemoteObserver observer) throws RemoteException, UserException;
+    void logOut(IRemoteObserver observer) throws RemoteException;
 
     User signIn(String username, String password, String country, IRemoteObserver observer) throws RemoteException, UserException;
 

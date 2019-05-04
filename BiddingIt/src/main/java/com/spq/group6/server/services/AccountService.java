@@ -32,7 +32,7 @@ public class AccountService implements IAccountService {
         return user;
     }
 
-    public void logOut(String username, IRemoteObserver observer) {
+    public void logOut(IRemoteObserver observer) {
         observable.deleteRemoteObserver(observer);
     }
 
