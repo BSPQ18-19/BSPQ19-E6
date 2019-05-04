@@ -6,6 +6,9 @@ import com.spq.group6.server.utils.logger.ServerLogger;
 
 import java.rmi.Naming;
 
+/**
+ * Class used for starting the Server
+ */
 public class ServerMain {
 
     public static void main(String[] args) {
