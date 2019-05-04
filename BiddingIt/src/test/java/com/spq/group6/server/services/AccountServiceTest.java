@@ -3,7 +3,7 @@ package com.spq.group6.server.services;
 import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
-import com.spq.group6.server.exceptions.UserException;
+import com.spq.group6.server.exceptions.AccountException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class AccountServiceTest {
         String username = testUser.getUsername(), pass = testUser.getPassword(), country = testUser.getCountry();
         try {
             testUser = service.signIn(username, pass, country, null);
-        } catch (UserException e) {
+        } catch (AccountException e) {
             fail();
         }
         assertEquals(username, testUser.getUsername());
@@ -36,25 +36,25 @@ public class AccountServiceTest {
 
         try {
             testUser = service.signIn(testUser.getUsername(), testUser.getPassword(), testUser.getCountry(), null);
-        } catch (UserException e) {
+        } catch (AccountException e) {
             assertTrue(true);
         }
     }
 
     @Test
-    public void testLogIn() throws UserException {
+    public void testLogIn() throws AccountException {
         // Setup
         accountDao.createUser(testUser);
         service.init_user(testUser);
         // Test
         try {
             testUser = service.logIn(testUser.getUsername(), testUser.getPassword(), null);
-        } catch (UserException e) {
+        } catch (AccountException e) {
             fail();
         }
         try {
             testUser = service.logIn("wrong_user", "wrong_pass", null);
-        } catch (UserException e) {
+        } catch (AccountException e) {
             assertTrue(true);
         }
     }

@@ -8,6 +8,9 @@ import com.spq.group6.server.exceptions.AuctionException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+/**
+ * Auctions related service's interface
+ */
 public interface IAuctionService {
     Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice);
 

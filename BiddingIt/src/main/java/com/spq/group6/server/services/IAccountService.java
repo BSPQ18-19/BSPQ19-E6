@@ -4,17 +4,20 @@ import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
-import com.spq.group6.server.exceptions.UserException;
+import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 
+/**
+ * Accounts related service's interface
+ */
 public interface IAccountService {
-    User logIn(String username, String password, IRemoteObserver observer) throws UserException;
+    User logIn(String username, String password, IRemoteObserver observer) throws AccountException;
 
     void logOut(IRemoteObserver observer);
 
-    User signIn(String username, String password, String country, IRemoteObserver observer) throws UserException;
+    User signIn(String username, String password, String country, IRemoteObserver observer) throws AccountException;
 
-    User updateUser(User user, String password, String country) throws UserException;
+    User updateUser(User user, String password, String country) throws AccountException;
 
     Administrator createAdministrator(Administrator admin) throws AdministratorException;
 

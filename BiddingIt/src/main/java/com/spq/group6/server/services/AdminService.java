@@ -14,6 +14,13 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
+/**
+ * BiddingIt server's Application for Administrator related services:
+ * - Authentication
+ * - Auction removal
+ * - User removal
+ * - Auction and User retrieval
+ */
 public class AdminService implements IAdminService {
     private IBiddingDAO biddingDAO;
 

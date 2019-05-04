@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 
 
+/**
+ *
+ */
 public class BiddingDAO implements IBiddingDAO {
     private PersistenceManager pm;
     private Lock pmLock;

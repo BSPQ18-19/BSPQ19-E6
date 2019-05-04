@@ -5,7 +5,7 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
-import com.spq.group6.server.exceptions.UserException;
+import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.remote.IServer;
 import com.spq.group6.server.remote.Server;
 import com.spq.group6.server.services.AccountService;
@@ -51,7 +51,7 @@ public class ObserverTest {
 
     @Ignore
     @Test
-    public void testUserDeleted() throws InterruptedException, RemoteException, UserException {
+    public void testUserDeleted() throws InterruptedException, RemoteException, AccountException {
         server.deleteUser(buyer);
         buyer = null;
 
@@ -62,7 +62,7 @@ public class ObserverTest {
     }
 
     @Test
-    public void testBidObserver() throws InterruptedException, RemoteException, AuctionException, UserException {
+    public void testBidObserver() throws InterruptedException, RemoteException, AuctionException, AccountException {
         auction = server.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         // Add observer
         assertFalse(observerDemo.auctionClosed);
@@ -81,7 +81,7 @@ public class ObserverTest {
     }
 
     @Test
-    public void testAuctionDeletedObserver() throws InterruptedException, RemoteException, AuctionException, UserException {
+    public void testAuctionDeletedObserver() throws InterruptedException, RemoteException, AuctionException, AccountException {
         auction = server.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         // Add observer
         assertFalse(observerDemo.auctionClosed);
@@ -100,7 +100,7 @@ public class ObserverTest {
     }
 
     @Test
-    public void testNewBidAndAuctionDeletedObserver() throws InterruptedException, RemoteException, AuctionException, UserException {
+    public void testNewBidAndAuctionDeletedObserver() throws InterruptedException, RemoteException, AuctionException, AccountException {
         auction = server.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         // Add observer
         assertFalse(observerDemo.auctionClosed);

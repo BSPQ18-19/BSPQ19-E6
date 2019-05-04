@@ -7,7 +7,7 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AuctionException;
-import com.spq.group6.server.exceptions.UserException;
+import com.spq.group6.server.exceptions.AccountException;
 
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
@@ -55,7 +55,7 @@ public class ClientController {
                 return true;
             } else
                 ClientLogger.logger.warn(info + " incorrect. Server returned null.");
-        } catch (UserException re) {
+        } catch (AccountException re) {
             ClientLogger.logger.error(info + ". Exception found in server: " + re.getMessage());
         }
         return false;
@@ -73,7 +73,7 @@ public class ClientController {
                 return true;
             } else
                 ClientLogger.logger.warn(info + " incorrect. Server returned null.");
-        } catch (UserException re) {
+        } catch (AccountException re) {
             ClientLogger.logger.error(info + ". Exception found in server: " + re.getMessage());
         }
         return false;
@@ -82,7 +82,7 @@ public class ClientController {
     public boolean logOut() {
         String info = "Log in with username " + currentUser.getUsername();
         try {
-            serviceLocator.getService().logOut(currentUser.getUsername(), observer);
+            serviceLocator.getService().logOut(observer);
         } catch (Exception e) {
             ClientLogger.logger.error(info + ". Exception found in server: " + e.getMessage());
             e.printStackTrace();

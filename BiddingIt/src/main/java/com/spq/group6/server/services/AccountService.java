@@ -6,15 +6,24 @@ import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
-import com.spq.group6.server.exceptions.UserException;
+import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.utils.BiddingLocks;
 import com.spq.group6.server.utils.logger.ServerLogger;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
+/**
+ * BiddingIt server's Application for account related services:
+ * - Account creation
+ * - Authentication
+ * - Product creation
+ * - Product removal
+ * - Account details modification
+ * - Product details modification
+ */
 public class AccountService implements IAccountService {
-    private IBiddingDAO biddingDAO;
     public static RemoteObservable observable = new RemoteObservable();
+    private IBiddingDAO biddingDAO;
 
     public AccountService() {
         biddingDAO = new BiddingDAO();
@@ -24,10 +33,10 @@ public class AccountService implements IAccountService {
     }
 
 
-    public User logIn(String username, String password, IRemoteObserver observer) throws UserException {
+    public User logIn(String username, String password, IRemoteObserver observer) throws AccountException {
         User user = biddingDAO.getUserByUsername(username);
-        if (user == null) throw new UserException("User does not exist");
-        if (!password.equals(user.getPassword())) throw new UserException("Invalid username or password");
+        if (user == null) throw new AccountException("User does not exist");
+        if (!password.equals(user.getPassword())) throw new AccountException("Invalid username or password");
         observable.addRemoteObserver(observer);
         return user;
     }
@@ -36,7 +45,7 @@ public class AccountService implements IAccountService {
         observable.deleteRemoteObserver(observer);
     }
 
-    public User signIn(String username, String password, String country, IRemoteObserver observer) throws UserException {
+    public User signIn(String username, String password, String country, IRemoteObserver observer) throws AccountException {
         User user = new User(username, password, country);
         user.setMoney(1000);
         checkDuplicatedUser(user);
@@ -46,7 +55,7 @@ public class AccountService implements IAccountService {
         return user;
     }
 
-    public User updateUser(User user, String password, String country) throws UserException {
+    public User updateUser(User user, String password, String country) throws AccountException {
         user = BiddingLocks.lockAndGetUser(user);
         user.setPassword(password);
         user.setCountry(country);
@@ -103,11 +112,22 @@ public class AccountService implements IAccountService {
         return user;
     }
 
-    private void checkDuplicatedUser(User user) throws UserException {
+    /**
+     * Method for checking if user already exists
+     *
+     * @param user User that will be checked
+     * @throws AccountException in case of User previous existance
+     */
+    private void checkDuplicatedUser(User user) throws AccountException {
         String username = user.getUsername();
-        if (biddingDAO.getUserByUsername(username) != null) throw new UserException("Username already in use.");
+        if (biddingDAO.getUserByUsername(username) != null) throw new AccountException("Username already in use.");
     }
 
+    /**
+     * Method for creating Lock for User
+     *
+     * @param user User that a Lock will be created for
+     */
     void init_user(User user) {
         BiddingLocks.setUserLock(user);
     }

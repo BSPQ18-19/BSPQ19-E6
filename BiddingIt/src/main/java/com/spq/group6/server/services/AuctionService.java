@@ -15,9 +15,15 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * BiddingIt server's Application for Auction related services:
+ * - Auction creation
+ * - Bid
+ * - Auctions's retrieval
+ */
 public class AuctionService implements IAuctionService {
-    private IBiddingDAO biddingDAO;
     public static HashMap<Long, Thread> countdownObservables;
+    private IBiddingDAO biddingDAO;
 
     public AuctionService() {
         biddingDAO = new BiddingDAO();
@@ -78,6 +84,12 @@ public class AuctionService implements IAuctionService {
     }
 
 
+    /**
+     * Method for creating a Lock for an Auction and a CountDown thread implementing
+     * the logic when an Auction finishes
+     *
+     * @param auction Auction that will be initalized
+     */
     private void initAuction(Auction auction) {
         BiddingLocks.setAuctionLock(auction); // create lock for auction
         Thread auctionCountdown = new Thread(new AuctionCountdown(auction));

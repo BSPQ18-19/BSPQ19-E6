@@ -8,6 +8,9 @@ import com.spq.group6.server.exceptions.AdministratorException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * Administrator related service's interface
+ */
 public interface IAdminService {
     Administrator logIn(String username, String password) throws AdministratorException;
 
