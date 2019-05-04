@@ -1,7 +1,6 @@
 package com.spq.group6.server.dao;
 
 import com.spq.group6.server.data.Auction;
-import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
 import org.junit.After;
@@ -15,76 +14,72 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class AuctionDAOTest {
-    private BiddingDAO biddingDAO;
-
-    private User testUser;
     private static User fakeUser;
-    private Product testProduct;
-    private Auction testAuction;
-    private List<Auction> testArray;
+    private BiddingDAO biddingDAO;
+    private User testUser;
+    private Product product;
+    private Auction auction;
+    private List<Auction> databaseAuctions;
     private List<Auction> auctions;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         biddingDAO = new BiddingDAO();
         testUser = new User("test_user", "test_pass", "uk");
-        testProduct = new Product("Mobile Phone", "Iphone X");
+        product = new Product("Mobile Phone", "Iphone X");
         fakeUser = new User("test_fake", "test_pass", "uk");
         int seconds = 10;
-        Timestamp limit = new Timestamp(System.currentTimeMillis() + seconds*1000);
-        testAuction = new Auction(testUser, testProduct, limit, 600, "123" );
-        testArray = new ArrayList<>();
-        testArray.add(testAuction);
+        Timestamp limit = new Timestamp(System.currentTimeMillis() + seconds * 1000);
+        auction = new Auction(testUser, product, limit, 600, "123");
+        databaseAuctions = new ArrayList<>();
+        databaseAuctions.add(auction);
+
+        biddingDAO.persistAuction(auction); // Persists User and Product too
     }
 
     @Test
-    public void getAuctionByCountry(){
+    public void getAuctionByCountry() {
         //Test
         assertEquals(0, biddingDAO.getAuctionByCountry(fakeUser, testUser.getCountry()).size());
-        biddingDAO.persistAuction(testAuction);
         auctions = biddingDAO.getAuctionByCountry(fakeUser, testUser.getCountry());
-        assertEquals(testArray.size(), auctions.size());
-        assertTrue(testArray.containsAll(auctions) && auctions.containsAll(testArray));
+        assertEquals(databaseAuctions.size(), auctions.size());
+        assertTrue(databaseAuctions.containsAll(auctions) && auctions.containsAll(databaseAuctions));
     }
 
     @Test
-    public void getAuctionByProductName(){
+    public void getAuctionByProductName() {
         //Test
-        assertEquals(0, biddingDAO.getAuctionByProductName(fakeUser, testProduct.getName()).size());
-        biddingDAO.persistAuction(testAuction);
-        auctions = biddingDAO.getAuctionByProductName(fakeUser, testProduct.getName());
-        assertTrue(testArray.size() == auctions.size() &&
-                testArray.containsAll(auctions) && auctions.containsAll(testArray));
+        assertEquals(0, biddingDAO.getAuctionByProductName(fakeUser, product.getName()).size());
+        auctions = biddingDAO.getAuctionByProductName(fakeUser, product.getName());
+        assertTrue(databaseAuctions.size() == auctions.size() &&
+                databaseAuctions.containsAll(auctions) && auctions.containsAll(databaseAuctions));
     }
 
     @Test
-    public void getAuctionByUser(){
+    public void getAuctionByUser() {
         //Test
         assertEquals(0, biddingDAO.getAuctionByUser(testUser).size());
-        biddingDAO.persistAuction(testAuction);
         auctions = biddingDAO.getAuctionByUser(testUser);
-        assertTrue(testArray.size() == auctions.size() &&
-                testArray.containsAll(auctions) && auctions.containsAll(testArray));
+        assertTrue(databaseAuctions.size() == auctions.size() &&
+                databaseAuctions.containsAll(auctions) && auctions.containsAll(databaseAuctions));
     }
 
     @Test
-    public void getAuctionByID(){
-        assertNull(biddingDAO.getAuctionByID(testAuction.getAuctionID()));
-        biddingDAO.persistAuction(testAuction);
-        assertEquals(testAuction, biddingDAO.getAuctionByID(testAuction.getAuctionID()));
+    public void getAuctionByID() {
+        assertNull(biddingDAO.getAuctionByID(auction.getAuctionID()));
+        assertEquals(auction, biddingDAO.getAuctionByID(auction.getAuctionID()));
     }
 
     @Test
-    public void getAllAuctionsExceptRequester(){
+    public void getAllAuctionsExceptRequester() {
         assertEquals(0, biddingDAO.getAllAuctionsExceptRequester(fakeUser).size());
-        biddingDAO.persistAuction(testAuction);
         auctions = biddingDAO.getAllAuctionsExceptRequester(fakeUser);
-        assertTrue(testArray.size() == auctions.size() &&
-                testArray.containsAll(auctions) && auctions.containsAll(testArray));
+        assertTrue(databaseAuctions.size() == auctions.size() &&
+                databaseAuctions.containsAll(auctions) && auctions.containsAll(databaseAuctions));
     }
-    
+
     @After
-    public void tearDown(){
-        biddingDAO.deleteUser(testAuction.getOwner());
+    public void tearDown() {
+        biddingDAO.deleteUser(auction.getOwner()); // Deletes Auctions, Products and Bids too
     }
 }

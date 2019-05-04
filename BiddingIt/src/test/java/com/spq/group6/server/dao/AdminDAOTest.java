@@ -19,50 +19,52 @@ public class AdminDAOTest {
     private User user2;
     private Product product;
     private List<User> users;
-    private List<User> testUsers;
+    private List<User> databaseUsers;
     private Auction auction;
-    private ArrayList<Auction> auctionArray;
+    private ArrayList<Auction> auctionList;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         user = new User("test_user", "test_pass", "spain");
         user2 = new User("xavier", "test_pass", "uk");
         product = new Product("cd", "Mikel Urdangarin cd");
         users = new ArrayList<User>();
-        testUsers = new ArrayList<User>();
+        databaseUsers = new ArrayList<User>();
         users.add(user);
         users.add(user2);
 
         int seconds = 10;
-        Timestamp limit = new Timestamp(System.currentTimeMillis() + seconds*1000);
-        auction = new Auction(user, product, limit, 600, "123" );
-        auctionArray = new ArrayList<>();
-        auctionArray.add(auction);
+        Timestamp limit = new Timestamp(System.currentTimeMillis() + seconds * 1000);
+        auction = new Auction(user, product, limit, 600, "123");
+        auctionList = new ArrayList<>();
+        auctionList.add(auction);
 
     }
 
     @Test
-    public void getAllUsers(){
+    public void getAllUsers() {
 
-        assertFalse(users.size() == testUsers.size() &&
-                users.containsAll(testUsers) && testUsers.containsAll(users));
+        assertFalse(users.size() == databaseUsers.size() &&
+                users.containsAll(databaseUsers) && databaseUsers.containsAll(users));
         biddingDAO.persistUser(user);
         biddingDAO.persistUser(user2);
-        testUsers = biddingDAO.getAllUsers();
-        assertTrue(users.size() == testUsers.size() &&
-                users.containsAll(testUsers) && testUsers.containsAll(users));
+        databaseUsers = biddingDAO.getAllUsers();
+        assertTrue(users.size() == databaseUsers.size() &&
+                users.containsAll(databaseUsers) && databaseUsers.containsAll(users));
         // Clean-up
         biddingDAO.deleteUser(user2);
     }
 
 
     @Test
-    public void getAllAuctions(){
+    public void getAllAuctions() {
         assertEquals(0, biddingDAO.getAllAuctions().size());
         biddingDAO.persistAuction(auction);
         ArrayList<Auction> auctions = biddingDAO.getAllAuctions();
-        assertTrue(auctionArray.size() == auctions.size() &&
-                auctionArray.containsAll(auctions) && auctions.containsAll(auctionArray));
+        assertTrue(auctionList.size() == auctions.size() &&
+                auctionList.containsAll(auctions) && auctions.containsAll(auctionList));
+        // Clean-up
+        biddingDAO.deleteAuction(auction);
     }
 
     @After

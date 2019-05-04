@@ -8,7 +8,6 @@ import com.spq.group6.server.data.User;
 import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.utils.BiddingLocks;
-import com.spq.group6.server.utils.logger.ServerLogger;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
@@ -28,7 +27,7 @@ public class AccountService implements IAccountService {
     public AccountService() {
         biddingDAO = new BiddingDAO();
         for (User user : biddingDAO.getAllUsers()) {
-            init_user(user);
+            initUser(user);
         }
     }
 
@@ -47,11 +46,11 @@ public class AccountService implements IAccountService {
 
     public User signIn(String username, String password, String country, IRemoteObserver observer) throws AccountException {
         User user = new User(username, password, country);
+        // Added 1000 as initial money, otheriwse a Payment service would be needed
         user.setMoney(1000);
         checkDuplicatedUser(user);
         biddingDAO.persistUser(user);
-        init_user(user);
-        ServerLogger.logger.debug("User '" + username + "' has signed in.");
+        initUser(user);
         return user;
     }
 
@@ -128,7 +127,7 @@ public class AccountService implements IAccountService {
      *
      * @param user User that a Lock will be created for
      */
-    void init_user(User user) {
+    void initUser(User user) {
         BiddingLocks.setUserLock(user);
     }
 

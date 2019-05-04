@@ -20,7 +20,8 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @Ignore
 public class ConcurrentClientControllerTest {
@@ -34,7 +35,9 @@ public class ConcurrentClientControllerTest {
     private static Auction auction, notPersistedAuction;
     private static Bid bid;
 
-    @Rule public ContiPerfRule rule = new ContiPerfRule();
+    @Rule
+    public ContiPerfRule rule = new ContiPerfRule();
+
     public static junit.framework.Test suite() {
         return new JUnit4TestAdapter(ConcurrentClientControllerTest.class);
     }
@@ -63,7 +66,7 @@ public class ConcurrentClientControllerTest {
         }
 
         String ip = "127.0.0.1", port = "1099", name = "BiddingItServer";
-        String serverName = "//"+ip+":"+port+"/"+ name;
+        String serverName = "//" + ip + ":" + port + "/" + name;
         class RMIServerRunnable implements Runnable {
 
             public void run() {
@@ -99,13 +102,27 @@ public class ConcurrentClientControllerTest {
         biddingDao.persistUser(seller);
 
         int offset = 60;
-        Timestamp limit = new Timestamp(System.currentTimeMillis() +offset*1000);
+        Timestamp limit = new Timestamp(System.currentTimeMillis() + offset * 1000);
         notPersistedAuction = new Auction(seller, product, limit, 12, null);
         auction = new Auction(seller, product, limit, 12, null);
         sellerClientController = ClientController.getNewClientController();
         sellerClientController.logIn(seller.getUsername(), seller.getPassword());
-        sellerClientController.createPublicAuction( auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+        sellerClientController.createPublicAuction(auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         auction = biddingDao.getAllAuctions().get(0);
+    }
+
+    @AfterClass
+    static public void tearDownClass() {
+        biddingDao.deleteUser(seller);
+        biddingDao.deleteUser(buyer);
+        try {
+            rmiServerThread.interrupt();
+            rmiRegistryThread.interrupt();
+            rmiServerThread.join();
+            rmiRegistryThread.join();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
     }
 
     @Before
@@ -115,7 +132,6 @@ public class ConcurrentClientControllerTest {
         assertTrue(buyerClientController.logIn(buyer.getUsername(), buyer.getPassword()));
         assertTrue(sellerClientController.logIn(seller.getUsername(), seller.getPassword()));
     }
-
 
     @Test
     @PerfTest(invocations = 1000, threads = 20)
@@ -161,25 +177,11 @@ public class ConcurrentClientControllerTest {
     @Required(max = 1000, average = 500)
     public void searchAuctionByCountryTest() throws RemoteException {
         ArrayList<Auction> auctions = buyerClientController.searchAuctionByCountry(seller.getCountry());
-        assertEquals(1, auctions.size() );
+        assertEquals(1, auctions.size());
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
 
-    }
-
-    @AfterClass
-    static public void tearDownClass(){
-        biddingDao.deleteUser(seller);
-        biddingDao.deleteUser(buyer);
-        try	{
-            rmiServerThread.interrupt();
-            rmiRegistryThread.interrupt();
-            rmiServerThread.join();
-            rmiRegistryThread.join();
-        } catch (InterruptedException ie) {
-            ie.printStackTrace();
-        }
     }
 }

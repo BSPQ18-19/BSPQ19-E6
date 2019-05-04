@@ -42,11 +42,17 @@ public interface IBiddingDAO {
     // Admin DAO
 
     /**
-     * Method for creating or updating an Administrator on the database
+     * Method for creating or updating an Administrator on the database, needed for tests
      *
-     * @param administrator Administrato that will be persisted
+     * @param administrator Administrator that will be persisted
      */
     void persistAdministrator(Administrator administrator);
+
+    /**
+     * Method for deleting and Administrator from database, needed for tests
+     * @param admin Administrator that will be deleted
+     */
+    void deleteAdministrator(Administrator admin);
 
     /**
      * Method for getting an Admisnitrator by its username from the database
@@ -145,5 +151,4 @@ public interface IBiddingDAO {
      * @return ArrayList containing all opened Auctions
      */
     ArrayList<Auction> getAllAuctions();
-
 }

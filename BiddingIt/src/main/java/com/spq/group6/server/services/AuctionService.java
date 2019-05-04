@@ -6,6 +6,7 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.utils.AuctionCountdown;
 import com.spq.group6.server.utils.BiddingLocks;
@@ -34,7 +35,8 @@ public class AuctionService implements IAuctionService {
         }
     }
 
-    public Auction createAuction(User owner, Product product, Timestamp dayLimit, float initialPrice, String password) {
+    public Auction createAuction(User owner, Product product, Timestamp dayLimit, float initialPrice, String password) throws AuctionException {
+        if (initialPrice <0) throw new AuctionException("Invalid <0 initial price");
         Auction auction = new Auction(owner, product, dayLimit, initialPrice, password);
         biddingDAO.persistAuction(auction);
         // Remove product from Owner until auction is finished
@@ -90,7 +92,7 @@ public class AuctionService implements IAuctionService {
      *
      * @param auction Auction that will be initalized
      */
-    private void initAuction(Auction auction) {
+    void initAuction(Auction auction) {
         BiddingLocks.setAuctionLock(auction); // create lock for auction
         Thread auctionCountdown = new Thread(new AuctionCountdown(auction));
         auctionCountdown.start(); // Run thread for auction countdown

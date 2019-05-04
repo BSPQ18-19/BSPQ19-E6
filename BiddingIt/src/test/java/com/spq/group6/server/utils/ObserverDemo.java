@@ -11,16 +11,13 @@ public class ObserverDemo implements IRemoteObserver {
     public boolean newBid = false, auctionClosed = false, auctionDeleted = false, userDeleted = false;
 
     public void update(Object arg) throws RemoteException {
-        if(arg instanceof NewBidEvent){
+        if (arg instanceof NewBidEvent) {
             newBid = true;
-        }
-        else if(arg instanceof AuctionClosedEvent){
+        } else if (arg instanceof AuctionClosedEvent) {
             auctionClosed = true;
-        }
-        else if(arg instanceof AuctionDeletedEvent){
+        } else if (arg instanceof AuctionDeletedEvent) {
             auctionDeleted = true;
-        }
-        else{
+        } else {
             userDeleted = true;
         }
     }

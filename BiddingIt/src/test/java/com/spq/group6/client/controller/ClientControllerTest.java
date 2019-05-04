@@ -11,13 +11,12 @@ import com.spq.group6.server.remote.Server;
 import com.spq.group6.server.utils.logger.ServerLogger;
 import org.junit.*;
 
-import static org.junit.Assert.*;
-
-
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 public class ClientControllerTest {
     private static Thread rmiRegistryThread = null;
@@ -54,7 +53,7 @@ public class ClientControllerTest {
         }
 
         String ip = "127.0.0.1", port = "1099", name = "BiddingItServer";
-        String serverName = "//"+ip+":"+port+"/"+ name;
+        String serverName = "//" + ip + ":" + port + "/" + name;
         class RMIServerRunnable implements Runnable {
 
             public void run() {
@@ -80,6 +79,16 @@ public class ClientControllerTest {
         ServiceLocator.getServiceLocator().setService(ip, port, name);
     }
 
+    @AfterClass
+    static public void tearDownClass() {
+        try {
+            rmiServerThread.join();
+            rmiRegistryThread.join();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+    }
+
     @Before
     public void setUp() throws RemoteException {
         clientController = ClientController.getNewClientController();
@@ -88,9 +97,9 @@ public class ClientControllerTest {
         product = new Product("test_product", "test_description");
         biddingDao = new BiddingDAO();
         int offset = 10;
-        Timestamp limit = new Timestamp(System.currentTimeMillis() +offset*1000);
+        Timestamp limit = new Timestamp(System.currentTimeMillis() + offset * 1000);
         auction = new Auction(seller, product, limit, 12, null);
-        bid = new Bid(buyer, auction.getInitialPrice()+1);
+        bid = new Bid(buyer, auction.getInitialPrice() + 1);
     }
 
     @Test
@@ -99,7 +108,6 @@ public class ClientControllerTest {
         assertEquals(seller, clientController.getCurrentUser());
         assertFalse(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
     }
-
 
     @Test
     public void logInInTest() throws RemoteException {
@@ -181,7 +189,7 @@ public class ClientControllerTest {
         assertTrue(clientController.signIn(buyer.getUsername(), buyer.getPassword(), buyer.getCountry()));
         auction = clientController.searchAuctionByProductName(product.getName()).get(0);
 
-        assertTrue(clientController.bid(auction, auction.getInitialPrice()+1));
+        assertTrue(clientController.bid(auction, auction.getInitialPrice() + 1));
         auction = clientController.searchAuctionByProductName(product.getName()).get(0);
         assertEquals(bid, auction.getHighestBid());
         // Clean up
@@ -222,20 +230,10 @@ public class ClientControllerTest {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         User user = clientController.getCurrentUser();
-        if (user != null){
+        if (user != null) {
             biddingDao.deleteUser(clientController.getCurrentUser());
-        }
-    }
-
-    @AfterClass
-    static public void tearDownClass(){
-        try	{
-            rmiServerThread.join();
-            rmiRegistryThread.join();
-        } catch (InterruptedException ie) {
-            ie.printStackTrace();
         }
     }
 }

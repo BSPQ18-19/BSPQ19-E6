@@ -4,8 +4,8 @@ import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
-import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.AccountException;
+import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.remote.IServer;
 import com.spq.group6.server.remote.Server;
 import com.spq.group6.server.services.AccountService;
@@ -67,7 +67,7 @@ public class ObserverTest {
         // Add observer
         assertFalse(observerDemo.auctionClosed);
         server.logIn(buyer.getUsername(), buyer.getPassword(), observerDemo);
-        server.bid(auction,buyer, auction.getInitialPrice()+1);
+        server.bid(auction, buyer, auction.getInitialPrice() + 1);
 
         Thread.sleep(offset + 1000);
 
@@ -86,7 +86,7 @@ public class ObserverTest {
         // Add observer
         assertFalse(observerDemo.auctionClosed);
         server.logIn(buyer.getUsername(), buyer.getPassword(), observerDemo);
-        server.bid(auction,buyer, auction.getInitialPrice()+1);
+        server.bid(auction, buyer, auction.getInitialPrice() + 1);
         server.deleteAuction(auction);
 
         Thread.sleep(offset + 1000);
@@ -118,10 +118,10 @@ public class ObserverTest {
 
     @After
     public void tearDown() throws InterruptedException {
-        if(seller!=null){
+        if (seller != null) {
             biddingDAO.deleteUser(seller);
         }
-        if(buyer != null) {
+        if (buyer != null) {
             biddingDAO.deleteUser(buyer);
         }
 

@@ -16,14 +16,13 @@ public class AccountServiceTest {
     private User testUser;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         String username = "test_user", pass = "test_pass", country = "uk";
         testUser = new User(username, pass, country);
     }
 
     @Test
-    public void testSignIn()
-    {
+    public void testSignIn() {
         String username = testUser.getUsername(), pass = testUser.getPassword(), country = testUser.getCountry();
         try {
             testUser = service.signIn(username, pass, country, null);
@@ -45,7 +44,7 @@ public class AccountServiceTest {
     public void testLogIn() throws AccountException {
         // Setup
         accountDao.persistUser(testUser);
-        service.init_user(testUser);
+        service.initUser(testUser);
         // Test
         try {
             testUser = service.logIn(testUser.getUsername(), testUser.getPassword(), null);
@@ -60,14 +59,13 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void testCreateProduct()
-    {
+    public void testCreateProduct() {
         // Setup
         User persistedUser;
         accountDao.persistUser(testUser);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);
-        Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() -1);
+        Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() - 1);
         // Test
         assertEquals(prodName, testProduct.getName());
         assertEquals(prodDescription, testProduct.getDescription());
@@ -77,13 +75,12 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void testUpdateProduct()
-    {
+    public void testUpdateProduct() {
         // Setup
         accountDao.persistUser(testUser);
         String oldName = "test_prod", newName = "test_super_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, newName, prodDescription);
-        Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() -1);
+        Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() - 1);
         service.createProduct(testUser, oldName, prodDescription);
         // Test
         service.updateProduct(testProduct, newName, prodDescription);
@@ -93,13 +90,13 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void testDeleteProduct(){
+    public void testDeleteProduct() {
         // Setup
         accountDao.persistUser(testUser);
-        service.init_user(testUser);
+        service.initUser(testUser);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);
-        Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() -1);
+        Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() - 1);
         // Test
         service.deleteProduct(testUser, testProduct);
         User persistedUser = accountDao.getUserByUsername(testUser.getUsername());
@@ -107,7 +104,7 @@ public class AccountServiceTest {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         accountDao.deleteUser(testUser);
     }
 }

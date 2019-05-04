@@ -12,11 +12,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class AuctionServiceTest {
     private static AuctionService auctionService;
@@ -41,8 +42,8 @@ public class AuctionServiceTest {
     }
 
     @Test
-    public void testCreatePublicAuction() throws InterruptedException {
-        Auction createdAuction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+    public void testCreateAuction() throws InterruptedException, AuctionException {
+        Auction createdAuction = auctionService.createAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice(), null);
 
         assertEquals(auction.getOwner(), createdAuction.getOwner());
         assertEquals(auction.getProduct(), createdAuction.getProduct());
@@ -50,42 +51,43 @@ public class AuctionServiceTest {
         assertEquals(0, auction.getOwner().getOwnedProducts().size());
         auction = createdAuction;
         user = auction.getOwner();
-        Thread.sleep((offsetSeconds +1) * 1000);
+        Thread.sleep((offsetSeconds + 1) * 1000);
 
         user = biddingDAO.getUserByUsername(user.getUsername());
         assertEquals(1, user.getOwnedProducts().size());
 
     }
 
-
     @Test
     public void testBid() throws AuctionException {
-        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+        auction = auctionService.createAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice(), null);
         user = auction.getOwner();
         float initialPrice = auction.getInitialPrice();
         Bid bid = new Bid(user, initialPrice);
         // too low amount
-        try{
-            auctionService.bid(auction, user, bid.getAmount()-1);
+        try {
+            auctionService.bid(auction, user, bid.getAmount() - 1);
             fail();
-        }catch (AuctionException ignored){}
+        } catch (AuctionException ignored) {
+        }
         // correct amount
         auction = auctionService.bid(auction, bid.getUser(), bid.getAmount());
         assertEquals(bid, auction.getHighestBid());
         // repeated amount
-        try{
+        try {
             auctionService.bid(auction, user, initialPrice);
             fail();
-        }catch (AuctionException ignored){}
+        } catch (AuctionException ignored) {
+        }
         // correct amount
-        bid.setAmount(bid.getAmount()+1);
+        bid.setAmount(bid.getAmount() + 1);
         auction = auctionService.bid(auction, bid.getUser(), bid.getAmount());
         assertEquals(bid, auction.getHighestBid());
     }
 
     @Test
-    public void testSearchAuctionByCountry() throws InterruptedException {
-        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+    public void testSearchAuctionByCountry() throws InterruptedException, AuctionException {
+        auction = auctionService.createAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice(), null);
         user = auction.getOwner();
         ArrayList<Auction> myAuctions = auctionService.searchAuctionByCountry(user, user.getCountry());
         assertEquals(0, myAuctions.size());
@@ -94,7 +96,7 @@ public class AuctionServiceTest {
         assertEquals(1, auctions.size());
         assertEquals(auction, auctions.get(0));
 
-        Thread.sleep((offsetSeconds +1) * 1000);
+        Thread.sleep((offsetSeconds + 1) * 1000);
         BiddingLocks.lockAndGetAuction(auction);
         auctions = auctionService.searchAuctionByCountry(fakeUser, user.getCountry());
         BiddingLocks.unlockAuction(auction);
@@ -103,15 +105,15 @@ public class AuctionServiceTest {
     }
 
     @Test
-    public void testSearchAuctionByProductName() throws InterruptedException {
-        auction = auctionService.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
+    public void testSearchAuctionByProductName() throws InterruptedException, AuctionException {
+        auction = auctionService.createAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice(), null);
         user = auction.getOwner();
 
         ArrayList<Auction> auctions = auctionService.searchAuctionByProductName(fakeUser, product.getName());
         assertEquals(1, auctions.size());
         assertEquals(auction, auctions.get(0));
 
-        Thread.sleep((offsetSeconds +1) * 1000);
+        Thread.sleep((offsetSeconds + 1) * 1000);
         BiddingLocks.lockAndGetAuction(auction);
         auctions = auctionService.searchAuctionByProductName(fakeUser, product.getName());
         BiddingLocks.unlockAuction(auction);
@@ -126,11 +128,11 @@ public class AuctionServiceTest {
         long countdownLeft = (auction.getDayLimit().getTime() - System.currentTimeMillis()) + 1000;
         Thread.sleep(Math.max(0, countdownLeft));
 
-        if (auction != null){
+        if (auction != null) {
             auction = biddingDAO.getAuctionByID(auction.getAuctionID());
             biddingDAO.deleteAuction(auction);
         }
-        if (user != null){
+        if (user != null) {
             user = biddingDAO.getUserByUsername(user.getUsername());
             biddingDAO.deleteUser(user);
         }

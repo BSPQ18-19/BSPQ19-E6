@@ -111,7 +111,7 @@ public interface IServer extends Remote {
      * @return Created Auction
      * @throws RemoteException
      */
-    Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException;
+    Auction createPublicAuction(User owner, Product product, Timestamp dayLimit, float initialPrice) throws RemoteException, AuctionException;
 
     /**
      * Method for creating an Auction

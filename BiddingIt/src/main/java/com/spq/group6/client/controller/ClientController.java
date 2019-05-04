@@ -208,7 +208,7 @@ public class ClientController {
                 ClientLogger.logger.warn(info + " incorrect. Server returned null.");
                 return false;
             }
-        } catch (RemoteException e) {
+        } catch (RemoteException | AuctionException e) {
             ClientLogger.logger.error("Error creating a public auction: " + e.getMessage());
         }
         return true;

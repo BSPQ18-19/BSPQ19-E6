@@ -33,6 +33,10 @@ public class BiddingDAO implements IBiddingDAO {
         updateObject(administrator);
     }
 
+    public void deleteAdministrator(Administrator admin) {
+        deleteObject(admin);
+    }
+
     public User getUserByUsername(String username) {
         pmLock.lock();
         Transaction tx = pm.currentTransaction();

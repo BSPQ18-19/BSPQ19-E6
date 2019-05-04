@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import static org.junit.Assert.*;
 
 public class AccountDAOTest {
@@ -15,7 +14,7 @@ public class AccountDAOTest {
     private Product product;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         user = new User("test_user", "test_pass", "spain");
         product = new Product("cd", "Mikel Urdangarin cd");
     }
@@ -28,8 +27,8 @@ public class AccountDAOTest {
     }
 
     @Test
-    public void updateUser(){
-        // Set-up
+    public void updateUser() {
+        // Setup
         String oldCountry = user.getCountry(), newCountry = "uk";
         biddingDAO.persistUser(user);
         // Test
@@ -41,7 +40,7 @@ public class AccountDAOTest {
     }
 
     @Test
-    public void createProductUpdatingUser(){
+    public void createProduct() {
         // Setup
         biddingDAO.persistUser(user);
         // Test
@@ -53,9 +52,9 @@ public class AccountDAOTest {
     }
 
     @Test
-    public void updateProductUpdatingUser() {
+    public void updateProduct() {
         // Setup
-        String prodOldName = product.getName(), prodNewName = "dvd";
+        String prodNewName = "dvd";
         user.getOwnedProducts().add(product);
         biddingDAO.persistUser(user);
         // Test
@@ -65,8 +64,11 @@ public class AccountDAOTest {
         assertEquals(prodNewName, persistedUser.getOwnedProducts().get(0).getName());
     }
 
+    /**
+     * This test is meant to test how the logic works when changing a product's owner
+     */
     @Test
-    public void updateExchange(){
+    public void updateExchange() {
         // Setup
         User user2 = new User("xavier", "test_pass", "uk");
         user.getOwnedProducts().add(product);
@@ -87,7 +89,6 @@ public class AccountDAOTest {
         // Clean-up
         biddingDAO.deleteUser(user2);
     }
-
 
 
     @After
