@@ -72,7 +72,7 @@ public class AuctionDAOTest {
 
     @Test
     public void getAllAuctionsExceptRequester() {
-        assertEquals(0, biddingDAO.getAllAuctionsExceptRequester(fakeUser).size());
+        assertEquals(0, biddingDAO.getAllAuctionsExceptRequester(testUser).size());
         auctions = biddingDAO.getAllAuctionsExceptRequester(fakeUser);
         assertTrue(databaseAuctions.size() == auctions.size() &&
                 databaseAuctions.containsAll(auctions) && auctions.containsAll(databaseAuctions));
