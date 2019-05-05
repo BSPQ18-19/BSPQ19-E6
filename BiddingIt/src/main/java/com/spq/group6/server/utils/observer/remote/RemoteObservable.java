@@ -54,7 +54,7 @@ public class RemoteObservable {
                     observer.update(arg);
                 }
             } catch (Exception ex) {
-                ServerLogger.logger.error("$ Error notifying remote observers: " + ex, ex);
+                ServerLogger.logger.error("$ Error notifying remote observers: " + ex);
                 deleteRemoteObserver(observer);
             }
         }

@@ -25,7 +25,7 @@ public class AdminService implements IAdminService {
     private IBiddingDAO biddingDAO;
 
     public AdminService() {
-        // Initializze Admin DAO
+        // Initializze AdminMain DAO
         biddingDAO = new BiddingDAO();
     }
 

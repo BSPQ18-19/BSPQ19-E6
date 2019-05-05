@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * Interface implemented by Client's RemotObserver
+ * Interface implemented by ClientMain's RemotObserver
  * needed for receiving events from the Server.
  */
 public interface IRemoteObserver extends Remote {

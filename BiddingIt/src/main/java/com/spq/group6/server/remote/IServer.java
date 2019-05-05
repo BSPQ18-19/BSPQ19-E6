@@ -26,7 +26,7 @@ public interface IServer extends Remote {
      *
      * @param username User's username
      * @param password User's password
-     * @param observer Client's observer responsible for handling events sent by server
+     * @param observer ClientMain's observer responsible for handling events sent by server
      * @return Logged in User
      * @throws RemoteException
      * @throws AccountException in case of invalid credentials
@@ -34,9 +34,9 @@ public interface IServer extends Remote {
     User logIn(String username, String password, IRemoteObserver observer) throws RemoteException, AccountException;
 
     /**
-     * Method for letting know the server a Client has logged out, so it can delete its observer
+     * Method for letting know the server a ClientMain has logged out, so it can delete its observer
      *
-     * @param observer Client's observer that will not listen more for Events
+     * @param observer ClientMain's observer that will not listen more for Events
      * @throws RemoteException
      * @throws AccountException
      */
@@ -48,7 +48,7 @@ public interface IServer extends Remote {
      * @param username User's username
      * @param password User's password
      * @param country  User's country. Useful for auctions search
-     * @param observer Client's observer responsible for handling events sent by server
+     * @param observer ClientMain's observer responsible for handling events sent by server
      * @return Created User
      * @throws RemoteException
      * @throws AccountException in case of invalid credentials

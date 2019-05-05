@@ -39,7 +39,7 @@ public interface IBiddingDAO {
      */
     void deleteProduct(Product product);
 
-    // Admin DAO
+    // AdminMain DAO
 
     /**
      * Method for creating or updating an Administrator on the database, needed for tests

@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Class needed for limiting access to User and Auctions.
  * This class contains a Lock for each User and Auction.
- * Locks are needed when there are Client concurrent requests
+ * Locks are needed when there are ClientMain concurrent requests
  * updating the same Object on the database
  */
 public class BiddingLocks {

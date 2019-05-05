@@ -31,12 +31,12 @@ public class AuctionCountdown implements Runnable {
             Thread.sleep(Math.max(remainingMilis, 0));
             ServerLogger.logger.debug("Countdown ended for auction: " + auction.getAuctionID());
         } catch (InterruptedException e) {
-            ServerLogger.logger.debug("Admin has deleted auction: " + auctionID);
+            ServerLogger.logger.debug("AdminMain has deleted auction: " + auctionID);
         }
         Auction oldAuction = auction;
         auction = BiddingLocks.lockAndGetAuction(auction);
         try {
-            if (auction == null) { // This means it has been deleted by Admin
+            if (auction == null) { // This means it has been deleted by AdminMain
                 AuctionService.countdownObservables.remove(auctionID);
                 BiddingLocks.unlockAuction(oldAuction);
                 return;

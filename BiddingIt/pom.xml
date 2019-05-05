@@ -130,6 +130,9 @@
                         <exclude>**/data/**/*</exclude>
                         <exclude>**/exceptions/**/*</exclude>
                         <exclude>**/logger/**/*</exclude>
+                        <exclude>**/AdminMain.*</exclude>
+                        <exclude>**/ClientMain.*</exclude>
+                        <exclude>**/ServerMain.*</exclude>
                     </excludes>
                     <rules>
                         <rule>
@@ -279,7 +282,7 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <version>1.6.0</version>
                         <configuration>
-                            <mainClass>com.spq.group6.client.Client</mainClass>
+                            <mainClass>com.spq.group6.client.ClientMain</mainClass>
                             <systemProperties>
                                 <systemProperty>
                                     <key>java.security.manager</key>
@@ -311,7 +314,7 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <version>1.6.0</version>
                         <configuration>
-                            <mainClass>com.spq.group6.admin.Admin</mainClass>
+                            <mainClass>com.spq.group6.admin.AdminMain</mainClass>
                             <systemProperties>
                                 <systemProperty>
                                     <key>java.security.manager</key>

@@ -73,7 +73,7 @@ public class BiddingDAO implements IBiddingDAO {
         deleteObject(product);
     }
 
-    // Admin DAO
+    // AdminMain DAO
     public Administrator getAdministratorByUsername(String username) {
         pmLock.lock();
         Transaction tx = pm.currentTransaction();
@@ -86,7 +86,7 @@ public class BiddingDAO implements IBiddingDAO {
             Query<Administrator> query = pm.newQuery(Administrator.class);
             query.setFilter("username == '" + username + "'");
             List<Administrator> result = (List<Administrator>) query.execute();
-            admin = (result.size() != 1) ? null : result.get(0); // Retrieves and detaches the Admin
+            admin = (result.size() != 1) ? null : result.get(0); // Retrieves and detaches the AdminMain
 
             tx.commit();
         } catch (Exception ex) {

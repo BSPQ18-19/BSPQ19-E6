@@ -70,7 +70,7 @@ public class AdminControllerTest {
         rmiServerThread = new Thread(new RMIServerRunnable());
         rmiServerThread.start();
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException ie) {
             ie.printStackTrace();
         }

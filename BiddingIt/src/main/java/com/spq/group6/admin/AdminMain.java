@@ -8,7 +8,7 @@ import com.spq.group6.admin.utils.logger.AdminLogger;
 import java.rmi.RemoteException;
 
 
-public class Admin {
+public class AdminMain {
     public static void main(String[] args) {
         if (args.length != 3) {
             AdminLogger.logger.error("Invalid number of arguments.");
@@ -20,7 +20,7 @@ public class Admin {
             serviceLocator.setService(args[0], args[1], args[2]);
 
             AdminWindow.getAdminWindow(controller).setVisible(true);
-            AdminLogger.logger.info("Client running correctly");
+            AdminLogger.logger.info("ClientMain running correctly");
         } catch (RemoteException e) {
             AdminLogger.logger.error("Error starting admin");
 

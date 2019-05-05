@@ -22,7 +22,7 @@ public class AdminWindow extends JFrame {
         this.controller = controller;
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setTitle("Easybooking Admin");
+        this.setTitle("Easybooking AdminMain");
         Dimension windowSize = new Dimension((int) (screenSize.getWidth() / 1.3), (int) (screenSize.getHeight() / 1.3));
         this.setSize(windowSize);
         this.setLocationRelativeTo(null);

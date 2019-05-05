@@ -122,7 +122,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return auctions;
     }
 
-    // Admin API
+    // AdminMain API
 
     public Administrator adminLogIn(String username, String password) throws RemoteException, AdministratorException {
         ServerLogger.logger.debug("Received log in petition for " + username);
