@@ -126,6 +126,8 @@
                 <configuration>
                     <excludes>
                         <exclude>**/gui/**/*</exclude>
+                        <exclude>**/ClientRemoteObserver.*
+                        </exclude><!-- We exclude it because it is complex to test its effects on the GUI-->
                         <exclude>**/profiling/**/*</exclude>
                         <exclude>**/data/**/*</exclude>
                         <exclude>**/exceptions/**/*</exclude>
@@ -303,7 +305,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- run as 'mvn exec:java -Padmin' -->
         <profile>
             <id>admin</id>
