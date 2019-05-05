@@ -85,6 +85,14 @@ public class AuctionService implements IAuctionService {
         return biddingDAO.getAllAuctionsExceptRequester(requester);
     }
 
+    public void startUncheckedAuctions() {
+        for (Auction auction : biddingDAO.getAllAuctions()) {
+            if (!countdownObservables.containsKey(auction.getAuctionID())) {
+                initAuction(auction);
+            }
+        }
+    }
+
 
     /**
      * Method for creating a Lock for an Auction and a CountDown thread implementing

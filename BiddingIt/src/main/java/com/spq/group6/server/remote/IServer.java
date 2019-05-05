@@ -220,4 +220,11 @@ public interface IServer extends Remote {
      * @throws RemoteException
      */
     ArrayList<Auction> getAllAuctionsAdmin() throws RemoteException;
+
+    /**
+     * Method for starting Auctions that have been created manually on the database
+     * after initializing Server. This is needed for tests to work
+     * @throws RemoteException
+     */
+    void startUncheckedAuctions() throws RemoteException;
 }

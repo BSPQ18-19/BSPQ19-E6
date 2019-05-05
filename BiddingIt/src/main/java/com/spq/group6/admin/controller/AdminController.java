@@ -64,17 +64,6 @@ public class AdminController {
     public ArrayList<Auction> getAllAuctions() {
         ArrayList<Auction> auctions = new ArrayList<>();
 
-
-//    	//PRUEBA
-//    	Auction as = new Auction(new User("user1", "pass1", "c1"), new Product("casa", "buena"), new Timestamp(0), 20, "pass");
-//    	Auction cs = new Auction(new User("user2", "pass2", "c2"), new Product("vaso", "limpio"), new Timestamp(1), 30, "pass");
-//    	ArrayList<Auction> auctionArray = new ArrayList<Auction>();
-//    	auctionArray.add(as);
-//    	auctionArray.add(cs);
-//    	auctions = auctionArray;
-//    	//PRUEBA
-
-
         String info = "Get all auctions";
         try {
             AdminLogger.logger.debug("Trying to " + info + ".");
@@ -109,6 +98,17 @@ public class AdminController {
             AdminLogger.logger.error("Error deleting auction: " + e.getMessage());
         }
         return true;
+    }
+
+    public void startUncheckedAuctions(){
+        String info = "Start unchecked Auctions";
+        try {
+            AdminLogger.logger.debug("Trying to " + info + ".");
+            adminServiceLocator.getService().startUncheckedAuctions();
+            AdminLogger.logger.debug(info + " correct.");
+        } catch (RemoteException e) {
+            AdminLogger.logger.error("Error starting unchecked Auctions: " + e.getMessage());
+        }
     }
 
     public void exit() {

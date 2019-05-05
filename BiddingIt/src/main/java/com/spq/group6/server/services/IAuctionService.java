@@ -21,4 +21,6 @@ public interface IAuctionService {
     ArrayList<Auction> searchAuctionByProductName(User requester, String name);
 
     ArrayList<Auction> getAllAuctions(User requester);
+
+    void startUncheckedAuctions();
 }

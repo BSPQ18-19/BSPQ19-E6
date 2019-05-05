@@ -164,4 +164,8 @@ public class Server extends UnicastRemoteObject implements IServer {
         return auctions;
     }
 
+    public void startUncheckedAuctions() throws RemoteException {
+        auctionService.startUncheckedAuctions();
+    }
+
 }
