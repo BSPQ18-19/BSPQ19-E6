@@ -196,11 +196,30 @@ public class ClientController {
     }
 
     public boolean createPublicAuction(Product product, Timestamp dayLimit, float initialPrice) {
-        String info = "Create the auction for product " + product.getName() + " with day limit " + dayLimit
+        String info = "Create the public auction for product " + product.getName() + " with day limit " + dayLimit
                 + " and initial price " + initialPrice;
         try {
             ClientLogger.logger.debug("Trying to " + info + ".");
             Auction auction = serviceLocator.getService().createPublicAuction(currentUser, product, dayLimit, initialPrice);
+            if (auction != null) {
+                currentUser = auction.getOwner();
+                ClientLogger.logger.debug(info + " correct.");
+            } else {
+                ClientLogger.logger.warn(info + " incorrect. Server returned null.");
+                return false;
+            }
+        } catch (RemoteException | AuctionException e) {
+            ClientLogger.logger.error("Error creating a public auction: " + e.getMessage());
+        }
+        return true;
+    }
+    
+    public boolean createPrivateAuction(Product product, String password, Timestamp dayLimit, float initialPrice) {
+        String info = "Create the private auction for product " + product.getName() + " with password " + password +
+        		", day limit " + dayLimit + " and initial price " + initialPrice;
+        try {
+            ClientLogger.logger.debug("Trying to " + info + ".");
+            Auction auction = serviceLocator.getService().createPrivateAuction(currentUser, product, dayLimit, initialPrice, password);
             if (auction != null) {
                 currentUser = auction.getOwner();
                 ClientLogger.logger.debug(info + " correct.");

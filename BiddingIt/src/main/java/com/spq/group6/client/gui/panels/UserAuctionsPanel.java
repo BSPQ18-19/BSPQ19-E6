@@ -27,7 +27,7 @@ public class UserAuctionsPanel extends JPanel {
     private JButton backButton;
     private JButton logOutButton;
     private int screenWidth, screenHeight;
-    private String[] auctionsColumnNames = {"Prod. Name", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
+    private String[] auctionsColumnNames = {"Prod. Name", "Password", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
 
     private ClientController controller;
     private List<Auction> userAuctions;
@@ -103,29 +103,31 @@ public class UserAuctionsPanel extends JPanel {
             for (i = 0; i < userAuctions.size(); i++) {
                 Auction tempAuction = userAuctions.get(i);
                 auctionsData[i][0] = tempAuction.getProduct().getName();
-                auctionsData[i][1] = tempAuction.getInitialPrice();
+                auctionsData[i][1] = tempAuction.getPassword();
+                auctionsData[i][2] = tempAuction.getInitialPrice();
                 if (tempAuction.getHighestBid() == null)
-                    auctionsData[i][2] = 0;
+                    auctionsData[i][3] = 0;
                 else {
-                    auctionsData[i][2] = tempAuction.getHighestBid().getAmount();
+                    auctionsData[i][3] = tempAuction.getHighestBid().getAmount();
                 }
                 if (tempAuction.isOpen())
-                    auctionsData[i][3] = "Open";
+                    auctionsData[i][4] = "Open";
                 else
-                    auctionsData[i][3] = "Closed";
-                auctionsData[i][4] = tempAuction.getDayLimit().toLocalDateTime();
-                auctionsData[i][5] = "";
+                    auctionsData[i][4] = "Closed";
+                auctionsData[i][5] = tempAuction.getDayLimit().toLocalDateTime();
+                auctionsData[i][6] = "";
             }
             auctionsData[i][0] = "";
             auctionsData[i][1] = "";
-            auctionsData[i][2] = "-";
+            auctionsData[i][2] = "";
             auctionsData[i][3] = "-";
-            auctionsData[i][4] = "";
-            auctionsData[i][5] = "Create";
+            auctionsData[i][4] = "-";
+            auctionsData[i][5] = "";
+            auctionsData[i][6] = "Create";
         }
         auctionsTable.setModel(new AuctionJTableModel(auctionsData, auctionsColumnNames, this));
-        auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 150);
-        ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 5);
+        auctionsTable.getColumnModel().getColumn(5).setPreferredWidth(auctionsTable.getColumnModel().getColumn(5).getPreferredWidth() + 150);
+        ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 6);
 
         // set column 0 to combobox
         updateUserProductsComboBox();
@@ -133,8 +135,8 @@ public class UserAuctionsPanel extends JPanel {
         // set column 4 to limit day
         auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
         auctionsTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
-        auctionsTable.getColumnModel().getColumn(4).setCellEditor(auctionsTable.getDefaultEditor(LocalDateTime.class));
-        auctionsTable.getColumnModel().getColumn(4).setCellRenderer(auctionsTable.getDefaultRenderer(LocalDateTime.class));
+        auctionsTable.getColumnModel().getColumn(5).setCellEditor(auctionsTable.getDefaultEditor(LocalDateTime.class));
+        auctionsTable.getColumnModel().getColumn(5).setCellRenderer(auctionsTable.getDefaultRenderer(LocalDateTime.class));
 
         auctionsTable.revalidate();
         auctionsTable.repaint();
