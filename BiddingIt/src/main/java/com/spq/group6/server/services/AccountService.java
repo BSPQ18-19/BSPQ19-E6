@@ -26,9 +26,6 @@ public class AccountService implements IAccountService {
 
     public AccountService() {
         biddingDAO = new BiddingDAO();
-        for (User user : biddingDAO.getAllUsers()) {
-            initUser(user);
-        }
     }
 
 
@@ -36,7 +33,7 @@ public class AccountService implements IAccountService {
         User user = biddingDAO.getUserByUsername(username);
         if (user == null) throw new AccountException("User does not exist");
         if (!password.equals(user.getPassword())) throw new AccountException("Invalid username or password");
-        observable.addRemoteObserver(observer);
+        initUser(user, observer);
         return user;
     }
 
@@ -50,7 +47,7 @@ public class AccountService implements IAccountService {
         user.setMoney(1000);
         checkDuplicatedUser(user);
         biddingDAO.persistUser(user);
-        initUser(user);
+        initUser(user, observer);
         return user;
     }
 
@@ -127,8 +124,9 @@ public class AccountService implements IAccountService {
      *
      * @param user User that a Lock will be created for
      */
-    void initUser(User user) {
+    void initUser(User user, IRemoteObserver observer) {
         BiddingLocks.setUserLock(user);
+        observable.addRemoteObserver(observer);
     }
 
 }
