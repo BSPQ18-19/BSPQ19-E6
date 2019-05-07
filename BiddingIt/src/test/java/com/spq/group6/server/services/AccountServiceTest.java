@@ -44,7 +44,7 @@ public class AccountServiceTest {
     public void testLogIn() throws AccountException {
         // Setup
         accountDao.persistUser(testUser);
-        service.initUser(testUser);
+        service.initUser(testUser, null);
         // Test
         try {
             testUser = service.logIn(testUser.getUsername(), testUser.getPassword(), null);
@@ -93,7 +93,7 @@ public class AccountServiceTest {
     public void testDeleteProduct() {
         // Setup
         accountDao.persistUser(testUser);
-        service.initUser(testUser);
+        service.initUser(testUser, null);
         String prodName = "test_prod", prodDescription = "desc_prod";
         testUser = service.createProduct(testUser, prodName, prodDescription);
         Product testProduct = testUser.getOwnedProducts().get(testUser.getOwnedProducts().size() - 1);
