@@ -1,0 +1,63 @@
+JFDML JFormDesigner: "6.0.6.4.204" Java: "1.8.0_202-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
+			"$columnSpecs": "pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow"
+			"$rowSpecs": "pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px):grow, pref:grow, max(pref;5px), pref, max(pref;5px), pref, max(pref;5px), pref"
+		} ) {
+			name: "this"
+			"background": new java.awt.Color( 255, 255, 255, 255 )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "BiddingIt!"
+				"horizontalAlignment": 0
+				"icon": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 6, false )
+				"foreground": sfield java.awt.Color white
+				"background": new java.awt.Color( 0, 204, 204, 255 )
+				"opaque": true
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridWidth": 28
+				"gridHeight": 4
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "buttonSign"
+				"text": "Signin"
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 4, false )
+				"foreground": new java.awt.Color( 0, 102, 102, 255 )
+				"border": new javax.swing.border.TitledBorder( "" )
+				"opaque": false
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "buttonSignActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "buttonSignFocusGained", true ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "buttonSignFocusLost", true ) )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 3
+				"gridY": 7
+				"gridWidth": 10
+				"gridHeight": 6
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "buttonLog"
+				"text": "Login"
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"foreground": new java.awt.Color( 0, 102, 102, 255 )
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 4, false )
+				"border": new javax.swing.border.TitledBorder( "" )
+				"autoscrolls": true
+				"opaque": false
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "buttonLogActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 15
+				"gridY": 7
+				"gridWidth": 11
+				"gridHeight": 6
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 5, 0 )
+			"size": new java.awt.Dimension( 380, 240 )
+		} )
+	}
+}
