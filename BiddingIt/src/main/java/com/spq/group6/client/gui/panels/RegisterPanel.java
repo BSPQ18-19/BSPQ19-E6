@@ -190,7 +190,7 @@ public class RegisterPanel extends JPanel {
             }
         });
 
-        cancelButton = new JButton("cancel");
+        cancelButton = new JButton("Cancel");
         cancelButton.setForeground(new Color(0, 102, 102));
         cancelButton.setBackground(Color.white);
         cancelButton.setBorder(new TitledBorder(""));

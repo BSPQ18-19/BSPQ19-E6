@@ -11,6 +11,9 @@ import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.server.data.Product;
 
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,23 +32,33 @@ public class UserProductsPanel extends JPanel {
 
     public UserProductsPanel(int screenWidth, int screenHeight) {
 
+        setBackground(Color.WHITE);
         this.setLayout(null);
 
         controller = ClientController.getClientController();
 
         titleLabel = new JLabel("My products", SwingConstants.LEFT);
+        titleLabel.setForeground(Color.white);
+        titleLabel.setBackground(new Color(0, 204, 204));
+        titleLabel.setOpaque(true);
         titleLabel.setSize(screenWidth / 4, screenHeight / 15);
         titleLabel.setLocation((int) (screenWidth / 2 - titleLabel.getWidth() * 1.75), screenHeight / 4 - titleLabel.getHeight() / 2);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
         infoLabel = new JLabel("<html>Here you can see your products. Start selling and check your earnings!"
                 + "<br/>You can edit the name and description and then click save.<br/>You can also delete your products.</html>", SwingConstants.LEFT);
+        infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
         infoLabel.setLocation((int) titleLabel.getLocation().getX(),
                 (int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
         backButton = new JButton("Back");
+        backButton.setForeground(new Color(0, 102, 102));
+        backButton.setBackground(Color.white);
+        backButton.setBorder(new TitledBorder(""));
+        backButton.setContentAreaFilled(false);
+        backButton.setOpaque(true);
         backButton.setSize(screenWidth / 8, screenHeight / 15);
         backButton.setLocation(backButton.getWidth() / 2,
                 screenHeight / 10);
@@ -59,6 +72,11 @@ public class UserProductsPanel extends JPanel {
         });
 
         logOutButton = new JButton("Log out");
+        logOutButton.setForeground(new Color(0, 102, 102));
+        logOutButton.setBackground(Color.white);
+        logOutButton.setBorder(new TitledBorder(""));
+        logOutButton.setContentAreaFilled(false);
+        logOutButton.setOpaque(true);
         logOutButton.setSize(backButton.getSize());
         logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth() * 1.5),
                 (int) backButton.getLocation().getY());
@@ -100,6 +118,10 @@ public class UserProductsPanel extends JPanel {
             productsData[i][3] = "";
         }
         productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames));
+        productsTable.setBackground(Color.white);
+        productsTable.setBorder(new MatteBorder(0, 0, 0, 0, Color.black));
+        productsTable.setOpaque(true);
+        productsTable.setForeground(new Color(0, 102, 102));
         productsTable.getColumnModel().getColumn(1).setPreferredWidth(productsTable.getColumnModel().getColumn(1).getPreferredWidth() + 200);
 
         @SuppressWarnings("unused")
@@ -108,6 +130,9 @@ public class UserProductsPanel extends JPanel {
         ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDeleteProduct(), 3);
 
         productsTableScrollPane = new JScrollPane(productsTable);
+        productsTableScrollPane.getViewport().setBackground(Color.WHITE);
+        productsTableScrollPane.setBorder(new TitledBorder(""));
+        productsTableScrollPane.setOpaque(true);
         productsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight / 2);
         productsTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));

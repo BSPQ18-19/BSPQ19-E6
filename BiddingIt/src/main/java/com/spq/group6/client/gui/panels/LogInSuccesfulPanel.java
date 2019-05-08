@@ -53,7 +53,7 @@ public class LogInSuccesfulPanel extends JPanel {
 
                 while (LogInSuccesfulPanel.this.isEnabled()) {
 
-                    if (dots++ == 3)
+                    if (dots++ == 2)
                         dots = 0;
 
                     String tempText = infoLabel2.getText().substring(0, 38);
