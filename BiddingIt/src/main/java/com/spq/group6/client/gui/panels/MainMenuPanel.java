@@ -6,6 +6,8 @@ import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,24 +25,34 @@ public class MainMenuPanel extends JPanel {
 
     public MainMenuPanel(int screenWidth, int screenHeight) {
 
+        setBackground(Color.WHITE);
         this.setLayout(null);
 
         controller = ClientController.getClientController();
 
         titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
-        titleLabel.setSize(screenWidth / 3, screenHeight / 3);
-        titleLabel.setLocation((int) (screenWidth / 2 - titleLabel.getWidth() * 1.25), (int) (screenHeight / 4 - titleLabel.getHeight() / 1.25));
+        titleLabel.setForeground(Color.white);
+        titleLabel.setBackground(new Color(0, 204, 204));
+        titleLabel.setOpaque(true);
+        titleLabel.setSize(screenWidth, screenHeight / 3);
+        titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
         infoLabel = new JLabel("Welcome to the best bidding system in the world!", SwingConstants.LEFT);
+        infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 6);
-        infoLabel.setLocation((int) titleLabel.getLocation().getX(),
+        infoLabel.setLocation((int) titleLabel.getLocation().getX() + 5,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 10));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
         userAuctionsButton = new JButton("My auctions");
+        userAuctionsButton.setForeground(new Color(0, 102, 102));
+        userAuctionsButton.setBackground(Color.white);
+        userAuctionsButton.setBorder(new TitledBorder(""));
+        userAuctionsButton.setContentAreaFilled(false);
+        userAuctionsButton.setOpaque(true);
         userAuctionsButton.setSize(screenWidth / 5, screenHeight / 8);
-        userAuctionsButton.setLocation((int) (titleLabel.getLocation().getX()),
+        userAuctionsButton.setLocation((int) (infoLabel.getLocation().getX() + 10),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getFont().getSize() + screenHeight / 5));
         SDG2Util.fixJButtonFontSize(userAuctionsButton);
         userAuctionsButton.addActionListener(new ActionListener() {
@@ -52,6 +64,11 @@ public class MainMenuPanel extends JPanel {
         });
 
         userProductsButton = new JButton("My products");
+        userProductsButton.setForeground(new Color(0, 102, 102));
+        userProductsButton.setBackground(Color.white);
+        userProductsButton.setBorder(new TitledBorder(""));
+        userProductsButton.setContentAreaFilled(false);
+        userProductsButton.setOpaque(true);
         userProductsButton.setSize(screenWidth / 5, screenHeight / 8);
         userProductsButton.setLocation((int) (userAuctionsButton.getLocation().getX()),
                 (int) (userAuctionsButton.getLocation().getY() + userProductsButton.getSize().getHeight() + screenHeight / 20));
@@ -65,6 +82,11 @@ public class MainMenuPanel extends JPanel {
         });
 
         marketButton = new JButton("Market");
+        marketButton.setForeground(new Color(0, 102, 102));
+        marketButton.setBackground(Color.white);
+        marketButton.setBorder(new TitledBorder(""));
+        marketButton.setContentAreaFilled(false);
+        marketButton.setOpaque(true);
         marketButton.setSize(screenWidth / 5, screenHeight / 8);
         marketButton.setLocation((int) (titleLabel.getLocation().getX() + marketButton.getSize().getWidth() + screenWidth / 20),
                 (int) (userAuctionsButton.getLocation().getY()));
@@ -79,9 +101,14 @@ public class MainMenuPanel extends JPanel {
         });
 
         logOutButton = new JButton("Log out");
+        logOutButton.setForeground(new Color(0, 102, 102));
+        logOutButton.setBackground(Color.white);
+        logOutButton.setBorder(new TitledBorder(""));
+        logOutButton.setContentAreaFilled(false);
+        logOutButton.setOpaque(true);
         logOutButton.setSize(screenWidth / 8, screenHeight / 15);
         logOutButton.setLocation(screenWidth / 2 + 2 * logOutButton.getWidth(),
-                screenHeight / 10);
+                (int) (screenHeight / 1.2));
         SDG2Util.fixJButtonFontSize(logOutButton);
         logOutButton.addActionListener(new ActionListener() {
 

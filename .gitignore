@@ -42,3 +42,6 @@ target/
 
 # Profiling
 profiling/
+
+# GUI
+*.jfd
