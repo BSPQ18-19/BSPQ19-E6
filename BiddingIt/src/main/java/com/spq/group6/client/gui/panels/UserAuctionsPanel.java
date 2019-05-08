@@ -12,6 +12,9 @@ import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
@@ -35,21 +38,31 @@ public class UserAuctionsPanel extends JPanel {
     public UserAuctionsPanel(int screenWidth, int screenHeight) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
+        setBackground(Color.WHITE);
         this.setLayout(null);
         this.controller = ClientController.getClientController();
 
         titleLabel = new JLabel("My auctions", SwingConstants.LEFT);
+        titleLabel.setForeground(Color.white);
+        titleLabel.setBackground(new Color(0, 204, 204));
+        titleLabel.setOpaque(true);
         titleLabel.setSize(screenWidth / 4, screenHeight / 15);
         titleLabel.setLocation((int) (screenWidth / 2 - titleLabel.getWidth() * 1.75), screenHeight / 4 - titleLabel.getHeight() / 2);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
         infoLabel = new JLabel("Here you can see your auctions. Start selling and check your earnings!", SwingConstants.LEFT);
+        infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
         infoLabel.setLocation((int) titleLabel.getLocation().getX(),
                 (int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
         backButton = new JButton("Back");
+        backButton.setForeground(new Color(0, 102, 102));
+        backButton.setBackground(Color.white);
+        backButton.setBorder(new TitledBorder(""));
+        backButton.setContentAreaFilled(false);
+        backButton.setOpaque(true);
         backButton.setSize(screenWidth / 8, screenHeight / 15);
         backButton.setLocation(backButton.getWidth() / 2,
                 screenHeight / 10);
@@ -63,6 +76,11 @@ public class UserAuctionsPanel extends JPanel {
         });
 
         logOutButton = new JButton("Log out");
+        logOutButton.setForeground(new Color(0, 102, 102));
+        logOutButton.setBackground(Color.white);
+        logOutButton.setBorder(new TitledBorder(""));
+        logOutButton.setContentAreaFilled(false);
+        logOutButton.setOpaque(true);
         logOutButton.setSize(backButton.getSize());
         logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth() * 1.5),
                 (int) backButton.getLocation().getY());
@@ -82,7 +100,18 @@ public class UserAuctionsPanel extends JPanel {
         userAuctions = controller.getCurrentUserAuctions();
         auctionsTable = new JTable(new AuctionJTableModel(new Object[][]{}, auctionsColumnNames, this));
         updateAuctions();
+        auctionsTable.setRowHeight((int)(auctionsTable.getRowHeight()*1.5));
+        auctionsTable.getTableHeader().setOpaque(false);
+        auctionsTable.getTableHeader().setBackground(new Color(234, 255, 255));
+        auctionsTable.setBackground(Color.white);
+        auctionsTable.setBorder(new MatteBorder(0, 0, 0, 0, Color.black));
+        auctionsTable.setOpaque(true);
+        auctionsTable.setForeground(new Color(0, 102, 102));
+
         auctionsTableScrollPane = new JScrollPane(auctionsTable);
+        auctionsTableScrollPane.getViewport().setBackground(Color.WHITE);
+        auctionsTableScrollPane.setBorder(new TitledBorder(""));
+        auctionsTableScrollPane.setOpaque(true);
         auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight / 2);
         auctionsTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));

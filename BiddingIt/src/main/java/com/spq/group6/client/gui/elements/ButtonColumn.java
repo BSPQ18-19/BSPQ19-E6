@@ -132,6 +132,8 @@ public class ButtonColumn extends AbstractCellEditor
         if (isSelected) {
             renderButton.setForeground(table.getSelectionForeground());
             renderButton.setBackground(table.getSelectionBackground());
+            renderButton.setContentAreaFilled(false);
+            renderButton.setOpaque(true);
         } else {
             renderButton.setForeground(new Color(102, 69, 3));
             renderButton.setBackground(Color.white);
