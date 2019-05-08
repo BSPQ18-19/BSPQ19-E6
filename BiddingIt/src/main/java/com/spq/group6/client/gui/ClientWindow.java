@@ -41,7 +41,7 @@ public class ClientWindow extends JFrame {
 
         switch (nextScreenType) {
             case INITIAL:
-                mainPanel = new InitialPanel();
+                mainPanel = new InitialPanel(screenWidth, screenHeight);
                 break;
             case REGISTER:
                 mainPanel = new RegisterPanel(screenWidth, screenHeight);
