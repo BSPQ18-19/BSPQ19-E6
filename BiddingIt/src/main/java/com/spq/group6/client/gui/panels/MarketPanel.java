@@ -12,6 +12,8 @@ import com.spq.group6.client.gui.utils.ScreenType;
 import com.spq.group6.server.data.Auction;
 
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,17 +43,22 @@ public class MarketPanel extends JPanel {
 
     public MarketPanel(int screenWidth, int screenHeight) {
 
+        setBackground(Color.WHITE);
         this.setLayout(null);
 
         controller = ClientController.getClientController();
         auctionsTimeLeftThread = new ArrayList<Thread>();
 
         titleLabel = new JLabel("Market", SwingConstants.LEFT);
+        titleLabel.setForeground(Color.white);
+        titleLabel.setBackground(new Color(0, 204, 204));
+        titleLabel.setOpaque(true);
         titleLabel.setSize(screenWidth / 5, screenHeight / 15);
         titleLabel.setLocation(screenWidth / 15, screenHeight / 4 - titleLabel.getHeight() / 2);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
         infoLabel = new JLabel("Here you can see others' auctions. Start bidding!", SwingConstants.LEFT);
+        infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
         infoLabel.setLocation((int) titleLabel.getLocation().getX(),
                 (int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));
@@ -59,10 +66,24 @@ public class MarketPanel extends JPanel {
 
         // searching filter
         searchLabel = new JLabel("Search for auctions where");
+        searchLabel.setForeground(new Color(0, 102, 102));
         searchComboBox = new JComboBox<>(new String[]{"Country", "Name"});
+        searchComboBox.setForeground(new Color(0, 102, 102));
+        searchComboBox.setEditable(true);
+        searchComboBox.getEditor().getEditorComponent().setBackground(Color.white);
+        searchComboBox.getEditor().getEditorComponent().setForeground(new Color(0, 102, 102));
+        searchComboBox.setBorder(new TitledBorder(""));
+        searchComboBox.setOpaque(true);
         searchLabel2 = new JLabel("is");
+        searchLabel2.setForeground(new Color(0, 102, 102));
         searchTF = new JTextField(10);
+        searchTF.setForeground(new Color(102, 69, 3));
         searchButton = new JButton("Search");
+        searchButton.setForeground(new Color(0, 102, 102));
+        searchButton.setBackground(Color.white);
+        searchButton.setBorder(new TitledBorder(""));
+        searchButton.setContentAreaFilled(false);
+        searchButton.setOpaque(true);
         searchButton.addActionListener(new ActionListener() {
 
             @Override
@@ -91,11 +112,20 @@ public class MarketPanel extends JPanel {
             }
         });
         searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        searchPanel.setBackground(Color.white);
+        searchPanel.setBorder(new MatteBorder(0, 0, 0, 0, Color.black));
+        searchPanel.setOpaque(true);
+        searchPanel.setForeground(new Color(0, 102, 102));
         searchPanel.setSize((int) (screenWidth / 1.2), screenHeight / 14);
         searchPanel.setLocation((int) infoLabel.getLocation().getX(),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
 
         backButton = new JButton("Back");
+        backButton.setForeground(new Color(0, 102, 102));
+        backButton.setBackground(Color.white);
+        backButton.setBorder(new TitledBorder(""));
+        backButton.setContentAreaFilled(false);
+        backButton.setOpaque(true);
         backButton.setSize(screenWidth / 8, screenHeight / 15);
         backButton.setLocation(backButton.getWidth() / 2,
                 screenHeight / 10);
@@ -109,6 +139,11 @@ public class MarketPanel extends JPanel {
         });
 
         logOutButton = new JButton("Log out");
+        logOutButton.setForeground(new Color(0, 102, 102));
+        logOutButton.setBackground(Color.white);
+        logOutButton.setBorder(new TitledBorder(""));
+        logOutButton.setContentAreaFilled(false);
+        logOutButton.setOpaque(true);
         logOutButton.setSize(backButton.getSize());
         logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth() * 1.5),
                 (int) backButton.getLocation().getY());
@@ -126,9 +161,18 @@ public class MarketPanel extends JPanel {
         });
 
         auctionsTable = new JTable(new MarketJTableModel(new Object[][]{}, auctionsColumnNames));
+        auctionsTable.setRowHeight((int)(auctionsTable.getRowHeight()*1.5));
+        auctionsTable.getTableHeader().setOpaque(false);
+        auctionsTable.getTableHeader().setBackground(new Color(234, 255, 255));
+        auctionsTable.setBackground(Color.white);
+        auctionsTable.setBorder(new MatteBorder(0, 0, 0, 0, Color.black));
+        auctionsTable.setOpaque(true);
+        auctionsTable.setForeground(new Color(0, 102, 102));
         auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 100);
-       
+
         auctionsTableScrollPane = new JScrollPane(auctionsTable);
+        auctionsTableScrollPane.getViewport().setBackground(Color.WHITE);
+        auctionsTableScrollPane.setBorder(new TitledBorder(""));
         auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()),
                 (int) (screenHeight / 2.25));
         auctionsTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
