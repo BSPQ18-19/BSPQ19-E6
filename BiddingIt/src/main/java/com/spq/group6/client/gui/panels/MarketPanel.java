@@ -1,6 +1,5 @@
 package com.spq.group6.client.gui.panels;
 
-import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.actions.ActionBid;
@@ -16,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MarketPanel extends JPanel {
@@ -34,10 +32,9 @@ public class MarketPanel extends JPanel {
     private JButton backButton;
     private JButton logOutButton;
 
-    private String[] auctionsColumnNames = {"Prod. Name", "Description", "Highest Bid", "Time left", ""};
+    private String[] auctionsColumnNames = {"Prod. Name", "Description", "Private", "Highest Bid", "Time left", ""};
 
 
-    @SuppressWarnings("unused")
     private ClientController controller;
     private ArrayList<Thread> auctionsTimeLeftThread;
     private ArrayList<Auction> auctions;
@@ -129,14 +126,8 @@ public class MarketPanel extends JPanel {
         });
 
         auctionsTable = new JTable(new MarketJTableModel(new Object[][]{}, auctionsColumnNames));
-        auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth() + 100);
-
-        // set column 3 to limit day
-        auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
-        auctionsTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
-        auctionsTable.getColumnModel().getColumn(4).setCellEditor(auctionsTable.getDefaultEditor(LocalDateTime.class));
-        auctionsTable.getColumnModel().getColumn(4).setCellRenderer(auctionsTable.getDefaultRenderer(LocalDateTime.class));
-
+        auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 100);
+       
         auctionsTableScrollPane = new JScrollPane(auctionsTable);
         auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()),
                 (int) (screenHeight / 2.25));
@@ -171,12 +162,16 @@ public class MarketPanel extends JPanel {
                 Auction tempAuction = auctions.get(i);
                 auctionsData[i][0] = tempAuction;
                 auctionsData[i][1] = tempAuction.getProduct().getDescription();
+                if (tempAuction.getPassword() != null && !tempAuction.getPassword().equals(""))
+                	auctionsData[i][2] = "Yes";
+            	else
+            		auctionsData[i][2] = "No";
                 if (tempAuction.getHighestBid() == null)
-                    auctionsData[i][2] = 0 + " (initial:" + tempAuction.getInitialPrice() + ")";
+                    auctionsData[i][3] = 0 + " (initial:" + tempAuction.getInitialPrice() + ")";
                 else
-                    auctionsData[i][2] = tempAuction.getHighestBid().getAmount();
-                auctionsData[i][3] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
-                auctionsData[i][4] = "Bid";
+                    auctionsData[i][3] = tempAuction.getHighestBid().getAmount();
+                auctionsData[i][4] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
+                auctionsData[i][5] = "Bid";
 
                 Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
                 auctionsTimeLeftThread.add(tempAuctionThread);
@@ -184,10 +179,10 @@ public class MarketPanel extends JPanel {
 
         }
         auctionsTable.setModel(new MarketJTableModel(auctionsData, auctionsColumnNames));
-        auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth() + 100);
+        auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 100);
 
-        ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 4);
-
+        ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 5);
+        
         // start countdown threads
         for (int i = 0; i < auctionsData.length; i++) {
             auctionsTimeLeftThread.get(i).start();

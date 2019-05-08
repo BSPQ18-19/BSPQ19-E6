@@ -8,8 +8,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class MarketJTableModel extends DefaultTableModel {
 
-    // TODO
-
     private static final long serialVersionUID = 1L;
     private ClientController controller;
 
@@ -22,7 +20,7 @@ public class MarketJTableModel extends DefaultTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == 4;
+        return columnIndex == 5;
     }
 
     public void bidAuctionAt(int rowIndex, Auction auction) {
@@ -37,7 +35,7 @@ public class MarketJTableModel extends DefaultTableModel {
         if (bidValue != null && Float.parseFloat(bidValue) > actualHighestBid)
             if (controller.bid(auction, Float.parseFloat(bidValue))) {
                 JOptionPane.showConfirmDialog(null, "Auction bidded correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                this.setValueAt(bidValue, rowIndex, 2);
+                this.setValueAt(bidValue, rowIndex, 3);
 
             } else
                 JOptionPane.showConfirmDialog(null, "Error bidding the auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
