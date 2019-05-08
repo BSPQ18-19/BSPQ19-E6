@@ -64,6 +64,7 @@ public class RegisterPanel extends JPanel {
 
         usernameTF = new JTextField();
         usernameTF.setBackground(Color.white);
+        usernameTF.setForeground(new Color(102, 69, 3));
         usernameTF.setBorder(new TitledBorder(""));
         usernameTF.setSize(screenWidth / 4, screenHeight / 20);
         usernameTF.setLocation((int) usernameLabel.getLocation().getX() + usernameLabel.getWidth(),
@@ -101,6 +102,7 @@ public class RegisterPanel extends JPanel {
 
         passwordTF = new JTextField();
         passwordTF.setBackground(Color.white);
+        passwordTF.setForeground(new Color(102, 69, 3));
         passwordTF.setBorder(new TitledBorder(""));
         passwordTF.setSize(usernameTF.getSize());
         passwordTF.setLocation((int) usernameTF.getLocation().getX(),
@@ -138,6 +140,7 @@ public class RegisterPanel extends JPanel {
 
         countryTF = new JTextField();
         countryTF.setBackground(Color.white);
+        countryTF.setForeground(new Color(102, 69, 3));
         countryTF.setBorder(new TitledBorder(""));
         countryTF.setSize(usernameTF.getSize());
         countryTF.setLocation((int) usernameTF.getLocation().getX(),
