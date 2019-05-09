@@ -230,8 +230,7 @@ public class MarketPanel extends JPanel {
         ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 5);
         
         // start countdown threads
-        int i;
-        for (i = 0; i < auctionsData.length; i++) {
+        for (int i = 0; i < auctionsData.length; i++) {
             auctionsTimeLeftThread.get(i).start();
         }
 
