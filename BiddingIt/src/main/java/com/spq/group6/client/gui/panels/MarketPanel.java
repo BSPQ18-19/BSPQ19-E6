@@ -3,6 +3,7 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.actions.ActionBid;
+import com.spq.group6.client.gui.elements.AuctionJTableModel;
 import com.spq.group6.client.gui.elements.AuctionTimeLeftRunnable;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.MarketJTableModel;
@@ -14,9 +15,11 @@ import com.spq.group6.server.data.Auction;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
 import java.util.ArrayList;
 
 public class MarketPanel extends JPanel {
@@ -216,7 +219,6 @@ public class MarketPanel extends JPanel {
                     auctionsData[i][3] = tempAuction.getHighestBid().getAmount();
                 auctionsData[i][4] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
                 auctionsData[i][5] = "Bid";
-
                 Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
                 auctionsTimeLeftThread.add(tempAuctionThread);
             }
@@ -228,7 +230,8 @@ public class MarketPanel extends JPanel {
         ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 5);
         
         // start countdown threads
-        for (int i = 0; i < auctionsData.length; i++) {
+        int i;
+        for (i = 0; i < auctionsData.length; i++) {
             auctionsTimeLeftThread.get(i).start();
         }
 
