@@ -43,7 +43,7 @@ public class AccountService implements IAccountService {
 
     public User signIn(String username, String password, String country, IRemoteObserver observer) throws AccountException {
         User user = new User(username, password, country);
-        // Added 1000 as initial money, otheriwse a Payment service would be needed
+        // Added 1000 as initial money, otherwise a Payment service would be needed
         user.setMoney(1000);
         checkDuplicatedUser(user);
         biddingDAO.persistUser(user);

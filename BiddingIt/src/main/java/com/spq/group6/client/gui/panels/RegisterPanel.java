@@ -12,7 +12,6 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.RemoteException;
 
 public class RegisterPanel extends JPanel {
 
@@ -23,6 +22,7 @@ public class RegisterPanel extends JPanel {
     private JTextField usernameTF;
     //private JLabelGraficoAjustado usernametickImage;
     private JLabel passwordLabel;
+    private JLabel confirmLabel;
     private JTextField passwordTF;
     //private JLabelGraficoAjustado passwordtickImage;
     private JLabel countryLabel;
@@ -162,11 +162,12 @@ public class RegisterPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                    if (controller.signIn(usernameTF.getText(), passwordTF.getText(), countryTF.getText())){
-                        ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
-                    }else {
-                        JOptionPane.showConfirmDialog(RegisterPanel.this, "Error signing in.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-                    }
+                if (controller.signIn(usernameTF.getText(), passwordTF.getText(), countryTF.getText())) {
+                    ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
+                } else {
+                    confirmLabel.setForeground(new Color(102, 34, 22));
+                    confirmLabel.setText("Error while signin.");
+                }
 				
 				/*
 				if (usernametickImage.getName().equals("media/checked.png") &&
@@ -204,6 +205,12 @@ public class RegisterPanel extends JPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
             }
         });
+        confirmLabel = new JLabel(" ",
+                SwingConstants.LEFT);
+        confirmLabel.setForeground(new Color(0, 102, 102));
+        confirmLabel.setSize((int) (screenWidth / 1.3), screenHeight / 6);
+        confirmLabel.setLocation(10, cancelButton.getY() + cancelButton.getHeight() + 20);
+        confirmLabel.setFont(new Font("Arial", Font.PLAIN, screenHeight / 30));
 
         this.add(titleLabel);
         this.add(infoLabel);
@@ -217,7 +224,15 @@ public class RegisterPanel extends JPanel {
         this.add(countryTF);
         this.add(confirmButton);
         this.add(cancelButton);
+        this.add(confirmLabel);
+    }
 
+    public static void main(String[] args) {
+        JFrame testFrame = new JFrame();
+        testFrame.setSize(800, 600);
+        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        testFrame.add(new RegisterPanel(800, 600));
+        testFrame.setVisible(true);
     }
 
     // param isUsername is true when checking the usernametf and false when checking the passwordtf
@@ -240,13 +255,5 @@ public class RegisterPanel extends JPanel {
 		}
 		System.out.println(usernametickImage.getName() + " " + passwordtickImage.getName());
 		*/
-    }
-
-    public static void main(String[] args) {
-        JFrame testFrame = new JFrame();
-        testFrame.setSize(800, 600);
-        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        testFrame.add(new RegisterPanel(800, 600));
-        testFrame.setVisible(true);
     }
 }

@@ -10,7 +10,6 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.RemoteException;
 
 
 public class UserAccountPanel extends JPanel {
@@ -133,7 +132,7 @@ public class UserAccountPanel extends JPanel {
                 SwingConstants.LEFT);
         confirmLabel.setForeground(new Color(0, 102, 102));
         confirmLabel.setSize((int) (screenWidth / 1.3), screenHeight / 6);
-        confirmLabel.setLocation(10, backButton.getY() + 20);
+        confirmLabel.setLocation(10, backButton.getY() + backButton.getHeight() + 20);
         confirmLabel.setFont(new Font("Arial", Font.PLAIN, screenHeight / 30));
 
         this.add(titleLabel);

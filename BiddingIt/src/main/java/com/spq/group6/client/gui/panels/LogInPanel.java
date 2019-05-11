@@ -19,6 +19,7 @@ public class LogInPanel extends JPanel {
     private JLabel titleLabel;
     private JLabel infoLabel;
     private JLabel usernameLabel;
+    private JLabel confirmLabel;
     private JTextField usernameTF;
     private JLabel passwordLabel;
     private JTextField passwordTF;
@@ -99,8 +100,10 @@ public class LogInPanel extends JPanel {
                 try {
                     if (controller.logIn(usernameTF.getText(), passwordTF.getText()))
                         ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
-                    else
-                        JOptionPane.showConfirmDialog(LogInPanel.this, "Error logging in.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                    else {
+                        confirmLabel.setForeground(new Color(102, 34, 22));
+                        confirmLabel.setText("Error while login.");
+                    }
 
                 } catch (RemoteException e1) {
 
@@ -126,6 +129,13 @@ public class LogInPanel extends JPanel {
             }
         });
 
+        confirmLabel = new JLabel(" ",
+                SwingConstants.LEFT);
+        confirmLabel.setForeground(new Color(0, 102, 102));
+        confirmLabel.setSize((int) (screenWidth / 1.3), screenHeight / 6);
+        confirmLabel.setLocation(10, cancelButton.getY() + cancelButton.getHeight() + 20);
+        confirmLabel.setFont(new Font("Arial", Font.PLAIN, screenHeight / 30));
+
         this.add(titleLabel);
         this.add(infoLabel);
         this.add(usernameLabel);
@@ -134,6 +144,7 @@ public class LogInPanel extends JPanel {
         this.add(passwordTF);
         this.add(confirmButton);
         this.add(cancelButton);
+        this.add(confirmLabel);
 
     }
 
