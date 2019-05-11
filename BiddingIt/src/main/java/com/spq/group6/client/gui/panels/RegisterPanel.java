@@ -100,7 +100,7 @@ public class RegisterPanel extends JPanel {
                 (int) (usernameLabel.getLocation().getY() + usernameLabel.getHeight() + screenHeight / 40));
         passwordLabel.setFont(usernameLabel.getFont());
 
-        passwordTF = new JTextField();
+        passwordTF = new JPasswordField();
         passwordTF.setBackground(Color.white);
         passwordTF.setForeground(new Color(102, 69, 3));
         passwordTF.setBorder(new TitledBorder(""));

@@ -229,6 +229,17 @@ public class ClientControllerTest {
         biddingDao.deleteUser(seller);
     }
 
+    @Test
+    public void updateUserTest() throws RemoteException {
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
+        assertEquals(seller.getCountry(), clientController.getCurrentUser().getCountry());
+
+        String newCountry = "Thailand";
+        assertTrue(clientController.updateUser(newCountry, seller.getPassword()));
+
+        assertEquals(newCountry, clientController.getCurrentUser().getCountry());
+    }
+
     @After
     public void tearDown() {
         User user = clientController.getCurrentUser();
