@@ -51,7 +51,7 @@ public class AccountService implements IAccountService {
         return user;
     }
 
-    public User updateUser(User user, String password, String country) throws AccountException {
+    public User updateUser(User user, String country, String password) throws AccountException {
         user = BiddingLocks.lockAndGetUser(user);
         user.setPassword(password);
         user.setCountry(country);

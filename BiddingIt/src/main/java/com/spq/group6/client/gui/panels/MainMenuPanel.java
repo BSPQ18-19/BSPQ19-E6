@@ -17,6 +17,7 @@ public class MainMenuPanel extends JPanel {
     private JLabel titleLabel;
     private JLabel infoLabel;
     private JButton marketButton;
+    private JButton userAccountButton;
     private JButton userProductsButton;
     private JButton userAuctionsButton;
     private JButton logOutButton;
@@ -100,6 +101,25 @@ public class MainMenuPanel extends JPanel {
             }
         });
 
+        userAccountButton = new JButton("Account");
+        userAccountButton.setForeground(new Color(0, 102, 102));
+        userAccountButton.setBackground(Color.white);
+        userAccountButton.setBorder(new TitledBorder(""));
+        userAccountButton.setContentAreaFilled(false);
+        userAccountButton.setOpaque(true);
+        userAccountButton.setSize(screenWidth / 5, screenHeight / 8);
+        SDG2Util.fixJButtonFontSize(userAccountButton);
+        userAccountButton.setLocation((int) (titleLabel.getLocation().getX() + userAccountButton.getSize().getWidth() + screenWidth / 20),
+                (int) (userProductsButton.getLocation().getY()));
+        userAccountButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ClientWindow.getClientWindow().changeScreen(ScreenType.USER_ACCOUNT);
+
+            }
+        });
+
         logOutButton = new JButton("Log out");
         logOutButton.setForeground(new Color(0, 102, 102));
         logOutButton.setBackground(Color.white);
@@ -127,6 +147,7 @@ public class MainMenuPanel extends JPanel {
         this.add(marketButton);
         this.add(userProductsButton);
         this.add(userAuctionsButton);
+        this.add(userAccountButton);
         this.add(logOutButton);
     }
 

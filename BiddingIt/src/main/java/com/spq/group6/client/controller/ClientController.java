@@ -61,7 +61,7 @@ public class ClientController {
         return false;
     }
 
-    public boolean signIn(String email, String password, String country) throws RemoteException {
+    public boolean signIn(String email, String password, String country) {
         String info = "Sign in with username " + email + " and password " + password + " and country " + country;
         try {
             ClientLogger.logger.debug("Trying to " + info + ".");
@@ -73,7 +73,7 @@ public class ClientController {
                 return true;
             } else
                 ClientLogger.logger.warn(info + " incorrect. Server returned null.");
-        } catch (AccountException re) {
+        } catch (AccountException | RemoteException re) {
             ClientLogger.logger.error(info + ". Exception found in server: " + re.getMessage());
         }
         return false;
@@ -277,6 +277,18 @@ public class ClientController {
         return prodNameAuctions;
     }
 
+    public boolean updateUser(String country, String password) {
+        String info = "Update user: " + currentUser.getUsername();
+        try {
+            ClientLogger.logger.debug("Trying to " + info + ".");
+            currentUser = serviceLocator.getService().updateUser(getCurrentUser(), country, password );
+            ClientLogger.logger.debug(info + " correct.");
+        } catch (RemoteException | AccountException e) {
+            ClientLogger.logger.error("Error searching auctions by prod name: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
 
     public void exit() {
         System.exit(0);

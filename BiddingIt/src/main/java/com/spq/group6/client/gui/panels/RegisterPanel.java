@@ -162,13 +162,11 @@ public class RegisterPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                try {
-                    controller.signIn(usernameTF.getText(), passwordTF.getText(), countryTF.getText());
-                    ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
-                } catch (RemoteException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                    if (controller.signIn(usernameTF.getText(), passwordTF.getText(), countryTF.getText())){
+                        ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN_SUCCESFUL, usernameTF.getText());
+                    }else {
+                        JOptionPane.showConfirmDialog(RegisterPanel.this, "Error signing in.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                    }
 				
 				/*
 				if (usernametickImage.getName().equals("media/checked.png") &&

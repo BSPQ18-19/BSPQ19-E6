@@ -64,6 +64,9 @@ public class ClientWindow extends JFrame {
             case USER_AUCTIONS:
                 mainPanel = new UserAuctionsPanel(screenWidth, screenHeight);
                 break;
+            case USER_ACCOUNT:
+                mainPanel = new UserAccountPanel(screenWidth, screenHeight);
+                break;
             default:
                 break;
         }

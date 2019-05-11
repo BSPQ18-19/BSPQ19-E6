@@ -65,7 +65,7 @@ public interface IServer extends Remote {
      * @throws RemoteException
      * @throws AccountException
      */
-    User updateUser(User user, String password, String country) throws RemoteException, AccountException;
+    User updateUser(User user, String country, String password) throws RemoteException, AccountException;
 
     /**
      * Method for creating a new Product.
