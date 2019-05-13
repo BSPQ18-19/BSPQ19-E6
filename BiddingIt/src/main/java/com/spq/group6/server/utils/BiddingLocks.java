@@ -10,16 +10,29 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Class needed for limiting access to User and Auctions.
+ * <p>
  * This class contains a Lock for each User and Auction.
- * Locks are needed when there are ClientMain concurrent requests
- * updating the same Object on the database
+ * Locks are needed when there are Client concurrent requests
+ * updating the same Object on the database.
+ * <p>
+ * The following classes use locks contained in this class.
+ * {@link com.spq.group6.server.services.AccountService}
+ * {@link com.spq.group6.server.services.AuctionService}
+ * {@link com.spq.group6.server.services.AdminService}
  */
 public class BiddingLocks {
-    private static HashMap<Long, Lock> auctionLocks = new HashMap<Long, Lock>(); /** HashMap containing Locks for every Auction.
-     Auctions are identified by their ID (long)*/
-    private static HashMap<String, Lock> userLocks = new HashMap<String, Lock>();/** HashMap containing Locks for every Client.
-     Clients are identified by their username(String)*/
-    private static BiddingDAO biddingDAO = new BiddingDAO();
+    private static HashMap<Long, Lock> auctionLocks = new HashMap<Long, Lock>();
+    /**
+     * static HashMap containing Locks for every Auction.
+     * Auctions are identified by their ID (long)
+     */
+    private static HashMap<String, Lock> userLocks = new HashMap<String, Lock>();
+    /**
+     * static HashMap containing Locks for every Client.
+     * Clients are identified by their username(String)
+     */
+    private static BiddingDAO biddingDAO = new BiddingDAO(); /* DAO object for updating
+     persistent data. It is used for accesing Users and Auctions latest versions */
 
     /**
      * Method for locking the access for an Auction
@@ -30,11 +43,12 @@ public class BiddingLocks {
      */
     public static synchronized Auction lockAndGetAuction(Auction auction) {
         long auctionID = auction.getAuctionID();
-        if (!auctionLocks.containsKey(auctionID)) {
+        if (!auctionLocks.containsKey(auctionID)) { // If it does not exist, creates a Lock
             auctionLocks.put(auctionID, new ReentrantLock());
         }
         auctionLocks.get(auctionID).lock();
-        return biddingDAO.getAuctionByID(auctionID);
+        return biddingDAO.getAuctionByID(auctionID); /* Retrieves Auction's latest version from the database,
+        and returns it. */
     }
 
     /**
@@ -50,7 +64,7 @@ public class BiddingLocks {
     }
 
     /**
-     * Method for unlocking and Auction previously Locked
+     * Method for unlocking a previously Locked Auction
      *
      * @param auction Auction that will be unlocked
      */
