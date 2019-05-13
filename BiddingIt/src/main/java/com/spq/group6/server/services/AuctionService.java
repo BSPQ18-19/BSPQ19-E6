@@ -23,7 +23,8 @@ import java.util.HashMap;
  * - Auctions's retrieval
  */
 public class AuctionService implements IAuctionService {
-    public static HashMap<Long, Thread> countdownObservables;
+    public static HashMap<Long, Thread> countdownObservables; /** HashMap containing all AuctionCountdowns that are
+     running.  Countdowns are Threads, and they are identified by its Auction's ID (long)*/
     private IBiddingDAO biddingDAO;
 
     public AuctionService() {

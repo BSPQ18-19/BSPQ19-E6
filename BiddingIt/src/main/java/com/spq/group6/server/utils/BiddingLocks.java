@@ -15,8 +15,10 @@ import java.util.concurrent.locks.ReentrantLock;
  * updating the same Object on the database
  */
 public class BiddingLocks {
-    private static HashMap<Long, Lock> auctionLocks = new HashMap<Long, Lock>();
-    private static HashMap<String, Lock> userLocks = new HashMap<String, Lock>();
+    private static HashMap<Long, Lock> auctionLocks = new HashMap<Long, Lock>(); /** HashMap containing Locks for every Auction.
+     Auctions are identified by their ID (long)*/
+    private static HashMap<String, Lock> userLocks = new HashMap<String, Lock>();/** HashMap containing Locks for every Client.
+     Clients are identified by their username(String)*/
     private static BiddingDAO biddingDAO = new BiddingDAO();
 
     /**
