@@ -3,8 +3,8 @@ package com.spq.group6.server.services;
 import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
-import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.AccountException;
+import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 
 /**
