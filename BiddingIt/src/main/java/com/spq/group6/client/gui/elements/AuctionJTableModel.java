@@ -32,27 +32,27 @@ public class AuctionJTableModel extends DefaultTableModel {
             JOptionPane.showConfirmDialog(null, "Error creating an auction. The day limit must be following now.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
         else if (Float.parseFloat(initialPrice) < 0)
             JOptionPane.showConfirmDialog(null, "Error creating an auction. The initial price must be positive.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-        else if (password != null && !password.equals("")){
-	        if (controller.createPrivateAuction(product, password, Timestamp.valueOf(dayLimit), Float.parseFloat(initialPrice))) {
-	            this.setValueAt("0", rowIndex, 3);
-	            this.setValueAt("Open", rowIndex, 4);
-	            this.setValueAt("", rowIndex, 6);
-	            this.addRow(new String[]{"", "", "", "-", "-", "", "Create"}); // add new row for a new auction
-	            JOptionPane.showConfirmDialog(null, "Private auction created correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-	            parentPanel.updateUserProductsComboBox();
-	        } else
-	            JOptionPane.showConfirmDialog(null, "Error creating an auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-	    } else {
-	    	if (controller.createPublicAuction(product, Timestamp.valueOf(dayLimit), Float.parseFloat(initialPrice))) {
-	            this.setValueAt("0", rowIndex, 3);
-	            this.setValueAt("Open", rowIndex, 4);
-	            this.setValueAt("", rowIndex, 6);
-	            this.addRow(new String[]{"", "", "", "-", "-", "", "Create"}); // add new row for a new auction
-	            JOptionPane.showConfirmDialog(null, "Public auction created correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-	            parentPanel.updateUserProductsComboBox();
-	        } else
-	            JOptionPane.showConfirmDialog(null, "Error creating a private auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-	    }
+        else if (password != null && !password.equals("")) {
+            if (controller.createPrivateAuction(product, password, Timestamp.valueOf(dayLimit), Float.parseFloat(initialPrice))) {
+                this.setValueAt("0", rowIndex, 3);
+                this.setValueAt("Open", rowIndex, 4);
+                this.setValueAt("", rowIndex, 6);
+                this.addRow(new String[]{"", "", "", "-", "-", "", "Create"}); // add new row for a new auction
+                JOptionPane.showConfirmDialog(null, "Private auction created correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.updateUserProductsComboBox();
+            } else
+                JOptionPane.showConfirmDialog(null, "Error creating an auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (controller.createPublicAuction(product, Timestamp.valueOf(dayLimit), Float.parseFloat(initialPrice))) {
+                this.setValueAt("0", rowIndex, 3);
+                this.setValueAt("Open", rowIndex, 4);
+                this.setValueAt("", rowIndex, 6);
+                this.addRow(new String[]{"", "", "", "-", "-", "", "Create"}); // add new row for a new auction
+                JOptionPane.showConfirmDialog(null, "Public auction created correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.updateUserProductsComboBox();
+            } else
+                JOptionPane.showConfirmDialog(null, "Error creating a private auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 }
