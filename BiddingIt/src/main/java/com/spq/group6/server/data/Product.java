@@ -1,10 +1,16 @@
 package com.spq.group6.server.data;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 import java.io.Serializable;
 
 @PersistenceCapable(detachable = "true")
 public class Product implements Serializable {
+    @PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
+    private long productID;
     private static final long serialVersionUID = -7363525693084022738L;
     private String name;
     private String description;
@@ -45,8 +51,17 @@ public class Product implements Serializable {
                 description.equals(product.description);
     }
 
+    public long getProductID() {
+        return productID;
+    }
+
+    public void setProductID(long productID) {
+        this.productID = productID;
+    }
+
     @Override
     public String toString() {
         return name;
     }
+
 }
