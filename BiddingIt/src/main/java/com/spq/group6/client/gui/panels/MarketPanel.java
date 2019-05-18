@@ -149,7 +149,7 @@ public class MarketPanel extends JPanel {
         auctionsTable.setOpaque(true);
         auctionsTable.setForeground(new Color(0, 102, 102));
         auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth() - 500);
-        auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 200);
+        auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 300);
 
         auctionsTableScrollPane = new JScrollPane(auctionsTable);
         auctionsTableScrollPane.getViewport().setBackground(Color.WHITE);

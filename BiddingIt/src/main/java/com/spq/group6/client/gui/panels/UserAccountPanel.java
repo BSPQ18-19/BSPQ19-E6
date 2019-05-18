@@ -18,6 +18,8 @@ public class UserAccountPanel extends JPanel {
     private JLabel titleLabel;
     private JLabel infoLabel;
     private JLabel countryLabel;
+    private JLabel nameLabel;
+    private JLabel moneyLabel;
     private JLabel confirmLabel;
     private JTextField countryTF;
     private JLabel passwordLabel;
@@ -62,7 +64,7 @@ public class UserAccountPanel extends JPanel {
         countryTF.setForeground(new Color(102, 69, 3));
         countryTF.setBorder(new TitledBorder(""));
         countryTF.setSize(screenWidth / 4, screenHeight / 20);
-        countryTF.setLocation((int) countryLabel.getLocation().getX() + countryLabel.getWidth(),
+        countryTF.setLocation((int) countryLabel.getLocation().getX() + countryLabel.getWidth() - 80,
                 (int) countryLabel.getLocation().getY());
         countryTF.setFont(new Font("Arial", Font.PLAIN, (int) (countryLabel.getFont().getSize() / 1.5)));
 
@@ -82,6 +84,20 @@ public class UserAccountPanel extends JPanel {
         passwordTF.setLocation((int) countryTF.getLocation().getX(),
                 (int) passwordLabel.getLocation().getY());
         passwordTF.setFont(countryTF.getFont());
+
+        nameLabel = new JLabel("Username: " + controller.getCurrentUser().getUsername(), SwingConstants.LEFT);
+        nameLabel.setForeground(new Color(0, 102, 102));
+        nameLabel.setSize(screenWidth / 5, screenHeight / 20);
+        nameLabel.setLocation((int) countryTF.getLocation().getX() + countryTF.getWidth() + 40,
+                (int) countryTF.getLocation().getY());
+        SDG2Util.fixJLabelFontSize(nameLabel);
+
+        moneyLabel = new JLabel("Money: " + controller.getCurrentUser().getMoney(), SwingConstants.LEFT);
+        moneyLabel.setForeground(new Color(0, 102, 102));
+        moneyLabel.setSize(screenWidth / 5, screenHeight / 20);
+        moneyLabel.setLocation((int) nameLabel.getLocation().getX(),
+                (int) (nameLabel.getLocation().getY() + nameLabel.getHeight() + screenHeight / 30));
+        SDG2Util.fixJLabelFontSize(moneyLabel);
 
         confirmButton = new JButton("Confirm");
         confirmButton.setForeground(new Color(0, 102, 102));
@@ -137,6 +153,8 @@ public class UserAccountPanel extends JPanel {
 
         this.add(titleLabel);
         this.add(infoLabel);
+        this.add(nameLabel);
+        this.add(moneyLabel);
         this.add(countryLabel);
         this.add(countryTF);
         this.add(passwordLabel);

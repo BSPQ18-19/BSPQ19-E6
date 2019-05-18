@@ -84,8 +84,16 @@ public class AuctionCountdown implements Runnable {
                 try {
                     ServerLogger.logger.debug("Ended auction with exchange: " + auction.getAuctionID());
                     Product product = auction.getProduct();
+                    // Update product
                     seller.getOwnedProducts().remove(product);
                     buyer.getOwnedProducts().add(product);
+                    // Update money
+                    float buyerMoney = buyer.getMoney() - bid.getAmount();
+                    buyer.setMoney(buyerMoney);
+                    float sellerMoney = seller.getMoney() + bid.getAmount();
+                    buyer.setMoney(buyerMoney);
+                    seller.setMoney(sellerMoney);
+                    // Update and persiste auction
                     auction.setOwner(seller);
                     auction.getHighestBid().setUser(buyer);
                     biddingDAO.persistAuction(auction);
