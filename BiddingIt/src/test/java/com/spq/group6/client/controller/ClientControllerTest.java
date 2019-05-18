@@ -25,8 +25,8 @@ public class ClientControllerTest {
     private static ClientController clientController;
     private static BiddingDAO biddingDao;
     private static User seller, buyer;
-    private static Product product;
-    private static Auction auction;
+    private static Product product, product2;
+    private static Auction auction, privateAuction;
     private static Bid bid;
 
     @BeforeClass
@@ -95,10 +95,12 @@ public class ClientControllerTest {
         seller = new User("test_seller", "test_pass", "uk");
         buyer = new User("test_buyer", "test_pass", "uk");
         product = new Product("test_product", "test_description");
+        product2 = new Product("test_product2", "test_description2");
         biddingDao = new BiddingDAO();
         int offset = 10;
         Timestamp limit = new Timestamp(System.currentTimeMillis() + offset * 1000);
         auction = new Auction(seller, product, limit, 12, null);
+        privateAuction = new Auction(seller, product2, limit, 14, "pass1");
         bid = new Bid(buyer, auction.getInitialPrice() + 1);
     }
 
@@ -177,6 +179,21 @@ public class ClientControllerTest {
         assertEquals(1, auctions.size());
         auction.setAuctionID(auctions.get(0).getAuctionID());
         assertEquals(auction, auctions.get(0));
+        // Clean up
+        biddingDao.deleteUser(seller);
+    }
+    
+    @Test
+    public void createPrivateAuctionTest() throws RemoteException {
+        assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));
+        seller = clientController.getCurrentUser();
+
+        assertTrue(clientController.createPrivateAuction(privateAuction.getProduct(), "pass1", privateAuction.getDayLimit(), privateAuction.getInitialPrice()));
+        assertTrue(clientController.signIn(buyer.getUsername(), buyer.getPassword(), buyer.getCountry()));
+        ArrayList<Auction> auctions = clientController.searchAuctionByProductName(product2.getName());
+        assertEquals(1, auctions.size());
+        privateAuction.setAuctionID(auctions.get(0).getAuctionID());
+        assertEquals(privateAuction, auctions.get(0));
         // Clean up
         biddingDao.deleteUser(seller);
     }
