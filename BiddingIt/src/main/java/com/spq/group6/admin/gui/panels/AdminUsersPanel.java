@@ -11,6 +11,9 @@ import com.spq.group6.admin.gui.utils.ScreenType;
 import com.spq.group6.server.data.User;
 
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,10 +38,13 @@ public class AdminUsersPanel extends JPanel {
     private AdminController controller;
 
     public AdminUsersPanel(int screenWidth, int screenHeight, AdminController controller) {
-
+    	setBackground(Color.white);
         this.setLayout(null);
 
         titleLabel = new JLabel("Administrating users...", SwingConstants.LEFT);
+        titleLabel.setForeground(new Color(0, 204, 204));
+        titleLabel.setBackground(Color.WHITE);
+        titleLabel.setOpaque(true);
         titleLabel.setSize((int) (screenWidth * 0.5), screenHeight / 15);
         titleLabel.setLocation(screenWidth / 15, screenHeight / 4 - titleLabel.getHeight() / 2);
         SDG2Util.fixJLabelFontSize(titleLabel);
@@ -113,6 +119,11 @@ public class AdminUsersPanel extends JPanel {
 
         // searching filter
         searchButton = new JButton("Update");
+        searchButton.setForeground(new Color(0, 102, 102));
+        searchButton.setBackground(Color.white);
+        searchButton.setBorder(new TitledBorder(""));
+        searchButton.setContentAreaFilled(false);
+        searchButton.setOpaque(true);
         searchButton.addActionListener(new ActionListener() {
 
             @Override
@@ -150,11 +161,17 @@ public class AdminUsersPanel extends JPanel {
             }
         });
         searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        searchPanel.setBackground(Color.white);
         searchPanel.setSize((int) (screenWidth / 1.2), screenHeight / 14);
         searchPanel.setLocation((int) titleLabel.getLocation().getX(),
                 (int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));
 
         backButton = new JButton("Back");
+        backButton.setForeground(new Color(0, 102, 102));
+        backButton.setBackground(Color.white);
+        backButton.setBorder(new TitledBorder(""));
+        backButton.setContentAreaFilled(false);
+        backButton.setOpaque(true);
         backButton.setSize(screenWidth / 8, screenHeight / 15);
         backButton.setLocation(backButton.getWidth() / 2,
                 screenHeight / 10);
@@ -168,6 +185,11 @@ public class AdminUsersPanel extends JPanel {
         });
 
         logOutButton = new JButton("Log out");
+        logOutButton.setForeground(new Color(0, 102, 102));
+        logOutButton.setBackground(Color.white);
+        logOutButton.setBorder(new TitledBorder(""));
+        logOutButton.setContentAreaFilled(false);
+        logOutButton.setOpaque(true);
         logOutButton.setSize(backButton.getSize());
         logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth() * 1.5),
                 (int) backButton.getLocation().getY());
@@ -185,6 +207,13 @@ public class AdminUsersPanel extends JPanel {
         });
 
         usersTable = new JTable(new UserJTableModel(new Object[][]{}, usersColumnNames, controller, new ArrayList<User>()));
+        usersTable.setRowHeight((int)(usersTable.getRowHeight()*1.5));
+        usersTable.getTableHeader().setOpaque(false);
+        usersTable.getTableHeader().setBackground(new Color(234, 255, 255));
+        usersTable.setBackground(Color.white);
+        usersTable.setBorder(new MatteBorder(0, 0, 0, 0, Color.black));
+        usersTable.setOpaque(true);
+        usersTable.setForeground(new Color(0, 102, 102));
         usersTable.getColumnModel().getColumn(3).setPreferredWidth(usersTable.getColumnModel().getColumn(3).getPreferredWidth() + 100);
 
         // set column 4 to limit day
@@ -194,6 +223,8 @@ public class AdminUsersPanel extends JPanel {
         usersTable.getColumnModel().getColumn(4).setCellRenderer(usersTable.getDefaultRenderer(LocalDateTime.class));
 
         usersTableScrollPane = new JScrollPane(usersTable);
+        usersTableScrollPane.getViewport().setBackground(Color.WHITE);
+        usersTableScrollPane.setBorder(new TitledBorder(""));
         usersTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()),
                 (int) (screenHeight / 2.25));
         usersTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),

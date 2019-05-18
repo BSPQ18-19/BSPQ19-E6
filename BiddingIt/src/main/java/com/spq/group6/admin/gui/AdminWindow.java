@@ -41,7 +41,7 @@ public class AdminWindow extends JFrame {
 
         switch (nextScreenType) {
             case LOG_IN:
-                mainPanel = new LogInPanel(screenWidth, screenHeight, controller);
+                mainPanel = new AdminLogInPanel(screenWidth, screenHeight, controller);
                 break;
             case LOG_IN_SUCCESFUL:
                 mainPanel = new AdminLogInSuccesfulPanel(screenWidth, screenHeight, data[0]);

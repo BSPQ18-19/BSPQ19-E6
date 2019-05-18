@@ -227,4 +227,6 @@ public interface IServer extends Remote {
      * @throws RemoteException
      */
     void startUncheckedAuctions() throws RemoteException;
+    
+    public Administrator createAdministrator(Administrator admin) throws RemoteException, AdministratorException;
 }
