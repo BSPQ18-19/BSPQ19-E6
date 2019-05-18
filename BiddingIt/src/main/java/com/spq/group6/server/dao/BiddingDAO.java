@@ -70,6 +70,17 @@ public class BiddingDAO implements IBiddingDAO {
     }
 
     public void deleteProduct(Product product) {
+        pmLock.lock();
+        Transaction tx = pm.currentTransaction();
+        tx.begin();
+        Query<Auction> query = pm.newQuery(Auction.class);
+        query.setFilter("product.productID == " + product.getProductID());
+        List<Auction> auctions = (List<Auction>) query.execute();
+        tx.commit();
+        for (Auction auction : auctions) {
+            deleteAuction(auction); //deletes each auction owned by the user being deleted
+        }
+
         deleteObject(product);
     }
 

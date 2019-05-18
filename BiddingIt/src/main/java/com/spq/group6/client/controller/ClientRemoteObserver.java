@@ -103,7 +103,7 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
             ownAuctionsPanel.getUserAuctions().remove(auction);
             ownAuctionsPanel.updateAuctions();
             showNonBlockingMessage(msg);
-        } else if(panel instanceof UserProductsPanel){
+        } else if (panel instanceof UserProductsPanel) {
             window.changeScreen(ScreenType.USER_PRODUCTS);
         }
     }
@@ -127,7 +127,7 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
                 ownAuctionsPanel.updateAuctions();
                 showNonBlockingMessage(msg);
             }
-        } else if(panel instanceof UserProductsPanel){
+        } else if (panel instanceof UserProductsPanel) {
             window.changeScreen(ScreenType.USER_PRODUCTS);
         }
     }
