@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InitialPanel extends JPanel {
+public class InitialPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -21,8 +21,7 @@ public class InitialPanel extends JPanel {
 
     public InitialPanel(int screenWidth, int screenHeight) {
 
-        setBackground(Color.white);
-        this.setLayout(null);
+    	super(screenHeight, screenHeight);
 
         titleLabel = new JLabel("BiddingIt", SwingConstants.CENTER);
         titleLabel.setForeground(Color.WHITE);
@@ -81,12 +80,14 @@ public class InitialPanel extends JPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.REGISTER);
             }
         });
-
+        
         this.add(titleLabel);
         this.add(infoLabel);
         this.add(authorLabel);
         this.add(logInButton);
         this.add(signInButton);
+        
+        bringSelectLanguageCBToFront();
     }
 
     public static void main(String[] args) {

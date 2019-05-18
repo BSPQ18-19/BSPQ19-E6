@@ -19,7 +19,6 @@ public class ClientWindow extends JFrame {
 
     // private constructor using lazy singleton
     private ClientWindow() {
-        this.controller = controller;
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setTitle("BiddingIt client");

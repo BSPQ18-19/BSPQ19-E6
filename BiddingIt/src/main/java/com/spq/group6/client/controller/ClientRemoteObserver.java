@@ -23,6 +23,9 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
     private ClientWindow window;
 
     public ClientRemoteObserver() throws RemoteException {
+    }
+    
+    public void setClientWindow() {
         window = ClientWindow.getClientWindow();
     }
 

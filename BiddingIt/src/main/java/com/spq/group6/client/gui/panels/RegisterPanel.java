@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RegisterPanel extends JPanel {
+public class RegisterPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -34,10 +34,7 @@ public class RegisterPanel extends JPanel {
 
     public RegisterPanel(int screenWidth, int screenHeight) {
 
-        setBackground(Color.WHITE);
-        this.setLayout(null);
-
-        this.controller = ClientController.getClientController();
+        super(screenWidth, screenHeight);
 
         titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
@@ -225,6 +222,9 @@ public class RegisterPanel extends JPanel {
         this.add(confirmButton);
         this.add(cancelButton);
         this.add(confirmLabel);
+        
+        bringSelectLanguageCBToFront();
+
     }
 
     public static void main(String[] args) {

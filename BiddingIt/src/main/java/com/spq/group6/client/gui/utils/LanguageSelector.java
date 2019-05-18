@@ -20,7 +20,7 @@ public class LanguageSelector {
             new Locale("es", "ES"),
             "es_ES",
             "Spanish/Spain",
-            "Español/España"
+            "Espanyol/Espanya"
     );
 
     /**
@@ -82,5 +82,10 @@ public class LanguageSelector {
     public String getLocalizedName() {
         return localizedName;
     }
+
+	@Override
+	public String toString() {
+		return localizedName;
+	}
 
 }

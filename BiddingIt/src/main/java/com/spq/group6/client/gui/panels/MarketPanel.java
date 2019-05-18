@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class MarketPanel extends JPanel {
+public class MarketPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -41,10 +41,8 @@ public class MarketPanel extends JPanel {
 
     public MarketPanel(int screenWidth, int screenHeight) {
 
-        setBackground(Color.WHITE);
-        this.setLayout(null);
-
-        controller = ClientController.getClientController();
+        super(screenWidth, screenHeight);
+        
         auctionsTimeLeftThread = new ArrayList<Thread>();
 
         titleLabel = new JLabel("Market", SwingConstants.LEFT);
@@ -169,6 +167,9 @@ public class MarketPanel extends JPanel {
         this.add(searchPanel);
         this.add(auctionsTableScrollPane);
         this.add(backButton);
+        
+        bringSelectLanguageCBToFront();
+
     }
 
     public void updateAuctions() {

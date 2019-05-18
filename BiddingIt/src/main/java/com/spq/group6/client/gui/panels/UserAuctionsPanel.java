@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class UserAuctionsPanel extends JPanel {
+public class UserAuctionsPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -28,18 +28,14 @@ public class UserAuctionsPanel extends JPanel {
     private JScrollPane auctionsTableScrollPane;
     private JTable auctionsTable;
     private JButton backButton;
-    private int screenWidth, screenHeight;
     private String[] auctionsColumnNames = {"Prod. Name", "Password", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
 
     private ClientController controller;
     private List<Auction> userAuctions;
 
     public UserAuctionsPanel(int screenWidth, int screenHeight) {
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-        setBackground(Color.WHITE);
-        this.setLayout(null);
-        this.controller = ClientController.getClientController();
+
+        super(screenWidth, screenHeight);
 
         titleLabel = new JLabel("My auctions", SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
@@ -145,6 +141,9 @@ public class UserAuctionsPanel extends JPanel {
 
         auctionsTable.revalidate();
         auctionsTable.repaint();
+        
+        bringSelectLanguageCBToFront();
+
     }
 
     public void updateUserProductsComboBox() {

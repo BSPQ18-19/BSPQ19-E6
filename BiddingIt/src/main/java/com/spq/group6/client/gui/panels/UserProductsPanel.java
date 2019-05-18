@@ -17,7 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UserProductsPanel extends JPanel {
+public class UserProductsPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -31,10 +31,7 @@ public class UserProductsPanel extends JPanel {
 
     public UserProductsPanel(int screenWidth, int screenHeight) {
 
-        setBackground(Color.WHITE);
-        this.setLayout(null);
-
-        controller = ClientController.getClientController();
+        super(screenWidth, screenHeight);
 
         titleLabel = new JLabel("My products", SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
@@ -114,6 +111,9 @@ public class UserProductsPanel extends JPanel {
         this.add(infoLabel);
         this.add(productsTableScrollPane);
         this.add(backButton);
+        
+        bringSelectLanguageCBToFront();
+
     }
 
     public static void main(String[] args) {

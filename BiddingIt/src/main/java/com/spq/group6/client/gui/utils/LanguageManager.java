@@ -90,4 +90,12 @@ public class LanguageManager {
         return formatter.format(parameters);
 
     }
+    
+    /**
+     * Get all languages available
+     * @return the locales allowed
+     */
+    public LanguageSelector[] getLanguages() {
+    	return LanguageSelector.ALLOWED_LOCALES;
+    }
 }

@@ -1,6 +1,8 @@
 package com.spq.group6.client.controller;
 
 import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.utils.LanguageManager;
+import com.spq.group6.client.gui.utils.LanguageSelector;
 import com.spq.group6.client.remote.ServiceLocator;
 import com.spq.group6.client.utils.logger.ClientLogger;
 import com.spq.group6.server.data.Auction;
@@ -13,6 +15,7 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ClientController {
     private static ClientController controller;
@@ -20,6 +23,7 @@ public class ClientController {
     private ServiceLocator serviceLocator;
     private User currentUser;
     private ClientRemoteObserver observer;
+    private LanguageManager languageManager;
 
     private ClientController() {
         super();
@@ -29,7 +33,7 @@ public class ClientController {
             e.printStackTrace();
         }
         serviceLocator = ServiceLocator.getServiceLocator();
-        ClientWindow.getClientWindow().setVisible(true);
+        languageManager = new LanguageManager();
     }
 
     public static ClientController getClientController() {
@@ -41,6 +45,26 @@ public class ClientController {
 
     public static ClientController getNewClientController() {
         return new ClientController();
+    }
+    
+    public void setClientRemoteObserver() {
+    	observer.setClientWindow();
+    }
+    
+    public LanguageManager getLanguageManager() {
+    	return languageManager;
+    }
+    
+    public void setLocale(Locale locale) {
+        languageManager.setLocale(locale);
+    }
+    
+    public LanguageSelector[] getLanguagesAvailable() {
+    	return languageManager.getLanguages();
+    }
+    
+    public String getLanguageMessage(String key, String... parameters) {
+    	return languageManager.getMessage(key, parameters);
     }
 
     public boolean logIn(String email, String password) throws RemoteException {

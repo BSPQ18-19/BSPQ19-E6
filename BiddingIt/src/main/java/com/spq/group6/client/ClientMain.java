@@ -19,6 +19,7 @@ public class ClientMain {
         serviceLocator.setService(args[0], args[1], args[2]);
         UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
         ClientWindow.getClientWindow().setVisible(true);
+        controller.setClientRemoteObserver();
         ClientLogger.logger.info("ClientMain running correctly.");
     }
 }

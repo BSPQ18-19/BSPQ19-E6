@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainMenuPanel extends JPanel {
+public class MainMenuPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -26,10 +26,7 @@ public class MainMenuPanel extends JPanel {
 
     public MainMenuPanel(int screenWidth, int screenHeight) {
 
-        setBackground(Color.WHITE);
-        this.setLayout(null);
-
-        controller = ClientController.getClientController();
+        super(screenWidth, screenHeight);
 
         titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
@@ -149,6 +146,9 @@ public class MainMenuPanel extends JPanel {
         this.add(userAuctionsButton);
         this.add(userAccountButton);
         this.add(logOutButton);
+        
+        bringSelectLanguageCBToFront();
+
     }
 
     public static void main(String[] args) {
