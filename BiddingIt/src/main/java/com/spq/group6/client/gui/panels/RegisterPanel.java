@@ -39,7 +39,7 @@ public class RegisterPanel extends JPanel {
 
         this.controller = ClientController.getClientController();
 
-        titleLabel = new JLabel("Easybooking", SwingConstants.LEFT);
+        titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);

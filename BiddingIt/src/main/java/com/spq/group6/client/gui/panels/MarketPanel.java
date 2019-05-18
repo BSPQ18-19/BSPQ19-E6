@@ -36,7 +36,6 @@ public class MarketPanel extends JPanel {
 
     private String[] auctionsColumnNames = {"Prod. Name", "Description", "Private", "Highest Bid", "Time left", ""};
 
-
     private ClientController controller;
     private ArrayList<Thread> auctionsTimeLeftThread;
     private ArrayList<Auction> auctions;
@@ -168,7 +167,8 @@ public class MarketPanel extends JPanel {
         auctionsTable.setBorder(new MatteBorder(0, 0, 0, 0, Color.black));
         auctionsTable.setOpaque(true);
         auctionsTable.setForeground(new Color(0, 102, 102));
-        auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 100);
+        auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth() - 500);
+        auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 200);
 
         auctionsTableScrollPane = new JScrollPane(auctionsTable);
         auctionsTableScrollPane.getViewport().setBackground(Color.WHITE);
@@ -213,7 +213,7 @@ public class MarketPanel extends JPanel {
                 if (tempAuction.getHighestBid() == null)
                     auctionsData[i][3] = 0 + " (initial:" + tempAuction.getInitialPrice() + ")";
                 else
-                    auctionsData[i][3] = tempAuction.getHighestBid().getAmount();
+                    auctionsData[i][3] = Float.toString(tempAuction.getHighestBid().getAmount());
                 auctionsData[i][4] = SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuction.getDayLimit().toLocalDateTime());
                 auctionsData[i][5] = "Bid";
                 Thread tempAuctionThread = new Thread(new AuctionTimeLeftRunnable(auctionsTable, i, tempAuction.getDayLimit().toLocalDateTime()));
@@ -221,8 +221,9 @@ public class MarketPanel extends JPanel {
             }
 
         }
-        auctionsTable.setModel(new MarketJTableModel(auctionsData, auctionsColumnNames));
-        auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 100);
+        auctionsTable.setModel(new MarketJTableModel(auctionsData, auctionsColumnNames, this));
+        auctionsTable.getColumnModel().getColumn(3).setPreferredWidth(auctionsTable.getColumnModel().getColumn(3).getPreferredWidth() - 500);
+        auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 200);
 
         ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 5);
 

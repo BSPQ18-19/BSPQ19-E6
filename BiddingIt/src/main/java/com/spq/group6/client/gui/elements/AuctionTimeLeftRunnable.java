@@ -22,7 +22,7 @@ public class AuctionTimeLeftRunnable implements Runnable {
         boolean failed = false;
         while (!Thread.interrupted() && !failed && LocalDateTime.from(LocalDateTime.now()).until(tempAuctionTime, ChronoUnit.SECONDS) > 0) {
             try {
-                auctionsTable.setValueAt(SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuctionTime), tableRow, 3);
+                auctionsTable.setValueAt(SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuctionTime), tableRow, 4);
                 Thread.sleep(1000);
             } catch (Exception e) {
                 failed = true;

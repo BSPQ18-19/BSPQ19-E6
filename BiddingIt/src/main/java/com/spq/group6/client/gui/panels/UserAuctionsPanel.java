@@ -172,6 +172,7 @@ public class UserAuctionsPanel extends JPanel {
     }
 
     public void updateUserProductsComboBox() {
+    	userAuctions = controller.getCurrentUserAuctions();
         List<Product> userProductsNotAuction = controller.getCurrentUserProducts(); // get all user products
         for (int i = userProductsNotAuction.size() - 1; i >= 0; i--) // remove products already in an auction
             for (int j = 0; j < userAuctions.size(); j++)
