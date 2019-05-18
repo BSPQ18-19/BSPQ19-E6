@@ -100,7 +100,7 @@ public class UserAuctionsPanel extends JPanel {
         userAuctions = controller.getCurrentUserAuctions();
         auctionsTable = new JTable(new AuctionJTableModel(new Object[][]{}, auctionsColumnNames, this));
         updateAuctions();
-        auctionsTable.setRowHeight((int)(auctionsTable.getRowHeight()*1.5));
+        auctionsTable.setRowHeight((int) (auctionsTable.getRowHeight() * 1.5));
         auctionsTable.getTableHeader().setOpaque(false);
         auctionsTable.getTableHeader().setBackground(new Color(234, 255, 255));
         auctionsTable.setBackground(Color.white);

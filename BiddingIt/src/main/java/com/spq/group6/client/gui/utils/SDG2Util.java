@@ -31,7 +31,7 @@ public class SDG2Util {
 
             int newFontSize = (int) (labelFont.getSize() * widthRatio * 0.8);
 
-            int fontSizeToUse = Math.min(newFontSize, (int) (componentHeight*0.75));
+            int fontSizeToUse = Math.min(newFontSize, (int) (componentHeight * 0.75));
             label.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
 
 

@@ -3,7 +3,6 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.actions.ActionBid;
-import com.spq.group6.client.gui.elements.AuctionJTableModel;
 import com.spq.group6.client.gui.elements.AuctionTimeLeftRunnable;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.MarketJTableModel;
@@ -15,11 +14,9 @@ import com.spq.group6.server.data.Auction;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.print.PrinterException;
 import java.util.ArrayList;
 
 public class MarketPanel extends JPanel {
@@ -162,8 +159,8 @@ public class MarketPanel extends JPanel {
             }
         });
 
-        auctionsTable = new JTable(new MarketJTableModel(new Object[][]{}, auctionsColumnNames, this));
-        auctionsTable.setRowHeight((int)(auctionsTable.getRowHeight()*1.5));
+        auctionsTable = new JTable(new MarketJTableModel(new Object[][]{}, auctionsColumnNames));
+        auctionsTable.setRowHeight((int) (auctionsTable.getRowHeight() * 1.5));
         auctionsTable.getTableHeader().setOpaque(false);
         auctionsTable.getTableHeader().setBackground(new Color(234, 255, 255));
         auctionsTable.setBackground(Color.white);
@@ -210,9 +207,9 @@ public class MarketPanel extends JPanel {
                 auctionsData[i][0] = tempAuction;
                 auctionsData[i][1] = tempAuction.getProduct().getDescription();
                 if (tempAuction.getPassword() != null && !tempAuction.getPassword().equals(""))
-                	auctionsData[i][2] = "Yes";
-            	else
-            		auctionsData[i][2] = "No";
+                    auctionsData[i][2] = "Yes";
+                else
+                    auctionsData[i][2] = "No";
                 if (tempAuction.getHighestBid() == null)
                     auctionsData[i][3] = 0 + " (initial:" + tempAuction.getInitialPrice() + ")";
                 else
@@ -229,7 +226,7 @@ public class MarketPanel extends JPanel {
         auctionsTable.getColumnModel().getColumn(4).setPreferredWidth(auctionsTable.getColumnModel().getColumn(4).getPreferredWidth() + 200);
 
         ButtonColumn bidButtonColumn = new ButtonColumn(auctionsTable, new ActionBid(), 5);
-        
+
         // start countdown threads
         for (int i = 0; i < auctionsData.length; i++) {
             auctionsTimeLeftThread.get(i).start();

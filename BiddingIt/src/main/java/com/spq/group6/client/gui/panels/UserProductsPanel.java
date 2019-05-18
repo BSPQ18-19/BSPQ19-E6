@@ -117,7 +117,7 @@ public class UserProductsPanel extends JPanel {
             productsData[i][3] = "";
         }
         productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames));
-        productsTable.setRowHeight((int)(productsTable.getRowHeight()*1.5));
+        productsTable.setRowHeight((int) (productsTable.getRowHeight() * 1.5));
         productsTable.getTableHeader().setOpaque(false);
         productsTable.getTableHeader().setBackground(new Color(234, 255, 255));
         productsTable.setBackground(Color.white);

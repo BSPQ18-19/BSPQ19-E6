@@ -100,7 +100,7 @@ public class AdminController {
         return true;
     }
 
-    public void startUncheckedAuctions(){
+    public void startUncheckedAuctions() {
         String info = "Start unchecked Auctions";
         try {
             AdminLogger.logger.debug("Trying to " + info + ".");

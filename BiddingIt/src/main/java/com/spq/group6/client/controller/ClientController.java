@@ -6,8 +6,8 @@ import com.spq.group6.client.utils.logger.ClientLogger;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
-import com.spq.group6.server.exceptions.AuctionException;
 import com.spq.group6.server.exceptions.AccountException;
+import com.spq.group6.server.exceptions.AuctionException;
 
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
@@ -213,10 +213,10 @@ public class ClientController {
         }
         return true;
     }
-    
+
     public boolean createPrivateAuction(Product product, String password, Timestamp dayLimit, float initialPrice) {
         String info = "Create the private auction for product " + product.getName() + " with password " + password +
-        		", day limit " + dayLimit + " and initial price " + initialPrice;
+                ", day limit " + dayLimit + " and initial price " + initialPrice;
         try {
             ClientLogger.logger.debug("Trying to " + info + ".");
             Auction auction = serviceLocator.getService().createPrivateAuction(currentUser, product, dayLimit, initialPrice, password);
@@ -281,7 +281,7 @@ public class ClientController {
         String info = "Update user: " + currentUser.getUsername();
         try {
             ClientLogger.logger.debug("Trying to " + info + ".");
-            currentUser = serviceLocator.getService().updateUser(getCurrentUser(), country, password );
+            currentUser = serviceLocator.getService().updateUser(getCurrentUser(), country, password);
             ClientLogger.logger.debug(info + " correct.");
         } catch (RemoteException | AccountException e) {
             ClientLogger.logger.error("Error searching auctions by prod name: " + e.getMessage());
