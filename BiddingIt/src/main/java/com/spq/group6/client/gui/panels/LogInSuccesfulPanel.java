@@ -7,7 +7,7 @@ import com.spq.group6.client.gui.utils.ScreenType;
 import javax.swing.*;
 import java.awt.*;
 
-public class LogInSuccesfulPanel extends JPanel {
+public class LogInSuccesfulPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -16,9 +16,8 @@ public class LogInSuccesfulPanel extends JPanel {
 
     public LogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
 
-        setBackground(Color.white);
-        this.setLayout(null);
-
+    	super(screenWidth, screenHeight);
+    	
         if (!username.isEmpty())
             titleLabel = new JLabel("Welcome " + username + "! :)", SwingConstants.LEFT);
         else
@@ -74,6 +73,9 @@ public class LogInSuccesfulPanel extends JPanel {
             }
         });
         animationThread.start();
+        
+        bringSelectLanguageCBToFront();
+
     }
 
     public static void main(String[] args) {

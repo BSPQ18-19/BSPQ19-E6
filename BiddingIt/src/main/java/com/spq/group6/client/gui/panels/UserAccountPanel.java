@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class UserAccountPanel extends JPanel {
+public class UserAccountPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -29,9 +29,7 @@ public class UserAccountPanel extends JPanel {
 
     public UserAccountPanel(int screenWidth, int screenHeight) {
 
-        setBackground(Color.white);
-        setLayout(null);
-        this.controller = ClientController.getClientController();
+        super(screenWidth, screenHeight);
 
         titleLabel = new JLabel("Account details", SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
@@ -144,6 +142,8 @@ public class UserAccountPanel extends JPanel {
         this.add(confirmButton);
         this.add(backButton);
         this.add(confirmLabel);
+        
+        bringSelectLanguageCBToFront();
 
     }
 

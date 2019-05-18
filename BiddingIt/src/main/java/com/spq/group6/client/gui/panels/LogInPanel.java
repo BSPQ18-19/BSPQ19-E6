@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 
 
-public class LogInPanel extends JPanel {
+public class LogInPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -30,9 +30,7 @@ public class LogInPanel extends JPanel {
 
     public LogInPanel(int screenWidth, int screenHeight) {
 
-        setBackground(Color.white);
-        setLayout(null);
-        this.controller = ClientController.getClientController();
+    	super(screenWidth, screenHeight);
 
         titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
@@ -145,6 +143,8 @@ public class LogInPanel extends JPanel {
         this.add(confirmButton);
         this.add(cancelButton);
         this.add(confirmLabel);
+        
+        bringSelectLanguageCBToFront();
 
     }
 

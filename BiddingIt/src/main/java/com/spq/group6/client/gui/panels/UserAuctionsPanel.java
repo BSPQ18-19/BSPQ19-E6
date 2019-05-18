@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class UserAuctionsPanel extends JPanel {
+public class UserAuctionsPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
     private JLabel titleLabel;
@@ -35,9 +35,7 @@ public class UserAuctionsPanel extends JPanel {
 
     public UserAuctionsPanel(int screenWidth, int screenHeight) {
 
-        setBackground(Color.WHITE);
-        this.setLayout(null);
-        this.controller = ClientController.getClientController();
+        super(screenWidth, screenHeight);
 
         titleLabel = new JLabel("My auctions", SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
@@ -143,6 +141,9 @@ public class UserAuctionsPanel extends JPanel {
 
         auctionsTable.revalidate();
         auctionsTable.repaint();
+        
+        bringSelectLanguageCBToFront();
+
     }
 
     public void updateUserProductsComboBox() {

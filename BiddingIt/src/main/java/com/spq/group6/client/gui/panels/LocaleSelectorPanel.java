@@ -18,7 +18,7 @@ import com.spq.group6.client.gui.utils.SDG2Util;
 public class LocaleSelectorPanel extends JPanel {
     
 	private JComboBox<LanguageSelector> selectLanguageCB;
-	private JLabel label1;
+	private JLabel titleLabel;
 	private ClientController controller;
 
 	public LocaleSelectorPanel(int screenWidth, int screenHeight) {
@@ -27,18 +27,20 @@ public class LocaleSelectorPanel extends JPanel {
         this.setLayout(null);
 		this.controller = ClientController.getClientController();
 		
-		label1 = new JLabel(controller.getLanguageMessage("InitialPanel.infoLabel.text"), SwingConstants.CENTER);
-		label1.setForeground(Color.WHITE);
-		label1.setBackground(new Color(0, 204, 204));
-		label1.setOpaque(true);
-		label1.setSize(screenWidth, screenHeight / 4);
-		label1.setLocation(0, 0);
-        SDG2Util.fixJLabelFontSize(label1);
+//		titleLabel = new JLabel(controller.getLanguageMessage(asda), SwingConstants.CENTER);
+//		titleLabel.setForeground(Color.WHITE);
+//		titleLabel.setBackground(new Color(0, 204, 204));
+//		titleLabel.setOpaque(true);
+//		titleLabel.setSize(screenWidth, screenHeight / 4);
+//		titleLabel.setLocation(0, 0);
+//      SDG2Util.fixJLabelFontSize(titleLabel);
         
         selectLanguageCB = new JComboBox<>(controller.getLanguagesAvailable());
-        selectLanguageCB.setForeground(new Color(0, 102, 102));
-        selectLanguageCB.setSize((int) (screenWidth / 3.3), screenHeight / 6);
-        selectLanguageCB.setLocation(0, 300);
+        selectLanguageCB.setForeground(new Color(0, 204, 204));
+        selectLanguageCB.setBackground(Color.WHITE);
+        selectLanguageCB.setOpaque(true);
+        selectLanguageCB.setSize((int) (screenWidth / 8), screenHeight / 15);
+        selectLanguageCB.setLocation((int) (screenWidth / 1.25), titleLabel.getHeight() / 2 - selectLanguageCB.getHeight() / 2);
         selectLanguageCB.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
@@ -46,16 +48,22 @@ public class LocaleSelectorPanel extends JPanel {
                 JComboBox<LanguageSelector> comboBox = (JComboBox<LanguageSelector>) e.getSource();
                 Locale l = ((LanguageSelector) comboBox.getSelectedItem()).getLocale();
                 controller.setLocale(l);
-                label1.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+                titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+                LocaleSelectorPanel.this.bringSelectLanguageCBToFront();
+
             }
         });  
         
-        this.add(label1);
+        this.add(titleLabel);
         this.add(selectLanguageCB);
 	}
 	
 	public void bringSelectLanguageCBToFront() {
-		selectLanguageCB.repaint();
+		this.remove(titleLabel);
+        this.remove(selectLanguageCB);
+        this.repaint();
+        this.add(selectLanguageCB);
+        this.add(titleLabel);
 	}
 	
 	public static void main(String[] args) {
