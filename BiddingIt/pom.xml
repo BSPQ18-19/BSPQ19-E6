@@ -301,6 +301,17 @@
         <profile>
             <id>client</id>
             <build>
+                <resources>
+                    <resource>
+                        <directory>${config.files.dir}</directory>
+                        <includes>
+                            <include>**/*.jdo</include>
+                            <include>**/*.orm</include>
+                            <include>**/*.properties</include>
+                        </includes>
+                    </resource>
+                </resources>
+                
                 <plugins>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>

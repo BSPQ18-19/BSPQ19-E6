@@ -81,7 +81,7 @@ public class InitialPanel extends JPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.REGISTER);
             }
         });
-
+        
         this.add(titleLabel);
         this.add(infoLabel);
         this.add(authorLabel);
