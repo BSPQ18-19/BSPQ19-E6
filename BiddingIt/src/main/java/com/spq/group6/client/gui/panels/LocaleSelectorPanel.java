@@ -9,17 +9,16 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.utils.LanguageSelector;
-import com.spq.group6.client.gui.utils.SDG2Util;
 
 public class LocaleSelectorPanel extends JPanel {
     
+	private static final long serialVersionUID = 1L;
 	private JComboBox<LanguageSelector> selectLanguageCB;
-	private JLabel titleLabel;
-	private ClientController controller;
+	protected JLabel titleLabel;
+	protected ClientController controller;
 
 	public LocaleSelectorPanel(int screenWidth, int screenHeight) {
 		
@@ -27,7 +26,7 @@ public class LocaleSelectorPanel extends JPanel {
         this.setLayout(null);
 		this.controller = ClientController.getClientController();
 		
-//		titleLabel = new JLabel(controller.getLanguageMessage(asda), SwingConstants.CENTER);
+//		titleLabel = new JLabel(controller.getLanguageMessage("asdads"), SwingConstants.CENTER);
 //		titleLabel.setForeground(Color.WHITE);
 //		titleLabel.setBackground(new Color(0, 204, 204));
 //		titleLabel.setOpaque(true);
@@ -45,7 +44,8 @@ public class LocaleSelectorPanel extends JPanel {
 
             public void actionPerformed(ActionEvent e)
             {
-                JComboBox<LanguageSelector> comboBox = (JComboBox<LanguageSelector>) e.getSource();
+                @SuppressWarnings("unchecked")
+				JComboBox<LanguageSelector> comboBox = (JComboBox<LanguageSelector>) e.getSource();
                 Locale l = ((LanguageSelector) comboBox.getSelectedItem()).getLocale();
                 controller.setLocale(l);
                 titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));

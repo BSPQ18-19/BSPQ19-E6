@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 public class UserAccountPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
-    private JLabel titleLabel;
     private JLabel infoLabel;
     private JLabel countryLabel;
     private JLabel confirmLabel;
@@ -31,7 +30,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
 
         super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel("Account details", SwingConstants.LEFT);
+        titleLabel = new JLabel(controller.getLanguageMessage("UserAccountPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -39,7 +38,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel("You can modify either your country or your password.",
+        infoLabel = new JLabel(controller.getLanguageMessage("UserAccountPanel.infoLabel.text"),
                 SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.3), screenHeight / 6);
@@ -47,7 +46,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() * 1.5));
         infoLabel.setFont(new Font("Arial", Font.PLAIN, screenHeight / 30));
 
-        countryLabel = new JLabel("Country:", SwingConstants.LEFT);
+        countryLabel = new JLabel(controller.getLanguageMessage("UserAccountPanel.countryLabel.text"), SwingConstants.LEFT);
         countryLabel.setForeground(new Color(0, 102, 102));
         countryLabel.setSize(screenWidth / 5, screenHeight / 20);
         countryLabel.setLocation((int) infoLabel.getLocation().getX(),
@@ -64,7 +63,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
                 (int) countryLabel.getLocation().getY());
         countryTF.setFont(new Font("Arial", Font.PLAIN, (int) (countryLabel.getFont().getSize() / 1.5)));
 
-        passwordLabel = new JLabel("Password:", SwingConstants.LEFT);
+        passwordLabel = new JLabel(controller.getLanguageMessage("UserAccountPanel.passwordLabel.text"), SwingConstants.LEFT);
         passwordLabel.setForeground(new Color(0, 102, 102));
         passwordLabel.setSize(countryLabel.getSize());
         passwordLabel.setLocation((int) countryLabel.getLocation().getX(),
@@ -81,7 +80,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
                 (int) passwordLabel.getLocation().getY());
         passwordTF.setFont(countryTF.getFont());
 
-        confirmButton = new JButton("Confirm");
+        confirmButton = new JButton(controller.getLanguageMessage("General.confirmButton.text"));
         confirmButton.setForeground(new Color(0, 102, 102));
         confirmButton.setBackground(Color.white);
         confirmButton.setBorder(new TitledBorder(""));
@@ -109,7 +108,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
             }
         });
 
-        backButton = new JButton("Back");
+        backButton = new JButton(controller.getLanguageMessage("General.backButton.text"));
         backButton.setForeground(new Color(0, 102, 102));
         backButton.setBackground(Color.white);
         backButton.setBorder(new TitledBorder(""));

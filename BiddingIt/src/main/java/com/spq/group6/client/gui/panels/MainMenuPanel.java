@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 public class MainMenuPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
-    private JLabel titleLabel;
     private JLabel infoLabel;
     private JButton marketButton;
     private JButton userAccountButton;
@@ -28,7 +27,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
 
         super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
+        titleLabel = new JLabel(controller.getLanguageMessage("MainMenuPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -36,14 +35,14 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel("Welcome to the best bidding system in the world!", SwingConstants.LEFT);
+        infoLabel = new JLabel(controller.getLanguageMessage("MainMenuPanel.infoLabel.text"), SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 6);
         infoLabel.setLocation(screenWidth / 20,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 10));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
-        userAuctionsButton = new JButton("My auctions");
+        userAuctionsButton = new JButton(controller.getLanguageMessage("MainMenuPanel.userAuctionsButton.text"));
         userAuctionsButton.setForeground(new Color(0, 102, 102));
         userAuctionsButton.setBackground(Color.white);
         userAuctionsButton.setBorder(new TitledBorder(""));
@@ -61,7 +60,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
             }
         });
 
-        userProductsButton = new JButton("My products");
+        userProductsButton = new JButton(controller.getLanguageMessage("MainMenuPanel.userProductsButton.text"));
         userProductsButton.setForeground(new Color(0, 102, 102));
         userProductsButton.setBackground(Color.white);
         userProductsButton.setBorder(new TitledBorder(""));
@@ -79,7 +78,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
             }
         });
 
-        marketButton = new JButton("Market");
+        marketButton = new JButton(controller.getLanguageMessage("MainMenuPanel.marketButton.text"));
         marketButton.setForeground(new Color(0, 102, 102));
         marketButton.setBackground(Color.white);
         marketButton.setBorder(new TitledBorder(""));
@@ -98,7 +97,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
             }
         });
 
-        userAccountButton = new JButton("Account");
+        userAccountButton = new JButton(controller.getLanguageMessage("MainMenuPanel.userAccountButton.text"));
         userAccountButton.setForeground(new Color(0, 102, 102));
         userAccountButton.setBackground(Color.white);
         userAccountButton.setBorder(new TitledBorder(""));
@@ -117,7 +116,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
             }
         });
 
-        logOutButton = new JButton("Log out");
+        logOutButton = new JButton(controller.getLanguageMessage("MainMenuPanel.logOutButton.text"));
         logOutButton.setForeground(new Color(0, 102, 102));
         logOutButton.setBackground(Color.white);
         logOutButton.setBorder(new TitledBorder(""));
@@ -134,7 +133,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
                 if (controller.logOut())
                     ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
                 else
-                    JOptionPane.showConfirmDialog(MainMenuPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showConfirmDialog(MainMenuPanel.this, controller.getLanguageMessage("MainMenuPanel.confirmDialog1"), "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
             }
         });

@@ -23,12 +23,11 @@ import java.util.List;
 public class UserAuctionsPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
-    private JLabel titleLabel;
     private JLabel infoLabel;
     private JScrollPane auctionsTableScrollPane;
     private JTable auctionsTable;
     private JButton backButton;
-    private String[] auctionsColumnNames = {"Prod. Name", "Password", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
+    private String[] auctionsColumnNames;
 
     private ClientController controller;
     private List<Auction> userAuctions;
@@ -37,7 +36,7 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
 
         super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel("My auctions", SwingConstants.LEFT);
+        titleLabel = new JLabel(controller.getLanguageMessage("UserAuctionsPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -45,14 +44,14 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel("Here you can see your auctions. Start selling and check your earnings!", SwingConstants.LEFT);
+        infoLabel = new JLabel(controller.getLanguageMessage("UserAuctionsPanel.infoLabel.text"), SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
         infoLabel.setLocation(screenWidth / 20,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
-        backButton = new JButton("Back");
+        backButton = new JButton(controller.getLanguageMessage("General.backButton.text"));
         backButton.setForeground(new Color(0, 102, 102));
         backButton.setBackground(Color.white);
         backButton.setBorder(new TitledBorder(""));
@@ -71,6 +70,10 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         });
 
         userAuctions = controller.getCurrentUserAuctions();
+        auctionsColumnNames = new String[]{controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.0"),
+        		controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.1"), controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.2"),
+        		controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.3"), controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.4"),
+        		controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.5"), ""};
         auctionsTable = new JTable(new AuctionJTableModel(new Object[][]{}, auctionsColumnNames, this));
         updateAuctions();
         auctionsTable.setRowHeight((int) (auctionsTable.getRowHeight() * 1.5));
@@ -112,9 +115,9 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
                     auctionsData[i][3] = tempAuction.getHighestBid().getAmount();
                 }
                 if (tempAuction.isOpen())
-                    auctionsData[i][4] = "Open";
+                    auctionsData[i][4] = controller.getLanguageMessage("UserAuctionsPanel.auctionsData.4");
                 else
-                    auctionsData[i][4] = "Closed";
+                    auctionsData[i][4] = controller.getLanguageMessage("UserAuctionsPanel.auctionsData.4b");
                 auctionsData[i][5] = tempAuction.getDayLimit().toLocalDateTime();
                 auctionsData[i][6] = "";
             }
@@ -124,11 +127,12 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
             auctionsData[i][3] = "-";
             auctionsData[i][4] = "-";
             auctionsData[i][5] = "";
-            auctionsData[i][6] = "Create";
+            auctionsData[i][6] = controller.getLanguageMessage("UserAuctionsPanel.auctionsData.6");
         }
         auctionsTable.setModel(new AuctionJTableModel(auctionsData, auctionsColumnNames, this));
         auctionsTable.getColumnModel().getColumn(5).setPreferredWidth(auctionsTable.getColumnModel().getColumn(5).getPreferredWidth() + 150);
-        ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 6);
+        @SuppressWarnings("unused")
+		ButtonColumn createButtonColumn = new ButtonColumn(auctionsTable, new ActionCreateAuction(), 6);
 
         // set column 0 to combobox
         updateUserProductsComboBox();

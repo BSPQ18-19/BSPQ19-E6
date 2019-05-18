@@ -16,7 +16,6 @@ import java.rmi.RemoteException;
 public class LogInPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
-    private JLabel titleLabel;
     private JLabel infoLabel;
     private JLabel usernameLabel;
     private JLabel confirmLabel;
@@ -32,7 +31,7 @@ public class LogInPanel extends LocaleSelectorPanel {
 
     	super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel("BiddingIt", SwingConstants.LEFT);
+        titleLabel = new JLabel(controller.getLanguageMessage("LogInPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -40,7 +39,7 @@ public class LogInPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel("Please enter your username and password.",
+        infoLabel = new JLabel(controller.getLanguageMessage("LogInPanel.infoLabel.text"),
                 SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.3), screenHeight / 6);
@@ -48,7 +47,7 @@ public class LogInPanel extends LocaleSelectorPanel {
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() * 1.5));
         infoLabel.setFont(new Font("Arial", Font.PLAIN, screenHeight / 30));
 
-        usernameLabel = new JLabel("Username:", SwingConstants.LEFT);
+        usernameLabel = new JLabel(controller.getLanguageMessage("LogInPanel.usernameLabel.text"), SwingConstants.LEFT);
         usernameLabel.setForeground(new Color(0, 102, 102));
         usernameLabel.setSize(screenWidth / 5, screenHeight / 20);
         usernameLabel.setLocation((int) infoLabel.getLocation().getX(),
@@ -64,7 +63,7 @@ public class LogInPanel extends LocaleSelectorPanel {
                 (int) usernameLabel.getLocation().getY());
         usernameTF.setFont(new Font("Arial", Font.PLAIN, (int) (usernameLabel.getFont().getSize() / 1.5)));
 
-        passwordLabel = new JLabel("Password:", SwingConstants.LEFT);
+        passwordLabel = new JLabel(controller.getLanguageMessage("LogInPanel.passwordLabel.text"), SwingConstants.LEFT);
         passwordLabel.setForeground(new Color(0, 102, 102));
         passwordLabel.setSize(usernameLabel.getSize());
         passwordLabel.setLocation((int) usernameLabel.getLocation().getX(),
@@ -80,7 +79,7 @@ public class LogInPanel extends LocaleSelectorPanel {
                 (int) passwordLabel.getLocation().getY());
         passwordTF.setFont(usernameTF.getFont());
 
-        confirmButton = new JButton("Confirm");
+        confirmButton = new JButton(controller.getLanguageMessage("General.confirmButton.text"));
         confirmButton.setForeground(new Color(0, 102, 102));
         confirmButton.setBackground(Color.white);
         confirmButton.setBorder(new TitledBorder(""));
@@ -110,7 +109,7 @@ public class LogInPanel extends LocaleSelectorPanel {
             }
         });
 
-        cancelButton = new JButton("Cancel");
+        cancelButton = new JButton(controller.getLanguageMessage("General.cancelButton.text"));
         cancelButton.setForeground(new Color(0, 102, 102));
         cancelButton.setBackground(Color.white);
         cancelButton.setBorder(new TitledBorder(""));
