@@ -159,7 +159,7 @@ public class MarketPanel extends JPanel {
             }
         });
 
-        auctionsTable = new JTable(new MarketJTableModel(new Object[][]{}, auctionsColumnNames));
+        auctionsTable = new JTable(new MarketJTableModel(new Object[][]{}, auctionsColumnNames, this));
         auctionsTable.setRowHeight((int) (auctionsTable.getRowHeight() * 1.5));
         auctionsTable.getTableHeader().setOpaque(false);
         auctionsTable.getTableHeader().setBackground(new Color(234, 255, 255));

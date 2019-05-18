@@ -25,7 +25,6 @@ public class UserProductsPanel extends JPanel {
     private JScrollPane productsTableScrollPane;
     private JTable productsTable;
     private JButton backButton;
-    private JButton logOutButton;
 
     @SuppressWarnings("unused")
     private ClientController controller;
@@ -70,35 +69,6 @@ public class UserProductsPanel extends JPanel {
             }
         });
 
-        logOutButton = new JButton("Log out");
-        logOutButton.setForeground(new Color(0, 102, 102));
-        logOutButton.setBackground(Color.white);
-        logOutButton.setBorder(new TitledBorder(""));
-        logOutButton.setContentAreaFilled(false);
-        logOutButton.setOpaque(true);
-        logOutButton.setSize(backButton.getSize());
-        logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth() * 1.5),
-                (int) backButton.getLocation().getY());
-        SDG2Util.fixJButtonFontSize(logOutButton);
-        logOutButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (controller.logOut())
-                    ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
-                else
-                    JOptionPane.showConfirmDialog(UserProductsPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-
-            }
-        });
-
-
-//		User user1 = new User("Alejandro", "1234", "ES");
-//		Product[] products = new Product[2];
-//		products[0] = new Product(user1, "Product1", "desc1");
-//		products[1] = new Product(user1, "Product2", "desc2");
-//		user1.setOwnedProducts(products);
-
         String[] productsColumnNames = {"Name", "Description", "", ""};
         Object[][] productsData = null;
         if (controller.getCurrentUser() != null) {
@@ -135,16 +105,15 @@ public class UserProductsPanel extends JPanel {
         productsTableScrollPane.getViewport().setBackground(Color.WHITE);
         productsTableScrollPane.setBorder(new TitledBorder(""));
         productsTableScrollPane.setOpaque(true);
-        productsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight / 2);
+        productsTableScrollPane.setSize((int) (screenWidth - backButton.getWidth()), screenHeight / 2);
         productsTableScrollPane.setLocation(infoLabel.getX(),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
 
-
+       
         this.add(titleLabel);
         this.add(infoLabel);
         this.add(productsTableScrollPane);
         this.add(backButton);
-        this.add(logOutButton);
     }
 
     public static void main(String[] args) {

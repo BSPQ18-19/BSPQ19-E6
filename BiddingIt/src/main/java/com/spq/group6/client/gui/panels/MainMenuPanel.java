@@ -42,7 +42,7 @@ public class MainMenuPanel extends JPanel {
         infoLabel = new JLabel("Welcome to the best bidding system in the world!", SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 6);
-        infoLabel.setLocation((int) titleLabel.getLocation().getX() + 5,
+        infoLabel.setLocation(screenWidth / 20,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 10));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
@@ -53,7 +53,7 @@ public class MainMenuPanel extends JPanel {
         userAuctionsButton.setContentAreaFilled(false);
         userAuctionsButton.setOpaque(true);
         userAuctionsButton.setSize(screenWidth / 5, screenHeight / 8);
-        userAuctionsButton.setLocation((int) (infoLabel.getLocation().getX() + 10),
+        userAuctionsButton.setLocation(infoLabel.getX(),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getFont().getSize() + screenHeight / 5));
         SDG2Util.fixJButtonFontSize(userAuctionsButton);
         userAuctionsButton.addActionListener(new ActionListener() {
@@ -71,7 +71,7 @@ public class MainMenuPanel extends JPanel {
         userProductsButton.setContentAreaFilled(false);
         userProductsButton.setOpaque(true);
         userProductsButton.setSize(screenWidth / 5, screenHeight / 8);
-        userProductsButton.setLocation((int) (userAuctionsButton.getLocation().getX()),
+        userProductsButton.setLocation(userAuctionsButton.getX(),
                 (int) (userAuctionsButton.getLocation().getY() + userProductsButton.getSize().getHeight() + screenHeight / 20));
         SDG2Util.fixJButtonFontSize(userProductsButton);
         userProductsButton.addActionListener(new ActionListener() {
@@ -89,7 +89,7 @@ public class MainMenuPanel extends JPanel {
         marketButton.setContentAreaFilled(false);
         marketButton.setOpaque(true);
         marketButton.setSize(screenWidth / 5, screenHeight / 8);
-        marketButton.setLocation((int) (titleLabel.getLocation().getX() + marketButton.getSize().getWidth() + screenWidth / 20),
+        marketButton.setLocation((int) (userAuctionsButton.getX() + marketButton.getSize().getWidth() + screenWidth / 20),
                 (int) (userAuctionsButton.getLocation().getY()));
         SDG2Util.fixJButtonFontSize(marketButton);
         marketButton.addActionListener(new ActionListener() {
@@ -109,7 +109,7 @@ public class MainMenuPanel extends JPanel {
         userAccountButton.setOpaque(true);
         userAccountButton.setSize(screenWidth / 5, screenHeight / 8);
         SDG2Util.fixJButtonFontSize(userAccountButton);
-        userAccountButton.setLocation((int) (titleLabel.getLocation().getX() + userAccountButton.getSize().getWidth() + screenWidth / 20),
+        userAccountButton.setLocation(marketButton.getX(),
                 (int) (userProductsButton.getLocation().getY()));
         userAccountButton.addActionListener(new ActionListener() {
 
