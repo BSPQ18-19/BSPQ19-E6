@@ -1,5 +1,6 @@
 package com.spq.group6.server;
 
+import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.remote.IServer;
 import com.spq.group6.server.remote.Server;
 import com.spq.group6.server.utils.logger.ServerLogger;
@@ -26,6 +27,7 @@ public class ServerMain {
         try {
             IServer objServer = new Server();
             Naming.rebind(name, objServer);
+            objServer.createAdministrator(new Administrator("admin", "admin"));
             java.io.InputStreamReader inputStreamReader = new java.io.InputStreamReader(System.in);
             java.io.BufferedReader stdin = new java.io.BufferedReader(inputStreamReader);
             ServerLogger.logger.info("BiddingIt active and listening...");

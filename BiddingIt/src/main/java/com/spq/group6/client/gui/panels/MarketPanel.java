@@ -65,6 +65,7 @@ public class MarketPanel extends JPanel {
         // searching filter
         searchLabel = new JLabel("Search for auctions where");
         searchLabel.setForeground(new Color(0, 102, 102));
+        
         searchComboBox = new JComboBox<>(new String[]{"Country", "Name"});
         searchComboBox.setForeground(new Color(0, 102, 102));
         searchComboBox.setEditable(true);
@@ -72,10 +73,13 @@ public class MarketPanel extends JPanel {
         searchComboBox.getEditor().getEditorComponent().setForeground(new Color(0, 102, 102));
         searchComboBox.setBorder(new TitledBorder(""));
         searchComboBox.setOpaque(true);
+        
         searchLabel2 = new JLabel("is");
         searchLabel2.setForeground(new Color(0, 102, 102));
+        
         searchTF = new JTextField(10);
         searchTF.setForeground(new Color(102, 69, 3));
+        
         searchButton = new JButton("Search");
         searchButton.setForeground(new Color(0, 102, 102));
         searchButton.setBackground(Color.white);
