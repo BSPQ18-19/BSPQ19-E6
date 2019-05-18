@@ -32,7 +32,6 @@ public class MarketPanel extends JPanel {
     private JScrollPane auctionsTableScrollPane;
     private JTable auctionsTable;
     private JButton backButton;
-    private JButton logOutButton;
 
     private String[] auctionsColumnNames = {"Prod. Name", "Description", "Private", "Highest Bid", "Time left", ""};
 
@@ -52,14 +51,14 @@ public class MarketPanel extends JPanel {
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
-        titleLabel.setSize(screenWidth / 5, screenHeight / 15);
-        titleLabel.setLocation(screenWidth / 15, screenHeight / 4 - titleLabel.getHeight() / 2);
+        titleLabel.setSize(screenWidth, screenHeight / 7);
+        titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
         infoLabel = new JLabel("Here you can see others' auctions. Start bidding!", SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
-        infoLabel.setLocation((int) titleLabel.getLocation().getX(),
+        infoLabel.setLocation(screenWidth / 20,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
@@ -126,8 +125,8 @@ public class MarketPanel extends JPanel {
         backButton.setContentAreaFilled(false);
         backButton.setOpaque(true);
         backButton.setSize(screenWidth / 8, screenHeight / 15);
-        backButton.setLocation(backButton.getWidth() / 2,
-                screenHeight / 10);
+        backButton.setLocation(infoLabel.getX(), (int) (screenHeight - (backButton.getHeight() * 2.5)));
+
         SDG2Util.fixJButtonFontSize(backButton);
         backButton.addActionListener(new ActionListener() {
 
@@ -136,29 +135,7 @@ public class MarketPanel extends JPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
             }
         });
-
-        logOutButton = new JButton("Log out");
-        logOutButton.setForeground(new Color(0, 102, 102));
-        logOutButton.setBackground(Color.white);
-        logOutButton.setBorder(new TitledBorder(""));
-        logOutButton.setContentAreaFilled(false);
-        logOutButton.setOpaque(true);
-        logOutButton.setSize(backButton.getSize());
-        logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth() * 1.5),
-                (int) backButton.getLocation().getY());
-        SDG2Util.fixJButtonFontSize(logOutButton);
-        logOutButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (controller.logOut())
-                    ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
-                else
-                    JOptionPane.showConfirmDialog(MarketPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-
-            }
-        });
-
+        
         auctionsTable = new JTable(new MarketJTableModel(new Object[][]{}, auctionsColumnNames, this));
         auctionsTable.setRowHeight((int) (auctionsTable.getRowHeight() * 1.5));
         auctionsTable.getTableHeader().setOpaque(false);
@@ -173,9 +150,8 @@ public class MarketPanel extends JPanel {
         auctionsTableScrollPane = new JScrollPane(auctionsTable);
         auctionsTableScrollPane.getViewport().setBackground(Color.WHITE);
         auctionsTableScrollPane.setBorder(new TitledBorder(""));
-        auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()),
-                (int) (screenHeight / 2.25));
-        auctionsTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
+        auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getWidth()), (int) (screenHeight / 2.25));
+        auctionsTableScrollPane.setLocation(infoLabel.getX(),
                 (int) (searchPanel.getLocation().getY() + searchPanel.getHeight()));
 
 
@@ -189,7 +165,6 @@ public class MarketPanel extends JPanel {
         this.add(searchPanel);
         this.add(auctionsTableScrollPane);
         this.add(backButton);
-        this.add(logOutButton);
     }
 
     public void updateAuctions() {

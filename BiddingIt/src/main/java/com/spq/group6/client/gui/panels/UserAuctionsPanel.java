@@ -28,7 +28,6 @@ public class UserAuctionsPanel extends JPanel {
     private JScrollPane auctionsTableScrollPane;
     private JTable auctionsTable;
     private JButton backButton;
-    private JButton logOutButton;
     private int screenWidth, screenHeight;
     private String[] auctionsColumnNames = {"Prod. Name", "Password", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
 
@@ -64,36 +63,14 @@ public class UserAuctionsPanel extends JPanel {
         backButton.setContentAreaFilled(false);
         backButton.setOpaque(true);
         backButton.setSize(screenWidth / 8, screenHeight / 15);
-        backButton.setLocation(infoLabel.getX(),
-                screenHeight / 10);
+        backButton.setLocation(infoLabel.getX(), (int) (screenHeight - (backButton.getHeight() * 2.5)));
+
         SDG2Util.fixJButtonFontSize(backButton);
         backButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
-            }
-        });
-
-        logOutButton = new JButton("Log out");
-        logOutButton.setForeground(new Color(0, 102, 102));
-        logOutButton.setBackground(Color.white);
-        logOutButton.setBorder(new TitledBorder(""));
-        logOutButton.setContentAreaFilled(false);
-        logOutButton.setOpaque(true);
-        logOutButton.setSize(backButton.getSize());
-        logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth() * 1.5),
-                (int) backButton.getLocation().getY());
-        SDG2Util.fixJButtonFontSize(logOutButton);
-        logOutButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (controller.logOut())
-                    ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
-                else
-                    JOptionPane.showConfirmDialog(UserAuctionsPanel.this, "Error logging out.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-
             }
         });
 
@@ -112,7 +89,7 @@ public class UserAuctionsPanel extends JPanel {
         auctionsTableScrollPane.getViewport().setBackground(Color.WHITE);
         auctionsTableScrollPane.setBorder(new TitledBorder(""));
         auctionsTableScrollPane.setOpaque(true);
-        auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight / 2);
+        auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getWidth()), screenHeight / 2);
         auctionsTableScrollPane.setLocation(infoLabel.getX(),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
 
@@ -120,7 +97,6 @@ public class UserAuctionsPanel extends JPanel {
         this.add(titleLabel);
         this.add(infoLabel);
         this.add(backButton);
-        this.add(logOutButton);
 
     }
 
