@@ -97,17 +97,17 @@ public class UserAccountPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-               if (controller.updateUser(countryTF.getText(), passwordTF.getText())){
-                   confirmLabel.setForeground(new Color(0, 102, 29));
-                   confirmLabel.setText("User updated.");
-               } else{
-                   confirmLabel.setForeground(new Color(102, 34, 22));
-                   confirmLabel.setText("User not updated.");
-                   countryTF.setText(controller.getCurrentUser().getCountry());
-                   passwordTF.setText(controller.getCurrentUser().getPassword());
-               }
+                if (controller.updateUser(countryTF.getText(), passwordTF.getText())) {
+                    confirmLabel.setForeground(new Color(0, 102, 29));
+                    confirmLabel.setText("User updated.");
+                } else {
+                    confirmLabel.setForeground(new Color(102, 34, 22));
+                    confirmLabel.setText("User not updated.");
+                    countryTF.setText(controller.getCurrentUser().getCountry());
+                    passwordTF.setText(controller.getCurrentUser().getPassword());
+                }
                 revalidate();
-               repaint();
+                repaint();
             }
         });
 

@@ -4,9 +4,9 @@ import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.exceptions.AdministratorException;
 import com.spq.group6.server.exceptions.AuctionException;
-import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.services.*;
 import com.spq.group6.server.utils.logger.ServerLogger;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
@@ -86,7 +86,7 @@ public class Server extends UnicastRemoteObject implements IServer {
 
     public Auction createPrivateAuction(User owner, Product product, Timestamp dayLimit, float initialPrice, String password) throws RemoteException, AuctionException {
         ServerLogger.logger.debug("Received public auction creation petition");
-        if (password == null){
+        if (password == null) {
             throw new AuctionException("Invalid null password");
         }
         Auction auction = auctionService.createAuction(owner, product, dayLimit, initialPrice, password);
@@ -168,4 +168,8 @@ public class Server extends UnicastRemoteObject implements IServer {
         auctionService.startUncheckedAuctions();
     }
 
+    public Administrator createAdministrator(Administrator admin) throws RemoteException, AdministratorException {
+        ServerLogger.logger.debug("Received admin creation petition");
+        return accountService.createAdministrator(admin);
+}
 }

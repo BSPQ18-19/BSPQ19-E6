@@ -6,6 +6,9 @@ import com.spq.group6.admin.gui.utils.SDG2Util;
 import com.spq.group6.admin.gui.utils.ScreenType;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,14 +26,22 @@ public class AdminMainMenuPanel extends JPanel {
         this.controller = controller;
         this.setLayout(null);
 
-        titleLabel = new JLabel("BiddingIt Administration", SwingConstants.LEFT);
-        titleLabel.setSize((int) (screenWidth * 0.5), screenHeight / 3);
-        titleLabel.setLocation((int) (screenWidth * 0.1), (int) (screenHeight / 4 - titleLabel.getHeight() / 1.25));
+        titleLabel = new JLabel("BiddingIt Administration", SwingConstants.CENTER);
+        titleLabel.setForeground(Color.white);
+        titleLabel.setBackground(new Color(0, 204, 204));
+        titleLabel.setOpaque(true);
+        titleLabel.setSize(screenWidth, screenHeight / 7);
+        titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
         AdminAuctionsButton = new JButton("Administrate Auctions");
+        AdminAuctionsButton.setForeground(new Color(0, 102, 102));
+        AdminAuctionsButton.setBackground(Color.white);
+        AdminAuctionsButton.setBorder(new TitledBorder(""));
+        AdminAuctionsButton.setContentAreaFilled(false);
+        AdminAuctionsButton.setOpaque(true);
         AdminAuctionsButton.setSize(screenWidth / 5, screenHeight / 8);
-        AdminAuctionsButton.setLocation((int) (titleLabel.getLocation().getX()),
+        AdminAuctionsButton.setLocation((int) (titleLabel.getLocation().getX()) + screenWidth/10,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 5));
         SDG2Util.fixJButtonFontSize(AdminAuctionsButton);
         AdminAuctionsButton.addActionListener(new ActionListener() {
@@ -42,8 +53,13 @@ public class AdminMainMenuPanel extends JPanel {
         });
 
         AdminUsersButton = new JButton("Administrate Users");
+        AdminUsersButton.setForeground(new Color(0, 102, 102));
+        AdminUsersButton.setBackground(Color.white);
+        AdminUsersButton.setBorder(new TitledBorder(""));
+        AdminUsersButton.setContentAreaFilled(false);
+        AdminUsersButton.setOpaque(true);
         AdminUsersButton.setSize(screenWidth / 5, screenHeight / 8);
-        AdminUsersButton.setLocation((int) (titleLabel.getLocation().getX() + AdminUsersButton.getSize().getWidth() + screenWidth / 20),
+        AdminUsersButton.setLocation((int) (titleLabel.getLocation().getX() + AdminUsersButton.getSize().getWidth() + screenWidth/5),
                 (int) (AdminAuctionsButton.getLocation().getY()));
         SDG2Util.fixJButtonFontSize(AdminUsersButton);
         AdminUsersButton.addActionListener(new ActionListener() {
@@ -56,9 +72,14 @@ public class AdminMainMenuPanel extends JPanel {
         });
 
         logOutButton = new JButton("Log out");
+        logOutButton.setForeground(new Color(0, 102, 102));
+        logOutButton.setBackground(Color.white);
+        logOutButton.setBorder(new TitledBorder(""));
+        logOutButton.setContentAreaFilled(false);
+        logOutButton.setOpaque(true);
         logOutButton.setSize(screenWidth / 8, screenHeight / 15);
-        logOutButton.setLocation(screenWidth / 2 + 2 * logOutButton.getWidth(),
-                screenHeight / 10);
+        logOutButton.setLocation((int) (screenWidth - logOutButton.getWidth() * 1.5),
+                (int) screenHeight / 5);
         SDG2Util.fixJButtonFontSize(logOutButton);
         logOutButton.addActionListener(new ActionListener() {
 

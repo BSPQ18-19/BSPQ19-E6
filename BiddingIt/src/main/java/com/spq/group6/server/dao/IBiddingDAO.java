@@ -50,6 +50,7 @@ public interface IBiddingDAO {
 
     /**
      * Method for deleting and Administrator from database, needed for tests
+     *
      * @param admin Administrator that will be deleted
      */
     void deleteAdministrator(Administrator admin);
