@@ -46,14 +46,14 @@ public class UserAuctionsPanel extends JPanel {
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
-        titleLabel.setSize(screenWidth / 4, screenHeight / 15);
-        titleLabel.setLocation((int) (screenWidth / 2 - titleLabel.getWidth() * 1.75), screenHeight / 4 - titleLabel.getHeight() / 2);
+        titleLabel.setSize(screenWidth, screenHeight / 7);
+        titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
         infoLabel = new JLabel("Here you can see your auctions. Start selling and check your earnings!", SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
-        infoLabel.setLocation((int) titleLabel.getLocation().getX(),
+        infoLabel.setLocation(screenWidth / 20,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
@@ -64,7 +64,7 @@ public class UserAuctionsPanel extends JPanel {
         backButton.setContentAreaFilled(false);
         backButton.setOpaque(true);
         backButton.setSize(screenWidth / 8, screenHeight / 15);
-        backButton.setLocation(backButton.getWidth() / 2,
+        backButton.setLocation(infoLabel.getX(),
                 screenHeight / 10);
         SDG2Util.fixJButtonFontSize(backButton);
         backButton.addActionListener(new ActionListener() {
@@ -113,7 +113,7 @@ public class UserAuctionsPanel extends JPanel {
         auctionsTableScrollPane.setBorder(new TitledBorder(""));
         auctionsTableScrollPane.setOpaque(true);
         auctionsTableScrollPane.setSize((int) (screenWidth - backButton.getLocation().getX() - (screenWidth - logOutButton.getLocation().getX()) + logOutButton.getWidth()), screenHeight / 2);
-        auctionsTableScrollPane.setLocation((int) (titleLabel.getLocation().getX()),
+        auctionsTableScrollPane.setLocation(infoLabel.getX(),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
 
         this.add(auctionsTableScrollPane);
