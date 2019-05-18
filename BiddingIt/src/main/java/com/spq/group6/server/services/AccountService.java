@@ -21,7 +21,8 @@ import com.spq.group6.server.utils.observer.remote.RemoteObservable;
  * - Product details modification
  */
 public class AccountService implements IAccountService {
-    public static RemoteObservable observable = new RemoteObservable();
+    public static RemoteObservable observable = new RemoteObservable();/** Remote observable responsible for
+     notifying Clients. Contains all User RemoteObservers*/
     private IBiddingDAO biddingDAO;
 
     public AccountService() {
@@ -110,6 +111,7 @@ public class AccountService implements IAccountService {
 
     /**
      * Method for checking if user already exists
+     * If alreay exists, throws an Exception
      *
      * @param user User that will be checked
      * @throws AccountException in case of User previous existance
@@ -120,7 +122,7 @@ public class AccountService implements IAccountService {
     }
 
     /**
-     * Method for creating Lock for User
+     * Method for creating Lock and adding a RemoteObserver for a User
      *
      * @param user User that a Lock will be created for
      */
