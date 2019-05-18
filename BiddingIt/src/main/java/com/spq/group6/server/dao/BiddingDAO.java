@@ -78,10 +78,12 @@ public class BiddingDAO implements IBiddingDAO {
         List<Auction> auctions = (List<Auction>) query.execute();
         tx.commit();
         for (Auction auction : auctions) {
-            deleteAuction(auction); //deletes each auction owned by the user being deleted
+            deleteAuction(auction);
         }
 
         deleteObject(product);
+        pmLock.unlock();
+
     }
 
     // AdminMain DAO
@@ -161,7 +163,9 @@ public class BiddingDAO implements IBiddingDAO {
     }
 
     public void deleteUser(User user) {
+        System.out.println("Waiting DAO lock");
         pmLock.lock();
+        System.out.println("DAO lock got it");
         Transaction tx = pm.currentTransaction();
         try {
             user = getUserByUsername(user.getUsername());
