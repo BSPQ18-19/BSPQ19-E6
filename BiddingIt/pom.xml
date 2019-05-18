@@ -303,15 +303,13 @@
             <build>
                 <resources>
                     <resource>
-                        <directory>${config.files.dir}</directory>
+                        <directory>${config.files.dir}/locale/</directory>
                         <includes>
-                            <include>**/*.jdo</include>
-                            <include>**/*.orm</include>
                             <include>**/*.properties</include>
                         </includes>
                     </resource>
                 </resources>
-                
+
                 <plugins>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>

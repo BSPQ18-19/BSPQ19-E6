@@ -17,14 +17,12 @@ import com.spq.group6.client.gui.utils.SDG2Util;
 
 public class LocaleSelectorPanel extends JPanel {
     
-    private int screenWidth, screenHeight;
 	private JComboBox<LanguageSelector> selectLanguageCB;
 	private JLabel label1;
 	private ClientController controller;
 
 	public LocaleSelectorPanel(int screenWidth, int screenHeight) {
-		this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
+		
         setBackground(Color.WHITE);
         this.setLayout(null);
 		this.controller = ClientController.getClientController();
@@ -54,6 +52,10 @@ public class LocaleSelectorPanel extends JPanel {
         
         this.add(label1);
         this.add(selectLanguageCB);
+	}
+	
+	public void bringSelectLanguageCBToFront() {
+		selectLanguageCB.repaint();
 	}
 	
 	public static void main(String[] args) {

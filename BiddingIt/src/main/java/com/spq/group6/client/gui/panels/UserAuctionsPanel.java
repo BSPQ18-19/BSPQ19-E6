@@ -28,15 +28,13 @@ public class UserAuctionsPanel extends JPanel {
     private JScrollPane auctionsTableScrollPane;
     private JTable auctionsTable;
     private JButton backButton;
-    private int screenWidth, screenHeight;
     private String[] auctionsColumnNames = {"Prod. Name", "Password", "Initial Price", "Highest Bid", "Status", "Day Limit", ""};
 
     private ClientController controller;
     private List<Auction> userAuctions;
 
     public UserAuctionsPanel(int screenWidth, int screenHeight) {
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
+
         setBackground(Color.WHITE);
         this.setLayout(null);
         this.controller = ClientController.getClientController();

@@ -34,7 +34,6 @@ public class ClientController {
         }
         serviceLocator = ServiceLocator.getServiceLocator();
         languageManager = new LanguageManager();
-        ClientWindow.getClientWindow().setVisible(true);
     }
 
     public static ClientController getClientController() {
@@ -46,6 +45,10 @@ public class ClientController {
 
     public static ClientController getNewClientController() {
         return new ClientController();
+    }
+    
+    public void setClientRemoteObserver() {
+    	observer.setClientWindow();
     }
     
     public LanguageManager getLanguageManager() {
