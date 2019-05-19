@@ -39,7 +39,6 @@ public class LocaleSelectorPanel extends JPanel {
         selectLanguageCB.setBackground(Color.WHITE);
         selectLanguageCB.setOpaque(true);
         selectLanguageCB.setSize((int) (screenWidth / 8), screenHeight / 15);
-        selectLanguageCB.setLocation((int) (screenWidth / 1.25), titleLabel.getHeight() / 2 - selectLanguageCB.getHeight() / 2);
         selectLanguageCB.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
@@ -54,13 +53,13 @@ public class LocaleSelectorPanel extends JPanel {
             }
         });  
         
-        this.add(titleLabel);
         this.add(selectLanguageCB);
 	}
 	
 	public void bringSelectLanguageCBToFront() {
 		this.remove(titleLabel);
         this.remove(selectLanguageCB);
+        selectLanguageCB.setLocation((int) (titleLabel.getWidth() / 1.25), titleLabel.getHeight() / 2 - selectLanguageCB.getHeight() / 2);
         this.repaint();
         this.add(selectLanguageCB);
         this.add(titleLabel);
