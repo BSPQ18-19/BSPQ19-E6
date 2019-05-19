@@ -1,6 +1,5 @@
 package com.spq.group6.client.gui.panels;
 
-import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
@@ -25,8 +24,6 @@ public class UserAccountPanel extends LocaleSelectorPanel {
     private JTextField passwordTF;
     private JButton confirmButton;
     private JButton backButton;
-
-    private ClientController controller;
 
     public UserAccountPanel(int screenWidth, int screenHeight) {
 
@@ -56,6 +53,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         SDG2Util.fixJLabelFontSize(countryLabel);
 
         countryTF = new JTextField();
+        countryTF.setName("country");
         countryTF.setText(controller.getCurrentUser().getCountry());
         countryTF.setBackground(Color.white);
         countryTF.setForeground(new Color(102, 69, 3));
@@ -74,6 +72,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         passwordLabel.setFont(countryLabel.getFont());
 
         passwordTF = new JPasswordField();
+        passwordTF.setName("password");
         passwordTF.setText(controller.getCurrentUser().getPassword());
         passwordTF.setBackground(Color.white);
         passwordTF.setForeground(new Color(102, 69, 3));
@@ -173,11 +172,17 @@ public class UserAccountPanel extends LocaleSelectorPanel {
     @Override
     protected void updateComponentsText() {
     	titleLabel.setText(controller.getLanguageMessage("UserAccountPanel.titleLabel.text"));
+    	SDG2Util.fixJLabelFontSize(titleLabel);
     	infoLabel.setText(controller.getLanguageMessage("UserAccountPanel.infoLabel.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel);
     	countryLabel.setText(controller.getLanguageMessage("UserAccountPanel.countryLabel.text"));
+    	SDG2Util.fixJLabelFontSize(countryLabel);
     	passwordLabel.setText(controller.getLanguageMessage("UserAccountPanel.passwordLabel.text"));
+    	SDG2Util.fixJLabelFontSize(passwordLabel);
     	confirmButton.setText(controller.getLanguageMessage("General.confirmButton.text"));
+    	SDG2Util.fixJButtonFontSize(confirmButton);
     	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    	SDG2Util.fixJButtonFontSize(backButton);
     	
     }
 

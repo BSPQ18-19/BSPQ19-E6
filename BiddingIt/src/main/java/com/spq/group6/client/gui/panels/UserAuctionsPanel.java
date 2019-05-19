@@ -1,7 +1,6 @@
 package com.spq.group6.client.gui.panels;
 
 import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
-import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.actions.ActionCreateAuction;
 import com.spq.group6.client.gui.elements.AuctionJTableModel;
@@ -29,7 +28,6 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
     private JButton backButton;
     private String[] auctionsColumnNames;
 
-    private ClientController controller;
     private List<Auction> userAuctions;
 
     public UserAuctionsPanel(int screenWidth, int screenHeight) {
@@ -170,9 +168,12 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
     @Override
     protected void updateComponentsText() {
     	titleLabel.setText(controller.getLanguageMessage("UserAuctionsPanel.titleLabel.text"));
+    	SDG2Util.fixJLabelFontSize(titleLabel);
     	infoLabel.setText(controller.getLanguageMessage("UserAuctionsPanel.infoLabel.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel);
     	updateAuctions();
     	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    	SDG2Util.fixJButtonFontSize(backButton);
     }
     
     public static void main(String[] args) {

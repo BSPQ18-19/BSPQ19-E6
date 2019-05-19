@@ -1,11 +1,8 @@
 package com.spq.group6.client.gui.panels;
 
-import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
-import com.spq.group6.client.gui.actions.ActionCreateAuction;
 import com.spq.group6.client.gui.actions.ActionDeleteProduct;
 import com.spq.group6.client.gui.actions.ActionUpdateProduct;
-import com.spq.group6.client.gui.elements.AuctionJTableModel;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.ProductJTableModel;
 import com.spq.group6.client.gui.utils.SDG2Util;
@@ -26,9 +23,6 @@ public class UserProductsPanel extends LocaleSelectorPanel {
     private JScrollPane productsTableScrollPane;
     private JTable productsTable;
     private JButton backButton;
-
-    @SuppressWarnings("unused")
-    private ClientController controller;
 
     public UserProductsPanel(int screenWidth, int screenHeight) {
 
@@ -119,7 +113,6 @@ public class UserProductsPanel extends LocaleSelectorPanel {
             productsData[i][3] = "";
         }
         productsTable.setModel(new ProductJTableModel(productsData, productsColumnNames));
-        productsTable.getColumnModel().getColumn(5).setPreferredWidth(productsTable.getColumnModel().getColumn(5).getPreferredWidth() + 150);
         @SuppressWarnings("unused")
         ButtonColumn updateButtonColumn = new ButtonColumn(productsTable, new ActionUpdateProduct(), 2);
         @SuppressWarnings("unused")
@@ -134,9 +127,12 @@ public class UserProductsPanel extends LocaleSelectorPanel {
     @Override
     protected void updateComponentsText() {
     	titleLabel.setText(controller.getLanguageMessage("UserProductsPanel.titleLabel.text"));
+    	SDG2Util.fixJLabelFontSize(titleLabel);
     	infoLabel.setText(controller.getLanguageMessage("UserProductsPanel.infoLabel.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel);
     	updateProducts();
     	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    	SDG2Util.fixJButtonFontSize(backButton);
     }
 
     public static void main(String[] args) {

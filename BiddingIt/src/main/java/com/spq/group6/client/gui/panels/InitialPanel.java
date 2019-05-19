@@ -20,9 +20,9 @@ public class InitialPanel extends LocaleSelectorPanel {
 
     public InitialPanel(int screenWidth, int screenHeight) {
 
-    	super(screenHeight, screenHeight);
+    	super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel(controller.getLanguageMessage("InitialPanel.titleLabel.text"), SwingConstants.CENTER);
+        titleLabel = new JLabel(controller.getLanguageMessage("InitialPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -90,19 +90,24 @@ public class InitialPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
         
-        controller.sayText("Welcome to Bidding It! This is aun auction system. You can sell and bid other people's products."
-        		+ " If you want to disable this beatiful voice, you can turn it off by pressing the sound ON button. You can also change"
-        		+ "the language. Enjoy!");
+//        controller.sayText("Welcome to Bidding It! This is aun auction system. You can sell and bid other people's products."
+//        		+ " If you want to disable this beatiful voice, you can turn it off by pressing the sound ON button. You can also change"
+//        		+ "the language. Enjoy!");
         controller.sayText("You currently are in the initial menu.");
     }
     
     @Override
     protected void updateComponentsText() {
         titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+        SDG2Util.fixJLabelFontSize(titleLabel);
         infoLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+        SDG2Util.fixJLabelFontSize(infoLabel);
         authorLabel.setText(controller.getLanguageMessage("InitialPanel.authorLabel.text"));
+        SDG2Util.fixJLabelFontSize(authorLabel);
         logInButton.setText(controller.getLanguageMessage("InitialPanel.logInButton.text"));
+        SDG2Util.fixJButtonFontSize(logInButton);
         signInButton.setText(controller.getLanguageMessage("InitialPanel.signInButton.text"));
+        SDG2Util.fixJButtonFontSize(signInButton);
 	}
 
     public static void main(String[] args) {

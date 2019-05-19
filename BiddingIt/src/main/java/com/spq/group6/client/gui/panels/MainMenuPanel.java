@@ -1,6 +1,5 @@
 package com.spq.group6.client.gui.panels;
 
-import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
@@ -20,8 +19,6 @@ public class MainMenuPanel extends LocaleSelectorPanel {
     private JButton userProductsButton;
     private JButton userAuctionsButton;
     private JButton logOutButton;
-
-    private ClientController controller;
 
     public MainMenuPanel(int screenWidth, int screenHeight) {
 
@@ -160,12 +157,19 @@ public class MainMenuPanel extends LocaleSelectorPanel {
     @Override
     protected void updateComponentsText() {
     	titleLabel.setText(controller.getLanguageMessage("MainMenuPanel.titleLabel.text"));
+    	SDG2Util.fixJLabelFontSize(titleLabel);
     	infoLabel.setText(controller.getLanguageMessage("MainMenuPanel.infoLabel.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel);
     	marketButton.setText(controller.getLanguageMessage("MainMenuPanel.marketButton.text"));
+    	SDG2Util.fixJButtonFontSize(marketButton);
     	userProductsButton.setText(controller.getLanguageMessage("MainMenuPanel.userProductsButton.text"));
+    	SDG2Util.fixJButtonFontSize(userProductsButton);
     	userAuctionsButton.setText(controller.getLanguageMessage("MainMenuPanel.userAuctionsButton.text"));
+    	SDG2Util.fixJButtonFontSize(userAuctionsButton);
     	userAccountButton.setText(controller.getLanguageMessage("MainMenuPanel.userAccountButton.text"));
+    	SDG2Util.fixJButtonFontSize(userAccountButton);
     	logOutButton.setText(controller.getLanguageMessage("MainMenuPanel.logOutButton.text"));
+    	SDG2Util.fixJButtonFontSize(logOutButton);
     }
 
     public static void main(String[] args) {

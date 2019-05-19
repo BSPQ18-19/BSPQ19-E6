@@ -1,6 +1,5 @@
 package com.spq.group6.client.gui.panels;
 
-import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
@@ -28,8 +27,6 @@ public class RegisterPanel extends LocaleSelectorPanel {
     private JTextField countryTF;
     private JButton confirmButton;
     private JButton cancelButton;
-
-    private ClientController controller;
 
     public RegisterPanel(int screenWidth, int screenHeight) {
 
@@ -59,6 +56,7 @@ public class RegisterPanel extends LocaleSelectorPanel {
         SDG2Util.fixJLabelFontSize(usernameLabel);
 
         usernameTF = new JTextField();
+        usernameTF.setName("username");
         usernameTF.setBackground(Color.white);
         usernameTF.setForeground(new Color(102, 69, 3));
         usernameTF.setBorder(new TitledBorder(""));
@@ -98,6 +96,7 @@ public class RegisterPanel extends LocaleSelectorPanel {
         passwordLabel.setFont(usernameLabel.getFont());
 
         passwordTF = new JPasswordField();
+        passwordTF.setName("password");
         passwordTF.setBackground(Color.white);
         passwordTF.setForeground(new Color(102, 69, 3));
         passwordTF.setBorder(new TitledBorder(""));
@@ -137,6 +136,7 @@ public class RegisterPanel extends LocaleSelectorPanel {
         countryLabel.setFont(passwordLabel.getFont());
 
         countryTF = new JTextField();
+        countryTF.setName("country");
         countryTF.setBackground(Color.white);
         countryTF.setForeground(new Color(102, 69, 3));
         countryTF.setBorder(new TitledBorder(""));
@@ -237,12 +237,19 @@ public class RegisterPanel extends LocaleSelectorPanel {
     @Override
     protected void updateComponentsText() {
     	titleLabel.setText(controller.getLanguageMessage("RegisterPanel.titleLabel.text"));
+    	SDG2Util.fixJLabelFontSize(titleLabel);
     	infoLabel.setText(controller.getLanguageMessage("RegisterPanel.infoLabel.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel);
     	usernameLabel.setText(controller.getLanguageMessage("RegisterPanel.usernameLabel.text"));
+    	SDG2Util.fixJLabelFontSize(usernameLabel);
     	passwordLabel.setText(controller.getLanguageMessage("RegisterPanel.passwordLabel.text"));
+    	SDG2Util.fixJLabelFontSize(passwordLabel);
     	countryLabel.setText(controller.getLanguageMessage("RegisterPanel.countryLabel.text"));
+    	SDG2Util.fixJLabelFontSize(countryLabel);
     	confirmButton.setText(controller.getLanguageMessage("General.confirmButton.text"));
+    	SDG2Util.fixJButtonFontSize(confirmButton);
     	cancelButton.setText(controller.getLanguageMessage("General.cancelButton.text"));
+    	SDG2Util.fixJButtonFontSize(cancelButton);
     }
 
     public static void main(String[] args) {
