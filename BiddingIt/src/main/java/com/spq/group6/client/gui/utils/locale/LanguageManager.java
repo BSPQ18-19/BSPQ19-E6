@@ -1,4 +1,4 @@
-package com.spq.group6.client.gui.utils;
+package com.spq.group6.client.gui.utils.locale;
 
 import java.text.MessageFormat;
 import java.util.Locale;
@@ -8,7 +8,7 @@ public class LanguageManager {
     /**
      * The name of the ResourceBundle files
      */
-    private static final String RESOURCE_BUNDLE_FILE_NAME = "localization";
+    private static final String RESOURCE_BUNDLE_FILE_NAME = "locale/localization";
 
     /**
      * The default locale for the app.

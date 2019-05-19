@@ -1,4 +1,4 @@
-package com.spq.group6.client.gui.utils;
+package com.spq.group6.client.gui.utils.locale;
 
 import java.util.Locale;
 

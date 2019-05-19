@@ -17,7 +17,6 @@
         <server.port>1099</server.port>
         <server.Name>BiddingItServer</server.Name>
         <policy.file>${basedir}/src/main/resources/security/java.policy</policy.file>
-        <locale.dir>${basedir}/src/main/resources/locale</locale.dir>
         <config.files.dir>${basedir}/src/main/resources</config.files.dir>
         <doxygen.config.file>${config.files.dir}/Doxyfile</doxygen.config.file>
     </properties>
@@ -126,7 +125,7 @@
             <groupId>com.github.freetts</groupId>
             <artifactId>freetts-jsapi10</artifactId>
             <version>1.0</version>
-        </dependency> 
+        </dependency>
         <dependency>
             <groupId>com.github.freetts</groupId>
             <artifactId>jsapi</artifactId>
@@ -352,11 +351,7 @@
         <profile>
             <id>client</id>
             <build>
-                <resources>
-                    <resource>
-                        <directory>${locale.dir}</directory>
-                    </resource>
-                </resources>
+
 
                 <plugins>
                     <plugin>

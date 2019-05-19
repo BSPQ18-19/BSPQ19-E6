@@ -1,8 +1,7 @@
 package com.spq.group6.client.controller;
 
-import com.spq.group6.client.gui.ClientWindow;
-import com.spq.group6.client.gui.utils.LanguageManager;
-import com.spq.group6.client.gui.utils.LanguageSelector;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
+import com.spq.group6.client.gui.utils.locale.LanguageSelector;
 import com.spq.group6.client.gui.utils.TTSManager;
 import com.spq.group6.client.remote.ServiceLocator;
 import com.spq.group6.client.utils.logger.ClientLogger;
