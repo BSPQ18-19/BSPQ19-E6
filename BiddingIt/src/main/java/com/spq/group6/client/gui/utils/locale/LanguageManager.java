@@ -50,15 +50,14 @@ public class LanguageManager {
 
             // Check if the key is in the default bundle
             if (!getResourceBundle(DEFAULT_LOCALE).containsKey(key)) {
-                return key; // return just the translation key
+                return "KeyNotFound"; // return a error String
+            }else {
+                // If it exist in the default bundle we use it
+                localeToUse = DEFAULT_LOCALE;
             }
-
-            // If it exist in the default bundle we use it
-            localeToUse = DEFAULT_LOCALE;
-
         }
 
-        // Format with parameters
+        // return the translated message
         MessageFormat formatter = new MessageFormat("");
         formatter.setLocale(localeToUse);
         formatter.applyPattern(getResourceBundle(localeToUse).getString(key));
@@ -66,10 +65,7 @@ public class LanguageManager {
 
     }
     
-    /**
-     * Get all languages available
-     * @return the locales allowed
-     */
+    // get the possible languages
     public LanguageSelector[] getLanguages() {
     	return LanguageSelector.ALLOWED_LOCALES;
     }
