@@ -64,7 +64,8 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         countryTF.setLocation((int) countryLabel.getLocation().getX() + countryLabel.getWidth() - 80,
                 (int) countryLabel.getLocation().getY());
         countryTF.setFont(new Font("Arial", Font.PLAIN, (int) (countryLabel.getFont().getSize() / 1.5)));
-
+        countryTF.addFocusListener(ttsFocusListener);
+        
         passwordLabel = new JLabel(controller.getLanguageMessage("UserAccountPanel.passwordLabel.text"), SwingConstants.LEFT);
         passwordLabel.setForeground(new Color(0, 102, 102));
         passwordLabel.setSize(countryLabel.getSize());
@@ -81,7 +82,8 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         passwordTF.setLocation((int) countryTF.getLocation().getX(),
                 (int) passwordLabel.getLocation().getY());
         passwordTF.setFont(countryTF.getFont());
-
+        passwordTF.addFocusListener(ttsFocusListener);
+        
         nameLabel = new JLabel("Username: " + controller.getCurrentUser().getUsername(), SwingConstants.LEFT);
         nameLabel.setForeground(new Color(0, 102, 102));
         nameLabel.setSize(screenWidth / 5, screenHeight / 20);
@@ -123,6 +125,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
                 repaint();
             }
         });
+        confirmButton.addFocusListener(ttsFocusListener);
 
         backButton = new JButton(controller.getLanguageMessage("General.backButton.text"));
         backButton.setForeground(new Color(0, 102, 102));
@@ -140,6 +143,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU, countryTF.getText());
             }
         });
+        backButton.addFocusListener(ttsFocusListener);
 
         confirmLabel = new JLabel(" ",
                 SwingConstants.LEFT);
@@ -161,6 +165,8 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         this.add(confirmLabel);
         
         bringSelectLanguageCBToFront();
+
+        controller.sayText("You currently are in the user account menu.");
 
     }
 

@@ -63,6 +63,7 @@ public class UserProductsPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
             }
         });
+        backButton.addFocusListener(ttsFocusListener);
 
         String[] productsColumnNames = {controller.getLanguageMessage("UserProductsPanel.productsColumnNames.0"), 
         		controller.getLanguageMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
@@ -112,6 +113,8 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         this.add(backButton);
         
         bringSelectLanguageCBToFront();
+        
+        controller.sayText("You currently are in the initial menu.");
 
     }
 

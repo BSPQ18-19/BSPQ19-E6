@@ -59,6 +59,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.USER_AUCTIONS);
             }
         });
+        userAuctionsButton.addFocusListener(ttsFocusListener);
 
         userProductsButton = new JButton(controller.getLanguageMessage("MainMenuPanel.userProductsButton.text"));
         userProductsButton.setForeground(new Color(0, 102, 102));
@@ -77,6 +78,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.USER_PRODUCTS);
             }
         });
+        userProductsButton.addFocusListener(ttsFocusListener);
 
         marketButton = new JButton(controller.getLanguageMessage("MainMenuPanel.marketButton.text"));
         marketButton.setForeground(new Color(0, 102, 102));
@@ -96,6 +98,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
 
             }
         });
+        marketButton.addFocusListener(ttsFocusListener);
 
         userAccountButton = new JButton(controller.getLanguageMessage("MainMenuPanel.userAccountButton.text"));
         userAccountButton.setForeground(new Color(0, 102, 102));
@@ -115,6 +118,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
 
             }
         });
+        userAccountButton.addFocusListener(ttsFocusListener);
 
         logOutButton = new JButton(controller.getLanguageMessage("MainMenuPanel.logOutButton.text"));
         logOutButton.setForeground(new Color(0, 102, 102));
@@ -137,6 +141,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
 
             }
         });
+        logOutButton.addFocusListener(ttsFocusListener);
 
         this.add(titleLabel);
         this.add(infoLabel);
@@ -147,6 +152,8 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         this.add(logOutButton);
         
         bringSelectLanguageCBToFront();
+        
+        controller.sayText("You currently are in the main menu.");
 
     }
 

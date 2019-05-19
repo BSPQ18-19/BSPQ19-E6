@@ -71,12 +71,14 @@ public class MarketPanel extends LocaleSelectorPanel {
         searchComboBox.getEditor().getEditorComponent().setForeground(new Color(0, 102, 102));
         searchComboBox.setBorder(new TitledBorder(""));
         searchComboBox.setOpaque(true);
+        searchComboBox.addFocusListener(ttsFocusListener);
         
         searchLabel2 = new JLabel(controller.getLanguageMessage("MarketPanel.searchLabel2.text"));
         searchLabel2.setForeground(new Color(0, 102, 102));
         
         searchTF = new JTextField(10);
         searchTF.setForeground(new Color(102, 69, 3));
+        searchTF.addFocusListener(ttsFocusListener);
         
         searchButton = new JButton(controller.getLanguageMessage("MarketPanel.searchButton.text"));
         searchButton.setForeground(new Color(0, 102, 102));
@@ -113,6 +115,8 @@ public class MarketPanel extends LocaleSelectorPanel {
                 }
             }
         });
+        searchButton.addFocusListener(ttsFocusListener);
+        
         searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         searchPanel.setBackground(Color.white);
         searchPanel.setBorder(new MatteBorder(0, 0, 0, 0, Color.black));
@@ -130,7 +134,6 @@ public class MarketPanel extends LocaleSelectorPanel {
         backButton.setOpaque(true);
         backButton.setSize(screenWidth / 8, screenHeight / 15);
         backButton.setLocation(infoLabel.getX(), (int) (screenHeight - (backButton.getHeight() * 2.5)));
-
         SDG2Util.fixJButtonFontSize(backButton);
         backButton.addActionListener(new ActionListener() {
 
@@ -139,6 +142,7 @@ public class MarketPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
             }
         });
+        backButton.addFocusListener(ttsFocusListener);
         
         auctionsColumnNames = new String[]{controller.getLanguageMessage("MarketPanel.auctionsColumnNames.0"),
         		controller.getLanguageMessage("MarketPanel.auctionsColumnNames.1"), controller.getLanguageMessage("MarketPanel.auctionsColumnNames.2"),
@@ -174,6 +178,8 @@ public class MarketPanel extends LocaleSelectorPanel {
         this.add(backButton);
         
         bringSelectLanguageCBToFront();
+
+        controller.sayText("You currently are in the market menu.");
 
     }
 

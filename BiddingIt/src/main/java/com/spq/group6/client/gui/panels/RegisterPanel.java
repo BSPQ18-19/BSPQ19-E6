@@ -83,6 +83,7 @@ public class RegisterPanel extends LocaleSelectorPanel {
                 checkInput(true);
             }
         });
+        usernameTF.addFocusListener(ttsFocusListener);
 		
 		/*
 		usernametickImage = new JLabelGraficoAjustado("media/error.png", usernameTF.getHeight(), usernameTF.getHeight());
@@ -121,6 +122,7 @@ public class RegisterPanel extends LocaleSelectorPanel {
                 checkInput(false);
             }
         });
+        passwordTF.addFocusListener(ttsFocusListener);
 		
 		/*
 		passwordtickImage = new JLabelGraficoAjustado("/error.png", usernametickImage.getHeight(), usernametickImage.getHeight());
@@ -142,7 +144,8 @@ public class RegisterPanel extends LocaleSelectorPanel {
         countryTF.setLocation((int) usernameTF.getLocation().getX(),
                 (int) (countryLabel.getLocation().getY()));
         countryTF.setFont(usernameTF.getFont());
-
+        countryTF.addFocusListener(ttsFocusListener);
+        
         confirmButton = new JButton(controller.getLanguageMessage("General.confirmButton.text"));
         confirmButton.setForeground(new Color(0, 102, 102));
         confirmButton.setBackground(Color.white);
@@ -184,6 +187,7 @@ public class RegisterPanel extends LocaleSelectorPanel {
 				*/
             }
         });
+        confirmButton.addFocusListener(ttsFocusListener);
 
         cancelButton = new JButton(controller.getLanguageMessage("General.cancelButton.text"));
         cancelButton.setForeground(new Color(0, 102, 102));
@@ -201,6 +205,8 @@ public class RegisterPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
             }
         });
+        cancelButton.addFocusListener(ttsFocusListener);
+        
         confirmLabel = new JLabel(" ",
                 SwingConstants.LEFT);
         confirmLabel.setForeground(new Color(0, 102, 102));
@@ -223,6 +229,8 @@ public class RegisterPanel extends LocaleSelectorPanel {
         this.add(confirmLabel);
         
         bringSelectLanguageCBToFront();
+
+        controller.sayText("You currently are in the register menu.");
 
     }
 

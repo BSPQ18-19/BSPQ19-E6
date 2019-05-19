@@ -62,6 +62,7 @@ public class LogInPanel extends LocaleSelectorPanel {
         usernameTF.setLocation((int) usernameLabel.getLocation().getX() + usernameLabel.getWidth(),
                 (int) usernameLabel.getLocation().getY());
         usernameTF.setFont(new Font("Arial", Font.PLAIN, (int) (usernameLabel.getFont().getSize() / 1.5)));
+        usernameTF.addFocusListener(ttsFocusListener);
 
         passwordLabel = new JLabel(controller.getLanguageMessage("LogInPanel.passwordLabel.text"), SwingConstants.LEFT);
         passwordLabel.setForeground(new Color(0, 102, 102));
@@ -78,6 +79,7 @@ public class LogInPanel extends LocaleSelectorPanel {
         passwordTF.setLocation((int) usernameTF.getLocation().getX(),
                 (int) passwordLabel.getLocation().getY());
         passwordTF.setFont(usernameTF.getFont());
+        passwordTF.addFocusListener(ttsFocusListener);
 
         confirmButton = new JButton(controller.getLanguageMessage("General.confirmButton.text"));
         confirmButton.setForeground(new Color(0, 102, 102));
@@ -108,6 +110,7 @@ public class LogInPanel extends LocaleSelectorPanel {
                 }
             }
         });
+        confirmButton.addFocusListener(ttsFocusListener);
 
         cancelButton = new JButton(controller.getLanguageMessage("General.cancelButton.text"));
         cancelButton.setForeground(new Color(0, 102, 102));
@@ -125,6 +128,7 @@ public class LogInPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL, usernameTF.getText());
             }
         });
+        cancelButton.addFocusListener(ttsFocusListener);
 
         confirmLabel = new JLabel(" ",
                 SwingConstants.LEFT);
@@ -145,6 +149,8 @@ public class LogInPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
 
+        controller.sayText("You currently are in the log in menu.");
+        
     }
 
     public static void main(String[] args) {

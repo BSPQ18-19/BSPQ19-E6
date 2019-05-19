@@ -68,6 +68,7 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
             }
         });
+        backButton.addFocusListener(ttsFocusListener);
 
         userAuctions = controller.getCurrentUserAuctions();
         auctionsColumnNames = new String[]{controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.0"),
@@ -96,6 +97,10 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         this.add(titleLabel);
         this.add(infoLabel);
         this.add(backButton);
+        
+        bringSelectLanguageCBToFront();
+
+        controller.sayText("You currently are in the initial menu.");
 
     }
 

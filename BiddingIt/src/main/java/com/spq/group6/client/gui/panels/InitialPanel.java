@@ -61,6 +61,7 @@ public class InitialPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN);
             }
         });
+        logInButton.addFocusListener(ttsFocusListener);
 
         signInButton = new JButton(controller.getLanguageMessage("InitialPanel.signInButton.text"));
         signInButton.setForeground(new Color(0, 102, 102));
@@ -79,6 +80,7 @@ public class InitialPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.REGISTER);
             }
         });
+        signInButton.addFocusListener(ttsFocusListener);
         
         this.add(titleLabel);
         this.add(infoLabel);
@@ -87,6 +89,11 @@ public class InitialPanel extends LocaleSelectorPanel {
         this.add(signInButton);
         
         bringSelectLanguageCBToFront();
+        
+        controller.sayText("Welcome to Bidding It! This is aun auction system. You can sell and bid other people's products."
+        		+ " If you want to disable this beatiful voice, you can turn it off by pressing the sound ON button. You can also change"
+        		+ "the language. Enjoy!");
+        controller.sayText("You currently are in the initial menu.");
     }
 
     public static void main(String[] args) {

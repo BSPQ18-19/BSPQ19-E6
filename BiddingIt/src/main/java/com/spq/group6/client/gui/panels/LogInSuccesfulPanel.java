@@ -74,6 +74,8 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
         animationThread.start();
         
         bringSelectLanguageCBToFront();
+        
+        controller.sayText("You have logged in successfully. Please wait.");
 
     }
 
