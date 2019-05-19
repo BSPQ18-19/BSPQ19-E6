@@ -95,6 +95,15 @@ public class InitialPanel extends LocaleSelectorPanel {
         		+ "the language. Enjoy!");
         controller.sayText("You currently are in the initial menu.");
     }
+    
+    @Override
+    protected void updateComponentsText() {
+        titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+        infoLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+        authorLabel.setText(controller.getLanguageMessage("InitialPanel.authorLabel.text"));
+        logInButton.setText(controller.getLanguageMessage("InitialPanel.logInButton.text"));
+        signInButton.setText(controller.getLanguageMessage("InitialPanel.signInButton.text"));
+	}
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();

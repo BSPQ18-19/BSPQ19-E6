@@ -156,6 +156,17 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         controller.sayText("You currently are in the main menu.");
 
     }
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("MainMenuPanel.titleLabel.text"));
+    	infoLabel.setText(controller.getLanguageMessage("MainMenuPanel.infoLabel.text"));
+    	marketButton.setText(controller.getLanguageMessage("MainMenuPanel.marketButton.text"));
+    	userProductsButton.setText(controller.getLanguageMessage("MainMenuPanel.userProductsButton.text"));
+    	userAuctionsButton.setText(controller.getLanguageMessage("MainMenuPanel.userAuctionsButton.text"));
+    	userAccountButton.setText(controller.getLanguageMessage("MainMenuPanel.userAccountButton.text"));
+    	logOutButton.setText(controller.getLanguageMessage("MainMenuPanel.logOutButton.text"));
+    }
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();

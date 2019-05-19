@@ -93,9 +93,9 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         auctionsTableScrollPane.setLocation(infoLabel.getX(),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
 
-        this.add(auctionsTableScrollPane);
         this.add(titleLabel);
         this.add(infoLabel);
+        this.add(auctionsTableScrollPane);
         this.add(backButton);
         
         bringSelectLanguageCBToFront();
@@ -105,7 +105,7 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
     }
 
     public void updateAuctions() {
-        Object[][] auctionsData = null;
+        Object[][] auctionsData = new Object[][] {};
         if (controller.getCurrentUser() != null) {
             auctionsData = new Object[userAuctions.size() + 1][auctionsColumnNames.length];
             int i = 0;
@@ -151,8 +151,6 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         auctionsTable.revalidate();
         auctionsTable.repaint();
         
-        bringSelectLanguageCBToFront();
-
     }
 
     public void updateUserProductsComboBox() {
@@ -168,7 +166,15 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         JComboBox<Product> prodComboBox = new JComboBox<Product>(userProductsNotAuctionArray);
         auctionsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(prodComboBox));
     }
-
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("UserAuctionsPanel.titleLabel.text"));
+    	infoLabel.setText(controller.getLanguageMessage("UserAuctionsPanel.infoLabel.text"));
+    	updateAuctions();
+    	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    }
+    
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();
         testFrame.setSize(800, 600);

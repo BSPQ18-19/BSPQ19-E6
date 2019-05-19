@@ -12,10 +12,12 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
     private static final long serialVersionUID = 1L;
     private JLabel infoLabel1;
     private JLabel infoLabel2;
+    private String username;
 
     public LogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
 
     	super(screenWidth, screenHeight);
+    	this.username = username;
     	
         if (!username.isEmpty())
             titleLabel = new JLabel(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)", SwingConstants.LEFT);
@@ -77,6 +79,17 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
         
         controller.sayText("You have logged in successfully. Please wait.");
 
+    }
+    
+    @Override
+    protected void updateComponentsText() {
+    	if (!username.isEmpty())
+            titleLabel.setText(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)");
+        else
+            titleLabel.setText(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + "! :)");
+    	infoLabel1.setText(controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel1.text"));
+    	infoLabel2.setText(controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel2.text"));
+    	
     }
 
     public static void main(String[] args) {

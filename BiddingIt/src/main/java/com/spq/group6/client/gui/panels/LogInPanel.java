@@ -152,6 +152,16 @@ public class LogInPanel extends LocaleSelectorPanel {
         controller.sayText("You currently are in the log in menu.");
         
     }
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("LogInPanel.titleLabel.text"));
+    	infoLabel.setText(controller.getLanguageMessage("LogInPanel.infoLabel.text"));
+    	usernameLabel.setText(controller.getLanguageMessage("LogInPanel.usernameLabel.text"));
+    	passwordLabel.setText(controller.getLanguageMessage("LogInPanel.passwordLabel.text"));
+    	confirmButton.setText(controller.getLanguageMessage("General.confirmButton.text"));
+    	cancelButton.setText(controller.getLanguageMessage("General.cancelButton.text"));
+    }
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();

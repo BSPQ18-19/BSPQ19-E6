@@ -233,6 +233,17 @@ public class RegisterPanel extends LocaleSelectorPanel {
         controller.sayText("You currently are in the register menu.");
 
     }
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("RegisterPanel.titleLabel.text"));
+    	infoLabel.setText(controller.getLanguageMessage("RegisterPanel.infoLabel.text"));
+    	usernameLabel.setText(controller.getLanguageMessage("RegisterPanel.usernameLabel.text"));
+    	passwordLabel.setText(controller.getLanguageMessage("RegisterPanel.passwordLabel.text"));
+    	countryLabel.setText(controller.getLanguageMessage("RegisterPanel.countryLabel.text"));
+    	confirmButton.setText(controller.getLanguageMessage("General.confirmButton.text"));
+    	cancelButton.setText(controller.getLanguageMessage("General.cancelButton.text"));
+    }
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();
