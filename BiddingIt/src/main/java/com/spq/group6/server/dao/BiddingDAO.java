@@ -163,9 +163,7 @@ public class BiddingDAO implements IBiddingDAO {
     }
 
     public void deleteUser(User user) {
-        System.out.println("Waiting DAO lock");
         pmLock.lock();
-        System.out.println("DAO lock got it");
         Transaction tx = pm.currentTransaction();
         try {
             user = getUserByUsername(user.getUsername());
