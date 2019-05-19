@@ -20,7 +20,6 @@ import java.awt.event.ActionListener;
 public class UserProductsPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
-    private JLabel titleLabel;
     private JLabel infoLabel;
     private JScrollPane productsTableScrollPane;
     private JTable productsTable;
@@ -33,7 +32,7 @@ public class UserProductsPanel extends LocaleSelectorPanel {
 
         super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel("My products", SwingConstants.LEFT);
+        titleLabel = new JLabel(controller.getLanguageMessage("UserProductsPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -41,15 +40,14 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel("<html>Here you can see your products. Start selling and check your earnings!"
-                + "<br/>You can edit the name and description and then click save.<br/>You can also delete your products.</html>", SwingConstants.LEFT);
+        infoLabel = new JLabel(controller.getLanguageMessage("UserProductsPanel.infoLabel.text"), SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
         infoLabel.setLocation(screenWidth / 20,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() * 1.5));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
-        backButton = new JButton("Back");
+        backButton = new JButton(controller.getLanguageMessage("General.backButton.text"));
         backButton.setForeground(new Color(0, 102, 102));
         backButton.setBackground(Color.white);
         backButton.setBorder(new TitledBorder(""));
@@ -65,8 +63,10 @@ public class UserProductsPanel extends LocaleSelectorPanel {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
             }
         });
+        backButton.addFocusListener(ttsFocusListener);
 
-        String[] productsColumnNames = {"Name", "Description", "", ""};
+        String[] productsColumnNames = {controller.getLanguageMessage("UserProductsPanel.productsColumnNames.0"), 
+        		controller.getLanguageMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
         Object[][] productsData = null;
         if (controller.getCurrentUser() != null) {
             productsData = new Object[controller.getCurrentUserProducts().size() + 1][productsColumnNames.length];
@@ -75,12 +75,12 @@ public class UserProductsPanel extends LocaleSelectorPanel {
                 Product tempProduct = controller.getCurrentUserProducts().get(i);
                 productsData[i][0] = tempProduct.getName();
                 productsData[i][1] = tempProduct.getDescription();
-                productsData[i][2] = "Save";
-                productsData[i][3] = "Delete";
+                productsData[i][2] = controller.getLanguageMessage("UserProductsPanel.productsData.2");
+                productsData[i][3] = controller.getLanguageMessage("UserProductsPanel.productsData.3");
             }
             productsData[i][0] = "";
             productsData[i][1] = "";
-            productsData[i][2] = "Create";
+            productsData[i][2] = controller.getLanguageMessage("UserProductsPanel.productsData.2b");
             productsData[i][3] = "";
         }
         productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames));
@@ -113,6 +113,8 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         this.add(backButton);
         
         bringSelectLanguageCBToFront();
+        
+        controller.sayText("You currently are in the initial menu.");
 
     }
 

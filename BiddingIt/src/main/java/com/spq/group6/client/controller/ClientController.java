@@ -3,6 +3,7 @@ package com.spq.group6.client.controller;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.LanguageManager;
 import com.spq.group6.client.gui.utils.LanguageSelector;
+import com.spq.group6.client.gui.utils.TTSManager;
 import com.spq.group6.client.remote.ServiceLocator;
 import com.spq.group6.client.utils.logger.ClientLogger;
 import com.spq.group6.server.data.Auction;
@@ -24,6 +25,7 @@ public class ClientController {
     private User currentUser;
     private ClientRemoteObserver observer;
     private LanguageManager languageManager;
+    private TTSManager ttsManager;
 
     private ClientController() {
         super();
@@ -34,6 +36,7 @@ public class ClientController {
         }
         serviceLocator = ServiceLocator.getServiceLocator();
         languageManager = new LanguageManager();
+        ttsManager = new TTSManager();
     }
 
     public static ClientController getClientController() {
@@ -65,6 +68,18 @@ public class ClientController {
     
     public String getLanguageMessage(String key, String... parameters) {
     	return languageManager.getMessage(key, parameters);
+    }
+    
+    public TTSManager getTtsManager() {
+    	return ttsManager;
+    }
+    
+    public void setTtsState(boolean state) {
+    	ttsManager.setTtsIsON(state);
+    }
+    
+    public void sayText(String text) {
+    	ttsManager.sayText(text);
     }
 
     public boolean logIn(String email, String password) throws RemoteException {
