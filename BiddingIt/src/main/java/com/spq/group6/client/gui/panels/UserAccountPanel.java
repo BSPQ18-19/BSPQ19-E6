@@ -169,6 +169,17 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         controller.sayText("You currently are in the user account menu.");
 
     }
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("UserAccountPanel.titleLabel.text"));
+    	infoLabel.setText(controller.getLanguageMessage("UserAccountPanel.infoLabel.text"));
+    	countryLabel.setText(controller.getLanguageMessage("UserAccountPanel.countryLabel.text"));
+    	passwordLabel.setText(controller.getLanguageMessage("UserAccountPanel.passwordLabel.text"));
+    	confirmButton.setText(controller.getLanguageMessage("General.confirmButton.text"));
+    	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    	
+    }
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();

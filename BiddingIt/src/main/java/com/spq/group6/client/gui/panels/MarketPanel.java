@@ -184,7 +184,10 @@ public class MarketPanel extends LocaleSelectorPanel {
     }
 
     public void updateAuctions() {
-        Object[][] auctionsData;
+    	auctionsColumnNames = new String[]{controller.getLanguageMessage("MarketPanel.auctionsColumnNames.0"),
+        		controller.getLanguageMessage("MarketPanel.auctionsColumnNames.1"), controller.getLanguageMessage("MarketPanel.auctionsColumnNames.2"),
+        		controller.getLanguageMessage("MarketPanel.auctionsColumnNames.3"), controller.getLanguageMessage("MarketPanel.auctionsColumnNames.4"), ""};
+    	Object[][] auctionsData = new Object[][] {};
         if (auctions.size() == 0) {
             auctionsData = new Object[][]{};
 
@@ -225,6 +228,19 @@ public class MarketPanel extends LocaleSelectorPanel {
 
         auctionsTable.revalidate();
         auctionsTable.repaint();
+    }
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("MarketPanel.titleLabel.text"));
+    	infoLabel.setText(controller.getLanguageMessage("MarketPanel.infoLabel.text"));
+    	searchLabel.setText(controller.getLanguageMessage("MarketPanel.searchLabel.text"));
+    	searchComboBox.setModel(new DefaultComboBoxModel<>(new String[]{controller.getLanguageMessage("MarketPanel.comboBox.option1"),
+        		controller.getLanguageMessage("MarketPanel.comboBox.option2")}));
+    	searchLabel2.setText(controller.getLanguageMessage("MarketPanel.searchLabel2.text"));
+    	searchButton.setText(controller.getLanguageMessage("MarketPanel.searchButton.text"));
+    	updateAuctions();
+    	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
     }
 
     public static void main(String[] args) {

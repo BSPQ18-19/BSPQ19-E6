@@ -73,7 +73,7 @@ public class LocaleSelectorPanel extends JPanel {
 				JComboBox<LanguageSelector> comboBox = (JComboBox<LanguageSelector>) e.getSource();
                 Locale l = ((LanguageSelector) comboBox.getSelectedItem()).getLocale();
                 controller.setLocale(l);
-                titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+                updateComponentsText();
                 LocaleSelectorPanel.this.bringSelectLanguageCBToFront();
 
             }
@@ -114,6 +114,10 @@ public class LocaleSelectorPanel extends JPanel {
         this.add(ttsButton);
         this.add(selectLanguageCB);
         this.add(titleLabel);
+	}
+	
+	protected void updateComponentsText() {
+        titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
 	}
 	
 	public static void main(String[] args) {

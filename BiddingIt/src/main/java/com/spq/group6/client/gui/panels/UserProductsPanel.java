@@ -2,8 +2,10 @@ package com.spq.group6.client.gui.panels;
 
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
+import com.spq.group6.client.gui.actions.ActionCreateAuction;
 import com.spq.group6.client.gui.actions.ActionDeleteProduct;
 import com.spq.group6.client.gui.actions.ActionUpdateProduct;
+import com.spq.group6.client.gui.elements.AuctionJTableModel;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.ProductJTableModel;
 import com.spq.group6.client.gui.utils.SDG2Util;
@@ -67,23 +69,8 @@ public class UserProductsPanel extends LocaleSelectorPanel {
 
         String[] productsColumnNames = {controller.getLanguageMessage("UserProductsPanel.productsColumnNames.0"), 
         		controller.getLanguageMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
-        Object[][] productsData = null;
-        if (controller.getCurrentUser() != null) {
-            productsData = new Object[controller.getCurrentUserProducts().size() + 1][productsColumnNames.length];
-            int i = 0;
-            for (i = 0; i < controller.getCurrentUserProducts().size(); i++) {
-                Product tempProduct = controller.getCurrentUserProducts().get(i);
-                productsData[i][0] = tempProduct.getName();
-                productsData[i][1] = tempProduct.getDescription();
-                productsData[i][2] = controller.getLanguageMessage("UserProductsPanel.productsData.2");
-                productsData[i][3] = controller.getLanguageMessage("UserProductsPanel.productsData.3");
-            }
-            productsData[i][0] = "";
-            productsData[i][1] = "";
-            productsData[i][2] = controller.getLanguageMessage("UserProductsPanel.productsData.2b");
-            productsData[i][3] = "";
-        }
-        productsTable = new JTable(new ProductJTableModel(productsData, productsColumnNames));
+        productsTable = new JTable(new ProductJTableModel(new Object[][]{}, productsColumnNames));
+        updateProducts();
         productsTable.setRowHeight((int) (productsTable.getRowHeight() * 1.5));
         productsTable.getTableHeader().setOpaque(false);
         productsTable.getTableHeader().setBackground(new Color(234, 255, 255));
@@ -91,12 +78,6 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         productsTable.setBorder(new MatteBorder(0, 0, 0, 0, Color.black));
         productsTable.setOpaque(true);
         productsTable.setForeground(new Color(0, 102, 102));
-        productsTable.getColumnModel().getColumn(1).setPreferredWidth(productsTable.getColumnModel().getColumn(1).getPreferredWidth() + 200);
-
-        @SuppressWarnings("unused")
-        ButtonColumn updateButtonColumn = new ButtonColumn(productsTable, new ActionUpdateProduct(), 2);
-        @SuppressWarnings("unused")
-        ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDeleteProduct(), 3);
 
         productsTableScrollPane = new JScrollPane(productsTable);
         productsTableScrollPane.getViewport().setBackground(Color.WHITE);
@@ -116,6 +97,46 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         
         controller.sayText("You currently are in the initial menu.");
 
+    }
+    
+    private void updateProducts() {
+    	String[] productsColumnNames = {controller.getLanguageMessage("UserProductsPanel.productsColumnNames.0"), 
+        		controller.getLanguageMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
+        Object[][] productsData = new Object[][] {};
+        if (controller.getCurrentUser() != null) {
+            productsData = new Object[controller.getCurrentUserProducts().size() + 1][productsColumnNames.length];
+            int i = 0;
+            for (i = 0; i < controller.getCurrentUserProducts().size(); i++) {
+                Product tempProduct = controller.getCurrentUserProducts().get(i);
+                productsData[i][0] = tempProduct.getName();
+                productsData[i][1] = tempProduct.getDescription();
+                productsData[i][2] = controller.getLanguageMessage("UserProductsPanel.productsData.2");
+                productsData[i][3] = controller.getLanguageMessage("UserProductsPanel.productsData.3");
+            }
+            productsData[i][0] = "";
+            productsData[i][1] = "";
+            productsData[i][2] = controller.getLanguageMessage("UserProductsPanel.productsData.2b");
+            productsData[i][3] = "";
+        }
+        productsTable.setModel(new ProductJTableModel(productsData, productsColumnNames));
+        productsTable.getColumnModel().getColumn(5).setPreferredWidth(productsTable.getColumnModel().getColumn(5).getPreferredWidth() + 150);
+        @SuppressWarnings("unused")
+        ButtonColumn updateButtonColumn = new ButtonColumn(productsTable, new ActionUpdateProduct(), 2);
+        @SuppressWarnings("unused")
+        ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDeleteProduct(), 3);
+        
+        productsTable.getColumnModel().getColumn(1).setPreferredWidth(productsTable.getColumnModel().getColumn(1).getPreferredWidth() + 200);
+
+        productsTable.revalidate();
+        productsTable.repaint();
+    }
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("UserProductsPanel.titleLabel.text"));
+    	infoLabel.setText(controller.getLanguageMessage("UserProductsPanel.infoLabel.text"));
+    	updateProducts();
+    	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
     }
 
     public static void main(String[] args) {
