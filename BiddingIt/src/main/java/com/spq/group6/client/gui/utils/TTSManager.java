@@ -66,8 +66,9 @@ public class TTSManager {
 		try {
 			if (ttsIsON) {
 	        	// speaks the given text until queue is empty. 
+				synthesizer.cancel();
 		        synthesizer.speakPlainText(text, null);
-				synthesizer.waitEngineState(Synthesizer.QUEUE_EMPTY);
+				//synthesizer.waitEngineState(Synthesizer.QUEUE_EMPTY);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
