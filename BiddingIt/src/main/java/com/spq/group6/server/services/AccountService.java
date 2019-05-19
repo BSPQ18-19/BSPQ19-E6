@@ -96,7 +96,6 @@ public class AccountService implements IAccountService {
 
     public User deleteProduct(User user, Product product) {
         user = BiddingLocks.lockAndGetUser(user);
-
         try {
             user.getOwnedProducts().remove(product);
             biddingDAO.persistUser(user);

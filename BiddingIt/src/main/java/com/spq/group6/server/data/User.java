@@ -14,7 +14,7 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String country;
-    private int money;
+    private float money;
     @Persistent(defaultFetchGroup = "true")
     private List<Product> ownedProducts;
 
@@ -67,11 +67,11 @@ public class User implements Serializable {
         this.country = country;
     }
 
-    public int getMoney() {
+    public float getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(float money) {
         this.money = money;
     }
 

@@ -3,6 +3,7 @@ package com.spq.group6.server.utils;
 import com.spq.group6.server.dao.BiddingDAO;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.utils.logger.ServerLogger;
 
 import java.util.HashMap;
 import java.util.concurrent.locks.Lock;
@@ -46,7 +47,9 @@ public class BiddingLocks {
         if (!auctionLocks.containsKey(auctionID)) { // If it does not exist, creates a Lock
             auctionLocks.put(auctionID, new ReentrantLock());
         }
+        ServerLogger.logger.debug("Waiting Auction " + auctionID + " lock...");
         auctionLocks.get(auctionID).lock();
+        ServerLogger.logger.debug("Locked Auction " + auctionID);
         return biddingDAO.getAuctionByID(auctionID); /* Retrieves Auction's latest version from the database,
         and returns it. */
     }
@@ -71,6 +74,7 @@ public class BiddingLocks {
     public static void unlockAuction(Auction auction) {
         long auctionID = auction.getAuctionID();
         auctionLocks.get(auctionID).unlock();
+        ServerLogger.logger.debug("Unlocked Auction " + auctionID);
     }
 
     /**
@@ -85,7 +89,9 @@ public class BiddingLocks {
         if (!userLocks.containsKey(username)) {
             userLocks.put(username, new ReentrantLock());
         }
+        ServerLogger.logger.debug("Waiting User "+ username + " lock...");
         userLocks.get(username).lock();
+        ServerLogger.logger.debug("Locked User " + username);
         return biddingDAO.getUserByUsername(username);
     }
 
@@ -109,5 +115,6 @@ public class BiddingLocks {
     public static void unlockUser(User user) {
         String username = user.getUsername();
         userLocks.get(username).unlock();
+        ServerLogger.logger.debug("Unlocked User " + username);
     }
 }
