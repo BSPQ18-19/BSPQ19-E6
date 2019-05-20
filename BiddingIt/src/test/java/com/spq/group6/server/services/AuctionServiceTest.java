@@ -70,6 +70,12 @@ public class AuctionServiceTest {
             fail();
         } catch (AuctionException ignored) {
         }
+        // negative amount
+        try {
+            auctionService.bid(auction, user, -1);
+            fail();
+        } catch (AuctionException ignored) {
+        }
         // correct amount
         auction = auctionService.bid(auction, bid.getUser(), bid.getAmount());
         assertEquals(bid, auction.getHighestBid());
