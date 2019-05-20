@@ -23,7 +23,7 @@ public class CountDownTest {
     private BiddingDAO biddingDAO = new BiddingDAO();
     private int offset;
     private Thread auctionCountdown;
-    private ObserverDemo observerDemo;
+    private FakeRemoteObserver fakeRemoteObserver;
 
     @Before
     public void setUp() throws RemoteException {
@@ -41,8 +41,8 @@ public class CountDownTest {
         biddingDAO.persistUser(product);
         biddingDAO.persistAuction(auction);
         BiddingLocks.setAuctionLock(auction); // create lock for auction
-        observerDemo = new ObserverDemo();
-        AccountService.observable.addRemoteObserver(observerDemo);
+        fakeRemoteObserver = new FakeRemoteObserver();
+        AccountService.observable.addRemoteObserver(fakeRemoteObserver);
     }
 
     @Test
@@ -52,15 +52,15 @@ public class CountDownTest {
         auctionCountdown.start();
         // Add observer
 
-        observable.addRemoteObserver(observerDemo);
-        assertFalse(observerDemo.auctionClosed);
+        observable.addRemoteObserver(fakeRemoteObserver);
+        assertFalse(fakeRemoteObserver.auctionClosed);
 
         Thread.sleep(offset + 1000);
 
-        assertTrue(observerDemo.auctionClosed);
-        assertFalse(observerDemo.auctionDeleted);
-        assertFalse(observerDemo.newBid);
-        assertFalse(observerDemo.userDeleted);
+        assertTrue(fakeRemoteObserver.auctionClosed);
+        assertFalse(fakeRemoteObserver.auctionDeleted);
+        assertFalse(fakeRemoteObserver.newBid);
+        assertFalse(fakeRemoteObserver.userDeleted);
         auction = BiddingLocks.lockAndGetAuction(auction);
         assertFalse(auction.isOpen());
         BiddingLocks.unlockAuction(auction);

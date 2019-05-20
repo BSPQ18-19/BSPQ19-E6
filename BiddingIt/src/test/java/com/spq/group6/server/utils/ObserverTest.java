@@ -26,7 +26,7 @@ public class ObserverTest {
     private BiddingDAO biddingDAO = new BiddingDAO();
     private IServer server;
     private int offset;
-    private ObserverDemo observerDemo;
+    private FakeRemoteObserver fakeRemoteObserver;
 
     @Before
     public void setUp() throws RemoteException {
@@ -45,8 +45,8 @@ public class ObserverTest {
         biddingDAO.persistUser(buyer);
         seller.getOwnedProducts().add(product);
         biddingDAO.persistUser(seller);
-        observerDemo = new ObserverDemo();
-        AccountService.observable.addRemoteObserver(observerDemo);
+        fakeRemoteObserver = new FakeRemoteObserver();
+        AccountService.observable.addRemoteObserver(fakeRemoteObserver);
     }
 
     @Ignore
@@ -55,26 +55,26 @@ public class ObserverTest {
         server.deleteUser(buyer);
         buyer = null;
 
-        assertFalse(observerDemo.auctionClosed);
-        assertFalse(observerDemo.auctionDeleted);
-        assertFalse(observerDemo.newBid);
-        assertTrue(observerDemo.userDeleted);
+        assertFalse(fakeRemoteObserver.auctionClosed);
+        assertFalse(fakeRemoteObserver.auctionDeleted);
+        assertFalse(fakeRemoteObserver.newBid);
+        assertTrue(fakeRemoteObserver.userDeleted);
     }
 
     @Test
     public void testBidObserver() throws InterruptedException, RemoteException, AuctionException, AccountException {
         auction = server.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         // Add observer
-        assertFalse(observerDemo.auctionClosed);
-        server.logIn(buyer.getUsername(), buyer.getPassword(), observerDemo);
+        assertFalse(fakeRemoteObserver.auctionClosed);
+        server.logIn(buyer.getUsername(), buyer.getPassword(), fakeRemoteObserver);
         server.bid(auction, buyer, auction.getInitialPrice() + 1);
 
         Thread.sleep(offset + 1000);
 
-        assertTrue(observerDemo.auctionClosed);
-        assertFalse(observerDemo.auctionDeleted);
-        assertTrue(observerDemo.newBid);
-        assertFalse(observerDemo.userDeleted);
+        assertTrue(fakeRemoteObserver.auctionClosed);
+        assertFalse(fakeRemoteObserver.auctionDeleted);
+        assertTrue(fakeRemoteObserver.newBid);
+        assertFalse(fakeRemoteObserver.userDeleted);
         auction = BiddingLocks.lockAndGetAuction(auction);
         assertFalse(auction.isOpen());
         BiddingLocks.unlockAuction(auction);
@@ -84,17 +84,17 @@ public class ObserverTest {
     public void testAuctionDeletedObserver() throws InterruptedException, RemoteException, AuctionException, AccountException {
         auction = server.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         // Add observer
-        assertFalse(observerDemo.auctionClosed);
-        server.logIn(buyer.getUsername(), buyer.getPassword(), observerDemo);
+        assertFalse(fakeRemoteObserver.auctionClosed);
+        server.logIn(buyer.getUsername(), buyer.getPassword(), fakeRemoteObserver);
         server.bid(auction, buyer, auction.getInitialPrice() + 1);
         server.deleteAuction(auction);
 
         Thread.sleep(offset + 1000);
 
-        assertFalse(observerDemo.auctionClosed);
-        assertTrue(observerDemo.auctionDeleted);
-        assertTrue(observerDemo.newBid);
-        assertFalse(observerDemo.userDeleted);
+        assertFalse(fakeRemoteObserver.auctionClosed);
+        assertTrue(fakeRemoteObserver.auctionDeleted);
+        assertTrue(fakeRemoteObserver.newBid);
+        assertFalse(fakeRemoteObserver.userDeleted);
         auction = biddingDAO.getAuctionByID(auction.getAuctionID());
         assertNull(auction);
     }
@@ -103,15 +103,15 @@ public class ObserverTest {
     public void testNewBidAndAuctionDeletedObserver() throws InterruptedException, RemoteException, AuctionException, AccountException {
         auction = server.createPublicAuction(auction.getOwner(), auction.getProduct(), auction.getDayLimit(), auction.getInitialPrice());
         // Add observer
-        assertFalse(observerDemo.auctionClosed);
+        assertFalse(fakeRemoteObserver.auctionClosed);
         server.deleteAuction(auction);
 
         Thread.sleep(offset + 1000);
 
-        assertFalse(observerDemo.auctionClosed);
-        assertTrue(observerDemo.auctionDeleted);
-        assertFalse(observerDemo.newBid);
-        assertFalse(observerDemo.userDeleted);
+        assertFalse(fakeRemoteObserver.auctionClosed);
+        assertTrue(fakeRemoteObserver.auctionDeleted);
+        assertFalse(fakeRemoteObserver.newBid);
+        assertFalse(fakeRemoteObserver.userDeleted);
         auction = biddingDAO.getAuctionByID(auction.getAuctionID());
         assertNull(auction);
     }

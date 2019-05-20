@@ -7,7 +7,7 @@ import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 
 import java.rmi.RemoteException;
 
-public class ObserverDemo implements IRemoteObserver {
+public class FakeRemoteObserver implements IRemoteObserver {
     public boolean newBid = false, auctionClosed = false, auctionDeleted = false, userDeleted = false;
 
     public void update(Object arg) throws RemoteException {
