@@ -61,6 +61,10 @@ public class ClientController {
         languageManager.setLocale(locale);
     }
     
+    public Locale getLocale() {
+        return languageManager.getLocale();
+    }
+    
     public LanguageSelector[] getLanguagesAvailable() {
     	return languageManager.getLanguages();
     }
@@ -75,6 +79,10 @@ public class ClientController {
     
     public void setTtsState(boolean state) {
     	ttsManager.setTtsIsON(state);
+    }
+    
+    public boolean isTtsON() {
+    	return ttsManager.isTtsIsON();
     }
     
     public void sayText(String text) {

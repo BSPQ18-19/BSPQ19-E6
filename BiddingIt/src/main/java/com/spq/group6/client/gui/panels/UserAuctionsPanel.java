@@ -1,7 +1,6 @@
 package com.spq.group6.client.gui.panels;
 
 import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
-import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.actions.ActionCreateAuction;
 import com.spq.group6.client.gui.elements.AuctionJTableModel;
@@ -29,7 +28,6 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
     private JButton backButton;
     private String[] auctionsColumnNames;
 
-    private ClientController controller;
     private List<Auction> userAuctions;
 
     public UserAuctionsPanel(int screenWidth, int screenHeight) {
@@ -93,9 +91,9 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         auctionsTableScrollPane.setLocation(infoLabel.getX(),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
 
-        this.add(auctionsTableScrollPane);
         this.add(titleLabel);
         this.add(infoLabel);
+        this.add(auctionsTableScrollPane);
         this.add(backButton);
         
         bringSelectLanguageCBToFront();
@@ -105,7 +103,7 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
     }
 
     public void updateAuctions() {
-        Object[][] auctionsData = null;
+        Object[][] auctionsData = new Object[][] {};
         if (controller.getCurrentUser() != null) {
             auctionsData = new Object[userAuctions.size() + 1][auctionsColumnNames.length];
             int i = 0;
@@ -151,8 +149,6 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         auctionsTable.revalidate();
         auctionsTable.repaint();
         
-        bringSelectLanguageCBToFront();
-
     }
 
     public void updateUserProductsComboBox() {
@@ -168,7 +164,18 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         JComboBox<Product> prodComboBox = new JComboBox<Product>(userProductsNotAuctionArray);
         auctionsTable.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(prodComboBox));
     }
-
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("UserAuctionsPanel.titleLabel.text"));
+    	SDG2Util.fixJLabelFontSize(titleLabel);
+    	infoLabel.setText(controller.getLanguageMessage("UserAuctionsPanel.infoLabel.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel);
+    	updateAuctions();
+    	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    	SDG2Util.fixJButtonFontSize(backButton);
+    }
+    
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();
         testFrame.setSize(800, 600);

@@ -12,10 +12,12 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
     private static final long serialVersionUID = 1L;
     private JLabel infoLabel1;
     private JLabel infoLabel2;
+    private String username;
 
     public LogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
 
     	super(screenWidth, screenHeight);
+    	this.username = username;
     	
         if (!username.isEmpty())
             titleLabel = new JLabel(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)", SwingConstants.LEFT);
@@ -33,7 +35,8 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
         infoLabel1.setLocation(screenWidth / 2 - infoLabel1.getWidth() / 2, screenHeight / 2 - infoLabel1.getHeight() / 2);
         SDG2Util.fixJLabelFontSize(infoLabel1);
 
-        infoLabel2 = new JLabel(controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel2.text"), SwingConstants.CENTER);
+        String infoLabel2Clean = controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel2.text");
+        infoLabel2 = new JLabel(infoLabel2Clean, SwingConstants.CENTER);
         infoLabel2.setForeground(new Color(102, 69, 3));
         infoLabel2.setSize((int) (screenWidth / 1.5), screenHeight / 7);
         infoLabel2.setLocation(screenWidth / 2 - infoLabel2.getWidth() / 2,
@@ -54,7 +57,7 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
                     if (dots++ == 2)
                         dots = 0;
 
-                    String tempText = infoLabel2.getText().substring(0, 38);
+                    String tempText = infoLabel2Clean;
                     for (int i = 0; i < dots; i++)
                         tempText += ".";
                     infoLabel2.setText(tempText);
@@ -77,6 +80,20 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
         
         controller.sayText("You have logged in successfully. Please wait.");
 
+    }
+    
+    @Override
+    protected void updateComponentsText() {
+    	if (!username.isEmpty())
+            titleLabel.setText(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)");
+        else
+            titleLabel.setText(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + "! :)");
+    	SDG2Util.fixJLabelFontSize(titleLabel);
+    	infoLabel1.setText(controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel1.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel1);
+    	infoLabel2.setText(controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel2.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel2);
+    	
     }
 
     public static void main(String[] args) {

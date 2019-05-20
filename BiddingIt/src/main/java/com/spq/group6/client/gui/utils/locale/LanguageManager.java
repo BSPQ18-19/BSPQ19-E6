@@ -5,85 +5,59 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LanguageManager {
-    /**
-     * The name of the ResourceBundle files
-     */
+
+    //The name of the header of the files with the translations
     private static final String RESOURCE_BUNDLE_FILE_NAME = "locale/localization";
 
-    /**
-     * The default locale for the app.
-     * Will always be en_EN fue to teacher's requirements.
-     * (the course is in English)
-     */
+    //The default language for the app
     public static final Locale DEFAULT_LOCALE = LanguageSelector.ENGLISH.getLocale();
 
-    /**
-     * The current locale of the system.
-     * Initialized to the default locale constant
-     */
+    //Default locale with the language for the app
     private Locale locale = DEFAULT_LOCALE;
 
-    /**
-     * Create a new LocaleManager instance
-     */
+    //constructor
     public LanguageManager() {
     }
+
+    //get & set for the Locale
     public Locale getLocale() {
         return locale;
     }
 
-    /**
-     * Set the locale of the system
-     * @param locale the locale to be set as active
-     */
     public void setLocale(Locale locale) {
         this.locale = locale;
     }
 
-    /**
-     * Get the current ResourceBundle for the selected Locale
-     * @return the ResourceBundle associated to the current locale
-     */
+    //get the default bundle with the translations
     private ResourceBundle getResourceBundle() {
         return ResourceBundle.getBundle(RESOURCE_BUNDLE_FILE_NAME, locale);
     }
 
 
-    /**
-     * Get the ResourceBundle for the specified Locale
-     * @return the ResourceBundle associated to the specified locale
-     */
+    //get of a specific bundle
     private ResourceBundle getResourceBundle(Locale locale) {
         return ResourceBundle.getBundle(RESOURCE_BUNDLE_FILE_NAME, locale);
     }
 
 
-    /**
-     * Localize a message resource.
-     * @param key the key of the resource
-     * @param parameters vararg of the parameters for the resource
-     * @return an already-formatted String
-     */
+    // return the translation for the inserted key (if the key does not exist in neither the current bundle or the default one returns the key)
     public String getMessage(String key, Object... parameters) {
 
-        // The locale to use for the formatting below
         Locale localeToUse = getLocale();
 
         // Check if the key is present for the current locale
         if (!getResourceBundle().containsKey(key)) {
 
-            // DEBUG mode: we don't fall back to default locale
-            // useful for detecting untranslated UI elements
+            // Check if the key is in the default bundle
             if (!getResourceBundle(DEFAULT_LOCALE).containsKey(key)) {
-                return key; // return just the translation key
+                return "KeyNotFound"; // return a error String
+            }else {
+                // If it exist in the default bundle we use it
+                localeToUse = DEFAULT_LOCALE;
             }
-
-            // In this case we use the default locale (key not found in Locale)
-            localeToUse = DEFAULT_LOCALE;
-
         }
 
-        // Format with parameters
+        // return the translated message
         MessageFormat formatter = new MessageFormat("");
         formatter.setLocale(localeToUse);
         formatter.applyPattern(getResourceBundle(localeToUse).getString(key));
@@ -91,10 +65,7 @@ public class LanguageManager {
 
     }
     
-    /**
-     * Get all languages available
-     * @return the locales allowed
-     */
+    // get the possible languages
     public LanguageSelector[] getLanguages() {
     	return LanguageSelector.ALLOWED_LOCALES;
     }

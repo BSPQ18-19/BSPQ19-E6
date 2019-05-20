@@ -1,6 +1,5 @@
 package com.spq.group6.client.gui.panels;
 
-import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
@@ -25,12 +24,12 @@ public class LogInPanel extends LocaleSelectorPanel {
     private JButton confirmButton;
     private JButton cancelButton;
 
-    private ClientController controller;
-
     public LogInPanel(int screenWidth, int screenHeight) {
 
     	super(screenWidth, screenHeight);
 
+    	System.out.println(controller);
+    	
         titleLabel = new JLabel(controller.getLanguageMessage("LogInPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
@@ -55,6 +54,7 @@ public class LogInPanel extends LocaleSelectorPanel {
         SDG2Util.fixJLabelFontSize(usernameLabel);
 
         usernameTF = new JTextField();
+        usernameTF.setName("username");
         usernameTF.setBackground(Color.white);
         usernameTF.setForeground(new Color(102, 69, 3));
         usernameTF.setBorder(new TitledBorder(""));
@@ -72,6 +72,7 @@ public class LogInPanel extends LocaleSelectorPanel {
         passwordLabel.setFont(usernameLabel.getFont());
 
         passwordTF = new JPasswordField();
+        passwordTF.setName("password");
         passwordTF.setBackground(Color.white);
         passwordTF.setForeground(new Color(102, 69, 3));
         passwordTF.setBorder(new TitledBorder(""));
@@ -151,6 +152,22 @@ public class LogInPanel extends LocaleSelectorPanel {
 
         controller.sayText("You currently are in the log in menu.");
         
+    }
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("LogInPanel.titleLabel.text"));
+    	SDG2Util.fixJLabelFontSize(titleLabel);
+    	infoLabel.setText(controller.getLanguageMessage("LogInPanel.infoLabel.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel);
+    	usernameLabel.setText(controller.getLanguageMessage("LogInPanel.usernameLabel.text"));
+    	SDG2Util.fixJLabelFontSize(usernameLabel);
+    	passwordLabel.setText(controller.getLanguageMessage("LogInPanel.passwordLabel.text"));
+    	SDG2Util.fixJLabelFontSize(passwordLabel);
+    	confirmButton.setText(controller.getLanguageMessage("General.confirmButton.text"));
+    	SDG2Util.fixJButtonFontSize(confirmButton);
+    	cancelButton.setText(controller.getLanguageMessage("General.cancelButton.text"));
+    	SDG2Util.fixJButtonFontSize(cancelButton);
     }
 
     public static void main(String[] args) {

@@ -14,10 +14,13 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 import com.spq.group6.client.controller.ClientController;
+import com.spq.group6.client.gui.utils.SDG2Util;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 import com.spq.group6.client.gui.utils.locale.LanguageSelector;
 
 public class LocaleSelectorPanel extends JPanel {
@@ -28,8 +31,12 @@ public class LocaleSelectorPanel extends JPanel {
 	private JComboBox<LanguageSelector> selectLanguageCB;
 	protected FocusListener ttsFocusListener;
 	protected JToggleButton ttsButton;
+	protected int screenWidth, screenHeight;
 
 	public LocaleSelectorPanel(int screenWidth, int screenHeight) {
+		
+		this.screenWidth = screenWidth;
+		this.screenHeight = screenHeight;
 		
         setBackground(Color.WHITE);
         this.setLayout(null);
@@ -54,13 +61,20 @@ public class LocaleSelectorPanel extends JPanel {
 			        controller.sayText("Combo box. Currently selected: " + ((JComboBox<?>) e.getSource()).getSelectedItem());
 
 				} else if (e.getSource() instanceof JTextField) {
-			        controller.sayText("Text input  " + ((JTextField) e.getSource()).getName().replaceAll("TF", ""));
+			        controller.sayText("Text input  " + ((JTextField) e.getSource()).getName());
 					
+				} else if (e.getSource() instanceof JPasswordField) {
+					controller.sayText("Password input " + ((JPasswordField) e.getSource()).getName());
 				}
 			}
 		};
         
-        selectLanguageCB = new JComboBox<>(controller.getLanguagesAvailable());
+		LanguageSelector tempLanguagesAvailable[] = controller.getLanguagesAvailable();
+        selectLanguageCB = new JComboBox<>(tempLanguagesAvailable);
+        for (int i = 0; i < tempLanguagesAvailable.length; i++)
+        	if (tempLanguagesAvailable[i].getLocale().equals(controller.getLocale()))
+        		selectLanguageCB.setSelectedIndex(i);	
+        
         selectLanguageCB.setForeground(new Color(0, 204, 204));
         selectLanguageCB.setBackground(Color.WHITE);
         selectLanguageCB.setOpaque(true);
@@ -73,14 +87,17 @@ public class LocaleSelectorPanel extends JPanel {
 				JComboBox<LanguageSelector> comboBox = (JComboBox<LanguageSelector>) e.getSource();
                 Locale l = ((LanguageSelector) comboBox.getSelectedItem()).getLocale();
                 controller.setLocale(l);
-                titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+                updateComponentsText();
                 LocaleSelectorPanel.this.bringSelectLanguageCBToFront();
 
             }
         });
         selectLanguageCB.addFocusListener(ttsFocusListener);
         
-        ttsButton = new JToggleButton("Sound ON", true);
+        if (controller.isTtsON())
+        	ttsButton = new JToggleButton("Sound ON", true);
+        else
+        	ttsButton = new JToggleButton("Sound OFF", false);
         ttsButton.setForeground(new Color(0, 204, 204));
         ttsButton.setBackground(Color.WHITE);
         ttsButton.setOpaque(true);
@@ -108,12 +125,17 @@ public class LocaleSelectorPanel extends JPanel {
 		this.remove(titleLabel);
         this.remove(selectLanguageCB);
         this.remove(ttsButton);
-        ttsButton.setLocation((int) (titleLabel.getWidth() / 1.4), titleLabel.getHeight() / 2 - selectLanguageCB.getHeight() / 2);
-        selectLanguageCB.setLocation((int) (titleLabel.getWidth() / 1.25), titleLabel.getHeight() / 2 - selectLanguageCB.getHeight() / 2);
+        ttsButton.setLocation((int) (screenWidth / 1.55), titleLabel.getHeight() / 2 - selectLanguageCB.getHeight() / 2);
+        selectLanguageCB.setLocation((int) (screenWidth / 1.25), titleLabel.getHeight() / 2 - selectLanguageCB.getHeight() / 2);
         this.repaint();
         this.add(ttsButton);
         this.add(selectLanguageCB);
         this.add(titleLabel);
+	}
+	
+	protected void updateComponentsText() {
+        titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+        SDG2Util.fixJLabelFontSize(titleLabel);
 	}
 	
 	public static void main(String[] args) {

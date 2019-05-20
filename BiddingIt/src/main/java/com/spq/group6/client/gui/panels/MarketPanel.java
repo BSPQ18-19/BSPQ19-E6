@@ -1,6 +1,5 @@
 package com.spq.group6.client.gui.panels;
 
-import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.actions.ActionBid;
 import com.spq.group6.client.gui.elements.AuctionTimeLeftRunnable;
@@ -34,7 +33,6 @@ public class MarketPanel extends LocaleSelectorPanel {
 
     private String[] auctionsColumnNames;
 
-    private ClientController controller;
     private ArrayList<Thread> auctionsTimeLeftThread;
     private ArrayList<Auction> auctions;
 
@@ -77,6 +75,7 @@ public class MarketPanel extends LocaleSelectorPanel {
         searchLabel2.setForeground(new Color(0, 102, 102));
         
         searchTF = new JTextField(10);
+        searchTF.setName("search");
         searchTF.setForeground(new Color(102, 69, 3));
         searchTF.addFocusListener(ttsFocusListener);
         
@@ -184,7 +183,10 @@ public class MarketPanel extends LocaleSelectorPanel {
     }
 
     public void updateAuctions() {
-        Object[][] auctionsData;
+    	auctionsColumnNames = new String[]{controller.getLanguageMessage("MarketPanel.auctionsColumnNames.0"),
+        		controller.getLanguageMessage("MarketPanel.auctionsColumnNames.1"), controller.getLanguageMessage("MarketPanel.auctionsColumnNames.2"),
+        		controller.getLanguageMessage("MarketPanel.auctionsColumnNames.3"), controller.getLanguageMessage("MarketPanel.auctionsColumnNames.4"), ""};
+    	Object[][] auctionsData = new Object[][] {};
         if (auctions.size() == 0) {
             auctionsData = new Object[][]{};
 
@@ -225,6 +227,25 @@ public class MarketPanel extends LocaleSelectorPanel {
 
         auctionsTable.revalidate();
         auctionsTable.repaint();
+    }
+    
+    @Override
+    protected void updateComponentsText() {
+    	titleLabel.setText(controller.getLanguageMessage("MarketPanel.titleLabel.text"));
+    	SDG2Util.fixJLabelFontSize(titleLabel);
+    	infoLabel.setText(controller.getLanguageMessage("MarketPanel.infoLabel.text"));
+    	SDG2Util.fixJLabelFontSize(infoLabel);
+    	searchLabel.setText(controller.getLanguageMessage("MarketPanel.searchLabel.text"));
+    	SDG2Util.fixJLabelFontSize(searchLabel);
+    	searchComboBox.setModel(new DefaultComboBoxModel<>(new String[]{controller.getLanguageMessage("MarketPanel.comboBox.option1"),
+        		controller.getLanguageMessage("MarketPanel.comboBox.option2")}));
+    	searchLabel2.setText(controller.getLanguageMessage("MarketPanel.searchLabel2.text"));
+    	SDG2Util.fixJLabelFontSize(searchLabel2);
+    	searchButton.setText(controller.getLanguageMessage("MarketPanel.searchButton.text"));
+    	SDG2Util.fixJButtonFontSize(searchButton);
+    	updateAuctions();
+    	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    	SDG2Util.fixJButtonFontSize(backButton);
     }
 
     public static void main(String[] args) {
