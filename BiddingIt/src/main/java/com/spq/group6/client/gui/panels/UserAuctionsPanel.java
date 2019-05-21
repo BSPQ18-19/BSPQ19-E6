@@ -1,5 +1,6 @@
 package com.spq.group6.client.gui.panels;
 
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.actions.ActionCreateAuction;
@@ -105,6 +106,10 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
     }
 
     public void updateAuctions() {
+        auctionsColumnNames = new String[]{LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.0"),
+                LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.1"), LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.2"),
+                LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.3"), LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.4"),
+                LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.5"), ""};
         Object[][] auctionsData = new Object[][] {};
         if (controller.getCurrentUser() != null) {
             auctionsData = new Object[userAuctions.size() + 1][auctionsColumnNames.length];
@@ -143,8 +148,10 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         updateUserProductsComboBox();
 
         // set column 4 to limit day
-        auctionsTable.setDefaultEditor(LocalDateTime.class, new DateTimeTableEditor());
-        auctionsTable.setDefaultRenderer(LocalDateTime.class, new DateTimeTableEditor());
+        DateTimeTableEditor dateTimeEditor = new DateTimeTableEditor();
+        dateTimeEditor.getDatePickerSettings().setLocale(LanguageManager.getLocale());
+        auctionsTable.setDefaultEditor(LocalDateTime.class, dateTimeEditor);
+        auctionsTable.setDefaultRenderer(LocalDateTime.class, dateTimeEditor);
         auctionsTable.getColumnModel().getColumn(5).setCellEditor(auctionsTable.getDefaultEditor(LocalDateTime.class));
         auctionsTable.getColumnModel().getColumn(5).setCellRenderer(auctionsTable.getDefaultRenderer(LocalDateTime.class));
 
@@ -173,9 +180,9 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
     	SDG2Util.fixJLabelFontSize(titleLabel);
     	infoLabel.setText(LanguageManager.getMessage("UserAuctionsPanel.infoLabel.text"));
     	SDG2Util.fixJLabelFontSize(infoLabel);
-    	updateAuctions();
     	backButton.setText(LanguageManager.getMessage("General.backButton.text"));
     	SDG2Util.fixJButtonFontSize(backButton);
+    	updateAuctions();
     }
     
     public static void main(String[] args) {

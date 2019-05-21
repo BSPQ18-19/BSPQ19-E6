@@ -9,14 +9,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Locale;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.utils.SDG2Util;
@@ -74,11 +68,14 @@ public class LocaleSelectorPanel extends JPanel {
         selectLanguageCB = new JComboBox<>(tempLanguagesAvailable);
         for (int i = 0; i < tempLanguagesAvailable.length; i++)
         	if (tempLanguagesAvailable[i].getLocale().equals(LanguageManager.getLocale()))
-        		selectLanguageCB.setSelectedIndex(i);	
-        
-        selectLanguageCB.setForeground(new Color(0, 204, 204));
-        selectLanguageCB.setBackground(Color.WHITE);
-        selectLanguageCB.setOpaque(true);
+        		selectLanguageCB.setSelectedIndex(i);
+
+		selectLanguageCB.setForeground(new Color(0, 102, 102));
+		selectLanguageCB.setEditable(true);
+		selectLanguageCB.getEditor().getEditorComponent().setBackground(Color.white);
+		selectLanguageCB.getEditor().getEditorComponent().setForeground(new Color(0, 102, 102));
+		selectLanguageCB.setBorder(new TitledBorder(""));
+		selectLanguageCB.setOpaque(true);
         selectLanguageCB.setSize((int) (screenWidth / 8), screenHeight / 15);
         selectLanguageCB.addActionListener(new ActionListener() {
 
@@ -99,8 +96,12 @@ public class LocaleSelectorPanel extends JPanel {
         	ttsButton = new JToggleButton(LanguageManager.getMessage("LocaleSelectorPanel.ttsButton.soundOnText"), true);
         else
         	ttsButton = new JToggleButton(LanguageManager.getMessage("LocaleSelectorPanel.ttsButton.soundOffText"), false);
-        ttsButton.setForeground(new Color(0, 204, 204));
-        ttsButton.setBackground(Color.WHITE);
+        ttsButton.setForeground(new Color(0, 102, 102));
+        ttsButton.setBackground(Color.white);
+        TitledBorder title = BorderFactory.createTitledBorder("");
+        title.setTitleColor(new Color(102, 82, 0));
+        ttsButton.setBorder(title);
+        ttsButton.setContentAreaFilled(false);
         ttsButton.setOpaque(true);
         ttsButton.setSize((int) (screenWidth / 8), screenHeight / 15);
         ttsButton.addItemListener(new ItemListener() {

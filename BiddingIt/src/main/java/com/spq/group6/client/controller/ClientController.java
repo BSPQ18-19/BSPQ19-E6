@@ -253,6 +253,19 @@ public class ClientController {
         return true;
     }
 
+    public ArrayList<Auction> getAllAuctions() {
+        ArrayList<Auction> allAuctions = new ArrayList<>();
+        String info = "Get all auctions";
+        try {
+            ClientLogger.logger.debug("Trying to " + info + ".");
+            allAuctions = serviceLocator.getService().getAllAuctions(currentUser);
+            ClientLogger.logger.debug(info + " correct.");
+        } catch (RemoteException e) {
+            ClientLogger.logger.error("Error getting all auctions: " + e.getMessage());
+        }
+        return allAuctions;
+    }
+
     public ArrayList<Auction> searchAuctionByCountry(String country) {
         ArrayList<Auction> countryAuctions = new ArrayList<>();
         String info = "Get auctions from country " + country;
@@ -295,5 +308,6 @@ public class ClientController {
     public void exit() {
         System.exit(0);
     }
+
 
 }

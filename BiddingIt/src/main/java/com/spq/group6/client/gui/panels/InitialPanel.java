@@ -36,7 +36,7 @@ public class InitialPanel extends LocaleSelectorPanel {
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 3.3), screenHeight / 6);
         infoLabel.setLocation(screenWidth / 2 - infoLabel.getWidth() / 2,
-                (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 5));
+                (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 6));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
         authorLabel = new JLabel(LanguageManager.getMessage("InitialPanel.authorLabel.text"), SwingConstants.CENTER);

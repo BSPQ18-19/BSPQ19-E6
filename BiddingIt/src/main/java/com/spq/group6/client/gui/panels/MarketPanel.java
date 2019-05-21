@@ -43,6 +43,7 @@ public class MarketPanel extends LocaleSelectorPanel {
         super(screenWidth, screenHeight);
         
         auctionsTimeLeftThread = new ArrayList<Thread>();
+        auctions = controller.getAllAuctions();
 
         titleLabel = new JLabel(LanguageManager.getMessage("MarketPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
@@ -238,16 +239,14 @@ public class MarketPanel extends LocaleSelectorPanel {
     	infoLabel.setText(LanguageManager.getMessage("MarketPanel.infoLabel.text"));
     	SDG2Util.fixJLabelFontSize(infoLabel);
     	searchLabel.setText(LanguageManager.getMessage("MarketPanel.searchLabel.text"));
-    	SDG2Util.fixJLabelFontSize(searchLabel);
     	searchComboBox.setModel(new DefaultComboBoxModel<>(new String[]{LanguageManager.getMessage("MarketPanel.comboBox.option1"),
         		LanguageManager.getMessage("MarketPanel.comboBox.option2")}));
     	searchLabel2.setText(LanguageManager.getMessage("MarketPanel.searchLabel2.text"));
-    	SDG2Util.fixJLabelFontSize(searchLabel2);
     	searchButton.setText(LanguageManager.getMessage("MarketPanel.searchButton.text"));
-    	SDG2Util.fixJButtonFontSize(searchButton);
-    	updateAuctions();
     	backButton.setText(LanguageManager.getMessage("General.backButton.text"));
     	SDG2Util.fixJButtonFontSize(backButton);
+
+        updateAuctions();
     }
 
     public static void main(String[] args) {
