@@ -36,6 +36,13 @@ public class AdminWindow extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    // lazy singleton
+    public static AdminWindow getAdminWindow(AdminController adminController) {
+        if (adminWindow == null)
+            adminWindow = new AdminWindow(adminController);
+        return adminWindow;
+    }
+
     public void changeScreen(ScreenType nextScreenType, String... data) {
         this.currentScreenType = nextScreenType;
 
@@ -64,13 +71,6 @@ public class AdminWindow extends JFrame {
 
     public AdminController getController() {
         return controller;
-    }
-
-    // lazy singleton
-    public static AdminWindow getAdminWindow(AdminController adminController) {
-        if (adminWindow == null)
-            adminWindow = new AdminWindow(adminController);
-        return adminWindow;
     }
 
 }

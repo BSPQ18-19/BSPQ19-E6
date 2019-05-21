@@ -63,9 +63,9 @@ public class LanguageSelector {
         return localizedName;
     }
 
-	@Override
-	public String toString() {
-		return localizedName;
-	}
+
+    public String toString() {
+        return localizedName;
+    }
 
 }

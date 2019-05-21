@@ -8,10 +8,10 @@ import java.io.Serializable;
 
 @PersistenceCapable(detachable = "true")
 public class Product implements Serializable {
+    private static final long serialVersionUID = -7363525693084022738L;
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
     private long productID;
-    private static final long serialVersionUID = -7363525693084022738L;
     private String name;
     private String description;
 
@@ -59,7 +59,7 @@ public class Product implements Serializable {
         this.productID = productID;
     }
 
-    @Override
+
     public String toString() {
         return name;
     }

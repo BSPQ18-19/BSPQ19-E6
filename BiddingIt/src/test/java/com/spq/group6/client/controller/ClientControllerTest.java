@@ -182,7 +182,7 @@ public class ClientControllerTest {
         // Clean up
         biddingDao.deleteUser(seller);
     }
-    
+
     @Test
     public void createPrivateAuctionTest() throws RemoteException {
         assertTrue(clientController.signIn(seller.getUsername(), seller.getPassword(), seller.getCountry()));

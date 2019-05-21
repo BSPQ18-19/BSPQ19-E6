@@ -3,8 +3,8 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,9 +18,9 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
 
     public LogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
 
-    	super(screenWidth, screenHeight);
-    	this.username = username;
-    	
+        super(screenWidth, screenHeight);
+        this.username = username;
+
         if (!username.isEmpty())
             titleLabel = new JLabel(LanguageManager.getMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)", SwingConstants.LEFT);
         else
@@ -77,25 +77,11 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
             }
         });
         animationThread.start();
-        
+
         bringSelectLanguageCBToFront();
-        
+
         VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.LogInSuccesfulPanel.welcome"));
 
-    }
-    
-    @Override
-    protected void updateComponentsText() {
-    	if (!username.isEmpty())
-            titleLabel.setText(LanguageManager.getMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)");
-        else
-            titleLabel.setText(LanguageManager.getMessage("LogInSuccesfulPanel.titleLabel.text") + "! :)");
-    	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel1.setText(LanguageManager.getMessage("LogInSuccesfulPanel.infoLabel1.text"));
-    	SDG2Util.fixJLabelFontSize(infoLabel1);
-    	infoLabel2.setText(LanguageManager.getMessage("LogInSuccesfulPanel.infoLabel2.text"));
-    	SDG2Util.fixJLabelFontSize(infoLabel2);
-    	
     }
 
     public static void main(String[] args) {
@@ -104,6 +90,20 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         testFrame.add(new LogInSuccesfulPanel(800, 600, "Alejandro"));
         testFrame.setVisible(true);
+    }
+
+
+    protected void updateComponentsText() {
+        if (!username.isEmpty())
+            titleLabel.setText(LanguageManager.getMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)");
+        else
+            titleLabel.setText(LanguageManager.getMessage("LogInSuccesfulPanel.titleLabel.text") + "! :)");
+        SDG2Util.fixJLabelFontSize(titleLabel);
+        infoLabel1.setText(LanguageManager.getMessage("LogInSuccesfulPanel.infoLabel1.text"));
+        SDG2Util.fixJLabelFontSize(infoLabel1);
+        infoLabel2.setText(LanguageManager.getMessage("LogInSuccesfulPanel.infoLabel2.text"));
+        SDG2Util.fixJLabelFontSize(infoLabel2);
+
     }
 
 }

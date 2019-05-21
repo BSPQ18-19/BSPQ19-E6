@@ -3,8 +3,8 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -22,7 +22,7 @@ public class InitialPanel extends LocaleSelectorPanel {
 
     public InitialPanel(int screenWidth, int screenHeight) {
 
-    	super(screenWidth, screenHeight);
+        super(screenWidth, screenHeight);
 
         titleLabel = new JLabel(LanguageManager.getMessage("InitialPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.WHITE);
@@ -58,7 +58,7 @@ public class InitialPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(logInButton);
         logInButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.LOG_IN);
             }
@@ -77,28 +77,36 @@ public class InitialPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(signInButton);
         signInButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.REGISTER);
             }
         });
         signInButton.addFocusListener(ttsFocusListener);
-        
+
         this.add(titleLabel);
         this.add(infoLabel);
         this.add(authorLabel);
         this.add(logInButton);
         this.add(signInButton);
-        
+
         bringSelectLanguageCBToFront();
-        
+
 //        VoiceHelper.textToSpeech("Welcome to Bidding It! This is aun auction system. You can sell and bid other people's products."
 //        		+ " If you want to disable this beatiful voice, you can turn it off by pressing the sound ON button. You can also change"
 //        		+ "the language. Enjoy!");
         VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.InitialPanel.welcome"));
     }
-    
-    @Override
+
+    public static void main(String[] args) {
+        JFrame testFrame = new JFrame();
+        testFrame.setSize(800, 600);
+        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        testFrame.add(new InitialPanel(800, 600));
+        testFrame.setVisible(true);
+    }
+
+
     protected void updateComponentsText() {
         titleLabel.setText(LanguageManager.getMessage("InitialPanel.infoLabel.text"));
         SDG2Util.fixJLabelFontSize(titleLabel);
@@ -110,14 +118,6 @@ public class InitialPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(logInButton);
         signInButton.setText(LanguageManager.getMessage("InitialPanel.signInButton.text"));
         SDG2Util.fixJButtonFontSize(signInButton);
-	}
-
-    public static void main(String[] args) {
-        JFrame testFrame = new JFrame();
-        testFrame.setSize(800, 600);
-        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        testFrame.add(new InitialPanel(800, 600));
-        testFrame.setVisible(true);
     }
 
 }

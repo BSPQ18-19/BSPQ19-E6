@@ -13,7 +13,6 @@ import com.spq.group6.server.data.User;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +37,7 @@ public class AdminUsersPanel extends JPanel {
     private AdminController controller;
 
     public AdminUsersPanel(int screenWidth, int screenHeight, AdminController controller) {
-    	setBackground(Color.white);
+        setBackground(Color.white);
         this.setLayout(null);
 
         titleLabel = new JLabel("Administrating users...", SwingConstants.LEFT);
@@ -93,7 +92,7 @@ public class AdminUsersPanel extends JPanel {
         Thread animationThread = new Thread(new Runnable() {
             int dots = 0;
 
-            @Override
+
             public void run() {
 
                 while (AdminUsersPanel.this.isEnabled()) {
@@ -126,7 +125,7 @@ public class AdminUsersPanel extends JPanel {
         searchButton.setOpaque(true);
         searchButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
 
                 usersData = null;
@@ -178,7 +177,7 @@ public class AdminUsersPanel extends JPanel {
         SDG2Util.fixJButtonFontSize(backButton);
         backButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 AdminWindow.getAdminWindow(null).changeScreen(ScreenType.MAIN_MENU);
             }
@@ -196,7 +195,7 @@ public class AdminUsersPanel extends JPanel {
         SDG2Util.fixJButtonFontSize(logOutButton);
         logOutButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 if (controller.logOut())
                     AdminWindow.getAdminWindow(null).changeScreen(ScreenType.LOG_IN);
@@ -207,7 +206,7 @@ public class AdminUsersPanel extends JPanel {
         });
 
         usersTable = new JTable(new UserJTableModel(new Object[][]{}, usersColumnNames, controller, new ArrayList<User>()));
-        usersTable.setRowHeight((int)(usersTable.getRowHeight()*1.5));
+        usersTable.setRowHeight((int) (usersTable.getRowHeight() * 1.5));
         usersTable.getTableHeader().setOpaque(false);
         usersTable.getTableHeader().setBackground(new Color(234, 255, 255));
         usersTable.setBackground(Color.white);

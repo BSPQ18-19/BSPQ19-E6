@@ -5,14 +5,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LanguageManager {
-    private static LanguageManager languageManager = new LanguageManager();
-
     //The name of the header of the files with the translations
     private static final String RESOURCE_BUNDLE_FILE_NAME = "locale/localization";
-
     //The default language for the app
     private static final Locale DEFAULT_LOCALE = LanguageSelector.ENGLISH.getLocale();
-
+    private static LanguageManager languageManager = new LanguageManager();
     //Default locale with the language for the app
     private static Locale locale = DEFAULT_LOCALE;
 
@@ -53,7 +50,7 @@ public class LanguageManager {
             // Check if the key is in the default bundle
             if (!getResourceBundle(DEFAULT_LOCALE).containsKey(key)) {
                 return "KeyNotFound"; // return a error String
-            }else {
+            } else {
                 // If it exist in the default bundle we use it
                 localeToUse = DEFAULT_LOCALE;
             }
@@ -66,9 +63,9 @@ public class LanguageManager {
         return formatter.format(parameters);
 
     }
-    
+
     // get the possible languages
     public static LanguageSelector[] getLanguages() {
-    	return LanguageSelector.ALLOWED_LOCALES;
+        return LanguageSelector.ALLOWED_LOCALES;
     }
 }

@@ -3,8 +3,8 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -28,10 +28,10 @@ public class LogInPanel extends LocaleSelectorPanel {
 
     public LogInPanel(int screenWidth, int screenHeight) {
 
-    	super(screenWidth, screenHeight);
+        super(screenWidth, screenHeight);
 
-    	System.out.println(controller);
-    	
+        System.out.println(controller);
+
         titleLabel = new JLabel(LanguageManager.getMessage("LogInPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
@@ -96,7 +96,7 @@ public class LogInPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(confirmButton);
         confirmButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
 
                 try {
@@ -126,7 +126,7 @@ public class LogInPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL, usernameTF.getText());
             }
@@ -149,27 +149,11 @@ public class LogInPanel extends LocaleSelectorPanel {
         this.add(confirmButton);
         this.add(cancelButton);
         this.add(confirmLabel);
-        
+
         bringSelectLanguageCBToFront();
 
         VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.LogInPanel.welcome"));
-        
-    }
-    
-    @Override
-    protected void updateComponentsText() {
-    	titleLabel.setText(LanguageManager.getMessage("LogInPanel.titleLabel.text"));
-    	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel.setText(LanguageManager.getMessage("LogInPanel.infoLabel.text"));
-    	SDG2Util.fixJLabelFontSize(infoLabel);
-    	usernameLabel.setText(LanguageManager.getMessage("LogInPanel.usernameLabel.text"));
-    	SDG2Util.fixJLabelFontSize(usernameLabel);
-    	passwordLabel.setText(LanguageManager.getMessage("LogInPanel.passwordLabel.text"));
-    	SDG2Util.fixJLabelFontSize(passwordLabel);
-    	confirmButton.setText(LanguageManager.getMessage("General.confirmButton.text"));
-    	SDG2Util.fixJButtonFontSize(confirmButton);
-    	cancelButton.setText(LanguageManager.getMessage("General.cancelButton.text"));
-    	SDG2Util.fixJButtonFontSize(cancelButton);
+
     }
 
     public static void main(String[] args) {
@@ -178,6 +162,22 @@ public class LogInPanel extends LocaleSelectorPanel {
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         testFrame.add(new LogInPanel(800, 600));
         testFrame.setVisible(true);
+    }
+
+
+    protected void updateComponentsText() {
+        titleLabel.setText(LanguageManager.getMessage("LogInPanel.titleLabel.text"));
+        SDG2Util.fixJLabelFontSize(titleLabel);
+        infoLabel.setText(LanguageManager.getMessage("LogInPanel.infoLabel.text"));
+        SDG2Util.fixJLabelFontSize(infoLabel);
+        usernameLabel.setText(LanguageManager.getMessage("LogInPanel.usernameLabel.text"));
+        SDG2Util.fixJLabelFontSize(usernameLabel);
+        passwordLabel.setText(LanguageManager.getMessage("LogInPanel.passwordLabel.text"));
+        SDG2Util.fixJLabelFontSize(passwordLabel);
+        confirmButton.setText(LanguageManager.getMessage("General.confirmButton.text"));
+        SDG2Util.fixJButtonFontSize(confirmButton);
+        cancelButton.setText(LanguageManager.getMessage("General.cancelButton.text"));
+        SDG2Util.fixJButtonFontSize(cancelButton);
     }
 
 }

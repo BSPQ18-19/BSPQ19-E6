@@ -312,6 +312,6 @@ public interface IServer extends Remote {
      * @throws RemoteException is raised in case of Error on RMI connection
      */
     void startUncheckedAuctions() throws RemoteException;
-    
+
     public Administrator createAdministrator(Administrator admin) throws RemoteException, AdministratorException;
 }

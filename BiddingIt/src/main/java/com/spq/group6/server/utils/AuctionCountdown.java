@@ -120,9 +120,8 @@ public class AuctionCountdown implements Runnable {
 
     /**
      * Method executed when there is no valid Bid.
-     *
+     * <p>
      * It gives back Auction's Product to the Seller, and persists changes on the database.
-     *
      */
     private void endUnsoldAuction() {
         ServerLogger.logger.debug("Ended auction without exchange: " + auction.getAuctionID());

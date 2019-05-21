@@ -3,8 +3,8 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -68,17 +68,17 @@ public class RegisterPanel extends LocaleSelectorPanel {
         usernameTF.setFont(new Font("Arial", Font.PLAIN, (int) (usernameLabel.getFont().getSize() / 1.25)));
         usernameTF.getDocument().addDocumentListener(new DocumentListener() {
 
-            @Override
+
             public void removeUpdate(DocumentEvent e) {
                 checkInput(true);
             }
 
-            @Override
+
             public void insertUpdate(DocumentEvent e) {
                 checkInput(true);
             }
 
-            @Override
+
             public void changedUpdate(DocumentEvent e) {
                 checkInput(true);
             }
@@ -108,17 +108,17 @@ public class RegisterPanel extends LocaleSelectorPanel {
         passwordTF.setFont(usernameTF.getFont());
         passwordTF.getDocument().addDocumentListener(new DocumentListener() {
 
-            @Override
+
             public void removeUpdate(DocumentEvent e) {
                 checkInput(false);
             }
 
-            @Override
+
             public void insertUpdate(DocumentEvent e) {
                 checkInput(false);
             }
 
-            @Override
+
             public void changedUpdate(DocumentEvent e) {
                 checkInput(false);
             }
@@ -147,7 +147,7 @@ public class RegisterPanel extends LocaleSelectorPanel {
                 (int) (countryLabel.getLocation().getY()));
         countryTF.setFont(usernameTF.getFont());
         countryTF.addFocusListener(ttsFocusListener);
-        
+
         confirmButton = new JButton(LanguageManager.getMessage("General.confirmButton.text"));
         confirmButton.setForeground(new Color(0, 102, 102));
         confirmButton.setBackground(Color.white);
@@ -160,7 +160,7 @@ public class RegisterPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(confirmButton);
         confirmButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
 
                 if (controller.signIn(usernameTF.getText(), passwordTF.getText(), countryTF.getText())) {
@@ -202,13 +202,13 @@ public class RegisterPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
             }
         });
         cancelButton.addFocusListener(ttsFocusListener);
-        
+
         confirmLabel = new JLabel(" ",
                 SwingConstants.LEFT);
         confirmLabel.setForeground(new Color(0, 102, 102));
@@ -229,29 +229,11 @@ public class RegisterPanel extends LocaleSelectorPanel {
         this.add(confirmButton);
         this.add(cancelButton);
         this.add(confirmLabel);
-        
+
         bringSelectLanguageCBToFront();
 
         VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.RegisterPanel.welcome"));
 
-    }
-    
-    @Override
-    protected void updateComponentsText() {
-    	titleLabel.setText(LanguageManager.getMessage("RegisterPanel.titleLabel.text"));
-    	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel.setText(LanguageManager.getMessage("RegisterPanel.infoLabel.text"));
-    	SDG2Util.fixJLabelFontSize(infoLabel);
-    	usernameLabel.setText(LanguageManager.getMessage("RegisterPanel.usernameLabel.text"));
-    	SDG2Util.fixJLabelFontSize(usernameLabel);
-    	passwordLabel.setText(LanguageManager.getMessage("RegisterPanel.passwordLabel.text"));
-    	SDG2Util.fixJLabelFontSize(passwordLabel);
-    	countryLabel.setText(LanguageManager.getMessage("RegisterPanel.countryLabel.text"));
-    	SDG2Util.fixJLabelFontSize(countryLabel);
-    	confirmButton.setText(LanguageManager.getMessage("General.confirmButton.text"));
-    	SDG2Util.fixJButtonFontSize(confirmButton);
-    	cancelButton.setText(LanguageManager.getMessage("General.cancelButton.text"));
-    	SDG2Util.fixJButtonFontSize(cancelButton);
     }
 
     public static void main(String[] args) {
@@ -260,6 +242,24 @@ public class RegisterPanel extends LocaleSelectorPanel {
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         testFrame.add(new RegisterPanel(800, 600));
         testFrame.setVisible(true);
+    }
+
+
+    protected void updateComponentsText() {
+        titleLabel.setText(LanguageManager.getMessage("RegisterPanel.titleLabel.text"));
+        SDG2Util.fixJLabelFontSize(titleLabel);
+        infoLabel.setText(LanguageManager.getMessage("RegisterPanel.infoLabel.text"));
+        SDG2Util.fixJLabelFontSize(infoLabel);
+        usernameLabel.setText(LanguageManager.getMessage("RegisterPanel.usernameLabel.text"));
+        SDG2Util.fixJLabelFontSize(usernameLabel);
+        passwordLabel.setText(LanguageManager.getMessage("RegisterPanel.passwordLabel.text"));
+        SDG2Util.fixJLabelFontSize(passwordLabel);
+        countryLabel.setText(LanguageManager.getMessage("RegisterPanel.countryLabel.text"));
+        SDG2Util.fixJLabelFontSize(countryLabel);
+        confirmButton.setText(LanguageManager.getMessage("General.confirmButton.text"));
+        SDG2Util.fixJButtonFontSize(confirmButton);
+        cancelButton.setText(LanguageManager.getMessage("General.cancelButton.text"));
+        SDG2Util.fixJButtonFontSize(cancelButton);
     }
 
     // param isUsername is true when checking the usernametf and false when checking the passwordtf

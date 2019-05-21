@@ -3,8 +3,8 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -53,7 +53,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(userAuctionsButton);
         userAuctionsButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.USER_AUCTIONS);
             }
@@ -72,7 +72,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(userProductsButton);
         userProductsButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.USER_PRODUCTS);
             }
@@ -91,7 +91,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(marketButton);
         marketButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.MARKET);
 
@@ -111,7 +111,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
                 (int) (userProductsButton.getLocation().getY()));
         userAccountButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.USER_ACCOUNT);
 
@@ -131,7 +131,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(logOutButton);
         logOutButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 if (controller.logOut())
                     ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
@@ -149,29 +149,11 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         this.add(userAuctionsButton);
         this.add(userAccountButton);
         this.add(logOutButton);
-        
+
         bringSelectLanguageCBToFront();
-        
+
         VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.MainMenuPanel.welcome"));
 
-    }
-    
-    @Override
-    protected void updateComponentsText() {
-    	titleLabel.setText(LanguageManager.getMessage("MainMenuPanel.titleLabel.text"));
-    	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel.setText(LanguageManager.getMessage("MainMenuPanel.infoLabel.text"));
-    	SDG2Util.fixJLabelFontSize(infoLabel);
-    	marketButton.setText(LanguageManager.getMessage("MainMenuPanel.marketButton.text"));
-    	SDG2Util.fixJButtonFontSize(marketButton);
-    	userProductsButton.setText(LanguageManager.getMessage("MainMenuPanel.userProductsButton.text"));
-    	SDG2Util.fixJButtonFontSize(userProductsButton);
-    	userAuctionsButton.setText(LanguageManager.getMessage("MainMenuPanel.userAuctionsButton.text"));
-    	SDG2Util.fixJButtonFontSize(userAuctionsButton);
-    	userAccountButton.setText(LanguageManager.getMessage("MainMenuPanel.userAccountButton.text"));
-    	SDG2Util.fixJButtonFontSize(userAccountButton);
-    	logOutButton.setText(LanguageManager.getMessage("MainMenuPanel.logOutButton.text"));
-    	SDG2Util.fixJButtonFontSize(logOutButton);
     }
 
     public static void main(String[] args) {
@@ -180,6 +162,24 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         testFrame.add(new MainMenuPanel(800, 600));
         testFrame.setVisible(true);
+    }
+
+
+    protected void updateComponentsText() {
+        titleLabel.setText(LanguageManager.getMessage("MainMenuPanel.titleLabel.text"));
+        SDG2Util.fixJLabelFontSize(titleLabel);
+        infoLabel.setText(LanguageManager.getMessage("MainMenuPanel.infoLabel.text"));
+        SDG2Util.fixJLabelFontSize(infoLabel);
+        marketButton.setText(LanguageManager.getMessage("MainMenuPanel.marketButton.text"));
+        SDG2Util.fixJButtonFontSize(marketButton);
+        userProductsButton.setText(LanguageManager.getMessage("MainMenuPanel.userProductsButton.text"));
+        SDG2Util.fixJButtonFontSize(userProductsButton);
+        userAuctionsButton.setText(LanguageManager.getMessage("MainMenuPanel.userAuctionsButton.text"));
+        SDG2Util.fixJButtonFontSize(userAuctionsButton);
+        userAccountButton.setText(LanguageManager.getMessage("MainMenuPanel.userAccountButton.text"));
+        SDG2Util.fixJButtonFontSize(userAccountButton);
+        logOutButton.setText(LanguageManager.getMessage("MainMenuPanel.logOutButton.text"));
+        SDG2Util.fixJButtonFontSize(logOutButton);
     }
 
 }

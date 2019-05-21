@@ -12,9 +12,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * Needed for concurrent ClientMain's requests.
  */
 class JdoManager {
+    static Lock pmLock = new ReentrantLock();
     private static PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
     private static PersistenceManager pm;
-    static Lock pmLock = new ReentrantLock();
 
     static synchronized PersistenceManager getPersistanceManager() {
         if (pm == null) {

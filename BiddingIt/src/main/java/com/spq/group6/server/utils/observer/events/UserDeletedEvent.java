@@ -11,9 +11,9 @@ import java.io.Serializable;
  * This class contains the deleted User.
  */
 public class UserDeletedEvent implements Serializable {
+    public User user;
+
     public UserDeletedEvent(User user) {
         this.user = user;
     }
-
-    public User user;
 }

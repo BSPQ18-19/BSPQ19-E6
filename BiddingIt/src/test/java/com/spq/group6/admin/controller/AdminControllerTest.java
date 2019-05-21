@@ -1,10 +1,11 @@
 package com.spq.group6.admin.controller;
 
 import com.spq.group6.admin.remote.AdminServiceLocator;
-import com.spq.group6.client.controller.ClientController;
-import com.spq.group6.client.remote.ServiceLocator;
 import com.spq.group6.server.dao.BiddingDAO;
-import com.spq.group6.server.data.*;
+import com.spq.group6.server.data.Administrator;
+import com.spq.group6.server.data.Auction;
+import com.spq.group6.server.data.Product;
+import com.spq.group6.server.data.User;
 import com.spq.group6.server.remote.IServer;
 import com.spq.group6.server.remote.Server;
 import com.spq.group6.server.utils.logger.ServerLogger;
@@ -83,6 +84,17 @@ public class AdminControllerTest {
         biddingDao.persistAdministrator(admin);
     }
 
+    @AfterClass
+    static public void tearDownClass() {
+        biddingDao.deleteAdministrator(admin);
+        try {
+            rmiServerThread.join();
+            rmiRegistryThread.join();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+    }
+
     @Before
     public void setUp() throws RemoteException {
         adminController = new AdminController();
@@ -94,7 +106,6 @@ public class AdminControllerTest {
 
         biddingDao.persistAuction(auction);
     }
-
 
     @Test
     public void logInInTest() throws RemoteException {
@@ -125,13 +136,13 @@ public class AdminControllerTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testFailStartuUcheckedAuctions(){
+    public void testFailStartuUcheckedAuctions() {
         // It should fail because it tries to delet a countdown that does not exist
         adminController.deleteAuction(auction);
     }
 
     @Test
-    public void testCorrectStartuUcheckedAuctions(){
+    public void testCorrectStartuUcheckedAuctions() {
         adminController.startUncheckedAuctions();
         adminController.deleteAuction(auction);
     }
@@ -166,19 +177,8 @@ public class AdminControllerTest {
 
     @After
     public void tearDown() {
-        if (seller!= null) {
+        if (seller != null) {
             biddingDao.deleteUser(seller);
-        }
-    }
-
-    @AfterClass
-    static public void tearDownClass() {
-        biddingDao.deleteAdministrator(admin);
-        try {
-            rmiServerThread.join();
-            rmiRegistryThread.join();
-        } catch (InterruptedException ie) {
-            ie.printStackTrace();
         }
     }
 }
