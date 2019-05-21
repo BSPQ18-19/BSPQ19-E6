@@ -3,7 +3,7 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
 
 import javax.swing.*;
@@ -152,7 +152,7 @@ public class LogInPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
 
-        VoiceHelper.textToSpeech("You currently are in the log in menu.");
+        VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.LogInPanel.welcome"));
         
     }
     

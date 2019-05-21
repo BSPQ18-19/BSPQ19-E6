@@ -3,7 +3,7 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
 
 import javax.swing.*;
@@ -95,7 +95,7 @@ public class InitialPanel extends LocaleSelectorPanel {
 //        VoiceHelper.textToSpeech("Welcome to Bidding It! This is aun auction system. You can sell and bid other people's products."
 //        		+ " If you want to disable this beatiful voice, you can turn it off by pressing the sound ON button. You can also change"
 //        		+ "the language. Enjoy!");
-        VoiceHelper.textToSpeech("You currently are in the initial menu.");
+        VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.InitialPanel.welcome"));
     }
     
     @Override

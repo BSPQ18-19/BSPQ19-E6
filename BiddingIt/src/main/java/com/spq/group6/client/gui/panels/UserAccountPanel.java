@@ -3,7 +3,7 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
 
 import javax.swing.*;
@@ -167,7 +167,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
 
-        VoiceHelper.textToSpeech("You currently are in the user account menu.");
+        VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.UserAccountPanel.welcome"));
 
     }
     

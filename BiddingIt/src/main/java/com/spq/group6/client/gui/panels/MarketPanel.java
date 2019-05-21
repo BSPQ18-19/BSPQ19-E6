@@ -8,7 +8,7 @@ import com.spq.group6.client.gui.elements.MarketJTableModel;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.SPQG6Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
 import com.spq.group6.server.data.Auction;
 
@@ -180,7 +180,7 @@ public class MarketPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
 
-        VoiceHelper.textToSpeech("You currently are in the market menu.");
+        VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.MarketPanel.welcome"));
 
     }
 

@@ -7,7 +7,7 @@ import com.spq.group6.client.gui.elements.AuctionJTableModel;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
@@ -100,7 +100,7 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
 
-        VoiceHelper.textToSpeech("You currently are in the initial menu.");
+        VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.UserAuctionsPanel.welcome"));
 
     }
 

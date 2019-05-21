@@ -1,15 +1,12 @@
-package com.spq.group6.client.gui.utils;
+package com.spq.group6.client.gui.utils.voice;
 
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
-
-import javax.swing.*;
 
 public class VoiceHelper {
 
     private static TTSManager ttsManager = new TTSManager();
 
-    public static void textToSpeech(String speechCode){
-        String msg = LanguageManager.getMessage(speechCode);
+    public static void textToSpeech(String msg){
         Thread t = new Thread(new Runnable() {
             public void run() {
                 ttsManager.sayText(msg);
