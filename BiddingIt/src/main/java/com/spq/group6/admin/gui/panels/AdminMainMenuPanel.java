@@ -23,7 +23,9 @@ public class AdminMainMenuPanel extends JPanel {
     private AdminController controller;
 
     public AdminMainMenuPanel(int screenWidth, int screenHeight, AdminController controller) {
+    	
         this.controller = controller;
+        this.setBackground(Color.WHITE);
         this.setLayout(null);
 
         titleLabel = new JLabel("BiddingIt Administration", SwingConstants.CENTER);
