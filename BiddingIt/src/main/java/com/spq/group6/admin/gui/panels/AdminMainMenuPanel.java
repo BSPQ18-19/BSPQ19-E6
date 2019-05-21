@@ -7,8 +7,7 @@ import com.spq.group6.admin.gui.utils.ScreenType;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -41,12 +40,12 @@ public class AdminMainMenuPanel extends JPanel {
         AdminAuctionsButton.setContentAreaFilled(false);
         AdminAuctionsButton.setOpaque(true);
         AdminAuctionsButton.setSize(screenWidth / 5, screenHeight / 8);
-        AdminAuctionsButton.setLocation((int) (titleLabel.getLocation().getX()) + screenWidth/10,
+        AdminAuctionsButton.setLocation((int) (titleLabel.getLocation().getX()) + screenWidth / 10,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 5));
         SDG2Util.fixJButtonFontSize(AdminAuctionsButton);
         AdminAuctionsButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 AdminWindow.getAdminWindow(null).changeScreen(ScreenType.ADMIN_AUCTIONS);
             }
@@ -59,12 +58,12 @@ public class AdminMainMenuPanel extends JPanel {
         AdminUsersButton.setContentAreaFilled(false);
         AdminUsersButton.setOpaque(true);
         AdminUsersButton.setSize(screenWidth / 5, screenHeight / 8);
-        AdminUsersButton.setLocation((int) (titleLabel.getLocation().getX() + AdminUsersButton.getSize().getWidth() + screenWidth/5),
+        AdminUsersButton.setLocation((int) (titleLabel.getLocation().getX() + AdminUsersButton.getSize().getWidth() + screenWidth / 5),
                 (int) (AdminAuctionsButton.getLocation().getY()));
         SDG2Util.fixJButtonFontSize(AdminUsersButton);
         AdminUsersButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 AdminWindow.getAdminWindow(null).changeScreen(ScreenType.ADMIN_USERS);
 
@@ -83,7 +82,7 @@ public class AdminMainMenuPanel extends JPanel {
         SDG2Util.fixJButtonFontSize(logOutButton);
         logOutButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 if (controller.logOut())
                     AdminWindow.getAdminWindow(null).changeScreen(ScreenType.LOG_IN);

@@ -21,8 +21,11 @@ import com.spq.group6.server.utils.observer.remote.RemoteObservable;
  * - Product details modification
  */
 public class AccountService implements IAccountService {
-    public static RemoteObservable observable = new RemoteObservable();/** Remote observable responsible for
-     notifying Clients. Contains all User RemoteObservers*/
+    public static RemoteObservable observable = new RemoteObservable();
+    /**
+     * Remote observable responsible for
+     * notifying Clients. Contains all User RemoteObservers
+     */
     private IBiddingDAO biddingDAO;
 
     public AccountService() {

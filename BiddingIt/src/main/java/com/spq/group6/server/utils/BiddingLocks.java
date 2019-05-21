@@ -89,7 +89,7 @@ public class BiddingLocks {
         if (!userLocks.containsKey(username)) {
             userLocks.put(username, new ReentrantLock());
         }
-        ServerLogger.logger.debug("Waiting User "+ username + " lock...");
+        ServerLogger.logger.debug("Waiting User " + username + " lock...");
         userLocks.get(username).lock();
         ServerLogger.logger.debug("Locked User " + username);
         return biddingDAO.getUserByUsername(username);

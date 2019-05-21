@@ -4,9 +4,8 @@ import com.spq.group6.admin.gui.AdminWindow;
 import com.spq.group6.admin.gui.utils.SDG2Util;
 import com.spq.group6.admin.gui.utils.ScreenType;
 
-import java.awt.Color;
-
 import javax.swing.*;
+import java.awt.*;
 
 public class AdminLogInSuccesfulPanel extends JPanel {
 
@@ -16,7 +15,7 @@ public class AdminLogInSuccesfulPanel extends JPanel {
     private JLabel infoLabel2;
 
     public AdminLogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
-    	setBackground(Color.white);
+        setBackground(Color.white);
         this.setLayout(null);
 
         if (!username.isEmpty())
@@ -50,7 +49,7 @@ public class AdminLogInSuccesfulPanel extends JPanel {
         Thread animationThread = new Thread(new Runnable() {
             int dots = 0, repetitions = 0;
 
-            @Override
+
             public void run() {
 
                 while (AdminLogInSuccesfulPanel.this.isEnabled()) {

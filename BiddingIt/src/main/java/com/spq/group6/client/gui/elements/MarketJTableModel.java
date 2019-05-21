@@ -38,11 +38,11 @@ public class MarketJTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         return data[row][col];
     }
-    
-    @Override
+
+
     public void setValueAt(Object value, int rowIndex, int colIndex) {
-    	data[rowIndex][colIndex] = value;
-        fireTableCellUpdated(rowIndex, colIndex);            
+        data[rowIndex][colIndex] = value;
+        fireTableCellUpdated(rowIndex, colIndex);
     }
 
     /*
@@ -61,40 +61,40 @@ public class MarketJTableModel extends AbstractTableModel {
     public void bidAuctionAt(int rowIndex, Auction auction) {
         boolean passOK = false;
         boolean isPrivate = auction.getPassword() != null && !auction.getPassword().equals("");
-    	if (isPrivate) {
-        	String bidPassword = JOptionPane.showInputDialog(null, 
-        			"Please enter the password.", "Private Bid", JOptionPane.QUESTION_MESSAGE);
-        	if (bidPassword != null && bidPassword.equals(auction.getPassword()))
-        		passOK = true;
-    	
+        if (isPrivate) {
+            String bidPassword = JOptionPane.showInputDialog(null,
+                    "Please enter the password.", "Private Bid", JOptionPane.QUESTION_MESSAGE);
+            if (bidPassword != null && bidPassword.equals(auction.getPassword()))
+                passOK = true;
+
         } else
-        	passOK = true;
-    	
-    	if (passOK) {
-        	float actualHighestBid = 0;
-        
-	        if (auction.getHighestBid() != null) {
-	            actualHighestBid = auction.getHighestBid().getAmount();
-	        } else {
-	            actualHighestBid = auction.getInitialPrice();
-	        }
-	        String bidValue;
-	        if (isPrivate)
-	        	bidValue = JOptionPane.showInputDialog(null,
-	                "Password OK. Please enter the amount you want to bid (greater than " + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
-	        else
-	        	bidValue = JOptionPane.showInputDialog(null,
-		                "Please enter the amount you want to bid (greater than " + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
-	        if (bidValue != null && Float.parseFloat(bidValue) > actualHighestBid)
-	            if (controller.bid(auction, Float.parseFloat(bidValue))) {
-	                JOptionPane.showConfirmDialog(null, "Auction bidded correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-	                auction.setHighestBid(new Bid(controller.getCurrentUser(), Float.parseFloat(bidValue)));
-	                this.setValueAt(bidValue, rowIndex, 3);
-	                
-	            } else
-	                JOptionPane.showConfirmDialog(null, "Error bidding the auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-	        else
-	            JOptionPane.showConfirmDialog(null, "Error bidding the auction. Amount too small.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            passOK = true;
+
+        if (passOK) {
+            float actualHighestBid = 0;
+
+            if (auction.getHighestBid() != null) {
+                actualHighestBid = auction.getHighestBid().getAmount();
+            } else {
+                actualHighestBid = auction.getInitialPrice();
+            }
+            String bidValue;
+            if (isPrivate)
+                bidValue = JOptionPane.showInputDialog(null,
+                        "Password OK. Please enter the amount you want to bid (greater than " + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
+            else
+                bidValue = JOptionPane.showInputDialog(null,
+                        "Please enter the amount you want to bid (greater than " + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
+            if (bidValue != null && Float.parseFloat(bidValue) > actualHighestBid)
+                if (controller.bid(auction, Float.parseFloat(bidValue))) {
+                    JOptionPane.showConfirmDialog(null, "Auction bidded correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    auction.setHighestBid(new Bid(controller.getCurrentUser(), Float.parseFloat(bidValue)));
+                    this.setValueAt(bidValue, rowIndex, 3);
+
+                } else
+                    JOptionPane.showConfirmDialog(null, "Error bidding the auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            else
+                JOptionPane.showConfirmDialog(null, "Error bidding the auction. Amount too small.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
         } else
             JOptionPane.showConfirmDialog(null, "Error entering the private auction. Password incorrect.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 

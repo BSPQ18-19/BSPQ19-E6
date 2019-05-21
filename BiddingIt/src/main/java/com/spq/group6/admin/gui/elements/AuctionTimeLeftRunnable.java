@@ -18,7 +18,7 @@ public class AuctionTimeLeftRunnable implements Runnable {
         this.tempAuctionTime = tempAuctionTime;
     }
 
-    @Override
+
     public void run() {
         while (!Thread.interrupted() && LocalDateTime.from(LocalDateTime.now()).until(tempAuctionTime, ChronoUnit.SECONDS) > 0) {
             auctionsTable.setValueAt(SPQG6Util.getLocalDateTimeDifferenceFromNow(tempAuctionTime), tableRow, 3);

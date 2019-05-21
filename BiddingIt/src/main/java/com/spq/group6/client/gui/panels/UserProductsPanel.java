@@ -7,8 +7,8 @@ import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.ProductJTableModel;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
-import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
+import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import com.spq.group6.server.data.Product;
 
 import javax.swing.*;
@@ -56,7 +56,7 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         SDG2Util.fixJButtonFontSize(backButton);
         backButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 ClientWindow.getClientWindow().changeScreen(ScreenType.MAIN_MENU);
             }
@@ -64,7 +64,7 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         backButton.addFocusListener(ttsFocusListener);
 
         String[] productsColumnNames = {LanguageManager.getMessage("UserProductsPanel.productsColumnNames.0"),
-        		LanguageManager.getMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
+                LanguageManager.getMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
         productsTable = new JTable(new ProductJTableModel(new Object[][]{}, productsColumnNames));
         updateProducts();
         productsTable.setRowHeight((int) (productsTable.getRowHeight() * 1.5));
@@ -83,22 +83,30 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         productsTableScrollPane.setLocation(infoLabel.getX(),
                 (int) (infoLabel.getLocation().getY() + infoLabel.getHeight()));
 
-       
+
         this.add(titleLabel);
         this.add(infoLabel);
         this.add(productsTableScrollPane);
         this.add(backButton);
-        
+
         bringSelectLanguageCBToFront();
-        
+
         VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.UserProductsPanel.welcome"));
 
     }
-    
+
+    public static void main(String[] args) {
+        JFrame testFrame = new JFrame();
+        testFrame.setSize(800, 600);
+        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        testFrame.add(new UserProductsPanel(800, 600));
+        testFrame.setVisible(true);
+    }
+
     private void updateProducts() {
-    	String[] productsColumnNames = {LanguageManager.getMessage("UserProductsPanel.productsColumnNames.0"),
-        		LanguageManager.getMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
-        Object[][] productsData = new Object[][] {};
+        String[] productsColumnNames = {LanguageManager.getMessage("UserProductsPanel.productsColumnNames.0"),
+                LanguageManager.getMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
+        Object[][] productsData = new Object[][]{};
         if (controller.getCurrentUser() != null) {
             productsData = new Object[controller.getCurrentUserProducts().size() + 1][productsColumnNames.length];
             int i = 0;
@@ -119,30 +127,22 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         ButtonColumn updateButtonColumn = new ButtonColumn(productsTable, new ActionUpdateProduct(), 2);
         @SuppressWarnings("unused")
         ButtonColumn deleteButtonColumn = new ButtonColumn(productsTable, new ActionDeleteProduct(), 3);
-        
+
         productsTable.getColumnModel().getColumn(1).setPreferredWidth(productsTable.getColumnModel().getColumn(1).getPreferredWidth() + 200);
 
         productsTable.revalidate();
         productsTable.repaint();
     }
-    
-    @Override
-    protected void updateComponentsText() {
-    	titleLabel.setText(LanguageManager.getMessage("UserProductsPanel.titleLabel.text"));
-    	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel.setText(LanguageManager.getMessage("UserProductsPanel.infoLabel.text"));
-    	SDG2Util.fixJLabelFontSize(infoLabel);
-    	updateProducts();
-    	backButton.setText(LanguageManager.getMessage("General.backButton.text"));
-    	SDG2Util.fixJButtonFontSize(backButton);
-    }
 
-    public static void main(String[] args) {
-        JFrame testFrame = new JFrame();
-        testFrame.setSize(800, 600);
-        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        testFrame.add(new UserProductsPanel(800, 600));
-        testFrame.setVisible(true);
+
+    protected void updateComponentsText() {
+        titleLabel.setText(LanguageManager.getMessage("UserProductsPanel.titleLabel.text"));
+        SDG2Util.fixJLabelFontSize(titleLabel);
+        infoLabel.setText(LanguageManager.getMessage("UserProductsPanel.infoLabel.text"));
+        SDG2Util.fixJLabelFontSize(infoLabel);
+        updateProducts();
+        backButton.setText(LanguageManager.getMessage("General.backButton.text"));
+        SDG2Util.fixJButtonFontSize(backButton);
     }
 
 }

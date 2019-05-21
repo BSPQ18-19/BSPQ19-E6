@@ -18,7 +18,7 @@ public class ProductJTableModel extends DefaultTableModel {
 
     }
 
-    @Override
+
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return columnIndex == 0 || columnIndex == 1 || columnIndex == 2 || columnIndex == 3;
     }

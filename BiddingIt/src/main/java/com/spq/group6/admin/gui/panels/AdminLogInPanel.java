@@ -7,7 +7,6 @@ import com.spq.group6.admin.gui.utils.ScreenType;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +27,7 @@ public class AdminLogInPanel extends JPanel {
     private AdminController controller;
 
     public AdminLogInPanel(int screenWidth, int screenHeight, AdminController controller) {
-    	setBackground(Color.WHITE);
+        setBackground(Color.WHITE);
         this.setLayout(null);
         this.controller = controller;
 
@@ -92,7 +91,7 @@ public class AdminLogInPanel extends JPanel {
         SDG2Util.fixJButtonFontSize(confirmButton);
         confirmButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
 
                 try {

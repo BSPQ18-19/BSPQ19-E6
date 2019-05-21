@@ -100,7 +100,7 @@ public class ButtonColumn extends AbstractCellEditor
         editButton.setMnemonic(mnemonic);
     }
 
-    @Override
+
     public Component getTableCellEditorComponent(
             JTable table, Object value, boolean isSelected, int row, int column) {
         if (value == null) {
@@ -118,7 +118,7 @@ public class ButtonColumn extends AbstractCellEditor
         return editButton;
     }
 
-    @Override
+
     public Object getCellEditorValue() {
         return editorValue;
     }
@@ -134,7 +134,7 @@ public class ButtonColumn extends AbstractCellEditor
             renderButton.setContentAreaFilled(false);
             renderButton.setOpaque(true);
         } else {
-        	renderButton.setForeground(new Color(102, 69, 3));
+            renderButton.setForeground(new Color(102, 69, 3));
             renderButton.setBackground(Color.white);
             renderButton.setContentAreaFilled(false);
             renderButton.setOpaque(true);

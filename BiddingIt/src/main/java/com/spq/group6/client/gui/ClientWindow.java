@@ -35,6 +35,13 @@ public class ClientWindow extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    // lazy singleton
+    public static ClientWindow getClientWindow() {
+        if (clientWindow == null)
+            clientWindow = new ClientWindow();
+        return clientWindow;
+    }
+
     public void changeScreen(ScreenType nextScreenType, String... data) {
         this.currentScreenType = nextScreenType;
 
@@ -75,13 +82,6 @@ public class ClientWindow extends JFrame {
 
     public ClientController getController() {
         return controller;
-    }
-
-    // lazy singleton
-    public static ClientWindow getClientWindow() {
-        if (clientWindow == null)
-            clientWindow = new ClientWindow();
-        return clientWindow;
     }
 
     public JPanel getMainPanel() {

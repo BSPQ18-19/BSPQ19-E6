@@ -22,7 +22,7 @@ public class AuctionJTableModel extends DefaultTableModel {
         this.parentPanel = parentPanel;
     }
 
-    @Override
+
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return rowIndex == this.getRowCount() - 1 && columnIndex != 3 && columnIndex != 4;
     }

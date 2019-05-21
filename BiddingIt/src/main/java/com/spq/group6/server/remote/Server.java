@@ -171,5 +171,5 @@ public class Server extends UnicastRemoteObject implements IServer {
     public Administrator createAdministrator(Administrator admin) throws RemoteException, AdministratorException {
         ServerLogger.logger.debug("Received admin creation petition");
         return accountService.createAdministrator(admin);
-}
+    }
 }

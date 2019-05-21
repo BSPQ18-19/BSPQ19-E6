@@ -15,7 +15,6 @@ import com.spq.group6.server.data.Auction;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +39,7 @@ public class AdminAuctionsPanel extends JPanel {
     private ArrayList<Thread> auctionsTimeLeftThread;
 
     public AdminAuctionsPanel(int screenWidth, int screenHeight, AdminController controller) {
-    	setBackground(Color.white);
+        setBackground(Color.white);
         this.setLayout(null);
 
         titleLabel = new JLabel("Administrating auctions...", SwingConstants.LEFT);
@@ -104,7 +103,7 @@ public class AdminAuctionsPanel extends JPanel {
         Thread animationThread = new Thread(new Runnable() {
             int dots = 0;
 
-            @Override
+
             public void run() {
 
                 while (AdminAuctionsPanel.this.isEnabled()) {
@@ -137,7 +136,7 @@ public class AdminAuctionsPanel extends JPanel {
         searchButton.setOpaque(true);
         searchButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 // stop previous threads
                 if (auctionsTimeLeftThread != null)
@@ -203,7 +202,7 @@ public class AdminAuctionsPanel extends JPanel {
         SDG2Util.fixJButtonFontSize(backButton);
         backButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 AdminWindow.getAdminWindow(null).changeScreen(ScreenType.MAIN_MENU);
             }
@@ -221,7 +220,7 @@ public class AdminAuctionsPanel extends JPanel {
         SDG2Util.fixJButtonFontSize(logOutButton);
         logOutButton.addActionListener(new ActionListener() {
 
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 if (controller.logOut())
                     AdminWindow.getAdminWindow(null).changeScreen(ScreenType.LOG_IN);
@@ -232,7 +231,7 @@ public class AdminAuctionsPanel extends JPanel {
         });
 
         auctionsTable = new JTable(new AuctionJTableModel(new Object[][]{}, auctionsColumnNames, controller, new ArrayList<Auction>()));
-        auctionsTable.setRowHeight((int)(auctionsTable.getRowHeight()*1.5));
+        auctionsTable.setRowHeight((int) (auctionsTable.getRowHeight() * 1.5));
         auctionsTable.getTableHeader().setOpaque(false);
         auctionsTable.getTableHeader().setBackground(new Color(234, 255, 255));
         auctionsTable.setBackground(Color.white);

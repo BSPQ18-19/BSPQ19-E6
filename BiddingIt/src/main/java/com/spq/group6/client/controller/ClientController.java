@@ -40,11 +40,11 @@ public class ClientController {
     public static ClientController getNewClientController() {
         return new ClientController();
     }
-    
+
     public void setClientRemoteObserver() {
-    	observer.setClientWindow();
+        observer.setClientWindow();
     }
-    
+
     public boolean logIn(String email, String password) throws RemoteException {
         String info = "Log in with username " + email + " and password " + password;
         try {
