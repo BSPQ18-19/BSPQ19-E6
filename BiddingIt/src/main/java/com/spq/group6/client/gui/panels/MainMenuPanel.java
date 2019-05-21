@@ -3,6 +3,8 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -24,7 +26,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
 
         super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel(controller.getLanguageMessage("MainMenuPanel.titleLabel.text"), SwingConstants.LEFT);
+        titleLabel = new JLabel(LanguageManager.getMessage("MainMenuPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -32,14 +34,14 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel(controller.getLanguageMessage("MainMenuPanel.infoLabel.text"), SwingConstants.LEFT);
+        infoLabel = new JLabel(LanguageManager.getMessage("MainMenuPanel.infoLabel.text"), SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 6);
         infoLabel.setLocation(screenWidth / 20,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 10));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
-        userAuctionsButton = new JButton(controller.getLanguageMessage("MainMenuPanel.userAuctionsButton.text"));
+        userAuctionsButton = new JButton(LanguageManager.getMessage("MainMenuPanel.userAuctionsButton.text"));
         userAuctionsButton.setForeground(new Color(0, 102, 102));
         userAuctionsButton.setBackground(Color.white);
         userAuctionsButton.setBorder(new TitledBorder(""));
@@ -58,7 +60,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         });
         userAuctionsButton.addFocusListener(ttsFocusListener);
 
-        userProductsButton = new JButton(controller.getLanguageMessage("MainMenuPanel.userProductsButton.text"));
+        userProductsButton = new JButton(LanguageManager.getMessage("MainMenuPanel.userProductsButton.text"));
         userProductsButton.setForeground(new Color(0, 102, 102));
         userProductsButton.setBackground(Color.white);
         userProductsButton.setBorder(new TitledBorder(""));
@@ -77,7 +79,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         });
         userProductsButton.addFocusListener(ttsFocusListener);
 
-        marketButton = new JButton(controller.getLanguageMessage("MainMenuPanel.marketButton.text"));
+        marketButton = new JButton(LanguageManager.getMessage("MainMenuPanel.marketButton.text"));
         marketButton.setForeground(new Color(0, 102, 102));
         marketButton.setBackground(Color.white);
         marketButton.setBorder(new TitledBorder(""));
@@ -97,7 +99,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         });
         marketButton.addFocusListener(ttsFocusListener);
 
-        userAccountButton = new JButton(controller.getLanguageMessage("MainMenuPanel.userAccountButton.text"));
+        userAccountButton = new JButton(LanguageManager.getMessage("MainMenuPanel.userAccountButton.text"));
         userAccountButton.setForeground(new Color(0, 102, 102));
         userAccountButton.setBackground(Color.white);
         userAccountButton.setBorder(new TitledBorder(""));
@@ -117,7 +119,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         });
         userAccountButton.addFocusListener(ttsFocusListener);
 
-        logOutButton = new JButton(controller.getLanguageMessage("MainMenuPanel.logOutButton.text"));
+        logOutButton = new JButton(LanguageManager.getMessage("MainMenuPanel.logOutButton.text"));
         logOutButton.setForeground(new Color(0, 102, 102));
         logOutButton.setBackground(Color.white);
         logOutButton.setBorder(new TitledBorder(""));
@@ -134,7 +136,7 @@ public class MainMenuPanel extends LocaleSelectorPanel {
                 if (controller.logOut())
                     ClientWindow.getClientWindow().changeScreen(ScreenType.INITIAL);
                 else
-                    JOptionPane.showConfirmDialog(MainMenuPanel.this, controller.getLanguageMessage("MainMenuPanel.confirmDialog1"), "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showConfirmDialog(MainMenuPanel.this, LanguageManager.getMessage("MainMenuPanel.confirmDialog1"), "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
             }
         });
@@ -150,25 +152,25 @@ public class MainMenuPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
         
-        controller.sayText("You currently are in the main menu.");
+        VoiceHelper.textToSpeech("You currently are in the main menu.");
 
     }
     
     @Override
     protected void updateComponentsText() {
-    	titleLabel.setText(controller.getLanguageMessage("MainMenuPanel.titleLabel.text"));
+    	titleLabel.setText(LanguageManager.getMessage("MainMenuPanel.titleLabel.text"));
     	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel.setText(controller.getLanguageMessage("MainMenuPanel.infoLabel.text"));
+    	infoLabel.setText(LanguageManager.getMessage("MainMenuPanel.infoLabel.text"));
     	SDG2Util.fixJLabelFontSize(infoLabel);
-    	marketButton.setText(controller.getLanguageMessage("MainMenuPanel.marketButton.text"));
+    	marketButton.setText(LanguageManager.getMessage("MainMenuPanel.marketButton.text"));
     	SDG2Util.fixJButtonFontSize(marketButton);
-    	userProductsButton.setText(controller.getLanguageMessage("MainMenuPanel.userProductsButton.text"));
+    	userProductsButton.setText(LanguageManager.getMessage("MainMenuPanel.userProductsButton.text"));
     	SDG2Util.fixJButtonFontSize(userProductsButton);
-    	userAuctionsButton.setText(controller.getLanguageMessage("MainMenuPanel.userAuctionsButton.text"));
+    	userAuctionsButton.setText(LanguageManager.getMessage("MainMenuPanel.userAuctionsButton.text"));
     	SDG2Util.fixJButtonFontSize(userAuctionsButton);
-    	userAccountButton.setText(controller.getLanguageMessage("MainMenuPanel.userAccountButton.text"));
+    	userAccountButton.setText(LanguageManager.getMessage("MainMenuPanel.userAccountButton.text"));
     	SDG2Util.fixJButtonFontSize(userAccountButton);
-    	logOutButton.setText(controller.getLanguageMessage("MainMenuPanel.logOutButton.text"));
+    	logOutButton.setText(LanguageManager.getMessage("MainMenuPanel.logOutButton.text"));
     	SDG2Util.fixJButtonFontSize(logOutButton);
     }
 

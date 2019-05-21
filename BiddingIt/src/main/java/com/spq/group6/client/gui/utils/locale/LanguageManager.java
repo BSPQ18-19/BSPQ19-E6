@@ -5,43 +5,45 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LanguageManager {
+    private static LanguageManager languageManager = new LanguageManager();
 
     //The name of the header of the files with the translations
     private static final String RESOURCE_BUNDLE_FILE_NAME = "locale/localization";
 
     //The default language for the app
-    public static final Locale DEFAULT_LOCALE = LanguageSelector.ENGLISH.getLocale();
+    private static final Locale DEFAULT_LOCALE = LanguageSelector.ENGLISH.getLocale();
 
     //Default locale with the language for the app
-    private Locale locale = DEFAULT_LOCALE;
+    private static Locale locale = DEFAULT_LOCALE;
 
     //constructor
-    public LanguageManager() {
+    private LanguageManager() {
     }
 
+
     //get & set for the Locale
-    public Locale getLocale() {
+    public static Locale getLocale() {
         return locale;
     }
 
-    public void setLocale(Locale locale) {
-        this.locale = locale;
+    public static void setLocale(Locale newLocale) {
+        locale = newLocale;
     }
 
     //get the default bundle with the translations
-    private ResourceBundle getResourceBundle() {
+    public static ResourceBundle getResourceBundle() {
         return ResourceBundle.getBundle(RESOURCE_BUNDLE_FILE_NAME, locale);
     }
 
 
     //get of a specific bundle
-    private ResourceBundle getResourceBundle(Locale locale) {
+    public static ResourceBundle getResourceBundle(Locale locale) {
         return ResourceBundle.getBundle(RESOURCE_BUNDLE_FILE_NAME, locale);
     }
 
 
     // return the translation for the inserted key (if the key does not exist in neither the current bundle or the default one returns the key)
-    public String getMessage(String key, Object... parameters) {
+    public static String getMessage(String key, Object... parameters) {
 
         Locale localeToUse = getLocale();
 
@@ -66,7 +68,7 @@ public class LanguageManager {
     }
     
     // get the possible languages
-    public LanguageSelector[] getLanguages() {
+    public static LanguageSelector[] getLanguages() {
     	return LanguageSelector.ALLOWED_LOCALES;
     }
 }

@@ -3,6 +3,8 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -29,7 +31,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
 
         super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel(controller.getLanguageMessage("UserAccountPanel.titleLabel.text"), SwingConstants.LEFT);
+        titleLabel = new JLabel(LanguageManager.getMessage("UserAccountPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -37,7 +39,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel(controller.getLanguageMessage("UserAccountPanel.infoLabel.text"),
+        infoLabel = new JLabel(LanguageManager.getMessage("UserAccountPanel.infoLabel.text"),
                 SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.3), screenHeight / 6);
@@ -45,7 +47,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() * 1.5));
         infoLabel.setFont(new Font("Arial", Font.PLAIN, screenHeight / 30));
 
-        countryLabel = new JLabel(controller.getLanguageMessage("UserAccountPanel.countryLabel.text"), SwingConstants.LEFT);
+        countryLabel = new JLabel(LanguageManager.getMessage("UserAccountPanel.countryLabel.text"), SwingConstants.LEFT);
         countryLabel.setForeground(new Color(0, 102, 102));
         countryLabel.setSize(screenWidth / 5, screenHeight / 20);
         countryLabel.setLocation((int) infoLabel.getLocation().getX(),
@@ -64,7 +66,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         countryTF.setFont(new Font("Arial", Font.PLAIN, (int) (countryLabel.getFont().getSize() / 1.5)));
         countryTF.addFocusListener(ttsFocusListener);
         
-        passwordLabel = new JLabel(controller.getLanguageMessage("UserAccountPanel.passwordLabel.text"), SwingConstants.LEFT);
+        passwordLabel = new JLabel(LanguageManager.getMessage("UserAccountPanel.passwordLabel.text"), SwingConstants.LEFT);
         passwordLabel.setForeground(new Color(0, 102, 102));
         passwordLabel.setSize(countryLabel.getSize());
         passwordLabel.setLocation((int) countryLabel.getLocation().getX(),
@@ -97,7 +99,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
                 (int) (nameLabel.getLocation().getY() + nameLabel.getHeight() + screenHeight / 30));
         SDG2Util.fixJLabelFontSize(moneyLabel);
 
-        confirmButton = new JButton(controller.getLanguageMessage("General.confirmButton.text"));
+        confirmButton = new JButton(LanguageManager.getMessage("General.confirmButton.text"));
         confirmButton.setForeground(new Color(0, 102, 102));
         confirmButton.setBackground(Color.white);
         confirmButton.setBorder(new TitledBorder(""));
@@ -126,7 +128,7 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         });
         confirmButton.addFocusListener(ttsFocusListener);
 
-        backButton = new JButton(controller.getLanguageMessage("General.backButton.text"));
+        backButton = new JButton(LanguageManager.getMessage("General.backButton.text"));
         backButton.setForeground(new Color(0, 102, 102));
         backButton.setBackground(Color.white);
         backButton.setBorder(new TitledBorder(""));
@@ -165,23 +167,23 @@ public class UserAccountPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
 
-        controller.sayText("You currently are in the user account menu.");
+        VoiceHelper.textToSpeech("You currently are in the user account menu.");
 
     }
     
     @Override
     protected void updateComponentsText() {
-    	titleLabel.setText(controller.getLanguageMessage("UserAccountPanel.titleLabel.text"));
+    	titleLabel.setText(LanguageManager.getMessage("UserAccountPanel.titleLabel.text"));
     	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel.setText(controller.getLanguageMessage("UserAccountPanel.infoLabel.text"));
+    	infoLabel.setText(LanguageManager.getMessage("UserAccountPanel.infoLabel.text"));
     	SDG2Util.fixJLabelFontSize(infoLabel);
-    	countryLabel.setText(controller.getLanguageMessage("UserAccountPanel.countryLabel.text"));
+    	countryLabel.setText(LanguageManager.getMessage("UserAccountPanel.countryLabel.text"));
     	SDG2Util.fixJLabelFontSize(countryLabel);
-    	passwordLabel.setText(controller.getLanguageMessage("UserAccountPanel.passwordLabel.text"));
+    	passwordLabel.setText(LanguageManager.getMessage("UserAccountPanel.passwordLabel.text"));
     	SDG2Util.fixJLabelFontSize(passwordLabel);
-    	confirmButton.setText(controller.getLanguageMessage("General.confirmButton.text"));
+    	confirmButton.setText(LanguageManager.getMessage("General.confirmButton.text"));
     	SDG2Util.fixJButtonFontSize(confirmButton);
-    	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    	backButton.setText(LanguageManager.getMessage("General.backButton.text"));
     	SDG2Util.fixJButtonFontSize(backButton);
     	
     }

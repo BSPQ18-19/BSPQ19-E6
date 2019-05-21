@@ -20,6 +20,7 @@ import javax.swing.JToggleButton;
 
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.utils.SDG2Util;
+import com.spq.group6.client.gui.utils.VoiceHelper;
 import com.spq.group6.client.gui.utils.locale.LanguageManager;
 import com.spq.group6.client.gui.utils.locale.LanguageSelector;
 
@@ -52,27 +53,27 @@ public class LocaleSelectorPanel extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				if (e.getSource() instanceof JButton) {
-			        controller.sayText("Button " + ((JButton) e.getSource()).getText());
+			        VoiceHelper.textToSpeech("Button " + ((JButton) e.getSource()).getText());
 			        
 				} else if (e.getSource() instanceof JToggleButton) {
-			        controller.sayText("Toggle button. Currently selected: " + ((JToggleButton) e.getSource()).getText());
+			        VoiceHelper.textToSpeech("Toggle button. Currently selected: " + ((JToggleButton) e.getSource()).getText());
 				
 				} else if (e.getSource() instanceof JComboBox<?>) {
-			        controller.sayText("Combo box. Currently selected: " + ((JComboBox<?>) e.getSource()).getSelectedItem());
+			        VoiceHelper.textToSpeech("Combo box. Currently selected: " + ((JComboBox<?>) e.getSource()).getSelectedItem());
 
 				} else if (e.getSource() instanceof JTextField) {
-			        controller.sayText("Text input  " + ((JTextField) e.getSource()).getName());
+			        VoiceHelper.textToSpeech("Text input  " + ((JTextField) e.getSource()).getName());
 					
 				} else if (e.getSource() instanceof JPasswordField) {
-					controller.sayText("Password input " + ((JPasswordField) e.getSource()).getName());
+					VoiceHelper.textToSpeech("Password input " + ((JPasswordField) e.getSource()).getName());
 				}
 			}
 		};
         
-		LanguageSelector tempLanguagesAvailable[] = controller.getLanguagesAvailable();
+		LanguageSelector tempLanguagesAvailable[] = LanguageManager.getLanguages();
         selectLanguageCB = new JComboBox<>(tempLanguagesAvailable);
         for (int i = 0; i < tempLanguagesAvailable.length; i++)
-        	if (tempLanguagesAvailable[i].getLocale().equals(controller.getLocale()))
+        	if (tempLanguagesAvailable[i].getLocale().equals(LanguageManager.getLocale()))
         		selectLanguageCB.setSelectedIndex(i);	
         
         selectLanguageCB.setForeground(new Color(0, 204, 204));
@@ -86,7 +87,7 @@ public class LocaleSelectorPanel extends JPanel {
                 @SuppressWarnings("unchecked")
 				JComboBox<LanguageSelector> comboBox = (JComboBox<LanguageSelector>) e.getSource();
                 Locale l = ((LanguageSelector) comboBox.getSelectedItem()).getLocale();
-                controller.setLocale(l);
+                LanguageManager.setLocale(l);
                 updateComponentsText();
                 LocaleSelectorPanel.this.bringSelectLanguageCBToFront();
 
@@ -94,7 +95,7 @@ public class LocaleSelectorPanel extends JPanel {
         });
         selectLanguageCB.addFocusListener(ttsFocusListener);
         
-        if (controller.isTtsON())
+        if (VoiceHelper.isTtsON())
         	ttsButton = new JToggleButton("Sound ON", true);
         else
         	ttsButton = new JToggleButton("Sound OFF", false);
@@ -111,7 +112,7 @@ public class LocaleSelectorPanel extends JPanel {
 				} else {
 					ttsButton.setText("Sound OFF");
 				}
-				controller.setTtsState(ttsButton.isSelected());
+				VoiceHelper.setTtsState(ttsButton.isSelected());
 
 			}
 		});
@@ -134,7 +135,7 @@ public class LocaleSelectorPanel extends JPanel {
 	}
 	
 	protected void updateComponentsText() {
-        titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+        titleLabel.setText(LanguageManager.getMessage("InitialPanel.infoLabel.text"));
         SDG2Util.fixJLabelFontSize(titleLabel);
 	}
 	

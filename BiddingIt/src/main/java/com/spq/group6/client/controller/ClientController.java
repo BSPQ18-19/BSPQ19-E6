@@ -1,8 +1,5 @@
 package com.spq.group6.client.controller;
 
-import com.spq.group6.client.gui.utils.locale.LanguageManager;
-import com.spq.group6.client.gui.utils.locale.LanguageSelector;
-import com.spq.group6.client.gui.utils.TTSManager;
 import com.spq.group6.client.remote.ServiceLocator;
 import com.spq.group6.client.utils.logger.ClientLogger;
 import com.spq.group6.server.data.Auction;
@@ -15,7 +12,6 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ClientController {
     private static ClientController controller;
@@ -23,8 +19,6 @@ public class ClientController {
     private ServiceLocator serviceLocator;
     private User currentUser;
     private ClientRemoteObserver observer;
-    private LanguageManager languageManager;
-    private TTSManager ttsManager;
 
     private ClientController() {
         super();
@@ -34,8 +28,6 @@ public class ClientController {
             e.printStackTrace();
         }
         serviceLocator = ServiceLocator.getServiceLocator();
-        languageManager = new LanguageManager();
-        ttsManager = new TTSManager();
     }
 
     public static ClientController getClientController() {
@@ -53,42 +45,6 @@ public class ClientController {
     	observer.setClientWindow();
     }
     
-    public LanguageManager getLanguageManager() {
-    	return languageManager;
-    }
-    
-    public void setLocale(Locale locale) {
-        languageManager.setLocale(locale);
-    }
-    
-    public Locale getLocale() {
-        return languageManager.getLocale();
-    }
-    
-    public LanguageSelector[] getLanguagesAvailable() {
-    	return languageManager.getLanguages();
-    }
-    
-    public String getLanguageMessage(String key, String... parameters) {
-    	return languageManager.getMessage(key, parameters);
-    }
-    
-    public TTSManager getTtsManager() {
-    	return ttsManager;
-    }
-    
-    public void setTtsState(boolean state) {
-    	ttsManager.setTtsIsON(state);
-    }
-    
-    public boolean isTtsON() {
-    	return ttsManager.isTtsIsON();
-    }
-    
-    public void sayText(String text) {
-    	ttsManager.sayText(text);
-    }
-
     public boolean logIn(String email, String password) throws RemoteException {
         String info = "Log in with username " + email + " and password " + password;
         try {

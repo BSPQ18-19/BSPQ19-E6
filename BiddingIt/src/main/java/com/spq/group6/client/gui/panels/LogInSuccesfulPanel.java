@@ -3,6 +3,8 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,22 +22,22 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
     	this.username = username;
     	
         if (!username.isEmpty())
-            titleLabel = new JLabel(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)", SwingConstants.LEFT);
+            titleLabel = new JLabel(LanguageManager.getMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)", SwingConstants.LEFT);
         else
-            titleLabel = new JLabel(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + "! :)", SwingConstants.LEFT);
+            titleLabel = new JLabel(LanguageManager.getMessage("LogInSuccesfulPanel.titleLabel.text") + "! :)", SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setSize(screenWidth, screenHeight / 6);
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel1 = new JLabel(controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel1.text"), SwingConstants.CENTER);
+        infoLabel1 = new JLabel(LanguageManager.getMessage("LogInSuccesfulPanel.infoLabel1.text"), SwingConstants.CENTER);
         infoLabel1.setForeground(new Color(0, 102, 102));
         infoLabel1.setSize((int) (screenWidth / 1.5), screenHeight / 7);
         infoLabel1.setLocation(screenWidth / 2 - infoLabel1.getWidth() / 2, screenHeight / 2 - infoLabel1.getHeight() / 2);
         SDG2Util.fixJLabelFontSize(infoLabel1);
 
-        String infoLabel2Clean = controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel2.text");
+        String infoLabel2Clean = LanguageManager.getMessage("LogInSuccesfulPanel.infoLabel2.text");
         infoLabel2 = new JLabel(infoLabel2Clean, SwingConstants.CENTER);
         infoLabel2.setForeground(new Color(102, 69, 3));
         infoLabel2.setSize((int) (screenWidth / 1.5), screenHeight / 7);
@@ -78,20 +80,20 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
         
-        controller.sayText("You have logged in successfully. Please wait.");
+        VoiceHelper.textToSpeech("You have logged in successfully. Please wait.");
 
     }
     
     @Override
     protected void updateComponentsText() {
     	if (!username.isEmpty())
-            titleLabel.setText(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)");
+            titleLabel.setText(LanguageManager.getMessage("LogInSuccesfulPanel.titleLabel.text") + " " + username + "! :)");
         else
-            titleLabel.setText(controller.getLanguageMessage("LogInSuccesfulPanel.titleLabel.text") + "! :)");
+            titleLabel.setText(LanguageManager.getMessage("LogInSuccesfulPanel.titleLabel.text") + "! :)");
     	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel1.setText(controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel1.text"));
+    	infoLabel1.setText(LanguageManager.getMessage("LogInSuccesfulPanel.infoLabel1.text"));
     	SDG2Util.fixJLabelFontSize(infoLabel1);
-    	infoLabel2.setText(controller.getLanguageMessage("LogInSuccesfulPanel.infoLabel2.text"));
+    	infoLabel2.setText(LanguageManager.getMessage("LogInSuccesfulPanel.infoLabel2.text"));
     	SDG2Util.fixJLabelFontSize(infoLabel2);
     	
     }

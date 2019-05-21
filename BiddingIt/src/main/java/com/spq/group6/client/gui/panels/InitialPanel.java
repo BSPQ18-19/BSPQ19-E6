@@ -3,6 +3,8 @@ package com.spq.group6.client.gui.panels;
 import com.spq.group6.client.gui.ClientWindow;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -22,7 +24,7 @@ public class InitialPanel extends LocaleSelectorPanel {
 
     	super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel(controller.getLanguageMessage("InitialPanel.titleLabel.text"), SwingConstants.LEFT);
+        titleLabel = new JLabel(LanguageManager.getMessage("InitialPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -30,21 +32,21 @@ public class InitialPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel(controller.getLanguageMessage("InitialPanel.infoLabel.text"), SwingConstants.CENTER);
+        infoLabel = new JLabel(LanguageManager.getMessage("InitialPanel.infoLabel.text"), SwingConstants.CENTER);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 3.3), screenHeight / 6);
         infoLabel.setLocation(screenWidth / 2 - infoLabel.getWidth() / 2,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() + screenHeight / 5));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
-        authorLabel = new JLabel(controller.getLanguageMessage("InitialPanel.authorLabel.text"), SwingConstants.CENTER);
+        authorLabel = new JLabel(LanguageManager.getMessage("InitialPanel.authorLabel.text"), SwingConstants.CENTER);
         authorLabel.setForeground(new Color(0, 102, 102));
         authorLabel.setSize(screenWidth / 8, screenHeight / 15);
         authorLabel.setLocation((int) (screenWidth / 1.25 - authorLabel.getWidth() / 2),
                 (int) (screenHeight / 1.25 - authorLabel.getHeight() / 2));
         SDG2Util.fixJLabelFontSize(authorLabel);
 
-        logInButton = new JButton(controller.getLanguageMessage("InitialPanel.logInButton.text"));
+        logInButton = new JButton(LanguageManager.getMessage("InitialPanel.logInButton.text"));
         logInButton.setForeground(new Color(0, 102, 102));
         logInButton.setBackground(Color.white);
         logInButton.setBorder(new TitledBorder(""));
@@ -63,7 +65,7 @@ public class InitialPanel extends LocaleSelectorPanel {
         });
         logInButton.addFocusListener(ttsFocusListener);
 
-        signInButton = new JButton(controller.getLanguageMessage("InitialPanel.signInButton.text"));
+        signInButton = new JButton(LanguageManager.getMessage("InitialPanel.signInButton.text"));
         signInButton.setForeground(new Color(0, 102, 102));
         signInButton.setBackground(Color.white);
         signInButton.setBorder(new TitledBorder(""));
@@ -90,23 +92,23 @@ public class InitialPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
         
-//        controller.sayText("Welcome to Bidding It! This is aun auction system. You can sell and bid other people's products."
+//        VoiceHelper.textToSpeech("Welcome to Bidding It! This is aun auction system. You can sell and bid other people's products."
 //        		+ " If you want to disable this beatiful voice, you can turn it off by pressing the sound ON button. You can also change"
 //        		+ "the language. Enjoy!");
-        controller.sayText("You currently are in the initial menu.");
+        VoiceHelper.textToSpeech("You currently are in the initial menu.");
     }
     
     @Override
     protected void updateComponentsText() {
-        titleLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+        titleLabel.setText(LanguageManager.getMessage("InitialPanel.infoLabel.text"));
         SDG2Util.fixJLabelFontSize(titleLabel);
-        infoLabel.setText(controller.getLanguageMessage("InitialPanel.infoLabel.text"));
+        infoLabel.setText(LanguageManager.getMessage("InitialPanel.infoLabel.text"));
         SDG2Util.fixJLabelFontSize(infoLabel);
-        authorLabel.setText(controller.getLanguageMessage("InitialPanel.authorLabel.text"));
+        authorLabel.setText(LanguageManager.getMessage("InitialPanel.authorLabel.text"));
         SDG2Util.fixJLabelFontSize(authorLabel);
-        logInButton.setText(controller.getLanguageMessage("InitialPanel.logInButton.text"));
+        logInButton.setText(LanguageManager.getMessage("InitialPanel.logInButton.text"));
         SDG2Util.fixJButtonFontSize(logInButton);
-        signInButton.setText(controller.getLanguageMessage("InitialPanel.signInButton.text"));
+        signInButton.setText(LanguageManager.getMessage("InitialPanel.signInButton.text"));
         SDG2Util.fixJButtonFontSize(signInButton);
 	}
 

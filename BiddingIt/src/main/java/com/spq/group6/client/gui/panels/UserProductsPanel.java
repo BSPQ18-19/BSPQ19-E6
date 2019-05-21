@@ -7,6 +7,8 @@ import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.elements.ProductJTableModel;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 import com.spq.group6.server.data.Product;
 
 import javax.swing.*;
@@ -28,7 +30,7 @@ public class UserProductsPanel extends LocaleSelectorPanel {
 
         super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel(controller.getLanguageMessage("UserProductsPanel.titleLabel.text"), SwingConstants.LEFT);
+        titleLabel = new JLabel(LanguageManager.getMessage("UserProductsPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -36,14 +38,14 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel(controller.getLanguageMessage("UserProductsPanel.infoLabel.text"), SwingConstants.LEFT);
+        infoLabel = new JLabel(LanguageManager.getMessage("UserProductsPanel.infoLabel.text"), SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
         infoLabel.setLocation(screenWidth / 20,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getFont().getSize() * 1.5));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
-        backButton = new JButton(controller.getLanguageMessage("General.backButton.text"));
+        backButton = new JButton(LanguageManager.getMessage("General.backButton.text"));
         backButton.setForeground(new Color(0, 102, 102));
         backButton.setBackground(Color.white);
         backButton.setBorder(new TitledBorder(""));
@@ -61,8 +63,8 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         });
         backButton.addFocusListener(ttsFocusListener);
 
-        String[] productsColumnNames = {controller.getLanguageMessage("UserProductsPanel.productsColumnNames.0"), 
-        		controller.getLanguageMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
+        String[] productsColumnNames = {LanguageManager.getMessage("UserProductsPanel.productsColumnNames.0"),
+        		LanguageManager.getMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
         productsTable = new JTable(new ProductJTableModel(new Object[][]{}, productsColumnNames));
         updateProducts();
         productsTable.setRowHeight((int) (productsTable.getRowHeight() * 1.5));
@@ -89,13 +91,13 @@ public class UserProductsPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
         
-        controller.sayText("You currently are in the initial menu.");
+        VoiceHelper.textToSpeech("You currently are in the initial menu.");
 
     }
     
     private void updateProducts() {
-    	String[] productsColumnNames = {controller.getLanguageMessage("UserProductsPanel.productsColumnNames.0"), 
-        		controller.getLanguageMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
+    	String[] productsColumnNames = {LanguageManager.getMessage("UserProductsPanel.productsColumnNames.0"),
+        		LanguageManager.getMessage("UserProductsPanel.productsColumnNames.1"), "", ""};
         Object[][] productsData = new Object[][] {};
         if (controller.getCurrentUser() != null) {
             productsData = new Object[controller.getCurrentUserProducts().size() + 1][productsColumnNames.length];
@@ -104,12 +106,12 @@ public class UserProductsPanel extends LocaleSelectorPanel {
                 Product tempProduct = controller.getCurrentUserProducts().get(i);
                 productsData[i][0] = tempProduct.getName();
                 productsData[i][1] = tempProduct.getDescription();
-                productsData[i][2] = controller.getLanguageMessage("UserProductsPanel.productsData.2");
-                productsData[i][3] = controller.getLanguageMessage("UserProductsPanel.productsData.3");
+                productsData[i][2] = LanguageManager.getMessage("UserProductsPanel.productsData.2");
+                productsData[i][3] = LanguageManager.getMessage("UserProductsPanel.productsData.3");
             }
             productsData[i][0] = "";
             productsData[i][1] = "";
-            productsData[i][2] = controller.getLanguageMessage("UserProductsPanel.productsData.2b");
+            productsData[i][2] = LanguageManager.getMessage("UserProductsPanel.productsData.2b");
             productsData[i][3] = "";
         }
         productsTable.setModel(new ProductJTableModel(productsData, productsColumnNames));
@@ -126,12 +128,12 @@ public class UserProductsPanel extends LocaleSelectorPanel {
     
     @Override
     protected void updateComponentsText() {
-    	titleLabel.setText(controller.getLanguageMessage("UserProductsPanel.titleLabel.text"));
+    	titleLabel.setText(LanguageManager.getMessage("UserProductsPanel.titleLabel.text"));
     	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel.setText(controller.getLanguageMessage("UserProductsPanel.infoLabel.text"));
+    	infoLabel.setText(LanguageManager.getMessage("UserProductsPanel.infoLabel.text"));
     	SDG2Util.fixJLabelFontSize(infoLabel);
     	updateProducts();
-    	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    	backButton.setText(LanguageManager.getMessage("General.backButton.text"));
     	SDG2Util.fixJButtonFontSize(backButton);
     }
 

@@ -7,6 +7,8 @@ import com.spq.group6.client.gui.elements.AuctionJTableModel;
 import com.spq.group6.client.gui.elements.ButtonColumn;
 import com.spq.group6.client.gui.utils.SDG2Util;
 import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.utils.VoiceHelper;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Product;
 
@@ -34,7 +36,7 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
 
         super(screenWidth, screenHeight);
 
-        titleLabel = new JLabel(controller.getLanguageMessage("UserAuctionsPanel.titleLabel.text"), SwingConstants.LEFT);
+        titleLabel = new JLabel(LanguageManager.getMessage("UserAuctionsPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));
         titleLabel.setOpaque(true);
@@ -42,14 +44,14 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         titleLabel.setLocation(0, 0);
         SDG2Util.fixJLabelFontSize(titleLabel);
 
-        infoLabel = new JLabel(controller.getLanguageMessage("UserAuctionsPanel.infoLabel.text"), SwingConstants.LEFT);
+        infoLabel = new JLabel(LanguageManager.getMessage("UserAuctionsPanel.infoLabel.text"), SwingConstants.LEFT);
         infoLabel.setForeground(new Color(0, 102, 102));
         infoLabel.setSize((int) (screenWidth / 1.5), screenHeight / 8);
         infoLabel.setLocation(screenWidth / 20,
                 (int) (titleLabel.getLocation().getY() + titleLabel.getHeight()));
         SDG2Util.fixJLabelFontSize(infoLabel);
 
-        backButton = new JButton(controller.getLanguageMessage("General.backButton.text"));
+        backButton = new JButton(LanguageManager.getMessage("General.backButton.text"));
         backButton.setForeground(new Color(0, 102, 102));
         backButton.setBackground(Color.white);
         backButton.setBorder(new TitledBorder(""));
@@ -69,10 +71,10 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         backButton.addFocusListener(ttsFocusListener);
 
         userAuctions = controller.getCurrentUserAuctions();
-        auctionsColumnNames = new String[]{controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.0"),
-        		controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.1"), controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.2"),
-        		controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.3"), controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.4"),
-        		controller.getLanguageMessage("UserAuctionsPanel.auctionsColumnNames.5"), ""};
+        auctionsColumnNames = new String[]{LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.0"),
+        		LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.1"), LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.2"),
+        		LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.3"), LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.4"),
+        		LanguageManager.getMessage("UserAuctionsPanel.auctionsColumnNames.5"), ""};
         auctionsTable = new JTable(new AuctionJTableModel(new Object[][]{}, auctionsColumnNames, this));
         updateAuctions();
         auctionsTable.setRowHeight((int) (auctionsTable.getRowHeight() * 1.5));
@@ -98,7 +100,7 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
         
         bringSelectLanguageCBToFront();
 
-        controller.sayText("You currently are in the initial menu.");
+        VoiceHelper.textToSpeech("You currently are in the initial menu.");
 
     }
 
@@ -118,9 +120,9 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
                     auctionsData[i][3] = tempAuction.getHighestBid().getAmount();
                 }
                 if (tempAuction.isOpen())
-                    auctionsData[i][4] = controller.getLanguageMessage("UserAuctionsPanel.auctionsData.4");
+                    auctionsData[i][4] = LanguageManager.getMessage("UserAuctionsPanel.auctionsData.4");
                 else
-                    auctionsData[i][4] = controller.getLanguageMessage("UserAuctionsPanel.auctionsData.4b");
+                    auctionsData[i][4] = LanguageManager.getMessage("UserAuctionsPanel.auctionsData.4b");
                 auctionsData[i][5] = tempAuction.getDayLimit().toLocalDateTime();
                 auctionsData[i][6] = "";
             }
@@ -130,7 +132,7 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
             auctionsData[i][3] = "-";
             auctionsData[i][4] = "-";
             auctionsData[i][5] = "";
-            auctionsData[i][6] = controller.getLanguageMessage("UserAuctionsPanel.auctionsData.6");
+            auctionsData[i][6] = LanguageManager.getMessage("UserAuctionsPanel.auctionsData.6");
         }
         auctionsTable.setModel(new AuctionJTableModel(auctionsData, auctionsColumnNames, this));
         auctionsTable.getColumnModel().getColumn(5).setPreferredWidth(auctionsTable.getColumnModel().getColumn(5).getPreferredWidth() + 150);
@@ -167,12 +169,12 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
     
     @Override
     protected void updateComponentsText() {
-    	titleLabel.setText(controller.getLanguageMessage("UserAuctionsPanel.titleLabel.text"));
+    	titleLabel.setText(LanguageManager.getMessage("UserAuctionsPanel.titleLabel.text"));
     	SDG2Util.fixJLabelFontSize(titleLabel);
-    	infoLabel.setText(controller.getLanguageMessage("UserAuctionsPanel.infoLabel.text"));
+    	infoLabel.setText(LanguageManager.getMessage("UserAuctionsPanel.infoLabel.text"));
     	SDG2Util.fixJLabelFontSize(infoLabel);
     	updateAuctions();
-    	backButton.setText(controller.getLanguageMessage("General.backButton.text"));
+    	backButton.setText(LanguageManager.getMessage("General.backButton.text"));
     	SDG2Util.fixJButtonFontSize(backButton);
     }
     
