@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Locale;
 
+/**
+ * One of the panels used in the Client window
+ */
 public class LocaleSelectorPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -22,6 +25,12 @@ public class LocaleSelectorPanel extends JPanel {
     protected int screenWidth, screenHeight;
     private JComboBox<LanguageSelector> selectLanguageCB;
 
+    /**
+     * Constructor to create a new Locale-Selector Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     */
     public LocaleSelectorPanel(int screenWidth, int screenHeight) {
 
         this.screenWidth = screenWidth;

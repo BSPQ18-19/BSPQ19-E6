@@ -16,8 +16,10 @@ public class AdminWindow extends JFrame {
     private int screenWidth, screenHeight;
 
     private JPanel mainPanel;
-
-    // private constructor using lazy singleton
+    
+    /**
+     * private constructor using lazy singleton
+     */
     private AdminWindow(AdminController controller) {
         this.controller = controller;
 
@@ -36,13 +38,19 @@ public class AdminWindow extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
-    // lazy singleton
+    /**
+     * lazy singleton
+     */
     public static AdminWindow getAdminWindow(AdminController adminController) {
         if (adminWindow == null)
             adminWindow = new AdminWindow(adminController);
         return adminWindow;
     }
 
+    /**
+     * Method to change the panels of the Administrator window to access the different options
+     * @param nextScreenType name of the panel upcoming
+     */
     public void changeScreen(ScreenType nextScreenType, String... data) {
         this.currentScreenType = nextScreenType;
 

@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * One of the panels used in the Client window
+ */
 public class MainMenuPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
@@ -22,6 +25,12 @@ public class MainMenuPanel extends LocaleSelectorPanel {
     private JButton userAuctionsButton;
     private JButton logOutButton;
 
+    /**
+     * Constructor to create a new Main Menu Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     */
     public MainMenuPanel(int screenWidth, int screenHeight) {
 
         super(screenWidth, screenHeight);

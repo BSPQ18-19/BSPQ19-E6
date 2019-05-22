@@ -21,6 +21,9 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * One of the panels used in the Client window
+ */
 public class UserAuctionsPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
@@ -32,6 +35,12 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
 
     private List<Auction> userAuctions;
 
+    /**
+     * Constructor to create a new User-Auctions Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     */
     public UserAuctionsPanel(int screenWidth, int screenHeight) {
 
         super(screenWidth, screenHeight);

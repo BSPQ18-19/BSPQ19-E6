@@ -8,6 +8,9 @@ import com.spq.group6.server.data.Bid;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * Edited JTableModel to satisfy BiddingIt standards
+ */
 public class MarketJTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 1L;

@@ -18,6 +18,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * One of the panels used in the Client window
+ */
 public class UserProductsPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +29,12 @@ public class UserProductsPanel extends LocaleSelectorPanel {
     private JTable productsTable;
     private JButton backButton;
 
+    /**
+     * Constructor to create a new User-Products Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     */
     public UserProductsPanel(int screenWidth, int screenHeight) {
 
         super(screenWidth, screenHeight);

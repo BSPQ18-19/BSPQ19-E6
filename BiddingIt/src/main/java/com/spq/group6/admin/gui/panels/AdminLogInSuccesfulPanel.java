@@ -7,6 +7,9 @@ import com.spq.group6.admin.gui.utils.ScreenType;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * One of the panels used in the Admin window
+ */
 public class AdminLogInSuccesfulPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -14,6 +17,13 @@ public class AdminLogInSuccesfulPanel extends JPanel {
     private JLabel infoLabel1;
     private JLabel infoLabel2;
 
+    /**
+     * Constructor to create a new Log-In-Succesful Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     * @param username username of the user that logs in
+     */
     public AdminLogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
         setBackground(Color.white);
         this.setLayout(null);

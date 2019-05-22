@@ -12,7 +12,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+/**
+ * One of the panels used in the Client window
+ */
 public class UserAccountPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
@@ -27,6 +29,12 @@ public class UserAccountPanel extends LocaleSelectorPanel {
     private JButton confirmButton;
     private JButton backButton;
 
+    /**
+     * Constructor to create a new User Account Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     */
     public UserAccountPanel(int screenWidth, int screenHeight) {
 
         super(screenWidth, screenHeight);

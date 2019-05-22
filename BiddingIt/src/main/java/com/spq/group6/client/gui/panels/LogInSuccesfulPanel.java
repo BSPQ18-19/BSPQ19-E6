@@ -9,6 +9,9 @@ import com.spq.group6.client.gui.utils.voice.VoiceHelper;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * One of the panels used in the Client window
+ */
 public class LogInSuccesfulPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
@@ -16,6 +19,13 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
     private JLabel infoLabel2;
     private String username;
 
+    /**
+     * Constructor to create a new Log-In-Succesful Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     * @param username username of the user logged
+     */
     public LogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
 
         super(screenWidth, screenHeight);

@@ -9,6 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * Edited JTableModel to satisfy BiddingIt standards
+ */
 public class AuctionJTableModel extends DefaultTableModel {
 
     private static final long serialVersionUID = 1L;

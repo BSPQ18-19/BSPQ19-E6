@@ -7,9 +7,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
+/**
+ * Edited JTableModel to satisfy BiddingIt standards
+ */
 public class AuctionJTableModel extends DefaultTableModel {
-
-    // TODO
 
     private static final long serialVersionUID = 1L;
     private AdminController controller;
