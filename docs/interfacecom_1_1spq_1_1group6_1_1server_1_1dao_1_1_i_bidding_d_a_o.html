@@ -142,7 +142,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae7e4a6001bb3e76535aeabcf2ea18250"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Interface for BiddingIt server's DAO (data persistance) </p>
+<div class="textblock"><p>Interface for BiddingIt server's DAO. </p>
+<p>The Class implementing this Interface will be the one responsible for accessing persisted data in the database. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad68d375a127d6dda2f3218884c72a69b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad68d375a127d6dda2f3218884c72a69b">&#9670;&nbsp;</a></span>deleteAdministrator()</h2>
@@ -159,7 +160,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for deleting and Administrator from database, needed for tests</p>
+<p>Method for deleting and Administrator from database, needed for tests.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">admin</td><td>Administrator that will be deleted </td></tr>
@@ -186,10 +187,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for deleting an Auction from the database</p>
+<p>Method for deleting an Auction from the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">auction</td><td>Auction that will be deleted </td></tr>
+    <tr><td class="paramname">auction</td><td>Auction that will be deleted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -213,10 +214,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for deleting a Bid from the database</p>
+<p>Method for deleting a Bid from the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">bid</td><td>Bid that will be deleted </td></tr>
+    <tr><td class="paramname">bid</td><td>Bid that will be deleted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -240,10 +241,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for deleting a Product from the database</p>
+<p>Method for deleting a Product from the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">product</td><td>Product that will be deleted </td></tr>
+    <tr><td class="paramname">product</td><td>Product that will be deleted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -267,10 +268,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for deleting a User from the database. It deletes User's Auctions, Products and Bids</p>
+<p>Method for deleting a User from the database. It deletes User's Auctions, Products and Bids.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user</td><td>User that will be deleted </td></tr>
+    <tr><td class="paramname">user</td><td>User that will be deleted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -294,14 +295,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting an Admisnitrator by its username from the database</p>
+<p>Method for getting an Admisnitrator by its username from the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">username</td><td>Username that will be matched </td></tr>
+    <tr><td class="paramname">username</td><td>Username that will be matched. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Administrator that matches the username </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Administrator that matches the username. </dd></dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1dao_1_1_bidding_d_a_o.html#a2e5ebc95bb3f88713861290a29c3806e">com.spq.group6.server.dao.BiddingDAO</a>.</p>
 
@@ -321,8 +322,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting all opened auctions</p>
-<dl class="section return"><dt>Returns</dt><dd>ArrayList containing all opened Auctions </dd></dl>
+<p>Method for getting all opened auctions.</p>
+<dl class="section return"><dt>Returns</dt><dd>ArrayList containing all opened Auctions. </dd></dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1dao_1_1_bidding_d_a_o.html#a0c115368bfa96aec6619686850fe3be4">com.spq.group6.server.dao.BiddingDAO</a>.</p>
 
@@ -343,14 +344,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting all opened auctions except ones owned by the requester</p>
+<p>Method for getting all opened auctions except ones owned by the requester.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">requester</td><td>User that requests Auctions </td></tr>
+    <tr><td class="paramname">requester</td><td>User that requests Auctions. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ArrayList containing Auctions not owned by the requester </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>ArrayList containing Auctions not owned by the requester. </dd></dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1dao_1_1_bidding_d_a_o.html#a059d361bfaa018d03ac818c480d475b1">com.spq.group6.server.dao.BiddingDAO</a>.</p>
 
@@ -370,8 +371,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting all User's from the database</p>
-<dl class="section return"><dt>Returns</dt><dd>ArrayList containing all the Users from the database </dd></dl>
+<p>Method for getting all User's from the database.</p>
+<dl class="section return"><dt>Returns</dt><dd>ArrayList containing all the Users from the database. </dd></dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1dao_1_1_bidding_d_a_o.html#a8dd64e3b52d01c0d31cd7fe56ff6841a">com.spq.group6.server.dao.BiddingDAO</a>.</p>
 
@@ -402,15 +403,15 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting all Auctions that matches owner's country, that it is opened and not owned by the requester</p>
+<p>Method for getting all Auctions that matches owner's country, that it is opened and not owned by the requester.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">requester</td><td>User that requests Auctions </td></tr>
-    <tr><td class="paramname">country</td><td>Country that will be matched </td></tr>
+    <tr><td class="paramname">requester</td><td>User that requests Auctions. </td></tr>
+    <tr><td class="paramname">country</td><td>Country that will be matched. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ArrayList containing Auctions that match conditions </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>ArrayList containing Auctions that match conditions. </dd></dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1dao_1_1_bidding_d_a_o.html#a14292f75048172a54f2e35114ac4d1c5">com.spq.group6.server.dao.BiddingDAO</a>.</p>
 
@@ -431,14 +432,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting an Auction by its ID</p>
+<p>Method for getting an Auction by its ID.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">auctionID</td><td>ID that will be matched </td></tr>
+    <tr><td class="paramname">auctionID</td><td>ID that will be matched. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Auction that matched the ID </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Auction that matched the ID. </dd></dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1dao_1_1_bidding_d_a_o.html#a9661221a4447ceccfc4a99bc2a3d219a">com.spq.group6.server.dao.BiddingDAO</a>.</p>
 
@@ -469,15 +470,15 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting all Auctions that matches product's name, that it is opened and not owned by the requester</p>
+<p>Method for getting all Auctions that matches product's name, that it is opened and not owned by the requester.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">requester</td><td>User that requests Auctions </td></tr>
-    <tr><td class="paramname">name</td><td>Product name that will be matched </td></tr>
+    <tr><td class="paramname">requester</td><td>User that requests Auctions. </td></tr>
+    <tr><td class="paramname">name</td><td>Product name that will be matched. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ArrayList containing Auctions that match conditions </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>ArrayList containing Auctions that match conditions. </dd></dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1dao_1_1_bidding_d_a_o.html#ae632255fa18c0f074a14a65dd8daf433">com.spq.group6.server.dao.BiddingDAO</a>.</p>
 
@@ -498,14 +499,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting User's Auctions from the database</p>
+<p>Method for getting User's Auctions from the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user</td><td>User that is Auction's owner </td></tr>
+    <tr><td class="paramname">user</td><td>User that is Auction's owner. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ArrayList containing User's Auctions </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>ArrayList containing User's Auctions. </dd></dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1dao_1_1_bidding_d_a_o.html#ac0e934b897f8d1c953636a4c87659dfc">com.spq.group6.server.dao.BiddingDAO</a>.</p>
 
@@ -526,14 +527,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting a User by its username</p>
+<p>Method for getting a User by its username.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">username</td><td>Username that will be matched </td></tr>
+    <tr><td class="paramname">username</td><td>Username that will be matched. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>User that matches the username </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>User that matches the username. </dd></dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1dao_1_1_bidding_d_a_o.html#a16a81c70c87877344334e40180586b2b">com.spq.group6.server.dao.BiddingDAO</a>.</p>
 
@@ -554,10 +555,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for creating or updating an Administrator on the database, needed for tests</p>
+<p>Method for creating or updating an Administrator on the database, needed for tests.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">administrator</td><td>Administrator that will be persisted </td></tr>
+    <tr><td class="paramname">administrator</td><td>Administrator that will be persisted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -581,10 +582,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for creating and updating an Auction on the database</p>
+<p>Method for creating and updating an Auction on the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">auction</td><td>Auction that will be persisted </td></tr>
+    <tr><td class="paramname">auction</td><td>Auction that will be persisted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -608,10 +609,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for creating and updating a User on the database</p>
+<p>Method for creating and updating a User on the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user</td><td>User that will be persisted </td></tr>
+    <tr><td class="paramname">user</td><td>User that will be persisted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -635,10 +636,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for creating and updating a Product on the database</p>
+<p>Method for creating and updating a Product on the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">product</td><td>Product that will be persisted </td></tr>
+    <tr><td class="paramname">product</td><td>Product that will be persisted. </td></tr>
   </table>
   </dd>
 </dl>

@@ -148,7 +148,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7226b5954e58f607d7e37649798f3bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Remote Façade Interface for BididngIt server </p>
+<div class="textblock"><p>Remote Façade Interface for BididngIt server. </p>
 <p>This is the API that describes functionality offered by BiddingIt <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html">Server</a>. It is used on the User and Administrator applications. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3595b016a6eccfa4cf786ef12adabd07"></a>
@@ -177,19 +177,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for login an Administrator User. </p>
-<p>Checks if Administrator credentials are valid, and returns an Administrator object that matched.</p>
+<p>Checks if Administrator credentials are valid, and returns an Administrator object that matched login credentials.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">username</td><td>Administrator's username </td></tr>
-    <tr><td class="paramname">password</td><td>Administrator's password </td></tr>
+    <tr><td class="paramname">username</td><td>Administrator's username. </td></tr>
+    <tr><td class="paramname">password</td><td>Administrator's password. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Logged in Administrator </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Logged in Administrator. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
-    <tr><td class="paramname">AdministratorException</td><td>is raised in case of invalid credentials </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
+    <tr><td class="paramname">AdministratorException</td><td>is raised in case of invalid credentials. </td></tr>
   </table>
   </dd>
 </dl>
@@ -229,21 +229,21 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for bidding an Auction </p>
-<p>Whenever a User wants to Bid in an Auction, this method is called. As every Bid is related to a User and an Auction, it is necessary to pass the User and the Auction as arguments.</p>
+<p>Method for bidding an Auction. </p>
+<p>Whenever a User wants to Bid in an Auction, this method is called. As every Bid is related to a User and an Auction, it is necessary to pass the User and the Auction as arguments. Then, if the Bid is higher than the current bid (or in case of no bid, the initial price), the <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html">Server</a> creates a Bid, sets it as Auction's highest Bid, and returns updated Auction. Also, a notification is sent to RemoteObservers informing about a new Bid. Users that have Bidded on the Auction or the one that created may react to it. This method does not check if User has money enough, as it considers that a User can loose or get money before the Auction ends. Instead, the money is checked when the Auction finishes. If it has no enough money, Auction ends without an exchange. Auctions do not contain a history with previous Bids.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">auction</td><td>Auction will be bidded to </td></tr>
-    <tr><td class="paramname">user</td><td>Bid creator User </td></tr>
-    <tr><td class="paramname">amount</td><td>Bidded amount (money) </td></tr>
+    <tr><td class="paramname">auction</td><td>Auction will be bidded to. </td></tr>
+    <tr><td class="paramname">user</td><td>Bid creator User. </td></tr>
+    <tr><td class="paramname">amount</td><td>Bidded amount (money). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Auction with the new Bid </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Auction with the new Bid. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
-    <tr><td class="paramname">AuctionException</td><td>is raised in case of invalid Bid amount </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
+    <tr><td class="paramname">AuctionException</td><td>is raised in case of invalid Bid amount. </td></tr>
   </table>
   </dd>
 </dl>
@@ -267,6 +267,22 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Method for persisting an Adminsitrator on the system. </p>
+<p>This method is used for persisting an Administrator object. It is equivalent to User 'sign-in', but it receives an already created Administror object, instead of creating it when calling this method. It is used when there is no possibility of connecting directly to the database, and creating manually an Adminsitrator. This method should not be called, just in rare occasions. It is encouraged to create Administrators directly through the database.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">admin</td><td>Administrator that will be persisted on the system. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Persisted Administrator. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
+    <tr><td class="paramname">AdministratorException</td><td>is raised in case of Error while persisting the Administrator. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implemented in <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a5f42f74367e243d1530e3a4ded92a09f">com.spq.group6.server.remote.Server</a>.</p>
 
@@ -316,22 +332,22 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for creating a private Auction. </p>
-<p>Whenever a User wants to create a private Auction for selling a product, this method is called. In contrast to a public Auction, private Auctions require a Password in order to be able to bid Auction's Product.</p>
+<p>Whenever a User wants to create a private Auction for selling a product, this method is called. In contrast to a public Auction, private Auctions require a Password in order to be able to bid Auction's Product. When this method is executed, the <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html">Server</a> creates an Auction, persists it, starts a Thread for managing Auction's end (executing any exchange if there is), and returns created Auction. The next time the User logs-in, it will not have the Auctioned product. If the Auction ends without an exchange, the User will get back the Product, otheriwse, it will receive Highest Bid money.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">owner</td><td>Auction creator or Product's owner </td></tr>
-    <tr><td class="paramname">product</td><td>Product that will be sold on Auction </td></tr>
-    <tr><td class="paramname">dayLimit</td><td>Timestamp when Auction will be closed </td></tr>
-    <tr><td class="paramname">initialPrice</td><td>Initial proce for Product </td></tr>
-    <tr><td class="paramname">password</td><td>Password that the Auction will be protected with the Auction. It needs to be different from null. </td></tr>
+    <tr><td class="paramname">owner</td><td>Auction creator or Product's owner. </td></tr>
+    <tr><td class="paramname">product</td><td>Product that will be sold on Auction. </td></tr>
+    <tr><td class="paramname">dayLimit</td><td>Timestamp when Auction will be closed. </td></tr>
+    <tr><td class="paramname">initialPrice</td><td>Initial proce for Product. </td></tr>
+    <tr><td class="paramname">password</td><td>Password that the Auction will be protected with the Auction.. It needs to be different from null. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Created Auction </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Created Auction. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI </td></tr>
-    <tr><td class="paramname">AuctionException</td><td>is raised in case of invalid values for Auction </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI. </td></tr>
+    <tr><td class="paramname">AuctionException</td><td>is raised in case of invalid values for Auction. </td></tr>
   </table>
   </dd>
 </dl>
@@ -372,19 +388,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for creating a new Product. </p>
-<p>Whenever a User wants to add a Product to the system, in order to create an Auction for it, this method is called. As every Product is related to a User, it is necessary to pass the User as argument.</p>
+<p>This method is called whenever a User wants to add a Product to the system. The Users may want to add a Product to the system, in order to create an Auction later. As every Product is related to a User, it is necessary to pass the User as argument. After creating a product, it appends it to User's product list, and returns the updated User.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user</td><td>Product's owner User </td></tr>
-    <tr><td class="paramname">name</td><td>Product's name </td></tr>
-    <tr><td class="paramname">description</td><td>Product's description </td></tr>
+    <tr><td class="paramname">user</td><td>Product's owner User. </td></tr>
+    <tr><td class="paramname">name</td><td>Product's name. </td></tr>
+    <tr><td class="paramname">description</td><td>Product's description. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>User with its new Product on 'ownedProducts' ArrayList </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>User with its new Product on 'ownedProducts' ArrayList. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -430,22 +446,22 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for creating an Auction </p>
-<p>Whenever a User wants to create a public Auction for selling a product, this method is called. A public Auction accepts Bids from any User. As every Auction is related to a User, it is necessary to pass the User as argument.</p>
+<p>Method for creating an Auction. </p>
+<p>Whenever a User wants to create a public Auction for selling a product, this method is called. A public Auction accepts Bids from any User. As every Auction is related to a User, it is necessary to pass the User as argument. When this method is executed, the <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html">Server</a> creates an Auction, persists it, starts a Thread for managing Auction's end (executing any exchange if there is), and returns created Auction. The next time the User logs-in, it will not have the Auctioned product. If the Auction ends without an exchange, the User will get back the Product, otheriwse, it will receive Highest Bid money.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">owner</td><td>Auction creator or Product's owner </td></tr>
-    <tr><td class="paramname">product</td><td>Product that will be sold on Auction </td></tr>
-    <tr><td class="paramname">dayLimit</td><td>Timestamp when Auction will be closed </td></tr>
-    <tr><td class="paramname">initialPrice</td><td>Initial proce for Product </td></tr>
+    <tr><td class="paramname">owner</td><td>Auction creator or Product's owner. </td></tr>
+    <tr><td class="paramname">product</td><td>Product that will be sold on Auction. </td></tr>
+    <tr><td class="paramname">dayLimit</td><td>Timestamp when Auction will be closed. </td></tr>
+    <tr><td class="paramname">initialPrice</td><td>Initial proce for Product. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Created Auction </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Created Auction. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
-    <tr><td class="paramname">AuctionException</td><td>is raised in case of invalid values for Auction </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
+    <tr><td class="paramname">AuctionException</td><td>is raised in case of invalid values for Auction. </td></tr>
   </table>
   </dd>
 </dl>
@@ -470,16 +486,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for deleting an Auction. </p>
-<p>This method is used by Administrators in order to delete an Auction from the system. A notification is sent to IRemoteObservers.</p>
+<p>This method is used by Administrators in order to delete an Auction from the system. When this method is called, a notification is sent to all RemoteObservers informing about a deleted Auction. And the ones observing the Auction, or the User owner, may react to it.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">auction</td><td>Auction that will be deleted </td></tr>
+    <tr><td class="paramname">auction</td><td>Auction that will be deleted. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -513,19 +529,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for deleting a product </p>
-<p>Whenever a User wants to delete a Product from the system, this method is called. Thi may happen when a User buys a Product in a Bid, and it is not interested on selling it.</p>
+<p>Method for deleting a Product. </p>
+<p>Whenever a User wants to delete a Product from the system, this method is called. This may happen when a User buys a Product in an Auction, and it is not interested on selling it, so it deletes it from the system. This method receives product's User owner, it deletes the Product, removes it from User's product list, and returns the updated User without the deleted Product.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user</td><td>Product's owner User </td></tr>
-    <tr><td class="paramname">product</td><td>Product that will be deleted </td></tr>
+    <tr><td class="paramname">user</td><td>Product's owner User. </td></tr>
+    <tr><td class="paramname">product</td><td>Product that will be deleted. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>User without Product. Product is deleted from 'ownedProducts' ArrayList </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>User without Product. Product is deleted from 'ownedProducts' ArrayList. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -550,16 +566,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for deleting a User. </p>
-<p>This method is used by Administrators in order to delete a User from the system. A notification is sent to IRemoteObservers informing about a deleted Auction. Users that have Bidded Auction' Product or the one that created it may react to it.</p>
+<p>This method is used by Administrators in order to delete a User from the system. A notification is sent to all RemoteObservers and the Client that is identified by this User may react to it. This triggers too the removal of Products, Auctions and Bids that the User is owner of. Then, more notification are sent to all RemoteObservers informing about deleted objects.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user</td><td>User that will be deleted </td></tr>
+    <tr><td class="paramname">user</td><td>User that will be deleted. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -584,17 +600,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for getting all Auctions, without needing to search by a condition. </p>
-<p>Whenever a User wants to browse Auctions and is not interested in a specific Auction, this method is called. The result does not include Auctions created by the User, nor Auction already closed. That is why the User needs to be passed as an argument.</p>
+<p>Whenever a User wants to browse Auctions and is not interested in a specific Auction, this method is called. The result does not include Auctions created by the User, nor Auction already closed. That is why the User needs to be passed as an argument, n order to exclude Auctions created by the User when the result is returned.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">requester</td><td>User that requests Auctions. Needed for not sending User's Auctions </td></tr>
+    <tr><td class="paramname">requester</td><td>User that requests Auctions. Needed for not sending User's Auctions. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>All open auctions </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>All open auctions. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -617,12 +633,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for getting all Auctions </p>
-<p>This method is used by Administrators in order to retrieve all opened Auctions on the system.</p>
-<dl class="section return"><dt>Returns</dt><dd>All opened Auctions on the system </dd></dl>
+<p>Method for getting all Auctions. </p>
+<p>This method is used by Administrators in order to retrieve all opened Auctions on the system. This may be used for latter deleting a retrieved Auction.</p>
+<dl class="section return"><dt>Returns</dt><dd>All opened Auctions on the system. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -646,11 +662,11 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for getting all Users. </p>
-<p>This method is used by Administrators in order to retrieve all Users that have an account on the system. A notification is sent to IRemoteObservers informing about a deleted User. The deleted User may react to it.</p>
-<dl class="section return"><dt>Returns</dt><dd>All Users that have an account on BiddingIt </dd></dl>
+<p>This method is used by Administrators in order to retrieve all Users that have an account on the system. Therefore, this method must be called only from Administrator application.</p>
+<dl class="section return"><dt>Returns</dt><dd>All Users that have an account on BiddingIt. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -675,17 +691,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for getting specific User's Auctions. </p>
-<p>This method is used by Administrators in order to retrieve all Auctions, opened or closed, created by a specific User.</p>
+<p>This method is used by Administrators in order to retrieve all open Auctions, created by a specific User. This may be used for latter deleting a retrieved Auction.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user</td><td>Auctions owner User </td></tr>
+    <tr><td class="paramname">user</td><td>Auctions owner User. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>All Acutions the User is owner of </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>All opened Acutions the User is owner of. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -726,20 +742,20 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for login and getting access to the system. </p>
-<p>Checks if User credentials are valid, and returns a User object that matched.</p>
+<p>Checks if User credentials are valid. If credentials are valid, returns the User object that matched login credentials. This method receives a RemoteObserver as paremeter, which is used by the User for receiving notifications. Returned User object is used for later method calls, for identifying the caller Client.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">username</td><td>User's username </td></tr>
-    <tr><td class="paramname">password</td><td>User's password </td></tr>
-    <tr><td class="paramname">observer</td><td>User's observer responsible for handling events sent by server </td></tr>
+    <tr><td class="paramname">username</td><td>User's username. </td></tr>
+    <tr><td class="paramname">password</td><td>User's password. </td></tr>
+    <tr><td class="paramname">observer</td><td>User's observer responsible for handling events sent by server. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Logged in User </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Logged in User. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
-    <tr><td class="paramname">AccountException</td><td>is raised in case of invalid credentials </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
+    <tr><td class="paramname">AccountException</td><td>is raised in case of invalid credentials. </td></tr>
   </table>
   </dd>
 </dl>
@@ -763,16 +779,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for letting know the server a User has logged out, so it can delete its observer</p>
+<p>Method for letting know the server a User has logged out. </p>
+<p>When this method is called, the <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html">Server</a> deletes User's RemoteObserver, so it will not receive more notifications. The RemoteObserver must be the same as the one passed when log-in or sign-in. This is the way for telling <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html">Server</a> that a User will not be using the system.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">observer</td><td>User's observer that will not listen more for Events </td></tr>
+    <tr><td class="paramname">observer</td><td>User's observer that will not listen more for Events. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -807,18 +824,18 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for searching auctions by Auction owner's country. </p>
-<p>Whenever a User wants to browse Auctions and search them by Country, this method is called. The result does not include Auctions created by the User, nor Auction already closed. That is why the User needs to be passed as an argument. A notification is sent to IRemoteObservers informing about a new Bid. Users that have Bidded on the Auction or the one that created may react to it.</p>
+<p>Whenever a User wants to browse Auctions and search them by Country, this method is called. The result does not include Auctions created by the User, nor Auctions already closed. That is why the User needs to be passed as an argument, in order to exclude Auctions created by the User when the result is returned.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">requester</td><td>User that requests Auctions. Needed for not sending User's Auctions </td></tr>
-    <tr><td class="paramname">country</td><td>Country that Auction's owner is from </td></tr>
+    <tr><td class="paramname">requester</td><td>User that requests Auctions. Needed for not sending User's Auctions. </td></tr>
+    <tr><td class="paramname">country</td><td>Country that Auction's owner is from. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Auctions matching owner's country </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Auctions matching owner's country. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -852,19 +869,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Method for searching auctions by Auction product's name </p>
-<p>Whenever a User wants to browse Auctions and search them by Product name, this method is called. The result does not include Auctions created by the User, nor Auction already closed. That is why the User needs to be passed as an argument.</p>
+<p>Method for searching auctions by Auction product's name. </p>
+<p>Whenever a User wants to browse Auctions and search them by Product name, this method is called. The result does not include Auctions created by the User, nor Auction already closed. That is why the User needs to be passed as an argument, n order to exclude Auctions created by the User when the result is returned.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">requester</td><td>User that requests Auctions. Needed for not sending User's Auctions </td></tr>
-    <tr><td class="paramname">name</td><td>Name that Auction's product have </td></tr>
+    <tr><td class="paramname">requester</td><td>User that requests Auctions. Needed for not sending User's Auctions. </td></tr>
+    <tr><td class="paramname">name</td><td>Name that Auction's product have. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Auctions matching product's name </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Auctions matching product's name. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -911,21 +928,21 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for creating a new User. </p>
-<p>This is the method used for creating an Account on BiddingIt server.</p>
+<p>This is the method used for creating an Account on BiddingIt server. When creating the account, stores all User basic deatils, creates a User object, persists it and returns it. This method receives a RemoteObserver as paremeter, which is used by the User for receiving notifications. This method is used by the User application.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">username</td><td>User's username </td></tr>
-    <tr><td class="paramname">password</td><td>User's password </td></tr>
-    <tr><td class="paramname">country</td><td>User's country. Useful for auctions search </td></tr>
-    <tr><td class="paramname">observer</td><td>User's observer responsible for handling events sent by server </td></tr>
+    <tr><td class="paramname">username</td><td>User's username. </td></tr>
+    <tr><td class="paramname">password</td><td>User's password. </td></tr>
+    <tr><td class="paramname">country</td><td>User's country. Useful for auctions search. </td></tr>
+    <tr><td class="paramname">observer</td><td>User's observer responsible for handling events sent by server. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Created User </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Created User. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
-    <tr><td class="paramname">AccountException</td><td>is raised in case of invalid credentials </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
+    <tr><td class="paramname">AccountException</td><td>is raised in case of invalid credentials. </td></tr>
   </table>
   </dd>
 </dl>
@@ -949,10 +966,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for starting Auctions' Countdown threads. </p>
-<p>This is only used when testing. It is needed when an Auction have been created manually on the database after initializing the <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html">Server</a>.</p>
+<p>This is only used when testing. It is needed when an Auction have been created manually on the database after initializing the <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html">Server</a>. This method does not need to be called, if it is created calling 'createPublicAcution' or 'createPrivateAuction'.</p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -993,19 +1010,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for updating Product's name or description. </p>
-<p>Whenever a User wants to change details of one of its Products, this method is called.</p>
+<p>Whenever a User wants to change details of one of its Products, this method is called. When this method is executed, the <a class="el" href="classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html">Server</a> creates a updated passed Product object with received 'name' and 'description' strings, it persists it, and it returns updated Product. Even if only one value has changed, it is mandatory to pass both, 'name' and 'description'.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">product</td><td>Product that will be updated </td></tr>
-    <tr><td class="paramname">name</td><td>Product's new (or same old) name for updating product </td></tr>
-    <tr><td class="paramname">description</td><td>Product's new (or same old) description for updating product </td></tr>
+    <tr><td class="paramname">product</td><td>Product that will be updated. </td></tr>
+    <tr><td class="paramname">name</td><td>Product's new (or same old) name for updating product. </td></tr>
+    <tr><td class="paramname">description</td><td>Product's new (or same old) description for updating product. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Updated Product </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Updated Product. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1046,20 +1063,20 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Method for updating User's password or country. </p>
-<p>Whenever a User wants to update any of its detail's aacount, this method is called passing its new values. Even if only one value have changed, it is needed to pass both of them.</p>
+<p>Whenever a User wants to update any of its detail's aacount, this method is called passing its new values. Even if only one value has changed, it is mandatory to pass both, country and password. Received Country and Password will be set to the passed User, and after persisting it, returns the updated User.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">user</td><td>Old User that will be updated </td></tr>
-    <tr><td class="paramname">password</td><td>New (or same old) password for updating User </td></tr>
-    <tr><td class="paramname">country</td><td>New (or same old) country for updating User </td></tr>
+    <tr><td class="paramname">user</td><td>Old User that will be updated. </td></tr>
+    <tr><td class="paramname">password</td><td>New (or same old) password for updating User. </td></tr>
+    <tr><td class="paramname">country</td><td>New (or same old) country for updating User. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Updated User </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Updated User. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection </td></tr>
-    <tr><td class="paramname">AccountException</td><td>is raised in case of invalid values for update </td></tr>
+    <tr><td class="paramname">RemoteException</td><td>is raised in case of Error on RMI connection. </td></tr>
+    <tr><td class="paramname">AccountException</td><td>is raised in case of invalid values for update. </td></tr>
   </table>
   </dd>
 </dl>
