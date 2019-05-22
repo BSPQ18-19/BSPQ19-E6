@@ -32,7 +32,8 @@ public class UserAccountPanel extends LocaleSelectorPanel {
     /**
      * Constructor to create a new User Account Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
     public UserAccountPanel(int screenWidth, int screenHeight) {

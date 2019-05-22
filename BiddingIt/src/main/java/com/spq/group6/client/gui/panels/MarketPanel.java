@@ -44,7 +44,8 @@ public class MarketPanel extends LocaleSelectorPanel {
     /**
      * Constructor to create a new Market Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
     public MarketPanel(int screenWidth, int screenHeight) {

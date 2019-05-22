@@ -20,9 +20,10 @@ public class AdminLogInSuccesfulPanel extends JPanel {
     /**
      * Constructor to create a new Log-In-Succesful Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
-     * @param username username of the user that logs in
+     * @param username     username of the user that logs in
      */
     public AdminLogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
         setBackground(Color.white);

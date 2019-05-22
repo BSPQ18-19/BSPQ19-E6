@@ -28,7 +28,8 @@ public class MainMenuPanel extends LocaleSelectorPanel {
     /**
      * Constructor to create a new Main Menu Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
     public MainMenuPanel(int screenWidth, int screenHeight) {

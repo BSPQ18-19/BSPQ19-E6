@@ -38,7 +38,8 @@ public class UserAuctionsPanel extends LocaleSelectorPanel {
     /**
      * Constructor to create a new User-Auctions Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
     public UserAuctionsPanel(int screenWidth, int screenHeight) {

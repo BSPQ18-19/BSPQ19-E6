@@ -22,9 +22,10 @@ public class LogInSuccesfulPanel extends LocaleSelectorPanel {
     /**
      * Constructor to create a new Log-In-Succesful Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
-     * @param username username of the user logged
+     * @param username     username of the user logged
      */
     public LogInSuccesfulPanel(int screenWidth, int screenHeight, String username) {
 

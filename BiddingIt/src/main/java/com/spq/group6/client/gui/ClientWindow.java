@@ -48,6 +48,7 @@ public class ClientWindow extends JFrame {
 
     /**
      * Method to change the panels of the Client window to access the different options
+     *
      * @param nextScreenType name of the panel upcoming
      */
     public void changeScreen(ScreenType nextScreenType, String... data) {

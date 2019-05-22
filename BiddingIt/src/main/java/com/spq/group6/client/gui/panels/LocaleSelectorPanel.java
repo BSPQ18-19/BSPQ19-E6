@@ -28,7 +28,8 @@ public class LocaleSelectorPanel extends JPanel {
     /**
      * Constructor to create a new Locale-Selector Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
     public LocaleSelectorPanel(int screenWidth, int screenHeight) {

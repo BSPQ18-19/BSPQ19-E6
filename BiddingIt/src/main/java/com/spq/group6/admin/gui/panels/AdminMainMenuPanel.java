@@ -27,12 +27,13 @@ public class AdminMainMenuPanel extends JPanel {
     /**
      * Constructor to create a new Main Menu Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
-     * @param controller the controller that uses the Admin Window
+     * @param controller   the controller that uses the Admin Window
      */
     public AdminMainMenuPanel(int screenWidth, int screenHeight, AdminController controller) {
-    	
+
         this.controller = controller;
         this.setBackground(Color.WHITE);
         this.setLayout(null);

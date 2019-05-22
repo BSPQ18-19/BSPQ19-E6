@@ -56,10 +56,10 @@ public class ClientController {
      * Checks if Admin credentials are valid,
      * and returns a Admin object that matched.
      *
-     * @param email user's email
+     * @param email    user's email
      * @param password user's password
      * @return Logged in User
-     * @throws RemoteException  is raised in case of Error on RMI connection
+     * @throws RemoteException is raised in case of Error on RMI connection
      */
     public boolean logIn(String email, String password) throws RemoteException {
         String info = "Log in with username " + email + " and password " + password;
@@ -85,9 +85,9 @@ public class ClientController {
      * Checks if User credentials are valid,
      * and returns a User object that matched.
      *
-     * @param email user's email
+     * @param email    user's email
      * @param password user's password
-     * @param country user's country
+     * @param country  user's country
      * @return Logged in User
      */
     public boolean signIn(String email, String password, String country) {
@@ -167,7 +167,7 @@ public class ClientController {
      * Method to create a new product.
      * <p>
      *
-     * @param name name of the product
+     * @param name        name of the product
      * @param description description of the product
      * @return product created boolean
      */
@@ -192,8 +192,8 @@ public class ClientController {
      * Method to update a product.
      * <p>
      *
-     * @param product product-type object that will be updated
-     * @param name new name of the product
+     * @param product     product-type object that will be updated
+     * @param name        new name of the product
      * @param description new description of the product
      * @return product updated boolean
      */
@@ -252,8 +252,8 @@ public class ClientController {
      * Method to create a public auction.
      * <p>
      *
-     * @param product product-type object that will be auctioned
-     * @param dayLimit temporal limit of the auction
+     * @param product      product-type object that will be auctioned
+     * @param dayLimit     temporal limit of the auction
      * @param initialPrice initial price of the auction
      * @return auction created boolean
      */
@@ -280,9 +280,9 @@ public class ClientController {
      * Method to create a private auction.
      * <p>
      *
-     * @param product product-type object that will be auctioned
-     * @param password password that makes the auction private
-     * @param dayLimit temporal limit of the auction
+     * @param product      product-type object that will be auctioned
+     * @param password     password that makes the auction private
+     * @param dayLimit     temporal limit of the auction
      * @param initialPrice initial price of the auction
      * @return auction created boolean
      */
@@ -305,13 +305,13 @@ public class ClientController {
         return true;
     }
 
-    
+
     /**
      * Method to bid in an auction.
      * <p>
      *
      * @param auction auction that will be bided
-     * @param amount amount of money that is bided
+     * @param amount  amount of money that is bided
      * @return auction bided boolean
      */
     public boolean bid(Auction auction, float amount) {
@@ -332,7 +332,7 @@ public class ClientController {
         return true;
     }
 
-    
+
     public ArrayList<Auction> getAllAuctions() {
         ArrayList<Auction> allAuctions = new ArrayList<>();
         String info = "Get all auctions";
@@ -390,7 +390,7 @@ public class ClientController {
      * Method to update a User.
      * <p>
      *
-     * @param country country of the updated user
+     * @param country  country of the updated user
      * @param password password of the updated user
      * @return user updated boolean
      */

@@ -11,7 +11,6 @@ import com.spq.group6.admin.gui.utils.SDG2Util;
 import com.spq.group6.admin.gui.utils.SPQG6Util;
 import com.spq.group6.admin.gui.utils.ScreenType;
 import com.spq.group6.server.data.Auction;
-import com.spq.group6.server.exceptions.AccountException;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -45,9 +44,10 @@ public class AdminAuctionsPanel extends JPanel {
     /**
      * Constructor to create a new Auction Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
-     * @param controller the controller that uses the Admin Window
+     * @param controller   the controller that uses the Admin Window
      */
     public AdminAuctionsPanel(int screenWidth, int screenHeight, AdminController controller) {
         setBackground(Color.white);

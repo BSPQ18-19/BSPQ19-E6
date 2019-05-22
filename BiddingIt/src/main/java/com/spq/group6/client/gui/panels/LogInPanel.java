@@ -31,7 +31,8 @@ public class LogInPanel extends LocaleSelectorPanel {
     /**
      * Constructor to create a new Log-In Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
     public LogInPanel(int screenWidth, int screenHeight) {

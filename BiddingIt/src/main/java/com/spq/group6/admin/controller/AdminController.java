@@ -6,7 +6,6 @@ import com.spq.group6.admin.utils.logger.AdminLogger;
 import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.User;
-import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.exceptions.AdministratorException;
 
 import java.rmi.RemoteException;
@@ -35,10 +34,10 @@ public class AdminController {
      * Checks if Admin credentials are valid,
      * and returns a Admin object that matched.
      *
-     * @param email Admin's email
+     * @param email    Admin's email
      * @param password Admin's password
      * @return Logged in Admin
-     * @throws RemoteException  is raised in case of Error on RMI connection
+     * @throws RemoteException is raised in case of Error on RMI connection
      */
     public boolean logIn(String email, String password) throws RemoteException {
         String info = "Log in with email " + email + " and password " + password;
@@ -56,7 +55,7 @@ public class AdminController {
         }
         return false;
     }
-    
+
     /**
      * Method for logOut and stop getting access to the system.
      */
@@ -68,7 +67,7 @@ public class AdminController {
     public Administrator getCurrentAdmin() {
         return currentAdmin;
     }
-    
+
     /**
      * Method to get all the existing users in the BiddingIt database
      */
@@ -84,7 +83,7 @@ public class AdminController {
         }
         return users;
     }
-    
+
     /**
      * Method to get all the existing auctions in the BiddingIt database
      */
@@ -102,7 +101,7 @@ public class AdminController {
 
         return auctions;
     }
-    
+
     /**
      * Method to delete a User from the BiddingIt database
      */

@@ -42,9 +42,10 @@ public class AdminUsersPanel extends JPanel {
     /**
      * Constructor to create a new User Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
-     * @param controller the controller that uses the Admin Window
+     * @param controller   the controller that uses the Admin Window
      */
     public AdminUsersPanel(int screenWidth, int screenHeight, AdminController controller) {
         setBackground(Color.white);

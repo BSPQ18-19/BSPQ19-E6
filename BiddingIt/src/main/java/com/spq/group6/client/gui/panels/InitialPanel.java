@@ -26,7 +26,8 @@ public class InitialPanel extends LocaleSelectorPanel {
     /**
      * Constructor to create a new Initial Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
     public InitialPanel(int screenWidth, int screenHeight) {

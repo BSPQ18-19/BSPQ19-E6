@@ -36,7 +36,8 @@ public class RegisterPanel extends LocaleSelectorPanel {
     /**
      * Constructor to create a new Register Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
     public RegisterPanel(int screenWidth, int screenHeight) {

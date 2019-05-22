@@ -16,7 +16,7 @@ public class AdminWindow extends JFrame {
     private int screenWidth, screenHeight;
 
     private JPanel mainPanel;
-    
+
     /**
      * private constructor using lazy singleton
      */
@@ -49,6 +49,7 @@ public class AdminWindow extends JFrame {
 
     /**
      * Method to change the panels of the Administrator window to access the different options
+     *
      * @param nextScreenType name of the panel upcoming
      */
     public void changeScreen(ScreenType nextScreenType, String... data) {

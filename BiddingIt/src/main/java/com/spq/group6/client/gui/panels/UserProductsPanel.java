@@ -32,7 +32,8 @@ public class UserProductsPanel extends LocaleSelectorPanel {
     /**
      * Constructor to create a new User-Products Panel.
      * <p>
-     * @param screenWidth width of the screen
+     *
+     * @param screenWidth  width of the screen
      * @param screenHeight height of the screen
      */
     public UserProductsPanel(int screenWidth, int screenHeight) {
