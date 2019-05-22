@@ -25,26 +25,26 @@ public class BiddingLocks {
     private static HashMap<Long, Lock> auctionLocks = new HashMap<Long, Lock>();
     /**
      * static HashMap containing Locks for every Auction.
-     * Auctions are identified by their ID (long)
+     * Auctions are identified by their ID (long).
      */
     private static HashMap<String, Lock> userLocks = new HashMap<String, Lock>();
     /**
      * static HashMap containing Locks for every Client.
-     * Clients are identified by their username(String)
+     * Clients are identified by their username(String).
      */
     private static BiddingDAO biddingDAO = new BiddingDAO(); /* DAO object for updating
-     persistent data. It is used for accesing Users and Auctions latest versions */
+     persistent data. It is used for accesing Users and Auctions latest versions. */
 
     /**
      * Method for locking the access for an Auction
-     * and getting Auction's last version from the database
+     * and getting Auction's last version from the database.
      *
-     * @param auction Auction that will be locked and retrieved from the database
-     * @return Auction's last version from the database
+     * @param auction Auction that will be locked and retrieved from the database.
+     * @return Auction's last version from the database.
      */
     public static synchronized Auction lockAndGetAuction(Auction auction) {
         long auctionID = auction.getAuctionID();
-        if (!auctionLocks.containsKey(auctionID)) { // If it does not exist, creates a Lock
+        if (!auctionLocks.containsKey(auctionID)) { // If it does not exist, creates a Lock.
             auctionLocks.put(auctionID, new ReentrantLock());
         }
         ServerLogger.logger.debug("Waiting Auction " + auctionID + " lock...");
@@ -55,9 +55,9 @@ public class BiddingLocks {
     }
 
     /**
-     * Method for creating a Lock for an Auction
+     * Method for creating a Lock for an Auction.
      *
-     * @param auction Auction that a Lock will be created for
+     * @param auction Auction that a Lock will be created for.
      */
     public static synchronized void setAuctionLock(Auction auction) {
         long auctionID = auction.getAuctionID();
@@ -67,9 +67,9 @@ public class BiddingLocks {
     }
 
     /**
-     * Method for unlocking a previously Locked Auction
+     * Method for unlocking a previously Locked Auction.
      *
-     * @param auction Auction that will be unlocked
+     * @param auction Auction that will be unlocked.
      */
     public static void unlockAuction(Auction auction) {
         long auctionID = auction.getAuctionID();
@@ -79,10 +79,10 @@ public class BiddingLocks {
 
     /**
      * Method for locking the access for a User
-     * and getting User's last version from the database
+     * and getting User's last version from the database.
      *
-     * @param user User that will be locked and retrieved from the database
-     * @return User's last version from the database
+     * @param user User that will be locked and retrieved from the database.
+     * @return User's last version from the database.
      */
     public static synchronized User lockAndGetUser(User user) {
         String username = user.getUsername();
@@ -96,9 +96,9 @@ public class BiddingLocks {
     }
 
     /**
-     * Method for creating a Lock for a User
+     * Method for creating a Lock for a User.
      *
-     * @param user User that a Lock will be created for
+     * @param user User that a Lock will be created for.
      */
     public static synchronized void setUserLock(User user) {
         String username = user.getUsername();
@@ -108,9 +108,9 @@ public class BiddingLocks {
     }
 
     /**
-     * Method for unlocking a User previously locked
+     * Method for unlocking a User previously locked.
      *
-     * @param user User that will be unlocked
+     * @param user User that will be unlocked.
      */
     public static void unlockUser(User user) {
         String username = user.getUsername();

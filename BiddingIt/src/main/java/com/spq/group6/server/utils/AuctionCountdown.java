@@ -20,19 +20,19 @@ import java.sql.Timestamp;
  * it executes the logic for the exchange between the Buyer and the Seller.
  * <p>
  * {@link AuctionService} is the one responsible for starting Countdown threads, and it has a HashMap
- * AuctionID --> AuctionCountdown
+ * AuctionID --> AuctionCountdown.
  */
 public class AuctionCountdown implements Runnable {
     private static IBiddingDAO biddingDAO = new BiddingDAO();  /* DAO object for updating
-     persistent data. It is used for updating Users and Auctions when while executing Auction end logic*/
+     persistent data. It is used for updating Users and Auctions when while executing Auction end logic.*/
     private Auction auction; // Auction that is controlled by the Countdown.
     private long auctionID; /* Auction's AuctionID, just in Auction is corrupted.
-    Needed for retrieving latest version from the database */
+    Needed for retrieving latest version from the database.*/
 
     /**
-     * AuctionCountdown constructor that fills auction and auctionID
+     * AuctionCountdown constructor that fills auction and auctionID.
      *
-     * @param auction Auction that will be controlled by the countdown
+     * @param auction Auction that will be controlled by the countdown.
      */
     public AuctionCountdown(Auction auction) {
         this.auction = auction;
@@ -73,11 +73,11 @@ public class AuctionCountdown implements Runnable {
 
             Bid bid = auction.getHighestBid();
             User buyer = null;
-            if (bid != null) { // Checks if there was a Bid
+            if (bid != null) { // Checks if there was a Bid.
                 buyer = bid.getUser();
             }
             if (bid != null && bid.getUser() != null && bid.getUser().getMoney() >= bid.getAmount()) { /* Check
-            if the Bid was valid: the Buyer has enough money */
+            if the Bid was valid: the Buyer has enough money .*/
                 User seller = BiddingLocks.lockAndGetUser(auction.getOwner());
                 buyer = BiddingLocks.lockAndGetUser(buyer);
 
