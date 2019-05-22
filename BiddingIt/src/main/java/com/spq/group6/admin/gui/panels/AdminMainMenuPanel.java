@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * One of the panels used in the Admin window
+ */
 public class AdminMainMenuPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -21,6 +24,13 @@ public class AdminMainMenuPanel extends JPanel {
 
     private AdminController controller;
 
+    /**
+     * Constructor to create a new Main Menu Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     * @param controller the controller that uses the Admin Window
+     */
     public AdminMainMenuPanel(int screenWidth, int screenHeight, AdminController controller) {
     	
         this.controller = controller;

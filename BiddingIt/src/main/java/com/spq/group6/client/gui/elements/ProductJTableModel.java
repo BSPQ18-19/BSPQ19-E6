@@ -6,6 +6,9 @@ import com.spq.group6.server.data.Product;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Edited JTableModel to satisfy BiddingIt standards
+ */
 public class ProductJTableModel extends DefaultTableModel {
 
     private static final long serialVersionUID = 1L;

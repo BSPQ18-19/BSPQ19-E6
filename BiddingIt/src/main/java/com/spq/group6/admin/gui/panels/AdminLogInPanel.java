@@ -12,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 
-
+/**
+ * One of the panels used in the Admin window
+ */
 public class AdminLogInPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +28,13 @@ public class AdminLogInPanel extends JPanel {
 
     private AdminController controller;
 
+    /**
+     * Constructor to create a new Log-In Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     * @param controller the controller that uses the Admin Window
+     */
     public AdminLogInPanel(int screenWidth, int screenHeight, AdminController controller) {
         setBackground(Color.WHITE);
         this.setLayout(null);

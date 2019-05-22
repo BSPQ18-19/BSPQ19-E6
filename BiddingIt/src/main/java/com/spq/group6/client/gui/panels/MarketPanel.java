@@ -20,6 +20,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * One of the panels used in the Client window
+ */
 public class MarketPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
@@ -38,6 +41,12 @@ public class MarketPanel extends LocaleSelectorPanel {
     private ArrayList<Thread> auctionsTimeLeftThread;
     private ArrayList<Auction> auctions;
 
+    /**
+     * Constructor to create a new Market Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     */
     public MarketPanel(int screenWidth, int screenHeight) {
 
         super(screenWidth, screenHeight);

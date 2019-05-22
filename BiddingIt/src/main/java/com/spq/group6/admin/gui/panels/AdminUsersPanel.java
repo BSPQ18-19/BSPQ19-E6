@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * One of the panels used in the Admin window
+ */
 public class AdminUsersPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -36,6 +39,13 @@ public class AdminUsersPanel extends JPanel {
     @SuppressWarnings("unused")
     private AdminController controller;
 
+    /**
+     * Constructor to create a new User Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     * @param controller the controller that uses the Admin Window
+     */
     public AdminUsersPanel(int screenWidth, int screenHeight, AdminController controller) {
         setBackground(Color.white);
         this.setLayout(null);

@@ -7,7 +7,9 @@ import com.spq.group6.client.utils.logger.ClientLogger;
 
 import javax.swing.*;
 
-
+/**
+ * Class used for starting the client service
+ */
 public class ClientMain {
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         if (args.length != 3) {

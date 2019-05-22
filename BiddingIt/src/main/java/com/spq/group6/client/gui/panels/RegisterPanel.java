@@ -14,6 +14,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * One of the panels used in the Client window
+ */
 public class RegisterPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
@@ -30,6 +33,12 @@ public class RegisterPanel extends LocaleSelectorPanel {
     private JButton confirmButton;
     private JButton cancelButton;
 
+    /**
+     * Constructor to create a new Register Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     */
     public RegisterPanel(int screenWidth, int screenHeight) {
 
         super(screenWidth, screenHeight);

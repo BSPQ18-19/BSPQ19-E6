@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Remote Façade Interface for BididngIt server
  * <p>
  * This is the API that describes functionality offered by BiddingIt Server.
- * It is used on the User application.
+ * It is used on the User and Administrator applications.
  */
 public interface IServer extends Remote {
 

@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 
+/**
+ * Action class used to create an auction in a event
+ */
 public class ActionCreateAuction extends AbstractAction {
 
     private static final long serialVersionUID = 1L;

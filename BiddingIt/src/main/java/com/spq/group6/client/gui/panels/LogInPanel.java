@@ -13,7 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 
-
+/**
+ * One of the panels used in the Client window
+ */
 public class LogInPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +28,12 @@ public class LogInPanel extends LocaleSelectorPanel {
     private JButton confirmButton;
     private JButton cancelButton;
 
+    /**
+     * Constructor to create a new Log-In Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     */
     public LogInPanel(int screenWidth, int screenHeight) {
 
         super(screenWidth, screenHeight);

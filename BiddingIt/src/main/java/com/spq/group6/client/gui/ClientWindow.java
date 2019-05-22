@@ -17,7 +17,9 @@ public class ClientWindow extends JFrame {
 
     private JPanel mainPanel;
 
-    // private constructor using lazy singleton
+    /**
+     * private constructor using lazy singleton
+     */
     private ClientWindow() {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -35,13 +37,19 @@ public class ClientWindow extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
-    // lazy singleton
+    /**
+     * lazy singleton
+     */
     public static ClientWindow getClientWindow() {
         if (clientWindow == null)
             clientWindow = new ClientWindow();
         return clientWindow;
     }
 
+    /**
+     * Method to change the panels of the Client window to access the different options
+     * @param nextScreenType name of the panel upcoming
+     */
     public void changeScreen(ScreenType nextScreenType, String... data) {
         this.currentScreenType = nextScreenType;
 

@@ -7,6 +7,9 @@ import com.spq.group6.admin.utils.logger.AdminLogger;
 
 import java.rmi.RemoteException;
 
+/**
+ * Class used for starting the Administration service
+ */
 
 public class AdminMain {
     public static void main(String[] args) {

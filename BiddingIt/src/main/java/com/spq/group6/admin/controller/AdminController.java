@@ -6,10 +6,17 @@ import com.spq.group6.admin.utils.logger.AdminLogger;
 import com.spq.group6.server.data.Administrator;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.User;
+import com.spq.group6.server.exceptions.AccountException;
 import com.spq.group6.server.exceptions.AdministratorException;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+/**
+ * Controller of the Administration service
+ * <p>
+ * This is the API that describes functionality offered by BiddingIt Administration service.
+ */
 
 public class AdminController {
 
@@ -22,6 +29,17 @@ public class AdminController {
         AdminWindow.getAdminWindow(this).setVisible(true);
     }
 
+    /**
+     * Method for login and getting access to the system.
+     * <p>
+     * Checks if Admin credentials are valid,
+     * and returns a Admin object that matched.
+     *
+     * @param email Admin's email
+     * @param password Admin's password
+     * @return Logged in Admin
+     * @throws RemoteException  is raised in case of Error on RMI connection
+     */
     public boolean logIn(String email, String password) throws RemoteException {
         String info = "Log in with email " + email + " and password " + password;
         try {
@@ -38,7 +56,10 @@ public class AdminController {
         }
         return false;
     }
-
+    
+    /**
+     * Method for logOut and stop getting access to the system.
+     */
     public boolean logOut() {
         this.currentAdmin = null;
         return true;
@@ -47,7 +68,10 @@ public class AdminController {
     public Administrator getCurrentAdmin() {
         return currentAdmin;
     }
-
+    
+    /**
+     * Method to get all the existing users in the BiddingIt database
+     */
     public ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
         String info = "Get all users";
@@ -60,7 +84,10 @@ public class AdminController {
         }
         return users;
     }
-
+    
+    /**
+     * Method to get all the existing auctions in the BiddingIt database
+     */
     public ArrayList<Auction> getAllAuctions() {
         ArrayList<Auction> auctions = new ArrayList<>();
 
@@ -75,7 +102,10 @@ public class AdminController {
 
         return auctions;
     }
-
+    
+    /**
+     * Method to delete a User from the BiddingIt database
+     */
     public boolean deleteUser(User user) {
         String info = "Delete the user " + user.getUsername() + " with country " + user.getCountry();
         try {
@@ -88,6 +118,9 @@ public class AdminController {
         return true;
     }
 
+    /**
+     * Method to delete an Auction from the BiddingIt database
+     */
     public boolean deleteAuction(Auction auction) {
         String info = "Delete the auction of the product " + auction.getProduct().getName() + " with description " + auction.getProduct().getDescription();
         try {

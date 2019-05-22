@@ -5,6 +5,9 @@ import com.spq.group6.admin.gui.elements.AuctionJTableModel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Action class used to delete an auction in a event
+ */
 public class ActionDeleteAuction extends AbstractAction {
 
     private static final long serialVersionUID = 1L;

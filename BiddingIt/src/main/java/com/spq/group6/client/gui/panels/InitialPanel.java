@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * One of the panels used in the Client window
+ */
 public class InitialPanel extends LocaleSelectorPanel {
 
     private static final long serialVersionUID = 1L;
@@ -20,6 +23,12 @@ public class InitialPanel extends LocaleSelectorPanel {
     private JButton logInButton;
     private JButton signInButton;
 
+    /**
+     * Constructor to create a new Initial Panel.
+     * <p>
+     * @param screenWidth width of the screen
+     * @param screenHeight height of the screen
+     */
     public InitialPanel(int screenWidth, int screenHeight) {
 
         super(screenWidth, screenHeight);
