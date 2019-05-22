@@ -1,0 +1,5 @@
+var namespacecom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1remote =
+[
+    [ "IRemoteObserver", "interfacecom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1remote_1_1_i_remote_observer.html", "interfacecom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1remote_1_1_i_remote_observer" ],
+    [ "RemoteObservable", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1remote_1_1_remote_observable.html", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1remote_1_1_remote_observable" ]
+];

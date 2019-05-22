@@ -1,0 +1,7 @@
+var namespacecom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1events =
+[
+    [ "AuctionClosedEvent", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1events_1_1_auction_closed_event.html", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1events_1_1_auction_closed_event" ],
+    [ "AuctionDeletedEvent", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1events_1_1_auction_deleted_event.html", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1events_1_1_auction_deleted_event" ],
+    [ "NewBidEvent", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1events_1_1_new_bid_event.html", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1events_1_1_new_bid_event" ],
+    [ "UserDeletedEvent", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1events_1_1_user_deleted_event.html", "classcom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1events_1_1_user_deleted_event" ]
+];

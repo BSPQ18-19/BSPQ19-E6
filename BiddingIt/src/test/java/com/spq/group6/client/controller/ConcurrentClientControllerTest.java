@@ -143,7 +143,7 @@ public class ConcurrentClientControllerTest {
 
     @Test
     @PerfTest(invocations = 1000, threads = 20)
-    @Required(max = 4500, average = 1000)
+    @Required(max = 4500, average = 1200)
     public void createProductTest() throws RemoteException {
         assertTrue(buyerClientController.logIn(seller.getUsername(), seller.getPassword())); // If we do not use unique user objects, JDO throw error
         assertTrue(buyerClientController.createProduct(product.getName(), product.getDescription()));
@@ -159,7 +159,7 @@ public class ConcurrentClientControllerTest {
 
     @Test
     @PerfTest(invocations = 100, threads = 20)
-    @Required(max = 3000, average = 2500)
+    @Required(max = 8000, average = 4000)
     public void createPublicAuctionTest() throws RemoteException {
         assertTrue(sellerClientController.createPublicAuction(notPersistedAuction.getProduct(), notPersistedAuction.getDayLimit(), notPersistedAuction.getInitialPrice()));
     }

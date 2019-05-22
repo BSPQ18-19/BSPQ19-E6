@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['iaccountservice',['IAccountService',['../interfacecom_1_1spq_1_1group6_1_1server_1_1services_1_1_i_account_service.html',1,'com::spq::group6::server::services']]],
+  ['iaccountservice_2ejava',['IAccountService.java',['../_i_account_service_8java.html',1,'']]],
+  ['iadminservice',['IAdminService',['../interfacecom_1_1spq_1_1group6_1_1server_1_1services_1_1_i_admin_service.html',1,'com::spq::group6::server::services']]],
+  ['iadminservice_2ejava',['IAdminService.java',['../_i_admin_service_8java.html',1,'']]],
+  ['iauctionservice',['IAuctionService',['../interfacecom_1_1spq_1_1group6_1_1server_1_1services_1_1_i_auction_service.html',1,'com::spq::group6::server::services']]],
+  ['iauctionservice_2ejava',['IAuctionService.java',['../_i_auction_service_8java.html',1,'']]],
+  ['ibiddingdao',['IBiddingDAO',['../interfacecom_1_1spq_1_1group6_1_1server_1_1dao_1_1_i_bidding_d_a_o.html',1,'com::spq::group6::server::dao']]],
+  ['ibiddingdao_2ejava',['IBiddingDAO.java',['../_i_bidding_d_a_o_8java.html',1,'']]],
+  ['imagenobjeto',['imagenObjeto',['../classcom_1_1spq_1_1group6_1_1admin_1_1gui_1_1utils_1_1_j_label_grafico_ajustado.html#a8df18560a13be212494955dee1d5ccf2',1,'com.spq.group6.admin.gui.utils.JLabelGraficoAjustado.imagenObjeto()'],['../classcom_1_1spq_1_1group6_1_1client_1_1gui_1_1utils_1_1_j_label_grafico_ajustado.html#a165862eac69edda62ff37771288ce42f',1,'com.spq.group6.client.gui.utils.JLabelGraficoAjustado.imagenObjeto()']]],
+  ['initial',['INITIAL',['../enumcom_1_1spq_1_1group6_1_1client_1_1gui_1_1utils_1_1_screen_type.html#add8f9442de5e6dceafbee33e03f9c6bc',1,'com::spq::group6::client::gui::utils::ScreenType']]],
+  ['initialpanel',['InitialPanel',['../classcom_1_1spq_1_1group6_1_1client_1_1gui_1_1panels_1_1_initial_panel.html',1,'com.spq.group6.client.gui.panels.InitialPanel'],['../classcom_1_1spq_1_1group6_1_1client_1_1gui_1_1panels_1_1_initial_panel.html#ac72435dc1d22b5b970a6f81cb41b146d',1,'com.spq.group6.client.gui.panels.InitialPanel.InitialPanel()']]],
+  ['initialpanel_2ejava',['InitialPanel.java',['../_initial_panel_8java.html',1,'']]],
+  ['iremoteobserver',['IRemoteObserver',['../interfacecom_1_1spq_1_1group6_1_1server_1_1utils_1_1observer_1_1remote_1_1_i_remote_observer.html',1,'com::spq::group6::server::utils::observer::remote']]],
+  ['iremoteobserver_2ejava',['IRemoteObserver.java',['../_i_remote_observer_8java.html',1,'']]],
+  ['isborderopaque',['isBorderOpaque',['../classcom_1_1spq_1_1group6_1_1admin_1_1gui_1_1utils_1_1_rounded_border.html#abdf62305776ff4453ae736ab00379acb',1,'com.spq.group6.admin.gui.utils.RoundedBorder.isBorderOpaque()'],['../classcom_1_1spq_1_1group6_1_1client_1_1gui_1_1utils_1_1_rounded_border.html#a766eeb5b6f30a4d041a2ebb8e3b0174a',1,'com.spq.group6.client.gui.utils.RoundedBorder.isBorderOpaque()']]],
+  ['iscelleditable',['isCellEditable',['../classcom_1_1spq_1_1group6_1_1admin_1_1gui_1_1elements_1_1_auction_j_table_model.html#a0d62abaedaf5e55f03d8078c961adac0',1,'com.spq.group6.admin.gui.elements.AuctionJTableModel.isCellEditable()'],['../classcom_1_1spq_1_1group6_1_1admin_1_1gui_1_1elements_1_1_user_j_table_model.html#afb94ca6f9cce5fbe71b539bb2ee820e7',1,'com.spq.group6.admin.gui.elements.UserJTableModel.isCellEditable()'],['../classcom_1_1spq_1_1group6_1_1client_1_1gui_1_1elements_1_1_auction_j_table_model.html#ad9a74d11b80a008f105151367edcc4af',1,'com.spq.group6.client.gui.elements.AuctionJTableModel.isCellEditable()'],['../classcom_1_1spq_1_1group6_1_1client_1_1gui_1_1elements_1_1_market_j_table_model.html#ab5d86914d7ca20d40abf618a182c522e',1,'com.spq.group6.client.gui.elements.MarketJTableModel.isCellEditable()'],['../classcom_1_1spq_1_1group6_1_1client_1_1gui_1_1elements_1_1_product_j_table_model.html#a1cbc9ec6a69c8cd6e0f21bf557ab30c9',1,'com.spq.group6.client.gui.elements.ProductJTableModel.isCellEditable()']]],
+  ['iserver',['IServer',['../interfacecom_1_1spq_1_1group6_1_1server_1_1remote_1_1_i_server.html',1,'com::spq::group6::server::remote']]],
+  ['iserver_2ejava',['IServer.java',['../_i_server_8java.html',1,'']]],
+  ['isopen',['isOpen',['../classcom_1_1spq_1_1group6_1_1server_1_1data_1_1_auction.html#ad426e105e8cd5d8f0a18c3964a846940',1,'com::spq::group6::server::data::Auction']]],
+  ['isttsison',['isTtsIsON',['../classcom_1_1spq_1_1group6_1_1client_1_1gui_1_1utils_1_1voice_1_1_t_t_s_manager.html#a9d100cbf8b18d17955c7572505a56052',1,'com::spq::group6::client::gui::utils::voice::TTSManager']]],
+  ['isttson',['isTtsON',['../classcom_1_1spq_1_1group6_1_1client_1_1gui_1_1utils_1_1voice_1_1_voice_helper.html#af0283e3677500aed449fff22a93900a9',1,'com::spq::group6::client::gui::utils::voice::VoiceHelper']]]
+];

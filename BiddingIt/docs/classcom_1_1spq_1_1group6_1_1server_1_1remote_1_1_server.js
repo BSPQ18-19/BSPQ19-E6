@@ -1,0 +1,25 @@
+var classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server =
+[
+    [ "Server", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a41acc4fd3d0d541514f72297dc32b69a", null ],
+    [ "adminLogIn", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#adf6d7d7337c7ed25e7b10504ec545f18", null ],
+    [ "bid", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a7304c5a24c25b44f2141c94ebb7fb290", null ],
+    [ "createAdministrator", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a5f42f74367e243d1530e3a4ded92a09f", null ],
+    [ "createPrivateAuction", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#ac9d7cc74184ff72398354a948d44c774", null ],
+    [ "createProduct", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#afe2ac7b45b83762620ebb04ec9296f37", null ],
+    [ "createPublicAuction", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a3f8b4ccabf0354c05277dffe5fd4e0cc", null ],
+    [ "deleteAuction", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a936c45efa97994cc00daf18429bb855a", null ],
+    [ "deleteProduct", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a3ce08ad80fa6c5703b588c38e42d45a5", null ],
+    [ "deleteUser", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a8a75d279cee56d3c72d6f30e7b462e3a", null ],
+    [ "getAllAuctions", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a8e47a9ea86f306256113c5a3bed4d33b", null ],
+    [ "getAllAuctionsAdmin", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a3557b48472af199539df3446167d2b0a", null ],
+    [ "getAllUsers", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a07075ab29e8e7a4f8b478f8645c66aaa", null ],
+    [ "getAuctionByUser", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#acb946e07d68c769c6860fbce4a11a133", null ],
+    [ "logIn", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a37daea2e1ec451760f13e14b5119fb1b", null ],
+    [ "logOut", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a36e61e481c3b33df99d4203287f778d6", null ],
+    [ "searchAuctionByCountry", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a17be5c1b0a9e83e8f77639bdd724a2a4", null ],
+    [ "searchAuctionByProductName", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a701a399e65cc7de71b6519adddab8cd7", null ],
+    [ "signIn", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a3692a9f847c6c1aa5cc2ac5208638792", null ],
+    [ "startUncheckedAuctions", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#ab1a4b4182ef56f4ce2fbb6b557e89344", null ],
+    [ "updateProduct", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a5c7f85e6ea814b32b89be2dfadf5f02e", null ],
+    [ "updateUser", "classcom_1_1spq_1_1group6_1_1server_1_1remote_1_1_server.html#a779d56ee7dc9fe9d79eb6e71094f626d", null ]
+];
