@@ -159,7 +159,7 @@ public class ConcurrentClientControllerTest {
 
     @Test
     @PerfTest(invocations = 100, threads = 20)
-    @Required(max = 8000, average = 4000)
+    @Required(max = 13000, average = 6000)
     public void createPublicAuctionTest() throws RemoteException {
         assertTrue(sellerClientController.createPublicAuction(notPersistedAuction.getProduct(), notPersistedAuction.getDayLimit(), notPersistedAuction.getInitialPrice()));
     }
