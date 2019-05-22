@@ -102,9 +102,6 @@ public class InitialPanel extends LocaleSelectorPanel {
 
         bringSelectLanguageCBToFront();
 
-//        VoiceHelper.textToSpeech("Welcome to Bidding It! This is aun auction system. You can sell and bid other people's products."
-//        		+ " If you want to disable this beatiful voice, you can turn it off by pressing the sound ON button. You can also change"
-//        		+ "the language. Enjoy!");
         VoiceHelper.textToSpeech(LanguageManager.getMessage("Voice.InitialPanel.welcome"));
     }
 

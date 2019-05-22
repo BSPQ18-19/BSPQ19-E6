@@ -5,6 +5,7 @@ import com.spq.group6.client.gui.panels.MarketPanel;
 import com.spq.group6.client.gui.panels.UserAuctionsPanel;
 import com.spq.group6.client.gui.panels.UserProductsPanel;
 import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 import com.spq.group6.client.utils.logger.ClientLogger;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
@@ -68,7 +69,7 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
         if (user.getUsername().equals(controller.getCurrentUser().getUsername())) {
             controller.logOut();
             window.changeScreen(ScreenType.INITIAL);
-            String msg = "Sorry, your User has been deleted";
+            String msg = LanguageManager.getMessage("ClientRemoteObserver.checkUserDeleted.msg");
             showNonBlockingMessage(msg);
         }
     }
@@ -94,7 +95,7 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
 
     private void removeAuctionFromWindows(Auction auction) {
         JPanel panel = window.getMainPanel();
-        String msg = "Auction closed - " + auction.getAuctionID();
+        String msg = LanguageManager.getMessage("ClientRemoteObserver.removeAuctionFromWindows.msg") + " - " + auction.getAuctionID();
 
         if (panel instanceof MarketPanel) {
             MarketPanel marketPanel = (MarketPanel) panel;
@@ -113,7 +114,7 @@ public class ClientRemoteObserver extends UnicastRemoteObject implements IRemote
 
     private void updateAuctionFromWindows(Auction auction) {
         JPanel panel = window.getMainPanel();
-        String msg = "New bid - " + auction.getAuctionID();
+        String msg = LanguageManager.getMessage("ClientRemoteObserver.updateAuctionFromWindows.msg") + " - " + auction.getAuctionID();
         if (panel instanceof MarketPanel) {
             MarketPanel marketPanel = (MarketPanel) panel;
             int index = marketPanel.getAuctions().indexOf(auction);

@@ -60,45 +60,6 @@ public class AdminUsersPanel extends JPanel {
         SDG2Util.fixJLabelFontSize(titleLabel);
 
         String[] usersColumnNames = {"Username", "Password", "Country", "Money", ""};
-//		//JTABLE BEGIN
-//		//JTABLE BEGIN
-//		// stop previous threads
-//		if (usersTimeLeftThread != null)
-//			for (int i = 0; i < usersTimeLeftThread.size(); i++)
-//				usersTimeLeftThread.get(i).interrupt();
-//
-//		usersData = null;
-//		users = controller.getAllUsers();
-//		if (users.size() == 0) {
-//			usersData = new Object[][] {};
-//			JOptionPane.showConfirmDialog(AdminUsersPanel.this, "No auctions found.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-//
-//		} else {
-//			usersData = new Object[users.size()][usersColumnNames.length];
-//			int i = 0;
-//			usersTimeLeftThread = new ArrayList<>();
-//			for (i = 0; i < users.size(); i++) {
-//				User tempUser = users.get(i);
-//				usersData[i][0] = tempUser.getUsername();
-//				usersData[i][1] = tempUser.getPassword();
-//				usersData[i][2] = tempUser.getCountry();
-//				usersData[i][3] = tempUser.getMoney();
-//				usersData[i][4] = "Delete User";
-//			}
-//			JOptionPane.showConfirmDialog(AdminUsersPanel.this, "Users found succesfully.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-//
-//		}
-//		usersTable.setModel(new UserJTableModel(usersData, usersColumnNames, controller));
-//		usersTable.getColumnModel().getColumn(3).setPreferredWidth(usersTable.getColumnModel().getColumn(3).getPreferredWidth()+100);
-//
-//		@SuppressWarnings("unused")
-//		ButtonColumn bidButtonColumn = new ButtonColumn(usersTable, new ActionDeleteUser(), 4);
-//
-//		// start countdown threads
-//		for (int i = 0; i < usersData.length; i++)
-//			usersTimeLeftThread.get(i).start();
-//		//JTABLE END
-//		//JTABLE END
 
         Thread animationThread = new Thread(new Runnable() {
             int dots = 0;
@@ -119,7 +80,6 @@ public class AdminUsersPanel extends JPanel {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }

@@ -65,7 +65,6 @@ public class ClientController {
         String info = "Log in with username " + email + " and password " + password;
         try {
             ClientLogger.logger.debug("Trying to " + info + ".");
-            // TODO: create a real Observer for login
             User user = serviceLocator.getService().logIn(email, password, observer);
             if (user != null) {
                 ClientLogger.logger.debug(info + " correct.");
@@ -94,7 +93,6 @@ public class ClientController {
         String info = "Sign in with username " + email + " and password " + password + " and country " + country;
         try {
             ClientLogger.logger.debug("Trying to " + info + ".");
-            System.out.println(serviceLocator.getService());
             User user = serviceLocator.getService().signIn(email, password, country, observer);
             if (user != null) {
                 ClientLogger.logger.debug(info + " correct.");

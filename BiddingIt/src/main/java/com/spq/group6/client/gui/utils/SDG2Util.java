@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class SDG2Util {
 
-    // source: https://stackoverflow.com/a/2715279
     public static void fixJLabelFontSize(JLabel label) {
         String labelText = label.getText();
         Font labelFont = label.getFont();
@@ -59,7 +58,6 @@ public class SDG2Util {
 
         // Pick a new font size so it will not be larger than the height of button.
         int fontSizeToUse = Math.min(newFontSize, componentHeight);
-        // TEST System.out.println(buttonText + " " + buttonFont.getSize() + " "+ stringWidth + " " + componentWidth + " " + newFontSize + " " + fontSizeToUse);
 
         // Set the button's font size to the newly determined size.
         button.setFont(new Font(buttonFont.getName(), Font.PLAIN, fontSizeToUse));

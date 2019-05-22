@@ -26,11 +26,11 @@ public class BiddingDAO implements IBiddingDAO {
 
     // Account DAO
     public void persistUser(User user) {
-        updateObject(user);
+        persistObject(user);
     }
 
     public void persistAdministrator(Administrator administrator) {
-        updateObject(administrator);
+        persistObject(administrator);
     }
 
     public void deleteAdministrator(Administrator admin) {
@@ -66,7 +66,7 @@ public class BiddingDAO implements IBiddingDAO {
     }
 
     public void persistUser(Product product) {
-        updateObject(product);
+        persistObject(product);
     }
 
     public void deleteProduct(Product product) {
@@ -168,16 +168,29 @@ public class BiddingDAO implements IBiddingDAO {
         try {
             user = getUserByUsername(user.getUsername());
             tx.begin();
-            Query<Auction> query = pm.newQuery(Auction.class);
-            query.setFilter("owner.username == '" + user.getUsername() + "'");
-            List<Auction> auctions = (List<Auction>) query.execute();
+            Query<Auction> auctionsQuery = pm.newQuery(Auction.class);
+            auctionsQuery.setFilter("owner.username == '" + user.getUsername() + "'");
+            List<Auction> auctions = (List<Auction>) auctionsQuery.execute();
             tx.commit();
+            // Delete User's Auctions
             for (Auction auction : auctions) {
                 deleteAuction(auction); //deletes each auction owned by the user being deleted
             }
             tx.begin();
+            Query<Bid> bidsQuery = pm.newQuery(Bid.class);
+            bidsQuery.setFilter("user.username == '" + user.getUsername() + "'");
+            List<Bid> bids = (List<Bid>) bidsQuery.execute();
+            tx.commit();
+            // Delete User's Auctions
+            for (Bid bid : bids) {
+                bid.setUser(null); // Sets Bid to 'null', cannot delete it, just in case is a highest Bid
+                persistObject(bid);
+            }
+            tx.begin();
+            // Delete User's products
             for (Product product : user.getOwnedProducts()) pm.deletePersistent(product);
             user.getOwnedProducts().clear();
+            // Delete User
             pm.deletePersistent(user); // Deletes user in the Database
             tx.commit();
         } catch (Exception ex) {
@@ -193,7 +206,7 @@ public class BiddingDAO implements IBiddingDAO {
 
     // Auction DAO
     public void persistAuction(Auction auction) {
-        updateObject(auction);
+        persistObject(auction);
     }
 
     public void deleteBid(Bid bid) {
@@ -351,7 +364,7 @@ public class BiddingDAO implements IBiddingDAO {
     }
 
     // Utils
-    private void updateObject(Object obj) {
+    private void persistObject(Object obj) {
         pmLock.lock();
 
         Transaction tx = pm.currentTransaction();

@@ -28,7 +28,7 @@ public class SPQG6Util {
 
         long seconds = tempDateTime.until(toDateTime, ChronoUnit.SECONDS);
 
-        return (years + LanguageManager.getMessage("SPQG6Util.years") +
+        return (years + " " + LanguageManager.getMessage("SPQG6Util.years") +
                 months + " " + LanguageManager.getMessage("SPQG6Util.months") +
                 days + " " + LanguageManager.getMessage("SPQG6Util.days") +
                 hours + " " + LanguageManager.getMessage("SPQG6Util.hours") +

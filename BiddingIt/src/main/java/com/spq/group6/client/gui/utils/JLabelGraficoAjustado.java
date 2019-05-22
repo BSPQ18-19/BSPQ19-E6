@@ -28,37 +28,6 @@ public class JLabelGraficoAjustado extends JLabel {
         setSize(anchura, altura);
     }
 
-    /**
-     * Metodo de prueba de label grafico
-     */
-    public static void main(String[] args) {
-        JFrame f = new JFrame("Prueba JLabelGraficoAjustado");
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JLabelGraficoAjustado label = new JLabelGraficoAjustado("coche.png", 100, 100);
-        // TODO probar este 300, 300 con diferentes tamanyos. Si x<=0 ajusta el ancho y si es y<=0 ajusta el alto
-        f.setSize(600, 400);
-        f.add(label, BorderLayout.CENTER);
-        f.setVisible(true);
-        try {
-            Thread.sleep(5000);
-        } catch (Exception e) {
-        }  // Espera 5 segundos
-        for (int rot = 0; rot <= 200; rot++) {
-            label.setRotacion(rot * Math.PI / 100);
-            try {
-                Thread.sleep(20);
-            } catch (Exception e) {
-            }  // Espera dos decimas entre rotacion y rotacion
-        }
-        for (int op = -100; op <= 100; op++) {
-            label.setOpacidad(Math.abs(op * 0.01f));
-            try {
-                Thread.sleep(20);
-            } catch (Exception e) {
-            }  // Espera dos decimas entre rotacion y rotacion
-        }
-    }
-
 
     public void setSize(int anchura, int altura) {
         if (anchura <= 0 && imagenObjeto != null) anchura = imagenObjeto.getWidth();

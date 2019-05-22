@@ -2,6 +2,7 @@ package com.spq.group6.client.gui.elements;
 
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.panels.MarketPanel;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 import com.spq.group6.server.data.Auction;
 import com.spq.group6.server.data.Bid;
 
@@ -66,7 +67,7 @@ public class MarketJTableModel extends AbstractTableModel {
         boolean isPrivate = auction.getPassword() != null && !auction.getPassword().equals("");
         if (isPrivate) {
             String bidPassword = JOptionPane.showInputDialog(null,
-                    "Please enter the password.", "Private Bid", JOptionPane.QUESTION_MESSAGE);
+                    LanguageManager.getMessage("MarketJTable.bid.password.text1"), LanguageManager.getMessage("MarketJTable.bid.password.text2"), JOptionPane.QUESTION_MESSAGE);
             if (bidPassword != null && bidPassword.equals(auction.getPassword()))
                 passOK = true;
 
@@ -84,22 +85,22 @@ public class MarketJTableModel extends AbstractTableModel {
             String bidValue;
             if (isPrivate)
                 bidValue = JOptionPane.showInputDialog(null,
-                        "Password OK. Please enter the amount you want to bid (greater than " + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
+                        LanguageManager.getMessage("MarketJTable.bid.password.text3") + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
             else
                 bidValue = JOptionPane.showInputDialog(null,
-                        "Please enter the amount you want to bid (greater than " + actualHighestBid + ")", "Bid", JOptionPane.QUESTION_MESSAGE);
+                        LanguageManager.getMessage("MarketJTable.bid.text1") + actualHighestBid + ")", LanguageManager.getMessage("MarketJTable.bid.text2"), JOptionPane.QUESTION_MESSAGE);
             if (bidValue != null && Float.parseFloat(bidValue) > actualHighestBid)
                 if (controller.bid(auction, Float.parseFloat(bidValue))) {
-                    JOptionPane.showConfirmDialog(null, "Auction bidded correctly.", "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showConfirmDialog(null, LanguageManager.getMessage("MarketJTable.bid.text3"), "Info", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
                     auction.setHighestBid(new Bid(controller.getCurrentUser(), Float.parseFloat(bidValue)));
                     this.setValueAt(bidValue, rowIndex, 3);
 
                 } else
-                    JOptionPane.showConfirmDialog(null, "Error bidding the auction.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showConfirmDialog(null, LanguageManager.getMessage("MarketJTable.error.text1"), "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             else
-                JOptionPane.showConfirmDialog(null, "Error bidding the auction. Amount too small.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showConfirmDialog(null, LanguageManager.getMessage("MarketJTable.error.text2"), "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
         } else
-            JOptionPane.showConfirmDialog(null, "Error entering the private auction. Password incorrect.", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(null, LanguageManager.getMessage("MarketJTable.error.text3"), "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
     }
 

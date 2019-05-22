@@ -230,10 +230,8 @@ public class RegisterPanel extends LocaleSelectorPanel {
         this.add(infoLabel);
         this.add(usernameLabel);
         this.add(usernameTF);
-        // this.add(usernametickImage);
         this.add(passwordLabel);
         this.add(passwordTF);
-        // this.add(passwordtickImage);
         this.add(countryLabel);
         this.add(countryTF);
         this.add(confirmButton);

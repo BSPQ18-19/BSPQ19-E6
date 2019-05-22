@@ -39,8 +39,6 @@ public class LogInPanel extends LocaleSelectorPanel {
 
         super(screenWidth, screenHeight);
 
-        System.out.println(controller);
-
         titleLabel = new JLabel(LanguageManager.getMessage("LogInPanel.titleLabel.text"), SwingConstants.LEFT);
         titleLabel.setForeground(Color.white);
         titleLabel.setBackground(new Color(0, 204, 204));

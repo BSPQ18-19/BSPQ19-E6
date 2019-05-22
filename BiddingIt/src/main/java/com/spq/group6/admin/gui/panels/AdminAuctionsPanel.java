@@ -83,7 +83,6 @@ public class AdminAuctionsPanel extends JPanel {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -234,7 +233,6 @@ public class AdminAuctionsPanel extends JPanel {
         try {
             testFrame.add(new AdminAuctionsPanel(800, 600, new AdminController()));
         } catch (RemoteException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         testFrame.setVisible(true);

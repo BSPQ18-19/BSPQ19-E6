@@ -3,6 +3,7 @@ package com.spq.group6.client.gui;
 import com.spq.group6.client.controller.ClientController;
 import com.spq.group6.client.gui.panels.*;
 import com.spq.group6.client.gui.utils.ScreenType;
+import com.spq.group6.client.gui.utils.locale.LanguageManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ public class ClientWindow extends JFrame {
     private ClientWindow() {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setTitle("BiddingIt client");
+        this.setTitle(LanguageManager.getMessage("General.clientWindow.title"));
         Dimension windowSize = new Dimension((int) (screenSize.getWidth() / 1.3), (int) (screenSize.getHeight() / 1.3));
         this.setSize(windowSize);
         this.setLocationRelativeTo(null);

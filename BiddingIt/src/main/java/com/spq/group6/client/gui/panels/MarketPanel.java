@@ -177,7 +177,7 @@ public class MarketPanel extends LocaleSelectorPanel {
         auctionsTableScrollPane.setLocation(infoLabel.getX(),
                 (int) (searchPanel.getLocation().getY() + searchPanel.getHeight()));
 
-
+        updateAuctions();
         this.add(titleLabel);
         this.add(infoLabel);
         searchPanel.add(searchLabel);
