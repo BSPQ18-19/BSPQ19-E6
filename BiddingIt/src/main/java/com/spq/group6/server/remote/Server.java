@@ -19,6 +19,14 @@ import java.util.ArrayList;
 
 /**
  * Remote Façade for BididngIt server
+ * <p>
+ * This is a server that acts as an API front-end, receives API requests,
+ * enforces throttling and security policies, passes requests to the back-end
+ * service and then passes the response back to the requester.
+ * A service façade often includes a transformation engine to orchestrate and modify
+ * the requests and responses on the fly. It can also provide functionality such as
+ * collecting analytics data and providing caching. The façade can provide functionality to
+ * support authentication, authorization, security, audit and regulatory compliance.
  */
 public class Server extends UnicastRemoteObject implements IServer {
     private IAccountService accountService;
