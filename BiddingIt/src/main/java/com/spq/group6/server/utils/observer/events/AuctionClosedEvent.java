@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 /**
  * Class representing an Auction Closed event.
+ * <p>
  * An instance of this Class is sent to RemoteObservers whenever an Auction is closed.
  * This class contains the closed Auction.
  */

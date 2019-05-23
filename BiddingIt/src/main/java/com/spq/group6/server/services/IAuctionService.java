@@ -9,7 +9,12 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
- * Auctions related service's interface
+ * Auctions related service's interface.
+ * <p>
+ * BiddingIt server's Application for Auction related services:
+ * - Auction creation
+ * - Bid
+ * - Auctions's retrieval
  */
 public interface IAuctionService {
     Auction createAuction(User owner, Product product, Timestamp dayLimit, float initialPrice, String password) throws AuctionException;

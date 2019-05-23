@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 /**
  * Class representing an New Bid event.
+ * <p>
  * An instance of this Class is sent to RemoteObservers whenever a new Bid is created.
  * This class contains the Auction that the Bid was made to.
  */

@@ -9,6 +9,14 @@ import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 
 /**
  * Accounts related service's interface
+ * <p>
+ * BiddingIt server's Application for account related services:
+ * - Account creation
+ * - Authentication
+ * - Product creation
+ * - Product removal
+ * - Account details modification
+ * - Product details modification
  */
 public interface IAccountService {
     User logIn(String username, String password, IRemoteObserver observer) throws AccountException;

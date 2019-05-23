@@ -11,20 +11,11 @@ import com.spq.group6.server.utils.BiddingLocks;
 import com.spq.group6.server.utils.observer.remote.IRemoteObserver;
 import com.spq.group6.server.utils.observer.remote.RemoteObservable;
 
-/**
- * BiddingIt server's Application for account related services:
- * - Account creation
- * - Authentication
- * - Product creation
- * - Product removal
- * - Account details modification
- * - Product details modification
- */
 public class AccountService implements IAccountService {
     public static RemoteObservable observable = new RemoteObservable();
     /**
      * Remote observable responsible for
-     * notifying Clients. Contains all User RemoteObservers
+     * notifying Clients. Contains all User RemoteObservers.
      */
     private IBiddingDAO biddingDAO;
 
@@ -47,7 +38,7 @@ public class AccountService implements IAccountService {
 
     public User signIn(String username, String password, String country, IRemoteObserver observer) throws AccountException {
         User user = new User(username, password, country);
-        // Added 1000 as initial money, otherwise a Payment service would be needed
+        // Added 1000 as initial money, otherwise a Payment service would be needed.
         user.setMoney(1000);
         checkDuplicatedUser(user);
         biddingDAO.persistUser(user);
@@ -112,11 +103,11 @@ public class AccountService implements IAccountService {
     }
 
     /**
-     * Method for checking if user already exists
-     * If alreay exists, throws an Exception
+     * Method for checking if a User already exists.
+     * If alreay exists, throws an Exception.
      *
-     * @param user User that will be checked
-     * @throws AccountException in case of User previous existance
+     * @param user User that will be checked.
+     * @throws AccountException in case of User previous existance.
      */
     private void checkDuplicatedUser(User user) throws AccountException {
         String username = user.getUsername();
@@ -124,9 +115,9 @@ public class AccountService implements IAccountService {
     }
 
     /**
-     * Method for creating Lock and adding a RemoteObserver for a User
+     * Method for creating Lock and adding a RemoteObserver for a User.
      *
-     * @param user User that a Lock will be created for
+     * @param user User that a Lock will be created for.
      */
     void initUser(User user, IRemoteObserver observer) {
         BiddingLocks.setUserLock(user);

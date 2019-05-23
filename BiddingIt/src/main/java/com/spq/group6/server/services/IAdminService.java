@@ -9,7 +9,13 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
- * Administrator related service's interface
+ * Administrator related service's interface.
+ * <p>
+ * BiddingIt server's Application for Administrator related services:
+ * - Authentication
+ * - Auction removal
+ * - User removal
+ * - Auction and User retrieval
  */
 public interface IAdminService {
     Administrator logIn(String username, String password) throws AdministratorException;

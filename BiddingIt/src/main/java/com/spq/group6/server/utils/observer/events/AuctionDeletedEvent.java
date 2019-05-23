@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 /**
  * Class representing an Auction Deleted event.
+ * <p>
  * An instance of this Class is sent to RemoteObservers whenever
  * an Auction is deleted by an Administrator.
  * This class contains the deleted .

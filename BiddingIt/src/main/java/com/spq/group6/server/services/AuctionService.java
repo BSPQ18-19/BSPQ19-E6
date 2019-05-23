@@ -15,17 +15,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * BiddingIt server's Application for Auction related services:
- * - Auction creation
- * - Bid
- * - Auctions's retrieval
- */
 public class AuctionService implements IAuctionService {
     public static HashMap<Long, Thread> countdownObservables;
     /**
      * HashMap containing all AuctionCountdowns that are
-     * running.  Countdowns are Threads, and they are identified by its Auction's ID (long)
+     * running.  Countdowns are Threads, and they are identified by its Auction's ID (long).
      */
     private IBiddingDAO biddingDAO;
 
@@ -42,7 +36,7 @@ public class AuctionService implements IAuctionService {
         if (initialPrice < 0) throw new AuctionException("Invalid <0 initial price");
         Auction auction = new Auction(owner, product, dayLimit, initialPrice, password);
         biddingDAO.persistAuction(auction);
-        // Remove product from Owner until auction is finished
+        // Remove product from Owner until auction is finished.
         owner.getOwnedProducts().remove(product);
         biddingDAO.persistUser(owner);
 
@@ -65,7 +59,7 @@ public class AuctionService implements IAuctionService {
             auction.setHighestBid(newBid);
             biddingDAO.persistAuction(auction);
             biddingDAO.deleteBid(oldBid);
-            // Notify about new Bid
+            // Notify about new Bid.
             NewBidEvent newBidEvent = new NewBidEvent(auction);
             AccountService.observable.notifyRemoteObservers(newBidEvent);
         } catch (Exception e) {
@@ -99,9 +93,9 @@ public class AuctionService implements IAuctionService {
 
     /**
      * Method for creating a Lock for an Auction and a CountDown thread implementing
-     * the logic when an Auction finishes
+     * the logic when an Auction finishes.
      *
-     * @param auction Auction that will be initalized
+     * @param auction Auction that will be initalized.
      */
     void initAuction(Auction auction) {
         BiddingLocks.setAuctionLock(auction); // create lock for auction

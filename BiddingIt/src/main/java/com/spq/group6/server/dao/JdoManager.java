@@ -19,9 +19,9 @@ class JdoManager {
     private static PersistenceManager pm;
 
     /**
-     * Static method for retrieving JdoManager singleton instance
+     * Static method for retrieving JdoManager singleton instance.
      *
-     * @return JdoManager singleton instance
+     * @return JdoManager singleton instance.
      */
     static synchronized PersistenceManager getPersistanceManager() {
         if (pm == null) {
