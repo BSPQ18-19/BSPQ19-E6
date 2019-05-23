@@ -8,6 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.jdo.JDODataStoreException;
+
 import static org.junit.Assert.*;
 
 public class AccountServiceTest {
@@ -24,6 +26,22 @@ public class AccountServiceTest {
     @Test
     public void testSignIn() {
         String username = testUser.getUsername(), pass = testUser.getPassword(), country = testUser.getCountry();
+        // Check invalid username
+        try{
+            testUser = service.signIn(null, pass, country, null);
+            fail();
+        } catch (AccountException e){}
+        // Check invalid password
+        try{
+            testUser = service.signIn(username, null, country, null);
+            fail();
+        } catch (AccountException e){}
+        // Check invalid country
+        try{
+            testUser = service.signIn(username, pass, null, null);
+            fail();
+        } catch (AccountException e){}
+        // Create correct user
         try {
             testUser = service.signIn(username, pass, country, null);
         } catch (AccountException e) {

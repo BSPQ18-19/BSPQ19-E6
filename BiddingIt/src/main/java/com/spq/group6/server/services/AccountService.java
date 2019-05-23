@@ -40,10 +40,18 @@ public class AccountService implements IAccountService {
         User user = new User(username, password, country);
         // Added 1000 as initial money, otherwise a Payment service would be needed.
         user.setMoney(1000);
+        validateUser(user);
         checkDuplicatedUser(user);
         biddingDAO.persistUser(user);
         initUser(user, observer);
         return user;
+    }
+
+    private void validateUser(User user) throws AccountException {
+        if (user.getUsername() == null || user.getCountry() == null
+                || user.getPassword() == null){
+            throw new AccountException("Inavalid User details");
+        }
     }
 
     public User updateUser(User user, String country, String password) throws AccountException {
